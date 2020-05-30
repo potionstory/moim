@@ -1,39 +1,34 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getCommunity } from '../../modules/community';
-import api from '../../api/api';
+import { getAllCommunityAction } from '../../store/module/community';
 
 const Community = () => {
   const list = useSelector((state) => state.community.list);
   const dispatch = useDispatch();
-  const onGetCommunity = useCallback(() => dispatch(getCommunity()), [
-    dispatch,
-  ]);
-
-  const [onlines, setOnlines] = useState([]);
+  const onGetAllCommunity = useCallback(
+    () => dispatch(getAllCommunityAction.REQUEST()),
+    [dispatch],
+  );
 
   useEffect(() => {
-    api
-      .get('/onlines')
-      .then((res) => {
-        console.log(res.data);
-        setOnlines(res.data);
-      })
-      .catch((err) => console.log(err));
+    onGetAllCommunity();
   }, []);
   return (
     <div>
       <h2>Community Container</h2>
-      <button onClick={onGetCommunity}>리덕스 사용하기</button>
-      {onlines.map((item) => {
-        return (
-          <div key={item.onlineId}>
-            <strong>{item.name}</strong>
-            <span>{item.url}</span>
-            <span>{item.createdAt}</span>
-          </div>
-        );
-      })}
+      <ul>
+        {list.map((item, index) => {
+          return (
+            <li key={item.communityId}>
+              <div>
+                <strong>{item.name}</strong>
+                <span>{item.url}</span>
+                <span>{item.createdAt}</span>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };
