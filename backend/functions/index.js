@@ -7,14 +7,14 @@ const { db } = require("./util/admin");
 const app = express();
 
 const {
-  getAllOnlines,
-  postOnline,
-  getOnline,
-  deleteOnline,
-  likeOnline,
-  unlikeOnline,
-  commentOnOnline,
-} = require("./routes/onlines");
+  getAllCommunitys,
+  postCommunity,
+  getCommunity,
+  deleteCommunity,
+  likeCommunity,
+  unlikeCommunity,
+  commentOnCommunity,
+} = require("./routes/communitys");
 
 const {
   signup,
@@ -33,14 +33,14 @@ app.get("/", (req, res) => {
   res.send("Hello from Firebase!");
 });
 
-// onlines routes
-app.get("/onlines", getAllOnlines);
-app.post("/online", FBAuth, postOnline);
-app.get("/online/:onlineId", getOnline);
-app.delete("/online/:onlineId", FBAuth, deleteOnline);
-app.get("/online/:onlineId/like", FBAuth, likeOnline);
-app.get("/online/:onlineId/unlike", FBAuth, unlikeOnline);
-app.post("/online/:onlineId/comment", FBAuth, commentOnOnline);
+// communitys routes
+app.get("/communitys", getAllCommunitys);
+app.post("/community", FBAuth, postCommunity);
+app.get("/community/:communityId", getCommunity);
+app.delete("/community/:communityId", FBAuth, deleteCommunity);
+app.get("/community/:communityId/like", FBAuth, likeCommunity);
+app.get("/community/:communityId/unlike", FBAuth, unlikeCommunity);
+app.post("/community/:communityId/comment", FBAuth, commentOnCommunity);
 
 // users routes
 app.post("/signup", signup);
@@ -57,7 +57,7 @@ exports.createNotificationOnLike = functions.firestore
   .document("likes/{id}")
   .onCreate((snapshot) => {
     return db
-      .doc(`/onlines/${snapshot.data().onlineId}`)
+      .doc(`/communitys/${snapshot.data().communityId}`)
       .get()
       .then((doc) => {
         if (
@@ -70,7 +70,7 @@ exports.createNotificationOnLike = functions.firestore
             sender: snapshot.data().userHandle,
             type: "like",
             read: false,
-            onlineId: doc.id,
+            communityId: doc.id,
           });
         }
       })
@@ -96,7 +96,7 @@ exports.createNotificationOnComment = functions.firestore
   .document("comments/{id}")
   .onCreate((snapshot) => {
     return db
-      .doc(`/onlines/${snapshot.data().onlineId}`)
+      .doc(`/communitys/${snapshot.data().communityId}`)
       .get()
       .then((doc) => {
         if (
@@ -109,7 +109,7 @@ exports.createNotificationOnComment = functions.firestore
             sender: snapshot.data().userHandle,
             type: "comment",
             read: false,
-            onlineId: doc.id,
+            communityId: doc.id,
           });
         }
       })
@@ -127,13 +127,13 @@ exports.onUserImageChange = functions.firestore
       console.log("image has changed");
       const batch = db.batch();
       return db
-        .collection("onlines")
+        .collection("communitys")
         .where("userHandle", "==", change.before.data().handle)
         .get()
         .then((data) => {
           data.forEach((doc) => {
-            const online = db.doc(`onlines/${doc.id}`);
-            batch.update(online, {
+            const community = db.doc(`communitys/${doc.id}`);
+            batch.update(community, {
               userImage: change.after.data().userImageUrl,
             });
           });
@@ -142,20 +142,23 @@ exports.onUserImageChange = functions.firestore
     } else return true;
   });
 
-exports.onOnlineDelete = functions.firestore
-  .document("/onlines/{onlineId}")
+exports.onCommunityDelete = functions.firestore
+  .document("/communitys/{communityId}")
   .onDelete((snapshot, context) => {
-    const onlineId = context.params.onlineId;
+    const communityId = context.params.communityId;
     const batch = db.batch();
     return db
       .collection("comments")
-      .where("onlineId", "==", onlineId)
+      .where("communityId", "==", communityId)
       .get()
       .then((data) => {
         data.forEach((doc) => {
           batch.delete(db.doc(`/comments/${doc.id}`));
         });
-        return db.collection("likes").where("onlineId", "==", onlineId).get();
+        return db
+          .collection("likes")
+          .where("communityId", "==", communityId)
+          .get();
       })
       .then((data) => {
         data.forEach((doc) => {
@@ -163,7 +166,7 @@ exports.onOnlineDelete = functions.firestore
         });
         return db
           .collection("notifications")
-          .where("onlineId", "==", onlineId)
+          .where("communityId", "==", communityId)
           .get();
       })
       .then((data) => {

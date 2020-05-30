@@ -1,14 +1,15 @@
 const { db } = require("../util/admin");
 
-exports.getAllOnlines = (req, res) => {
-  db.collection("onlines")
+// get all communitys
+exports.getAllCommunitys = (req, res) => {
+  db.collection("communitys")
     .orderBy("createdAt", "desc")
     .get()
     .then((data) => {
-      let onlines = [];
+      let communitys = [];
       data.forEach((doc) => {
-        onlines.push({
-          onlineId: doc.id,
+        communitys.push({
+          communityId: doc.id,
           name: doc.data().name,
           url: doc.data().url,
           userHandle: doc.data().userHandle,
@@ -18,7 +19,7 @@ exports.getAllOnlines = (req, res) => {
           userImage: doc.data().userImage,
         });
       });
-      return res.json(onlines);
+      return res.json(communitys);
     })
     .catch((err) => {
       console.error(err);
@@ -26,12 +27,13 @@ exports.getAllOnlines = (req, res) => {
     });
 };
 
-exports.postOnline = (req, res) => {
+// create one community
+exports.postCommunity = (req, res) => {
   if (req.method !== "POST") {
     return res.status(400).json({ error: "Method not defined" });
   }
 
-  const newOnline = {
+  const newCommunity = {
     name: req.body.name,
     url: req.body.url,
     userHandle: req.user.handle,
@@ -41,12 +43,12 @@ exports.postOnline = (req, res) => {
     commentCount: 0,
   };
 
-  db.collection("onlines")
-    .add(newOnline)
+  db.collection("communitys")
+    .add(newCommunity)
     .then((doc) => {
-      const resOnline = newOnline;
-      resOnline.onlineId = doc.id;
-      res.json(resOnline);
+      const resCommunity = newCommunity;
+      resCommunity.communityId = doc.id;
+      res.json(resCommunity);
     })
     .catch((err) => {
       res.status(500).json({ error: "something went wrong" });
@@ -54,29 +56,29 @@ exports.postOnline = (req, res) => {
     });
 };
 
-// Fetch one online
-exports.getOnline = (req, res) => {
-  let onlineData = {};
-  db.doc(`/onlines/${req.params.onlineId}`)
+// get one community
+exports.getCommunity = (req, res) => {
+  let communityData = {};
+  db.doc(`/communitys/${req.params.communityId}`)
     .get()
     .then((doc) => {
       if (!doc.exists) {
-        return res.status(404).json({ error: "Online not found" });
+        return res.status(404).json({ error: "Community not found" });
       }
-      onlineData = doc.data();
-      onlineData.onlineId = doc.id;
+      communityData = doc.data();
+      communityData.communityId = doc.id;
       return db
         .collection("comments")
-        .where("onlineId", "==", req.params.onlineId)
+        .where("communityId", "==", req.params.communityId)
         .orderBy("createdAt", "desc")
         .get();
     })
     .then((data) => {
-      onlineData.comments = [];
+      communityData.comments = [];
       data.forEach((doc) => {
-        onlineData.comments.push(doc.data());
+        communityData.comments.push(doc.data());
       });
-      return res.json(onlineData);
+      return res.json(communityData);
     })
     .catch((err) => {
       console.error(err);
@@ -84,13 +86,14 @@ exports.getOnline = (req, res) => {
     });
 };
 
-exports.deleteOnline = (req, res) => {
-  const document = db.doc(`/onlines/${req.params.onlineId}`);
+// delete one community
+exports.deleteCommunity = (req, res) => {
+  const document = db.doc(`/communitys/${req.params.communityId}`);
   document
     .get()
     .then((doc) => {
       if (!doc.exists) {
-        return res.status(404).json({ error: "Online not found" });
+        return res.status(404).json({ error: "Community not found" });
       }
       if (doc.data().userHandle !== req.user.handle) {
         return res.status(403).json({ error: "Unauthorized" });
@@ -99,7 +102,7 @@ exports.deleteOnline = (req, res) => {
       }
     })
     .then(() => {
-      res.json({ message: "Online deleted successfully" });
+      res.json({ message: "Community deleted successfully" });
     })
     .catch((err) => {
       console.error(err);
@@ -107,26 +110,27 @@ exports.deleteOnline = (req, res) => {
     });
 };
 
-exports.likeOnline = (req, res) => {
+// like one community
+exports.likeCommunity = (req, res) => {
   const likeDocument = db
     .collection("likes")
     .where("userHandle", "==", req.user.handle)
-    .where("onlineId", "==", req.params.onlineId)
+    .where("communityId", "==", req.params.communityId)
     .limit(1);
 
-  const onlineDocument = db.doc(`/onlines/${req.params.onlineId}`);
+  const communityDocument = db.doc(`/communitys/${req.params.communityId}`);
 
-  let onlineData;
+  let communityData;
 
-  onlineDocument
+  communityDocument
     .get()
     .then((doc) => {
       if (doc.exists) {
-        onlineData = doc.data();
-        onlineData.onlineId = doc.id;
+        communityData = doc.data();
+        communityData.communityId = doc.id;
         return likeDocument.get();
       } else {
-        return res.status(404).json({ error: "Online not found" });
+        return res.status(404).json({ error: "Community not found" });
       }
     })
     .then((data) => {
@@ -134,18 +138,20 @@ exports.likeOnline = (req, res) => {
         return db
           .collection("likes")
           .add({
-            onlineId: req.params.onlineId,
+            communityId: req.params.communityId,
             userHandle: req.user.handle,
           })
           .then(() => {
-            onlineData.likeCount++;
-            return onlineDocument.update({ likeCount: onlineData.likeCount });
+            communityData.likeCount++;
+            return communityDocument.update({
+              likeCount: communityData.likeCount,
+            });
           })
           .then(() => {
-            return res.json(onlineData);
+            return res.json(communityData);
           });
       } else {
-        return res.status(400).json({ error: "Online already liked" });
+        return res.status(400).json({ error: "Community already liked" });
       }
     })
     .catch((err) => {
@@ -154,41 +160,44 @@ exports.likeOnline = (req, res) => {
     });
 };
 
-exports.unlikeOnline = (req, res) => {
+// unlike one community
+exports.unlikeCommunity = (req, res) => {
   const likeDocument = db
     .collection("likes")
     .where("userHandle", "==", req.user.handle)
-    .where("onlineId", "==", req.params.onlineId)
+    .where("communityId", "==", req.params.communityId)
     .limit(1);
 
-  const onlineDocument = db.doc(`/onlines/${req.params.onlineId}`);
+  const communityDocument = db.doc(`/communitys/${req.params.communityId}`);
 
-  let onlineData;
+  let communityData;
 
-  onlineDocument
+  communityDocument
     .get()
     .then((doc) => {
       if (doc.exists) {
-        onlineData = doc.data();
-        onlineData.onlineId = doc.id;
+        communityData = doc.data();
+        communityData.communityId = doc.id;
         return likeDocument.get();
       } else {
-        return res.status(404).json({ error: "Online not found" });
+        return res.status(404).json({ error: "Community not found" });
       }
     })
     .then((data) => {
       if (data.empty) {
-        return res.status(400).json({ error: "Online not liked" });
+        return res.status(400).json({ error: "Community not liked" });
       } else {
         return db
           .doc(`/likes/${data.docs[0].id}`)
           .delete()
           .then(() => {
-            onlineData.likeCount--;
-            return onlineDocument.update({ likeCount: onlineData.likeCount });
+            communityData.likeCount--;
+            return communityDocument.update({
+              likeCount: communityData.likeCount,
+            });
           })
           .then(() => {
-            res.json(onlineData);
+            res.json(communityData);
           });
       }
     })
@@ -198,23 +207,24 @@ exports.unlikeOnline = (req, res) => {
     });
 };
 
-exports.commentOnOnline = (req, res) => {
+// comment one community
+exports.commentOnCommunity = (req, res) => {
   if (req.body.body.trim() === "")
     return res.status(400).json({ comment: "Comment must not be empty" });
 
   const newComment = {
     body: req.body.body,
     createdAt: new Date().toISOString(),
-    onlineId: req.params.onlineId,
+    communityId: req.params.communityId,
     userHandle: req.user.handle,
     userImage: req.user.userImageUrl,
   };
 
-  db.doc(`/onlines/${req.params.onlineId}`)
+  db.doc(`/communitys/${req.params.communityId}`)
     .get()
     .then((doc) => {
       if (!doc.exists) {
-        return res.status(404).json({ error: "Online not found" });
+        return res.status(404).json({ error: "Community not found" });
       }
       return doc.ref.update({ commentCount: doc.data().commentCount + 1 });
     })

@@ -124,7 +124,7 @@ exports.getUserDetails = (req, res) => {
       if (doc.exists) {
         userData.user = doc.data();
         return db
-          .collection("onlines")
+          .collection("communitys")
           .where("userHandle", "==", req.params.handle)
           .orderBy("createdAt", "desc")
           .get();
@@ -133,9 +133,9 @@ exports.getUserDetails = (req, res) => {
       }
     })
     .then((data) => {
-      userData.onlines = [];
+      userData.communitys = [];
       data.forEach((doc) => {
-        userData.onlines.push({
+        userData.communitys.push({
           name: doc.data().name,
           url: doc.data().url,
           createdAt: doc.data().createdAt,
@@ -143,7 +143,7 @@ exports.getUserDetails = (req, res) => {
           userImage: doc.data().userImage,
           likeCount: doc.data().likeCount,
           commentCount: doc.data().commentCount,
-          onlineId: doc.id,
+          communityId: doc.id,
         });
       });
       return res.json(userData);
@@ -187,7 +187,7 @@ exports.getAuthenticatedUser = (req, res) => {
           recipient: doc.data().recipient,
           sender: doc.data().sender,
           createdAt: doc.data().createdAt,
-          onlineId: doc.data().onlineId,
+          communityId: doc.data().communityId,
           type: doc.data().type,
           read: doc.data().read,
           notifications: doc.id,
