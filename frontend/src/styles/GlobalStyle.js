@@ -3,19 +3,34 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
   @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
 
-  body {
-    color: #333;
-    font-size: 40px;
-    font-family: 'Spoqa Han Sans', sans-serif;
-    line-height: 1.5;
-    word-break: keep-all;
+  html, body, #root {
+    height: 100%;
+  }
 
-    background-color: white;
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Spoqa Han Sans', 'Helvetica Neue', 'Helvetica', 'Arial', 'Noto', 'Apple Gothic', 'MalgunGothic', sans-serif;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #212121;
+    line-height: 1.5;
   }
 
   a {
-    color: #333;
+    color: #212121;
     text-decoration: none;
+  }
+
+  ul, ol, dl {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  input, button, textarea {
+    font-family: inherit;
   }
 `;
 
