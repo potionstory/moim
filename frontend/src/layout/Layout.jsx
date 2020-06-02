@@ -1,14 +1,15 @@
 import React from 'react';
-import GlobalStyle from '../styles/GlobalStyle';
+import GlobalStyle from '../lib/styles/global';
 import Header from './Header';
 import Footer from './Footer';
+import { Container } from './style';
 
 const Layout = ({ children }) => {
   return (
     <>
       <GlobalStyle />
       <Header />
-      <div>{children}</div>
+      <Container>{children}</Container>
       <Footer />
     </>
   );

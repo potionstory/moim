@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
+import palette from './palette';
 
-const GlobalStyle = createGlobalStyle`
+const global = createGlobalStyle`
   @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
 
   html, body, #root {
@@ -14,12 +15,12 @@ const GlobalStyle = createGlobalStyle`
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #212121;
+    color: ${palette.light.title};
     line-height: 1.5;
   }
 
   a {
-    color: #212121;
+    color: ${palette.light.title};
     text-decoration: none;
   }
 
@@ -34,4 +35,4 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export default GlobalStyle;
+export default global;
