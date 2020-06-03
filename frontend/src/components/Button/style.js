@@ -1,19 +1,25 @@
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 
-export const LinkButtonWrap = styled.div`
-  a {
+export const ButtonWrap = styled.div`
+  a,
+  button {
     display: flex;
     align-items: center;
-    opacity: 0.5;
+    border-radius: 6px;
+    background-color: ${palette.light.buttonGray};
     transition: all 0.2s ease-out;
     .spinner {
       display: none;
     }
     &:hover {
-      opacity: 1;
+      background-color: transparent;
       .spinner {
         display: block;
+      }
+      .icon,
+      .text {
+        color: ${palette.light.theme};
       }
     }
   }
@@ -38,6 +44,7 @@ export const ButtonIcon = styled.span`
 
 export const ButtonText = styled.span`
   padding-left: 6px;
+  padding-right: 12px;
   font-weight: 500;
   color: ${palette.light.title};
   text-transform: uppercase;

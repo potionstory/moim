@@ -2,27 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Spinner from '../Spinner';
-import {
-  LinkButtonWrap,
-  ButtonIconWrap,
-  ButtonIcon,
-  ButtonText,
-} from './style';
+import { ButtonWrap, ButtonIconWrap, ButtonIcon } from './style';
 
-const LinkButton = ({ path, icon, text }) => {
+const LinkIconButton = ({ path, icon }) => {
   return (
-    <LinkButtonWrap>
+    <ButtonWrap>
       <Link to={path}>
         <ButtonIconWrap>
           <Spinner />
           <ButtonIcon>
-            <FontAwesomeIcon icon={icon} />
+            <FontAwesomeIcon className="icon" icon={icon} />
           </ButtonIcon>
         </ButtonIconWrap>
-        <ButtonText>{text}</ButtonText>
       </Link>
-    </LinkButtonWrap>
+    </ButtonWrap>
   );
 };
 
-export default LinkButton;
+export default LinkIconButton;

@@ -19,6 +19,10 @@ const global = createGlobalStyle`
     line-height: 1.5;
   }
 
+  * {
+    box-sizing: inherit;
+  }
+
   a {
     color: ${palette.light.title};
     text-decoration: none;
@@ -31,7 +35,14 @@ const global = createGlobalStyle`
   }
   
   input, button, textarea {
+    border: none;
+    background-color: transparent;
     font-family: inherit;
+    padding: 0;
+    cursor: pointer;
+    &:focus {
+      outline-style: none;
+    }
   }
 `;
 

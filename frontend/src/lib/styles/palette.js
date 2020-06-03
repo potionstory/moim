@@ -1,13 +1,15 @@
 const palette = {
   light: {
     main: '#ffffff',
-    theme: '#ff9100',
+    theme: '#2979ff',
     title: '#212121',
+    buttonGray: '#e0e0e0',
   },
   dark: {
     main: '#212121',
-    theme: '#2979ff',
+    theme: '#ff9100',
     title: '#ffffff',
+    buttonGray: '#424242',
   },
 };
 
