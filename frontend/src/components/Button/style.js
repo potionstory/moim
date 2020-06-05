@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import palette from '../../lib/styles/palette';
 
 export const ButtonWrap = styled.div`
   a,
@@ -7,7 +6,7 @@ export const ButtonWrap = styled.div`
     display: flex;
     align-items: center;
     border-radius: 6px;
-    background-color: ${palette.light.buttonGray};
+    background-color: ${({ theme }) => theme.grayBg};
     transition: all 0.2s ease-out;
     .spinner {
       display: none;
@@ -19,7 +18,7 @@ export const ButtonWrap = styled.div`
       }
       .icon,
       .text {
-        color: ${palette.light.theme};
+        color: ${({ theme }) => theme.theme};
       }
     }
   }
@@ -37,7 +36,7 @@ export const ButtonIcon = styled.span`
   width: 24px;
   height: 24px;
   font-size: 1rem;
-  color: ${palette.light.title};
+  color: ${({ theme }) => theme.grayText};
   text-align: center;
   line-height: 24px;
 `;
@@ -46,6 +45,6 @@ export const ButtonText = styled.span`
   padding-left: 6px;
   padding-right: 12px;
   font-weight: 500;
-  color: ${palette.light.title};
+  color: ${({ theme }) => theme.grayText};
   text-transform: uppercase;
 `;

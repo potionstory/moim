@@ -17,7 +17,7 @@ const Community = () => {
     <div>
       <h2>Community Container</h2>
       <ul>
-        {list.map((item, index) => {
+        {list.map((item) => {
           return (
             <li key={item.communityId}>
               <div>

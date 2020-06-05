@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import palette from '../../lib/styles/palette';
 
 export const Svg = styled.svg`
   position: absolute;
@@ -12,7 +11,7 @@ export const Svg = styled.svg`
   stroke-width: 10px;
   fill: none;
   .circle {
-    stroke: ${palette.light.theme};
+    stroke: ${({ theme }) => theme.theme};
     stroke-dashoffset: 0;
     transform-origin: center;
     stroke-dasharray: 312;

@@ -1,23 +1,30 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCoffee,
-  faSignInAlt,
-  faUserPlus,
-} from '@fortawesome/free-solid-svg-icons';
+import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { toggleModeAction } from '../../store/module/header';
+import { faSignInAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import TextButton from '../../components/Button/TextButton';
-import { HeaderWrap, LeftHead, RightHead, Menu, User } from './style';
+import {
+  HeaderWrap,
+  LeftHead,
+  Logo,
+  ModeToggle,
+  RightHead,
+  Menu,
+  User,
+  Profile,
+} from './style';
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const onToggleMode = useCallback(() => dispatch(toggleModeAction.REQUEST()), [
+    dispatch,
+  ]);
   return (
     <HeaderWrap>
       <LeftHead>
-        <Link to="/">
-          <FontAwesomeIcon icon={faCoffee} />
-          home
-        </Link>
-        <h1>MOIM</h1>
+        <Logo>
+          <ModeToggle onClick={onToggleMode}>M</ModeToggle>
+        </Logo>
       </LeftHead>
       <RightHead>
         <Menu>
@@ -39,7 +46,9 @@ const Header = () => {
           </ul>
         </Menu>
         <User>
-          <span>유저 프로필 사진</span>
+          <Profile type="button">
+            <img src="../../../public/favicon.png" />
+          </Profile>
         </User>
       </RightHead>
     </HeaderWrap>
