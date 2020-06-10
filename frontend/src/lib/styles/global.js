@@ -3,8 +3,12 @@ import { createGlobalStyle } from 'styled-components';
 const global = createGlobalStyle`
   @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
 
-  html, body, #root {
+  /* html, body, #root {
     height: 100%;
+  } */
+
+  html {
+    background-color: ${({ theme }) => theme.main};
   }
 
   body {
@@ -36,6 +40,10 @@ const global = createGlobalStyle`
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  p {
+    margin: 0;
   }
   
   input, button, textarea {

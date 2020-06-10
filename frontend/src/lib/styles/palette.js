@@ -1,19 +1,21 @@
 export const light = {
   main: '#ffffff',
-  sub: '#f5f5f5',
-  theme: '#ff9100',
-  inverse: '#2979ff',
-  title: '#212121',
+  sub: '#eeeeee',
+  theme: '#1168d9',
+  inverse: '#f29f05',
+  title: '#242424',
+  text: '#2d2d2d',
   grayBg: '#e0e0e0',
   grayText: '#424242',
 };
 
 export const dark = {
-  main: '#212121',
-  sub: '#292929',
-  theme: '#2979ff',
-  inverse: '#ff9100',
+  main: '#242424',
+  sub: '#2d2d2d',
+  theme: '#f29f05',
+  inverse: '#1168d9',
   title: '#ffffff',
+  text: '#eeeeee',
   grayBg: '#424242',
   grayText: '#e0e0e0',
 };

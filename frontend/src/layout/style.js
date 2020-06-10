@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+export const LayoutWrap = styled.div`
+  margin-top: 96px;
+`;
+
 export const Container = styled.section`
-  padding-top: 96px;
+  width: 1280px;
+  margin: 0 auto;
 `;
