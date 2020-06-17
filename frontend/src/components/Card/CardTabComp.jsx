@@ -29,7 +29,13 @@ const CardTabComp = ({ tabIndex, onTabClick }) => {
     <>
       <CardTabMenuWrap>
         <CardTabMenu activeIndex={tabIndex + 1}>
-          <motion.div className="activeBox" animate={{ top: tabIndex * 40 }} />
+          <motion.div
+            className="activeBox"
+            animate={{ top: tabIndex * 40 }}
+            transition={{
+              ease: 'backInOut',
+            }}
+          />
           <ul>
             {tabList.map((item, index) => (
               <li key={index}>

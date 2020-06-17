@@ -4,14 +4,14 @@ export const light = {
   theme: '#f8b408',
   title: '#212121',
   text: '#262626',
-  gray: '#5a5a5a',
+  gray: '#757575',
 };
 
 export const dark = {
   main: '#212121',
-  sub: '#2a2a2a',
+  sub: '#262626',
   theme: '#f8b408',
   title: '#fafafa',
   text: '#eeeeee',
-  gray: '#5a5a5a',
+  gray: '#757575',
 };

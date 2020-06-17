@@ -58,6 +58,7 @@ export const CardHeader = styled.div`
       display: block;
       font-size: 1rem;
       font-weight: 700;
+      color: ${({ theme }) => theme.title};
       line-height: 1.125rem;
       ${ellipsis};
     }
@@ -176,7 +177,7 @@ export const CardImage = styled.span`
 
 export const CardText = styled.p`
   font-size: 0.875rem;
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.gray};
   word-wrap: break-word;
   line-height: 1.125rem;
   ${ellipsisMulti};
@@ -188,88 +189,10 @@ export const CardTime = styled.div``;
 
 export const CardMore = styled.div``;
 
-export const CardAddInfo = styled.div`
-  margin-top: 12px;
-  padding-top: 6px;
-  .infoItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-top: 6px;
-    border-radius: 18px;
-    background-color: ${({ theme }) => theme.theme};
-    transition: all 0.2s ease-out;
-    .info {
-      display: flex;
-      overflow: hidden;
-      flex: 1;
-      height: 36px;
-      align-items: center;
-      .iconWrap {
-        position: relative;
-        width: 36px;
-        height: 36px;
-        .icon {
-          display: block;
-          width: 30px;
-          height: 30px;
-          margin: 3px;
-          border-radius: 15px;
-          background-color: ${({ theme }) => theme.main};
-          font-size: 0.8rem;
-          color: ${({ theme }) => theme.theme};
-          text-align: center;
-          line-height: 30px;
-        }
-        .spinner {
-          display: none;
-        }
-      }
-      b {
-        overflow: hidden;
-        flex: 1;
-        height: 36px;
-        margin: 0 6px;
-        font-size: 0.813rem;
-        font-weight: 600;
-        color: ${({ theme }) => theme.main};
-        line-height: 36px;
-        text-align: left;
-        ${ellipsis};
-      }
-    }
-    .arrow {
-      width: 30px;
-      height: 30px;
-      margin: 3px;
-      border-radius: 15px;
-      background-color: ${({ theme }) => theme.theme};
-      text-align: center;
-      line-height: 32px;
-      svg {
-        font-size: 1rem;
-        color: ${({ theme }) => theme.main};
-      }
-    }
-    &:hover {
-      background-color: ${({ theme }) => theme.main};
-      .iconWrap {
-        .spinner {
-          display: block;
-        }
-      }
-      b {
-        color: ${({ theme }) => theme.theme};
-      }
-    }
-  }
-`;
-
 export const CardUserInfo = styled.div`
   display: flex;
   flex: 1;
-  max-height: 36px;
+  max-height: 40px;
   margin-top: 12px;
   padding: 0 12px;
   justify-content: space-between;
@@ -277,33 +200,36 @@ export const CardUserInfo = styled.div`
     display: flex;
     overflow: hidden;
     flex: 1;
-    height: 36px;
+    height: 40px;
     img {
-      width: 30px;
-      height: 30px;
+      width: 34px;
+      height: 34px;
       border: 3px solid ${({ theme }) => theme.main};
-      border-radius: 18px;
+      border-radius: 20px;
       background-color: ${({ theme }) => theme.main};
       transition: all 0.2s ease-out;
     }
     span {
       flex: 1;
-      height: 36px;
-      margin: 0 6px;
-      font-size: 0.813rem;
+      height: 40px;
+      margin: 0 12px;
+      font-size: 0.875rem;
       font-weight: 400;
-      color: ${({ theme }) => theme.title};
-      line-height: 36px;
+      color: ${({ theme }) => theme.gray};
+      line-height: 40px;
       ${ellipsis};
       b {
-        font-weight: 600;
-        color: ${({ theme }) => theme.theme};
-        text-transform: none;
+        font-weight: 700;
+        color: ${({ theme }) => theme.title};
+        transition: all 0.2s ease-out;
       }
     }
     &:hover {
       img {
         border-color: ${({ theme }) => theme.theme};
+      }
+      b {
+        color: ${({ theme }) => theme.theme};
       }
     }
   }

@@ -9,7 +9,7 @@ const CardUserInfoComp = ({ image, name, count }) => {
       <a href="/" className="user">
         <img src={image} />
         <span>
-          registered by <b>{name}</b>
+          by <b>{name}</b>
         </span>
       </a>
       <span className="like">
