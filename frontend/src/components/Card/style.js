@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { color } from '../../lib/styles/palette';
 import { ellipsis, ellipsisMulti } from '../../lib/styles/util';
 
 export const CardWarp = styled.li`
@@ -44,8 +45,10 @@ export const CardHeader = styled.div`
   display: flex;
   align-items: center;
   .icon {
+    overflow: hidden;
     width: 40px;
     height: 40px;
+    border-radius: 4px;
   }
   .info {
     display: flex;
@@ -71,7 +74,16 @@ export const CardHeader = styled.div`
         height: 1rem;
         padding: 0 6px;
         border-radius: 8px;
-        background-color: ${({ theme }) => theme.theme};
+        background-color: ${({ theme, status }) => {
+          switch (status) {
+            case 'open':
+              return `${color.orange}`;
+            case 'close':
+              return `${color.gray}`;
+            default:
+              return;
+          }
+        }};
         font-size: 0.625rem;
         font-weight: 600;
         color: ${({ theme }) => theme.main};
@@ -152,7 +164,7 @@ export const CardTabContentInner = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.theme};
+  background-color: ${({ theme }) => theme.theme}; /* [TODO]: DELETE */
   .cardTabBox {
     display: none;
     height: 100%;
@@ -191,16 +203,14 @@ export const CardMore = styled.div``;
 
 export const CardUserInfo = styled.div`
   display: flex;
-  flex: 1;
   max-height: 40px;
   margin-top: 12px;
-  padding: 0 12px;
   justify-content: space-between;
   .user {
     display: flex;
     overflow: hidden;
-    flex: 1;
     height: 40px;
+    padding: 0 12px;
     img {
       width: 34px;
       height: 34px;
@@ -212,7 +222,7 @@ export const CardUserInfo = styled.div`
     span {
       flex: 1;
       height: 40px;
-      margin: 0 12px;
+      margin-left: 12px;
       font-size: 0.875rem;
       font-weight: 400;
       color: ${({ theme }) => theme.gray};
@@ -236,7 +246,7 @@ export const CardUserInfo = styled.div`
   .like {
     display: flex;
     align-items: center;
-    padding: 0 3px;
+    padding: 0 12px;
     color: ${({ theme }) => theme.theme};
     span {
       flex: 1;

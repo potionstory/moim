@@ -1,4 +1,6 @@
-const { db } = require("../util/admin");
+const { uuid } = require("uuidv4");
+const { admin, BusBoy, db } = require("../util/admin");
+const config = require("../util/config");
 
 // get all communitys
 exports.getAllCommunitys = (req, res) => {
@@ -10,13 +12,17 @@ exports.getAllCommunitys = (req, res) => {
       data.forEach((doc) => {
         communitys.push({
           communityId: doc.id,
-          name: doc.data().name,
+          service: doc.data().service,
+          title: doc.data().title,
+          status: doc.data().status,
+          mainImage: doc.data().mainImage,
+          text: doc.data().text,
           url: doc.data().url,
+          userImage: doc.data().userImage,
           userHandle: doc.data().userHandle,
           createdAt: doc.data().createdAt,
           likeCount: doc.data().likeCount,
           commentCount: doc.data().commentCount,
-          userImage: doc.data().userImage,
         });
       });
       return res.json(communitys);
@@ -33,27 +39,78 @@ exports.postCommunity = (req, res) => {
     return res.status(400).json({ error: "Method not defined" });
   }
 
-  const newCommunity = {
-    name: req.body.name,
-    url: req.body.url,
-    userHandle: req.user.handle,
-    userImage: req.user.userImageUrl,
-    createdAt: new Date().toISOString(),
-    likeCount: 0,
-    commentCount: 0,
-  };
+  let busboy = new BusBoy({ headers: req.headers });
 
-  db.collection("communitys")
-    .add(newCommunity)
-    .then((doc) => {
-      const resCommunity = newCommunity;
-      resCommunity.communityId = doc.id;
-      res.json(resCommunity);
-    })
-    .catch((err) => {
-      res.status(500).json({ error: "something went wrong" });
-      console.error(err);
-    });
+  let bucket = admin.storage().bucket();
+  let generatedToken = uuid();
+
+  let storageFilepath;
+  let storageFile;
+
+  let files = {};
+  req.body = {};
+
+  busboy.on("file", (fieldname, file, filename, encoding, mimetype) => {
+    if (mimetype !== "image/jpeg" && mimetype !== "image/png") {
+      return res.status(400).json({ error: "Wrong file type submitted" });
+    }
+
+    const metadata = {
+      contentType: mimetype,
+      metadata: {
+        firebaseStorageDownloadTokens: generatedToken,
+      },
+    };
+    let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
+    let uniqueName = admin.database().ref().push().key;
+
+    storageFilepath = `community/${uniqueName + fileext}`;
+    storageFile = bucket.file(storageFilepath);
+
+    file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
+  });
+
+  busboy.on("field", (fieldname, value) => {
+    req.body[fieldname] = value;
+  });
+
+  busboy.on("finish", () => {
+    req.files = files;
+
+    const mainImageUrl = `https://firebasestorage.googleapis.com/v0/b/${
+      config.storageBucket
+    }/o/${encodeURIComponent(
+      storageFilepath
+    )}?alt=media&token=${generatedToken}`;
+
+    const newCommunity = {
+      service: req.body.service,
+      title: req.body.title,
+      status: req.body.status,
+      mainImage: mainImageUrl,
+      text: req.body.text,
+      url: req.body.url,
+      userImage: req.user.userImageUrl,
+      userHandle: req.user.handle,
+      createdAt: new Date().toISOString(),
+      likeCount: 0,
+      commentCount: 0,
+    };
+
+    db.collection("communitys")
+      .add(newCommunity)
+      .then((doc) => {
+        const resCommunity = newCommunity;
+        resCommunity.communityId = doc.id;
+        res.json(resCommunity);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: "something went wrong" });
+        console.error(err);
+      });
+  });
+
+  busboy.end(req.rawBody);
 };
 
 // get one community

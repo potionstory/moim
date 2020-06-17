@@ -1,11 +1,12 @@
 import React from 'react';
 import { CardHeader } from './style';
+import { getCategoryIcon } from '../../utils/commonUtil';
 
-const CardHeaderComp = ({ icon, title, status }) => {
+const CardHeaderComp = ({ service, title, status }) => {
   return (
-    <CardHeader>
+    <CardHeader status={status}>
       <span className="icon">
-        <img src={icon} />
+        <img src={getCategoryIcon(service)} />
       </span>
       <div className="info">
         <h3 className="title">{title}</h3>

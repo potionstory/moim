@@ -1,24 +1,25 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import CardHeaderComp from './CardHeaderComp';
 import CardTabComp from './CardTabComp';
 import CardUserInfoComp from './CardUserInfoComp';
 import { CardWarp, CardBlock, CardInner, CardBody } from './style';
-import { kakao } from '../../lib/icons';
 
-const Card = ({ item }) => {
-  const [tabIndex, setTabIndex] = useState(0);
-
-  const onTabClick = useCallback((index) => {
-    setTabIndex(index);
-  }, []);
-
+const Card = ({ item, category }) => {
   return (
     <CardWarp>
       <CardBlock>
         <CardInner className="inner">
-          <CardHeaderComp icon={kakao} title={item.name} status="open" />
+          <CardHeaderComp
+            service={item.service}
+            title={item.title}
+            status={item.status}
+          />
           <CardBody>
-            <CardTabComp tabIndex={tabIndex} onTabClick={onTabClick} />
+            <CardTabComp
+              image={item.mainImage}
+              text={item.text}
+              category={category}
+            />
           </CardBody>
         </CardInner>
       </CardBlock>

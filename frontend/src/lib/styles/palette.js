@@ -15,3 +15,11 @@ export const dark = {
   text: '#eeeeee',
   gray: '#757575',
 };
+
+export const color = {
+  orange: '#f8b408',
+  red: '#f4511e',
+  green: '#7cb342',
+  blue: '#1e88e5',
+  gray: '#757575',
+};

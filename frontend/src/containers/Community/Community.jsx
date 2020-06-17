@@ -29,7 +29,9 @@ const Community = () => {
       <Content>
         <MoimList>
           {list.map((item) => {
-            return <Card key={item.communityId} item={item} />;
+            return (
+              <Card key={item.communityId} item={item} category="meeting" /> // cardClass: community/meeting
+            );
           })}
         </MoimList>
       </Content>

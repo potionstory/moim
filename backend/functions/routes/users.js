@@ -1,15 +1,12 @@
 const firebase = require("firebase");
-const BusBoy = require("busboy");
 const { uuid } = require("uuidv4");
+const { admin, BusBoy, db } = require("../util/admin");
 const config = require("../util/config");
-const { admin, db } = require("../util/admin");
 const {
   validateSignupData,
   validateSigninData,
   reduceUserDetails,
 } = require("../util/validators");
-
-firebase.initializeApp(config);
 
 // signup user
 exports.signup = (req, res) => {
@@ -227,8 +224,9 @@ exports.uploadImage = async (req, res) => {
       },
     };
     let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
+    let uniqueName = admin.database().ref().push().key;
 
-    storageFilepath = `user/${req.user.handle}/` + getUniqueName() + fileext;
+    storageFilepath = `user/${req.user.handle}/${uniqueName + fileext}`;
     storageFile = bucket.file(storageFilepath);
 
     file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
@@ -270,10 +268,6 @@ exports.uploadImage = async (req, res) => {
 
   busboy.end(req.rawBody);
 };
-
-function getUniqueName() {
-  return admin.database().ref().push().key;
-}
 
 exports.markNotificationsRead = (req, res) => {
   let batch = db.batch();

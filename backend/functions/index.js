@@ -1,8 +1,12 @@
+const firebase = require("firebase");
 const functions = require("firebase-functions");
 const express = require("express");
 const cors = require("cors");
 const FBAuth = require("./util/fbAuth");
 const { db } = require("./util/admin");
+const config = require("./util/config");
+
+firebase.initializeApp(config);
 
 const app = express();
 
