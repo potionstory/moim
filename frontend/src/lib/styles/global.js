@@ -8,7 +8,7 @@ const global = createGlobalStyle`
   } */
 
   html {
-    background-color: ${({ theme }) => theme.main};
+    background-color: ${({ theme }) => theme.sub};
   }
 
   body {

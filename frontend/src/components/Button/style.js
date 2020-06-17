@@ -5,18 +5,13 @@ export const ButtonWrap = styled.div`
   button {
     display: flex;
     align-items: center;
-    border-radius: 6px;
-    background-color: ${({ theme }) => theme.grayBg};
-    transition: all 0.2s ease-out;
-    .spinner {
-      display: none;
-    }
     &:hover {
-      background-color: transparent;
-      .spinner {
-        display: block;
+      .icon {
+        background-color: ${({ theme }) => theme.theme};
+        svg {
+          color: ${({ theme }) => theme.main};
+        }
       }
-      .icon,
       .text {
         color: ${({ theme }) => theme.theme};
       }
@@ -24,27 +19,29 @@ export const ButtonWrap = styled.div`
   }
 `;
 
-export const ButtonIconWrap = styled.span`
-  position: relative;
-  height: 24px;
-  width: 24px;
-  padding: 8px;
-`;
-
 export const ButtonIcon = styled.span`
   display: block;
   width: 24px;
   height: 24px;
-  font-size: 1rem;
-  color: ${({ theme }) => theme.grayText};
+  padding: 8px;
+  box-sizing: content-box;
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.sub};
   text-align: center;
   line-height: 24px;
+  transition: all 0.2s ease-out;
+  svg {
+    font-size: 1rem;
+    color: ${({ theme }) => theme.gray};
+    transition: all 0.2s ease-out;
+  }
 `;
 
 export const ButtonText = styled.span`
   padding-left: 6px;
   padding-right: 12px;
   font-weight: 500;
-  color: ${({ theme }) => theme.grayText};
+  color: ${({ theme }) => theme.gray};
   text-transform: uppercase;
+  transition: all 0.2s ease-out;
 `;

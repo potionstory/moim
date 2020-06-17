@@ -10,7 +10,7 @@ export const toggleModeAction = createAction(TOGGLE_MODE);
 // initialState
 const initialState = {
   loading: false,
-  mode: false, // true: Light, false: Dark
+  mode: true, // true: Light, false: Dark
 };
 
 export default (state = initialState, action) => {

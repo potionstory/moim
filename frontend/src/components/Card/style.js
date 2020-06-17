@@ -8,27 +8,36 @@ export const CardWarp = styled.li`
   flex-direction: column;
   justify-content: space-between;
   min-width: 296px;
-  margin: 1rem;
-  opacity: 0.6;
-  transition: all 0.2s ease-out;
-  &:hover {
-    opacity: 1;
+  margin: 24px 1rem 1rem;
+  .inner {
+    transition: all 0.2s ease-out;
   }
+  &:hover {
+    .inner {
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 16px 0px;
+    }
+  }
+`;
+
+export const CardBlock = styled.div`
+  display: block;
+  position: relative;
+  padding-top: 100%;
 `;
 
 export const CardInner = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  justify-content: space-between;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   padding: 12px;
   box-sizing: border-box;
-  border-radius: 6px;
+  border-radius: 4px;
   background-color: ${({ theme }) => theme.main};
-`;
-
-export const CardBase = styled.div`
-  flex: 1;
 `;
 
 export const CardHeader = styled.div`
@@ -45,10 +54,10 @@ export const CardHeader = styled.div`
     flex: 1;
     justify-content: center;
     margin-left: 12px;
-    .title {
+    h3 {
       display: block;
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 700;
       line-height: 1.125rem;
       ${ellipsis};
     }
@@ -72,44 +81,82 @@ export const CardHeader = styled.div`
   }
 `;
 
-export const CardUrl = styled.div`
+export const CardBody = styled.div`
   display: flex;
   flex: 1;
   margin-top: 12px;
-  height: 36px;
-  border-radius: 18px;
+`;
+
+export const CardTabMenuWrap = styled.div`
+  width: 40px;
+`;
+
+export const CardTabMenu = styled.div`
+  overflow: hidden;
+  position: relative;
+  border-radius: 20px;
   background-color: ${({ theme }) => theme.sub};
-  .url {
-    flex: 1;
-    padding: 6px 12px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: ${({ theme }) => theme.theme};
-    line-height: 24px;
-    ${ellipsis};
-    opacity: 0.6;
-    transition: all 0.2s ease-out;
-    &:hover {
-      opacity: 1;
+  .activeBox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: ${({ theme }) => theme.theme};
+  }
+  ul {
+    position: relative;
+    li {
+      button {
+        display: block;
+        width: 100%;
+        font-size: 0.875rem;
+        line-height: 40px;
+        svg {
+          transition: all 0.2s ease-out;
+          color: ${({ theme }) => theme.gray};
+        }
+        &:hover {
+          svg {
+            color: ${({ theme }) => theme.theme};
+          }
+        }
+      }
+      &:nth-child(${({ activeIndex }) => activeIndex}) {
+        button {
+          svg {
+            color: ${({ theme }) => theme.main};
+          }
+        }
+      }
     }
   }
-  .btnIcon {
-    width: 30px;
-    height: 30px;
-    margin-top: 3px;
-    margin-right: 3px;
-    border-radius: 15px;
-    background-color: ${({ theme }) => theme.main};
-    text-align: center;
-    line-height: 30px;
-    opacity: 0.6;
-    transition: all 0.2s ease-out;
-    svg {
-      font-size: 0.8rem;
-      color: ${({ theme }) => theme.theme};
-    }
-    &:hover {
-      opacity: 1;
+`;
+
+export const CardTabContentWarp = styled.div`
+  flex: 1;
+  margin-left: 12px;
+`;
+
+export const CardTabContentBlock = styled.div`
+  display: block;
+  position: relative;
+  padding-top: 100%;
+`;
+
+export const CardTabContentInner = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: ${({ theme }) => theme.theme};
+  .cardTabBox {
+    display: none;
+    height: 100%;
+    &:nth-child(${({ activeIndex }) => activeIndex}) {
+      display: block;
     }
   }
 `;
@@ -118,9 +165,8 @@ export const CardImage = styled.span`
   display: block;
   overflow: hidden;
   position: relative;
-  height: 10rem;
-  margin-top: 12px;
-  border-radius: 6px;
+  height: 100%;
+  border-radius: 4px;
   img {
     width: 100%;
     height: 100%;
@@ -129,12 +175,18 @@ export const CardImage = styled.span`
 `;
 
 export const CardText = styled.p`
-  margin-top: 12px;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   color: ${({ theme }) => theme.text};
-  line-height: 1rem;
+  word-wrap: break-word;
+  line-height: 1.125rem;
   ${ellipsisMulti};
 `;
+
+export const CardMap = styled.div``;
+
+export const CardTime = styled.div``;
+
+export const CardMore = styled.div``;
 
 export const CardAddInfo = styled.div`
   margin-top: 12px;
@@ -231,7 +283,7 @@ export const CardUserInfo = styled.div`
       height: 30px;
       border: 3px solid ${({ theme }) => theme.main};
       border-radius: 18px;
-      background-color: #fff;
+      background-color: ${({ theme }) => theme.main};
       transition: all 0.2s ease-out;
     }
     span {

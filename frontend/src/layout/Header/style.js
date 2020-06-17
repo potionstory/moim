@@ -29,7 +29,7 @@ export const ModeToggle = styled.button`
   width: 48px;
   height: 48px;
   position: relative;
-  border-radius: 6px;
+  border-radius: 4px;
   background-color: ${({ theme }) => theme.theme};
   font-size: 1.6rem;
   font-weight: 600;
@@ -37,9 +37,6 @@ export const ModeToggle = styled.button`
   text-align: center;
   line-height: 48px;
   transition: all 0.2s ease-out;
-  &:hover {
-    background-color: ${({ theme }) => theme.inverse};
-  }
 `;
 
 export const RightHead = styled.div`
@@ -70,7 +67,7 @@ export const User = styled.div`
 export const Profile = styled.button`
   width: 40px;
   height: 40px;
-  border: 4px solid ${({ theme }) => theme.grayBg};
+  border: 4px solid ${({ theme }) => theme.sub};
   border-radius: 24px;
   transition: all 0.2s ease-out;
   &:hover {

@@ -1,34 +1,27 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import CardHeaderComp from './CardHeaderComp';
-import CardUrlComp from './CardUrlComp';
-import CardAddInfoComp from './CardAddInfoComp';
+import CardTabComp from './CardTabComp';
 import CardUserInfoComp from './CardUserInfoComp';
-import { CardWarp, CardInner, CardBase, CardImage, CardText } from './style';
+import { CardWarp, CardBlock, CardInner, CardBody } from './style';
 import { kakao } from '../../lib/icons';
-import { temp } from '../../lib/images';
 
 const Card = ({ item }) => {
+  const [tabIndex, setTabIndex] = useState(0);
+
+  const onTabClick = useCallback((index) => {
+    setTabIndex(index);
+  }, []);
+
   return (
     <CardWarp>
-      <CardInner>
-        <CardBase>
+      <CardBlock>
+        <CardInner className="inner">
           <CardHeaderComp icon={kakao} title={item.name} status="open" />
-          <CardUrlComp url={item.url} />
-          <CardImage>
-            <img src={temp} />
-          </CardImage>
-          <CardText>
-            설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명
-            설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명
-            설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명
-            설명
-          </CardText>
-        </CardBase>
-        <CardAddInfoComp
-          date="2020.07.23 (수) 19:23 ~ 21:00"
-          place="서울시 강남구 삼성동 좋은 빌딩 301호"
-        />
-      </CardInner>
+          <CardBody>
+            <CardTabComp tabIndex={tabIndex} onTabClick={onTabClick} />
+          </CardBody>
+        </CardInner>
+      </CardBlock>
       <CardUserInfoComp
         image={item.userImage}
         name={item.userHandle}

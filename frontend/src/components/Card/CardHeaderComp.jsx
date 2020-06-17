@@ -8,7 +8,7 @@ const CardHeaderComp = ({ icon, title, status }) => {
         <img src={icon} />
       </span>
       <div className="info">
-        <span className="title">{title}</span>
+        <h3 className="title">{title}</h3>
         <div className="status">
           <span>{status}</span>
         </div>
