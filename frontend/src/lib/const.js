@@ -9,5 +9,5 @@ import {
 // card tabmenu icon
 export const tabMenu = {
   community: [faImage, faAlignLeft, faEllipsisH],
-  meeting: [faImage, faAlignLeft, faMapMarkerAlt, faClock, faEllipsisH],
+  meeting: [faImage, faAlignLeft, faClock, faMapMarkerAlt, faEllipsisH],
 };

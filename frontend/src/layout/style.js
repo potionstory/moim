@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const LayoutWrap = styled.div`
-  margin-top: 96px;
+  margin-top: 192px;
 `;
 
 export const Container = styled.section`

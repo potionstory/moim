@@ -9,7 +9,7 @@ export const CardWarp = styled.li`
   flex-direction: column;
   justify-content: space-between;
   min-width: 296px;
-  margin: 24px 1rem 1rem;
+  margin: 2rem 1rem 1rem;
   .inner {
     transition: all 0.2s ease-out;
   }
@@ -62,7 +62,7 @@ export const CardHeader = styled.div`
       font-size: 1rem;
       font-weight: 700;
       color: ${({ theme }) => theme.title};
-      line-height: 1.125rem;
+      line-height: 1rem;
       ${ellipsis};
     }
     .status {
@@ -191,7 +191,7 @@ export const CardText = styled.p`
   font-size: 0.875rem;
   color: ${({ theme }) => theme.gray};
   word-wrap: break-word;
-  line-height: 1.125rem;
+  line-height: 1.25rem;
   ${ellipsisMulti};
 `;
 

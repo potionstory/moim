@@ -9,7 +9,7 @@ const CardHeaderComp = ({ service, title, status }) => {
         <img src={getCategoryIcon(service)} />
       </span>
       <div className="info">
-        <h3 className="title">{title}</h3>
+        <h3>{title}</h3>
         <div className="status">
           <span>{status}</span>
         </div>
