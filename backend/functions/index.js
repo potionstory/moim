@@ -14,11 +14,23 @@ const {
   getAllCommunitys,
   postCommunity,
   getCommunity,
+  putCommunity,
   deleteCommunity,
   likeCommunity,
   unlikeCommunity,
   commentOnCommunity,
 } = require("./routes/communitys");
+
+const {
+  getAllMeetings,
+  postMeeting,
+  getMeeting,
+  putMeeting,
+  deleteMeeting,
+  likeMeeting,
+  unlikeMeeting,
+  commentOnMeeting,
+} = require("./routes/meetings");
 
 const {
   signup,
@@ -41,10 +53,21 @@ app.get("/", (req, res) => {
 app.get("/communitys", getAllCommunitys);
 app.post("/community", FBAuth, postCommunity);
 app.get("/community/:communityId", getCommunity);
+app.put("/community/:communityId", FBAuth, putCommunity);
 app.delete("/community/:communityId", FBAuth, deleteCommunity);
 app.get("/community/:communityId/like", FBAuth, likeCommunity);
 app.get("/community/:communityId/unlike", FBAuth, unlikeCommunity);
 app.post("/community/:communityId/comment", FBAuth, commentOnCommunity);
+
+// meetings routes
+app.get("/meetings", getAllMeetings);
+app.post("/meeting", FBAuth, postMeeting);
+app.get("/meeting/:meetingId", getMeeting);
+app.put("/meeting/:meetingId", FBAuth, putMeeting);
+app.delete("/meeting/:meetingId", FBAuth, deleteMeeting);
+app.get("/meeting/:meetingId/like", FBAuth, likeMeeting);
+app.get("/meeting/:meetingId/unlike", FBAuth, unlikeMeeting);
+app.post("/meeting/:meetingId/comment", FBAuth, commentOnMeeting);
 
 // users routes
 app.post("/signup", signup);
@@ -128,7 +151,6 @@ exports.onUserImageChange = functions.firestore
     if (
       change.before.data().userImageUrl !== change.after.data().userImageUrl
     ) {
-      console.log("image has changed");
       const batch = db.batch();
       return db
         .collection("communitys")

@@ -2,22 +2,23 @@ const { uuid } = require("uuidv4");
 const { admin, BusBoy, db } = require("../util/admin");
 const config = require("../util/config");
 
-// get all communitys
-exports.getAllCommunitys = (req, res) => {
-  db.collection("communitys")
+// get all meetings
+exports.getAllMeetings = (req, res) => {
+  db.collection("meetings")
     .orderBy("createdAt", "desc")
     .get()
     .then((data) => {
-      let communitys = [];
+      let meetings = [];
       data.forEach((doc) => {
-        communitys.push({
-          communityId: doc.id,
-          service: doc.data().service,
+        meetings.push({
+          meetingId: doc.id,
+          type: doc.data().type,
           title: doc.data().title,
           status: doc.data().status,
           mainImage: doc.data().mainImage,
           text: doc.data().text,
-          url: doc.data().url,
+          date: doc.data().date,
+          location: doc.data().location,
           userImage: doc.data().userImage,
           userHandle: doc.data().userHandle,
           createdAt: doc.data().createdAt,
@@ -25,7 +26,7 @@ exports.getAllCommunitys = (req, res) => {
           commentCount: doc.data().commentCount,
         });
       });
-      return res.json(communitys);
+      return res.json(meetings);
     })
     .catch((err) => {
       console.error(err);
@@ -33,8 +34,8 @@ exports.getAllCommunitys = (req, res) => {
     });
 };
 
-// create one community
-exports.postCommunity = (req, res) => {
+// create one meeting
+exports.postMeeting = (req, res) => {
   if (req.method !== "POST") {
     return res.status(400).json({ error: "Method not defined" });
   }
@@ -64,7 +65,7 @@ exports.postCommunity = (req, res) => {
     let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
     let uniqueName = admin.database().ref().push().key;
 
-    storageFilepath = `community/${uniqueName + fileext}`;
+    storageFilepath = `meeting/${uniqueName + fileext}`;
     storageFile = bucket.file(storageFilepath);
 
     file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
@@ -83,13 +84,14 @@ exports.postCommunity = (req, res) => {
       storageFilepath
     )}?alt=media&token=${generatedToken}`;
 
-    const newCommunity = {
-      service: req.body.service,
+    const newMeeting = {
+      type: req.body.type,
       title: req.body.title,
       status: req.body.status,
       mainImage: mainImageUrl,
       text: req.body.text,
-      url: req.body.url,
+      date: req.body.date,
+      location: req.body.location,
       userImage: req.user.userImageUrl,
       userHandle: req.user.handle,
       createdAt: new Date().toISOString(),
@@ -97,12 +99,12 @@ exports.postCommunity = (req, res) => {
       commentCount: 0,
     };
 
-    db.collection("communitys")
-      .add(newCommunity)
+    db.collection("meetings")
+      .add(newMeeting)
       .then((doc) => {
-        const resCommunity = newCommunity;
-        resCommunity.communityId = doc.id;
-        res.json(resCommunity);
+        const resMeeting = newMeeting;
+        resMeeting.meetingId = doc.id;
+        res.json(resMeeting);
       })
       .catch((err) => {
         res.status(500).json({ error: "something went wrong" });
@@ -113,29 +115,29 @@ exports.postCommunity = (req, res) => {
   busboy.end(req.rawBody);
 };
 
-// get one community
-exports.getCommunity = (req, res) => {
-  let communityData = {};
-  db.doc(`/communitys/${req.params.communityId}`)
+// get one meeting
+exports.getMeeting = (req, res) => {
+  let meetingData = {};
+  db.doc(`/meetings/${req.params.meetingId}`)
     .get()
     .then((doc) => {
       if (!doc.exists) {
-        return res.status(404).json({ error: "Community not found" });
+        return res.status(404).json({ error: "Meeting not found" });
       }
-      communityData = doc.data();
-      communityData.communityId = doc.id;
+      meetingData = doc.data();
+      meetingData.meetingId = doc.id;
       return db
         .collection("comments")
-        .where("communityId", "==", req.params.communityId)
+        .where("meetingId", "==", req.params.meetingId)
         .orderBy("createdAt", "desc")
         .get();
     })
     .then((data) => {
-      communityData.comments = [];
+      meetingData.comments = [];
       data.forEach((doc) => {
-        communityData.comments.push(doc.data());
+        meetingData.comments.push(doc.data());
       });
-      return res.json(communityData);
+      return res.json(meetingData);
     })
     .catch((err) => {
       console.error(err);
@@ -143,8 +145,8 @@ exports.getCommunity = (req, res) => {
     });
 };
 
-// update community
-exports.putCommunity = (req, res) => {
+// update meeting
+exports.putMeeting = (req, res) => {
   if (req.method !== "PUT") {
     return res.status(400).json({ error: "Method not defined" });
   }
@@ -164,7 +166,6 @@ exports.putCommunity = (req, res) => {
     if (mimetype !== "image/jpeg" && mimetype !== "image/png") {
       return res.status(400).json({ error: "Wrong file type submitted" });
     }
-
     const metadata = {
       contentType: mimetype,
       metadata: {
@@ -174,7 +175,7 @@ exports.putCommunity = (req, res) => {
     let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
     let uniqueName = admin.database().ref().push().key;
 
-    storageFilepath = `community/${uniqueName + fileext}`;
+    storageFilepath = `meeting/${uniqueName + fileext}`;
     storageFile = bucket.file(storageFilepath);
 
     file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
@@ -193,24 +194,25 @@ exports.putCommunity = (req, res) => {
       storageFilepath
     )}?alt=media&token=${generatedToken}`;
 
-    const { service, title, status, text, url } = req.body;
+    const { type, title, status, text, date, location } = req.body;
 
-    db.doc(`/communitys/${req.params.communityId}`)
+    db.doc(`/meetings/${req.params.meetingId}`)
       .get()
       .then((doc) => {
         const deleteFilePath = doc.data().mainImage;
         bucket.file(deleteFilePath).delete();
-        db.doc(`/communitys/${req.params.communityId}`)
+        db.doc(`/meetings/${req.params.meetingId}`)
           .update({
-            service,
+            type,
             title,
             status,
             mainImage: mainImageUrl,
             text,
-            url,
+            date,
+            location,
           })
           .then(() => {
-            res.status(201).json({ message: "community update successfully" }); // 201 CREATED
+            res.status(201).json({ message: "meeting update successfully" }); // 201 CREATED
           })
           .catch((err) => {
             console.error(err);
@@ -222,14 +224,14 @@ exports.putCommunity = (req, res) => {
   busboy.end(req.rawBody);
 };
 
-// delete one community
-exports.deleteCommunity = (req, res) => {
-  const document = db.doc(`/communitys/${req.params.communityId}`);
+// delete one meeting
+exports.deleteMeeting = (req, res) => {
+  const document = db.doc(`/meetings/${req.params.meetingId}`);
   document
     .get()
     .then((doc) => {
       if (!doc.exists) {
-        return res.status(404).json({ error: "Community not found" });
+        return res.status(404).json({ error: "Meeting not found" });
       }
       if (doc.data().userHandle !== req.user.handle) {
         return res.status(403).json({ error: "Unauthorized" });
@@ -238,7 +240,7 @@ exports.deleteCommunity = (req, res) => {
       }
     })
     .then(() => {
-      res.json({ message: "Community deleted successfully" });
+      res.json({ message: "Meeting deleted successfully" });
     })
     .catch((err) => {
       console.error(err);
@@ -246,27 +248,27 @@ exports.deleteCommunity = (req, res) => {
     });
 };
 
-// like one community
-exports.likeCommunity = (req, res) => {
+// like one meeting
+exports.likeMeeting = (req, res) => {
   const likeDocument = db
     .collection("likes")
     .where("userHandle", "==", req.user.handle)
-    .where("communityId", "==", req.params.communityId)
+    .where("meetingId", "==", req.params.meetingId)
     .limit(1);
 
-  const communityDocument = db.doc(`/communitys/${req.params.communityId}`);
+  const meetingDocument = db.doc(`/meetings/${req.params.meetingId}`);
 
-  let communityData;
+  let meetingData;
 
-  communityDocument
+  meetingDocument
     .get()
     .then((doc) => {
       if (doc.exists) {
-        communityData = doc.data();
-        communityData.communityId = doc.id;
+        meetingData = doc.data();
+        meetingData.meetingId = doc.id;
         return likeDocument.get();
       } else {
-        return res.status(404).json({ error: "Community not found" });
+        return res.status(404).json({ error: "Meeting not found" });
       }
     })
     .then((data) => {
@@ -274,20 +276,20 @@ exports.likeCommunity = (req, res) => {
         return db
           .collection("likes")
           .add({
-            communityId: req.params.communityId,
+            meetingId: req.params.meetingId,
             userHandle: req.user.handle,
           })
           .then(() => {
-            communityData.likeCount++;
-            return communityDocument.update({
-              likeCount: communityData.likeCount,
+            meetingData.likeCount++;
+            return meetingDocument.update({
+              likeCount: meetingData.likeCount,
             });
           })
           .then(() => {
-            return res.json(communityData);
+            return res.json(meetingData);
           });
       } else {
-        return res.status(400).json({ error: "Community already liked" });
+        return res.status(400).json({ error: "Meeting already liked" });
       }
     })
     .catch((err) => {
@@ -296,44 +298,44 @@ exports.likeCommunity = (req, res) => {
     });
 };
 
-// unlike one community
-exports.unlikeCommunity = (req, res) => {
+// unlike one meeting
+exports.unlikeMeeting = (req, res) => {
   const likeDocument = db
     .collection("likes")
     .where("userHandle", "==", req.user.handle)
-    .where("communityId", "==", req.params.communityId)
+    .where("meetingId", "==", req.params.meetingId)
     .limit(1);
 
-  const communityDocument = db.doc(`/communitys/${req.params.communityId}`);
+  const meetingDocument = db.doc(`/meetings/${req.params.meetingId}`);
 
-  let communityData;
+  let meetingData;
 
-  communityDocument
+  meetingDocument
     .get()
     .then((doc) => {
       if (doc.exists) {
-        communityData = doc.data();
-        communityData.communityId = doc.id;
+        meetingData = doc.data();
+        meetingData.meetingId = doc.id;
         return likeDocument.get();
       } else {
-        return res.status(404).json({ error: "Community not found" });
+        return res.status(404).json({ error: "Meeting not found" });
       }
     })
     .then((data) => {
       if (data.empty) {
-        return res.status(400).json({ error: "Community not liked" });
+        return res.status(400).json({ error: "Meeting not liked" });
       } else {
         return db
           .doc(`/likes/${data.docs[0].id}`)
           .delete()
           .then(() => {
-            communityData.likeCount--;
-            return communityDocument.update({
-              likeCount: communityData.likeCount,
+            meetingData.likeCount--;
+            return meetingDocument.update({
+              likeCount: meetingData.likeCount,
             });
           })
           .then(() => {
-            res.json(communityData);
+            res.json(meetingData);
           });
       }
     })
@@ -343,24 +345,24 @@ exports.unlikeCommunity = (req, res) => {
     });
 };
 
-// comment one community
-exports.commentOnCommunity = (req, res) => {
+// comment one meeting
+exports.commentOnMeeting = (req, res) => {
   if (req.body.body.trim() === "")
     return res.status(400).json({ comment: "Comment must not be empty" });
 
   const newComment = {
     body: req.body.body,
     createdAt: new Date().toISOString(),
-    communityId: req.params.communityId,
+    meetingId: req.params.meetingId,
     userHandle: req.user.handle,
     userImage: req.user.userImageUrl,
   };
 
-  db.doc(`/communitys/${req.params.communityId}`)
+  db.doc(`/meetings/${req.params.meetingId}`)
     .get()
     .then((doc) => {
       if (!doc.exists) {
-        return res.status(404).json({ error: "Community not found" });
+        return res.status(404).json({ error: "Meeting not found" });
       }
       return doc.ref.update({ commentCount: doc.data().commentCount + 1 });
     })
