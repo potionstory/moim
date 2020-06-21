@@ -8,7 +8,7 @@ import { MoimList } from './style';
 const Community = ({ category }) => {
   const list = {
     community: useSelector(({ community }) => community.list),
-    meeting: useSelector(({ community }) => community.list),
+    meeting: useSelector(({ meeting }) => meeting.list),
   };
   const dispatch = useDispatch();
 
@@ -30,7 +30,9 @@ const Community = ({ category }) => {
   return (
     <MoimList>
       {list[category].map((item) => {
-        return <Card key={item.communityId} item={item} category={category} />;
+        return (
+          <Card key={item[`${category}Id`]} item={item} category={category} />
+        );
       })}
     </MoimList>
   );

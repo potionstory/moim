@@ -3,6 +3,7 @@ import CardHeaderComp from './CardHeaderComp';
 import CardTabComp from './CardTabComp';
 import CardUserInfoComp from './CardUserInfoComp';
 import { CardWarp, CardBlock, CardInner, CardBody } from './style';
+import { getMeetingStatus } from '../../utils/commonUtil';
 
 const Card = ({ item, category }) => {
   return (
@@ -11,8 +12,12 @@ const Card = ({ item, category }) => {
         <CardInner className="inner">
           <CardHeaderComp
             service={item.service}
+            type={item.type}
             title={item.title}
-            status={item.status}
+            status={
+              category === 'community' ? item.status : getMeetingStatus(item)
+            }
+            category={category}
           />
           <CardBody>
             <CardTabComp

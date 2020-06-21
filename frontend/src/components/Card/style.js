@@ -44,12 +44,6 @@ export const CardInner = styled.div`
 export const CardHeader = styled.div`
   display: flex;
   align-items: center;
-  .icon {
-    overflow: hidden;
-    width: 40px;
-    height: 40px;
-    border-radius: 4px;
-  }
   .info {
     display: flex;
     overflow: hidden;
@@ -74,12 +68,20 @@ export const CardHeader = styled.div`
         height: 1rem;
         padding: 0 6px;
         border-radius: 8px;
-        background-color: ${({ theme, status }) => {
+        ${({ status }) => {
           switch (status) {
             case 'open':
-              return `${color.orange}`;
+              return `background-color: ${color.orange}`;
             case 'close':
-              return `${color.gray}`;
+              return `background-color: ${color.gray}`;
+            case 'empty':
+              return `background-color: ${color.blue}`;
+            case 'full':
+              return `background-color: ${color.red}`;
+            case 'proceeding':
+              return `background-color: ${color.green}`;
+            case 'complete':
+              return `background-color: ${color.gray}`;
             default:
               return;
           }
@@ -91,6 +93,20 @@ export const CardHeader = styled.div`
         text-transform: uppercase;
       }
     }
+  }
+`;
+
+export const CardIcon = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.sub};
+  svg {
+    color: ${({ theme }) => theme.title};
   }
 `;
 

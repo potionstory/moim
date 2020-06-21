@@ -1,13 +1,18 @@
 import React from 'react';
-import { CardHeader } from './style';
-import { getCategoryIcon } from '../../utils/commonUtil';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CardHeader, CardIcon } from './style';
+import { getCommunityIcon, getMeetingIcon } from '../../utils/commonUtil';
 
-const CardHeaderComp = ({ service, title, status }) => {
+const CardHeaderComp = ({ service, type, title, status, category }) => {
   return (
     <CardHeader status={status}>
-      <span className="icon">
-        <img src={getCategoryIcon(service)} />
-      </span>
+      <CardIcon className="icon" type={type}>
+        {category === 'community' ? (
+          <img src={getCommunityIcon(service)} />
+        ) : (
+          <FontAwesomeIcon icon={getMeetingIcon(type)} />
+        )}
+      </CardIcon>
       <div className="info">
         <h3>{title}</h3>
         <div className="status">
