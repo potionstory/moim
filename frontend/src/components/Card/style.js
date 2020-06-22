@@ -44,6 +44,19 @@ export const CardInner = styled.div`
 export const CardHeader = styled.div`
   display: flex;
   align-items: center;
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: ${({ theme }) => theme.sub};
+    svg {
+      color: ${({ theme }) => theme.title};
+    }
+  }
   .info {
     display: flex;
     overflow: hidden;
@@ -93,20 +106,6 @@ export const CardHeader = styled.div`
         text-transform: uppercase;
       }
     }
-  }
-`;
-
-export const CardIcon = styled.span`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  width: 40px;
-  height: 40px;
-  border-radius: 4px;
-  background-color: ${({ theme }) => theme.sub};
-  svg {
-    color: ${({ theme }) => theme.title};
   }
 `;
 
