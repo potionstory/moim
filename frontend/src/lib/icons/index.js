@@ -1,9 +1,11 @@
-import kakao from './icon_kakao.png';
-import slack from './icon_slack.png';
-import discord from './icon_discord.png';
+import kakao from './icon_kakao.svg';
+import line from './icon_line.svg';
+import slack from './icon_slack.svg';
+import discord from './icon_discord.svg';
 
 const icon = {
   kakao,
+  line,
   slack,
   discord,
 };
