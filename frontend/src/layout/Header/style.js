@@ -9,7 +9,7 @@ export const HeaderWrap = styled.section`
   height: 96px;
   box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.08);
   background-color: ${({ theme }) => theme.main};
-  z-index: 100;
+  z-index: 50;
 `;
 
 export const LeftHead = styled.div`

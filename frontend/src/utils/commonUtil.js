@@ -6,6 +6,8 @@ export const getCommunityIcon = (service) => {
   switch (service) {
     case 'kakao':
       return icon.kakao;
+    case 'line':
+      return icon.line;
     case 'slack':
       return icon.slack;
     case 'discord':

@@ -1,9 +1,9 @@
 import { call, select, put, takeEvery } from 'redux-saga/effects';
-import { TOGGLE_MODE } from '../module/header';
-import { toggleModeAction } from '../module/header';
+import { TOGGLE_MODE } from '../module/global';
+import { toggleModeAction } from '../module/global';
 
 function* workToggleMode() {
-  const { mode } = yield select(({ header }) => header);
+  const { mode } = yield select(({ global }) => global);
   yield put(toggleModeAction.SUCCESS(!mode));
 }
 
