@@ -16,7 +16,7 @@ const TabTitle = ({ menu, activeIndex, onTabClick }) => {
         />
         <ul>
           {menu.map((item, index) => (
-            <TabButton key={index} active={index === activeIndex}>
+            <TabButton key={index} isActive={index === activeIndex}>
               <button type="button" onClick={() => onTabClick(index)}>
                 <FontAwesomeIcon icon={item.icon} />
               </button>

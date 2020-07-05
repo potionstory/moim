@@ -1,20 +1,24 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { modalCloseAction } from '../../store/module/global';
-import Sign from '../../containers/Sign';
+import SignIn from '../../containers/Sign/SignIn';
+import SignUp from '../../containers/Sign/SignUp';
 import { ModalWrap, ModalInner, CloseButton } from './style';
 
-const Modal = ({ isVisible, mode, type }) => {
+const Modal = () => {
+  const mode = useSelector((state) => state.global.mode);
+  const { isVisible, name } = useSelector(({ global }) => global.modal);
+
   const dispatch = useDispatch();
   const onModalClose = useCallback(() => dispatch(modalCloseAction()), [
     dispatch,
   ]);
 
-  const [modalVisible, setModalvisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const onButtonClose = useCallback(() => setModalvisible(false));
+  const onButtonClose = useCallback(() => setModalVisible(false));
 
   const onModalOpen = useCallback(() => console.log('111111'));
 
@@ -27,21 +31,22 @@ const Modal = ({ isVisible, mode, type }) => {
   }, []);
 
   useEffect(() => {
-    setModalvisible(isVisible);
+    setModalVisible(isVisible);
   }, [isVisible]);
 
   return (
     <ModalWrap
       isVisible={isVisible || modalVisible}
+      mode={mode ? 1 : 0}
       modalVisible={modalVisible}
-      mode={mode}
       onAnimationEnd={() => onModalAnimationEnd(modalVisible)}
     >
+      <CloseButton onClick={onButtonClose}>
+        <FontAwesomeIcon icon={faTimes} />
+      </CloseButton>
       <ModalInner>
-        <CloseButton onClick={onButtonClose}>
-          <FontAwesomeIcon icon={faTimes} />
-        </CloseButton>
-        {type === 'SIGN' && <Sign />}
+        {name === 'SIGNIN' && <SignIn />}
+        {name === 'SIGNUP' && <SignUp />}
       </ModalInner>
     </ModalWrap>
   );

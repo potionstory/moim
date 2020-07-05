@@ -22,4 +22,12 @@ export const color = {
   green: '#7cb342',
   blue: '#1e88e5',
   gray: '#757575',
+  none: 'transparent',
+};
+
+export const iconBg = {
+  google: '#ffffff',
+  kakao: '#ffe812',
+  facebook: '#3b5998',
+  naver: '#2db400',
 };

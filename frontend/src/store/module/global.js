@@ -3,13 +3,17 @@ import { createType, createAction } from './helper';
 
 // action type
 export const TOGGLE_MODE = createType('TOGGLE_MODE');
-export const SIGN_MODAL_OPEN = 'SIGN_MODAL_OPEN';
+export const SIGNIN_MODAL_OPEN = 'SIGNIN_MODAL_OPEN';
+export const SIGNUP_MODAL_OPEN = 'SIGNUP_MODAL_OPEN';
 export const MODAL_CLOSE = 'MODAL_CLOSE';
 
 // action 생성자 함수
 export const toggleModeAction = createAction(TOGGLE_MODE);
-export const signModalOpenAction = () => ({
-  type: SIGN_MODAL_OPEN,
+export const signInModalOpenAction = () => ({
+  type: SIGNIN_MODAL_OPEN,
+});
+export const signUpModalOpenAction = () => ({
+  type: SIGNUP_MODAL_OPEN,
 });
 export const modalCloseAction = () => ({
   type: MODAL_CLOSE,
@@ -21,7 +25,8 @@ const initialState = {
   mode: true, // true: Light, false: Dark
   modal: {
     isVisible: false,
-    type: null,
+    name: null,
+    tab: null,
   },
 };
 
@@ -40,14 +45,19 @@ export default (state = initialState, action) => {
         draft.loading = false;
         break;
       }
-      case SIGN_MODAL_OPEN: {
+      case SIGNIN_MODAL_OPEN: {
         draft.modal.isVisible = true;
-        draft.modal.type = 'SIGN';
+        draft.modal.name = 'SIGNIN';
+        break;
+      }
+      case SIGNUP_MODAL_OPEN: {
+        draft.modal.isVisible = true;
+        draft.modal.name = 'SIGNUP';
         break;
       }
       case MODAL_CLOSE: {
         draft.modal.isVisible = false;
-        draft.modal.type = null;
+        draft.modal.name = null;
         break;
       }
       default:

@@ -40,7 +40,8 @@ export const ButtonIcon = styled.span`
 export const ButtonText = styled.span`
   padding-left: 6px;
   padding-right: 12px;
-  font-weight: 500;
+  font-size: 0.875rem;
+  font-weight: 600;
   color: ${({ theme }) => theme.gray};
   text-transform: uppercase;
   transition: all 0.2s ease-out;

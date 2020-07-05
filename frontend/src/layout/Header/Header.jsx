@@ -2,7 +2,8 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   toggleModeAction,
-  signModalOpenAction,
+  signInModalOpenAction,
+  signUpModalOpenAction,
 } from '../../store/module/global';
 import { faSignInAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import TextButton from '../../components/Button/TextButton';
@@ -19,12 +20,20 @@ import {
 
 const Header = () => {
   const dispatch = useDispatch();
+
   const onToggleMode = useCallback(() => dispatch(toggleModeAction.REQUEST()), [
     dispatch,
   ]);
-  const onSignModalOpen = useCallback(() => dispatch(signModalOpenAction()), [
-    dispatch,
-  ]);
+
+  const onSignInModalOpen = useCallback(
+    () => dispatch(signInModalOpenAction()),
+    [dispatch],
+  );
+
+  const onSignUpModalOpen = useCallback(
+    () => dispatch(signUpModalOpenAction()),
+    [dispatch],
+  );
 
   return (
     <HeaderWrap>
@@ -38,14 +47,14 @@ const Header = () => {
           <ul>
             <li>
               <TextButton
-                onClickEvent={onSignModalOpen}
+                onClickEvent={onSignInModalOpen}
                 icon={faSignInAlt}
                 text="sign in"
               />
             </li>
             <li>
               <TextButton
-                onClickEvent={console.log('2')}
+                onClickEvent={onSignUpModalOpen}
                 icon={faUserPlus}
                 text="sign up"
               />
