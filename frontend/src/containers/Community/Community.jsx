@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import map from 'lodash/map';
 import { getAllCommunityAction } from '../../store/module/community';
 import { getAllMeetingAction } from '../../store/module/meeting';
 import Card from '../../components/Card';
@@ -29,7 +30,7 @@ const Community = ({ category }) => {
 
   return (
     <MoimList>
-      {list[category].map((item) => {
+      {map(list[category], (item) => {
         return (
           <Card key={item[`${category}Id`]} item={item} category={category} />
         );

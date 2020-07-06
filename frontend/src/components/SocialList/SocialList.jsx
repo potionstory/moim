@@ -1,4 +1,5 @@
 import React from 'react';
+import map from 'lodash/map';
 import icon from '../../lib/icons';
 import { iconBg } from '../../lib/styles/palette';
 import { SocialListWrap, SocialItem } from './style';
@@ -29,7 +30,7 @@ const socials = [
 const SocialList = () => {
   return (
     <SocialListWrap>
-      {socials.map((item, index) => (
+      {map(socials, (item, index) => (
         <SocialItem key={index} bgColor={item.bgColor}>
           <a href="#">
             <img src={item.icon} />

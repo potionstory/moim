@@ -1,3 +1,5 @@
+import reduce from 'lodash/reduce';
+
 export const REQUEST = 'REQUEST';
 export const SUCCESS = 'SUCCESS';
 export const FAILURE = 'FAILURE';
@@ -7,10 +9,14 @@ const action = (type, payload = {}) => {
 };
 
 export const createType = (base) => {
-  return [REQUEST, SUCCESS, FAILURE].reduce((acc, value) => {
-    acc[value] = `${base}_${value}`;
-    return acc;
-  }, {});
+  return reduce(
+    [REQUEST, SUCCESS, FAILURE],
+    (acc, value) => {
+      acc[value] = `${base}_${value}`;
+      return acc;
+    },
+    {},
+  );
 };
 
 export const createAction = (type) => {

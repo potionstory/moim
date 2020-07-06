@@ -1,4 +1,5 @@
 import React from 'react';
+import map from 'lodash/map';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TabMenuWrap, TabButton } from './style';
@@ -14,7 +15,7 @@ const TabMeun = ({ menu, activeIndex, onTabClick }) => {
         }}
       />
       <ul>
-        {menu.map((item, index) => (
+        {map(menu, (item, index) => (
           <TabButton key={index} isActive={index === activeIndex}>
             <button type="button" onClick={() => onTabClick(index)}>
               <FontAwesomeIcon icon={item.icon} />

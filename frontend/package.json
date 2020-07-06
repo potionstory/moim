@@ -20,6 +20,7 @@
     "css-loader": "^3.5.3",
     "framer-motion": "^1.11.0",
     "immer": "^6.0.9",
+    "lodash": "^4.17.15",
     "moment": "^2.26.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

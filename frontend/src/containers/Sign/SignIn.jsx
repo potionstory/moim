@@ -1,4 +1,6 @@
 import React, { useState, useCallback } from 'react';
+import map from 'lodash/map';
+import every from 'lodash/every';
 import { produce } from 'immer';
 import { signin } from '../../utils/formData';
 import { emailCheck, passwordCheck } from '../../utils/regexUtil';
@@ -47,7 +49,7 @@ const SignIn = () => {
         <h4>sign in</h4>
         <SignBox>
           <form>
-            {formData.map((form, index) => (
+            {map(formData, (form, index) => (
               <InputBox
                 key={index}
                 isActive={form.name === focusInput}
@@ -58,7 +60,7 @@ const SignIn = () => {
                 onInputBlur={onInputBlur}
               />
             ))}
-            <InputSubmit isActive={formData.every((item) => item.isCheck)}>
+            <InputSubmit isActive={every(formData, (item) => item.isCheck)}>
               <button type="button">sign in</button>
             </InputSubmit>
           </form>

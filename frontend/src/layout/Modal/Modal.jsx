@@ -30,6 +30,17 @@ const Modal = () => {
     }
   }, []);
 
+  const getModalContent = useCallback(() => {
+    switch (name) {
+      case 'SIGNIN':
+        return <SignIn />;
+      case 'SIGNUP':
+        return <SignUp />;
+      default:
+        return;
+    }
+  }, [name]);
+
   useEffect(() => {
     setModalVisible(isVisible);
   }, [isVisible]);
@@ -44,10 +55,7 @@ const Modal = () => {
       <CloseButton onClick={onButtonClose}>
         <FontAwesomeIcon icon={faTimes} />
       </CloseButton>
-      <ModalInner>
-        {name === 'SIGNIN' && <SignIn />}
-        {name === 'SIGNUP' && <SignUp />}
-      </ModalInner>
+      <ModalInner>{getModalContent()}</ModalInner>
     </ModalWrap>
   );
 };

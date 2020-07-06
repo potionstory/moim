@@ -1,4 +1,6 @@
 import React, { useState, useCallback } from 'react';
+import map from 'lodash/map';
+import every from 'lodash/every';
 import { produce } from 'immer';
 import { signup } from '../../utils/formData';
 import {
@@ -48,7 +50,7 @@ const SignUp = () => {
       <SignArea>
         <h4>sign up</h4>
         <SignBox>
-          {formData.map((form, index) => (
+          {map(formData, (form, index) => (
             <InputBox
               key={index}
               isActive={form.name === focusInput}
@@ -59,7 +61,7 @@ const SignUp = () => {
               onInputBlur={onInputBlur}
             />
           ))}
-          <InputSubmit isActive={formData.every((item) => item.isCheck)}>
+          <InputSubmit isActive={every(formData, (item) => item.isCheck)}>
             <button type="button">sign up</button>
           </InputSubmit>
           <ValidationText>

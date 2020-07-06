@@ -28,7 +28,7 @@ export const InputSubmit = styled.div`
       !isActive ? theme.title : color.green};
     font-size: 0.875rem;
     font-weight: 600;
-    color: ${({ theme, isActive }) => (!isActive ? theme.main : theme.title)};
+    color: ${({ theme }) => theme.main};
     text-transform: uppercase;
     text-align: center;
     transition: all 0.2s ease-out;
@@ -59,7 +59,7 @@ export const SocialBox = styled.div`
   margin-top: 1.5rem;
   padding-top: 1.5rem;
   margin-left: 46px;
-  border-top: 1px solid ${({ theme }) => theme.gray};
+  border-top: 1px solid ${({ theme }) => theme.title};
   .subTitle {
     display: flex;
     align-items: center;
