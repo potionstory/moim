@@ -1,7 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import map from 'lodash/map';
 import every from 'lodash/every';
 import { produce } from 'immer';
+import { signinAction } from '../../store/module/auth';
 import { signin } from '../../utils/formData';
 import { emailCheck, passwordCheck } from '../../utils/regexUtil';
 import InputBox from '../../components/InputBox';
@@ -18,8 +20,19 @@ import {
 const validators = [emailCheck, passwordCheck];
 
 const SignIn = () => {
+  const dispatch = useDispatch();
+
+  const onSignIn = useCallback(
+    (payload) => dispatch(signinAction.REQUEST(payload)),
+    [dispatch],
+  );
+
   const [focusInput, setFocusInput] = useState(null);
   const [formData, setFormData] = useState(signin);
+
+  const isActive = useMemo(() => {
+    return every(formData, (item) => item.isCheck);
+  }, [formData]);
 
   const onInputFocus = useCallback((e) => {
     setFocusInput(e.target.name);
@@ -41,8 +54,6 @@ const SignIn = () => {
     );
   }, []);
 
-  console.log(formData);
-
   return (
     <SignWrap>
       <SignArea>
@@ -60,8 +71,15 @@ const SignIn = () => {
                 onInputBlur={onInputBlur}
               />
             ))}
-            <InputSubmit isActive={every(formData, (item) => item.isCheck)}>
-              <button type="button">sign in</button>
+            <InputSubmit isActive={isActive}>
+              <button
+                type="button"
+                onClick={() => {
+                  isActive && onSignIn(formData);
+                }}
+              >
+                sign in
+              </button>
             </InputSubmit>
           </form>
           {/* <ValidationText>

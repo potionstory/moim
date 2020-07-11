@@ -26,7 +26,6 @@ const initialState = {
   modal: {
     isVisible: false,
     name: null,
-    tab: null,
   },
 };
 
