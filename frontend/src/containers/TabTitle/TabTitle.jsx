@@ -10,7 +10,7 @@ const TabTitle = ({ menu, activeIndex, onTabClick }) => {
       <div className="tabTitle">
         <motion.div
           className="activeBox"
-          animate={{ left: activeIndex * 86 }}
+          animate={{ x: activeIndex * 86 }}
           transition={{
             ease: 'backInOut',
           }}

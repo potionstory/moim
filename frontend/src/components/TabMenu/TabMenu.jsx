@@ -9,7 +9,7 @@ const TabMeun = ({ menu, activeIndex, onTabClick }) => {
     <TabMenuWrap>
       <motion.div
         className="activeBox"
-        animate={{ left: activeIndex * 40 }}
+        animate={{ x: activeIndex * 40 }}
         transition={{
           ease: 'backInOut',
         }}

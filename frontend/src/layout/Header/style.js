@@ -59,12 +59,29 @@ export const Menu = styled.div`
   }
 `;
 
-export const User = styled.div`
+export const UserMenu = styled.div`
   display: flex;
+  position: relative;
   margin-left: 24px;
+  .menuBox {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    position: absolute;
+    top: 96px;
+    right: -224px;
+    width: 200px;
+    height: 200px;
+    padding: 12px;
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 16px 0px;
+    border-radius: 4px;
+    background-color: ${({ theme }) => theme.main};
+    transition: all 0.2s ease-out;
+  }
 `;
 
-export const Profile = styled.button`
+export const Avatar = styled.button`
   width: 40px;
   height: 40px;
   border: 4px solid ${({ theme }) => theme.sub};
@@ -73,4 +90,5 @@ export const Profile = styled.button`
   &:hover {
     border-color: ${({ theme }) => theme.theme};
   }
+  ${({ theme, isActive }) => isActive && `border-color: ${theme.theme};`};
 `;

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import map from 'lodash/map';
 import { getAllCommunityAction } from '../../store/module/community';
 import { getAllMeetingAction } from '../../store/module/meeting';
@@ -7,10 +7,6 @@ import Card from '../../components/Card';
 import { MoimList } from './style';
 
 const Community = ({ category }) => {
-  const list = {
-    community: useSelector(({ community }) => community.list),
-    meeting: useSelector(({ meeting }) => meeting.list),
-  };
   const dispatch = useDispatch();
 
   const onGetAllCommunity = useCallback(
@@ -22,6 +18,11 @@ const Community = ({ category }) => {
     () => dispatch(getAllMeetingAction.REQUEST()),
     [dispatch],
   );
+
+  const list = {
+    community: useSelector(({ community }) => community.list),
+    meeting: useSelector(({ meeting }) => meeting.list),
+  };
 
   useEffect(() => {
     onGetAllCommunity();
