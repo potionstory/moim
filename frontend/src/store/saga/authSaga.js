@@ -8,7 +8,7 @@ import {
   getUserAction,
 } from '../module/auth';
 import { modalCloseAction } from '../module/global';
-import { signup, signin, signout, getUser } from '../api/auth';
+import { signUp, signIn, signOut, getUser } from '../api/auth';
 
 function* workSignUp(action) {
   const bodyParams = {};
@@ -17,7 +17,7 @@ function* workSignUp(action) {
     bodyParams[item.name] = item.value;
   });
 
-  const response = yield call(signup, bodyParams);
+  const response = yield call(signUp, bodyParams);
 
   if (response.status === 201) {
     yield put(signUpAction.SUCCESS());
@@ -35,7 +35,7 @@ function* workSignIn(action) {
     bodyParams[item.name] = item.value;
   });
 
-  const response = yield call(signin, bodyParams);
+  const response = yield call(signIn, bodyParams);
 
   if (response.status === 200) {
     yield put(signInAction.SUCCESS());
@@ -47,7 +47,7 @@ function* workSignIn(action) {
 }
 
 function* workSignOut() {
-  const response = yield call(signout);
+  const response = yield call(signOut);
 
   if (response) {
     yield put(signOutAction.SUCCESS());

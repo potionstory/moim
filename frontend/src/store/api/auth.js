@@ -2,7 +2,7 @@ import api from './index';
 import { setAuthorizationHeader, deleteAuthorizationHeader } from './util';
 
 // 회원 가입
-export const signup = (bodyParams) =>
+export const signUp = (bodyParams) =>
   api
     .post('/signup', bodyParams)
     .then((res) => {
@@ -14,7 +14,7 @@ export const signup = (bodyParams) =>
     });
 
 // 회원 로그인
-export const signin = (bodyParams) =>
+export const signIn = (bodyParams) =>
   api
     .post('/signin', bodyParams)
     .then((res) => {
@@ -26,7 +26,7 @@ export const signin = (bodyParams) =>
     });
 
 // 회원 로그아웃
-export const signout = () => deleteAuthorizationHeader();
+export const signOut = () => deleteAuthorizationHeader();
 
 // user 정보 가져오기
 export const getUser = () => api.get('/user');
