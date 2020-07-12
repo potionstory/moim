@@ -163,7 +163,19 @@ exports.onUserImageChange = functions.firestore
               userImage: change.after.data().userImageUrl,
             });
           });
-          return batch.commit();
+          return db
+            .collection("meetings")
+            .where("userHandle", "==", change.before.data().handle)
+            .get()
+            .then((data) => {
+              data.forEach((doc) => {
+                const meetings = db.doc(`meetings/${doc.id}`);
+                batch.update(meetings, {
+                  userImage: change.after.data().userImageUrl,
+                });
+              });
+              return batch.commit();
+            });
         });
     } else return true;
   });
