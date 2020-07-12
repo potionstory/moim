@@ -1,5 +1,5 @@
 import api from './api';
-import { setAuthorizationHeader } from './util';
+import { setAuthorizationHeader, deleteAuthorizationHeader } from './util';
 
 // 회원 로그인
 export const signin = (bodyParams) =>
@@ -12,6 +12,9 @@ export const signin = (bodyParams) =>
     .catch((err) => {
       console.error(err);
     });
+
+// 회원 로그아웃
+export const signout = () => deleteAuthorizationHeader();
 
 // user 정보 가져오기
 export const getUser = () => api.get('/user');

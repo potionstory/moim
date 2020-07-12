@@ -3,13 +3,13 @@ export const light = {
   sub: '#eeeeee',
   theme: '#f8b408',
   title: '#212121',
-  text: '#262626',
+  text: '#292929',
   gray: '#757575',
 };
 
 export const dark = {
   main: '#212121',
-  sub: '#262626',
+  sub: '#292929',
   theme: '#f8b408',
   title: '#fafafa',
   text: '#eeeeee',

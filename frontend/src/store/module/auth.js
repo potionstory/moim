@@ -2,11 +2,13 @@ import produce from 'immer';
 import { createType, createAction } from './helper';
 
 // action type
-export const SIGNIN = createType('SIGNIN');
+export const SIGN_IN = createType('SIGN_IN');
+export const SIGN_OUT = createType('SIGNOUT');
 export const GET_USER = createType('GET_USER');
 
 // action 생성자 함수
-export const signinAction = createAction(SIGNIN);
+export const signInAction = createAction(SIGN_IN);
+export const signOutAction = createAction(SIGN_OUT);
 export const getUserAction = createAction(GET_USER);
 
 // initialState
@@ -19,15 +21,29 @@ const initialState = {
 export default (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
-      case SIGNIN.REQUEST: {
+      case SIGN_IN.REQUEST: {
         draft.loading = true;
         break;
       }
-      case SIGNIN.SUCCESS: {
+      case SIGN_IN.SUCCESS: {
         draft.loading = false;
         break;
       }
-      case SIGNIN.FAILURE: {
+      case SIGN_IN.FAILURE: {
+        draft.loading = false;
+        break;
+      }
+      case SIGN_OUT.REQUEST: {
+        draft.loading = true;
+        break;
+      }
+      case SIGN_OUT.SUCCESS: {
+        draft.loading = false;
+        draft.isAuth = false;
+        draft.userInfo = null;
+        break;
+      }
+      case SIGN_OUT.FAILURE: {
         draft.loading = false;
         break;
       }

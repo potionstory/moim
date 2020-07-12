@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ellipsis } from '../../lib/styles/util';
 
 export const HeaderWrap = styled.section`
   display: flex;
@@ -48,47 +49,17 @@ export const RightHead = styled.div`
 `;
 
 export const Menu = styled.div`
-  ul {
-    display: flex;
-    li {
-      padding-left: 12px;
-      &:first-child {
-        padding-left: 0;
-      }
-    }
-  }
-`;
-
-export const UserMenu = styled.div`
   display: flex;
-  position: relative;
-  margin-left: 24px;
-  .menuBox {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    position: absolute;
-    top: 96px;
-    right: -224px;
-    width: 200px;
-    height: 200px;
-    padding: 12px;
-    box-sizing: border-box;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 16px 0px;
-    border-radius: 4px;
-    background-color: ${({ theme }) => theme.main};
-    transition: all 0.2s ease-out;
-  }
+  align-items: center;
 `;
 
-export const Avatar = styled.button`
-  width: 40px;
-  height: 40px;
-  border: 4px solid ${({ theme }) => theme.sub};
-  border-radius: 24px;
-  transition: all 0.2s ease-out;
-  &:hover {
-    border-color: ${({ theme }) => theme.theme};
+export const MenuList = styled.ul`
+  display: flex;
+`;
+
+export const MenuItem = styled.li`
+  padding-left: 12px;
+  &:first-child {
+    padding-left: 0;
   }
-  ${({ theme, isActive }) => isActive && `border-color: ${theme.theme};`};
 `;

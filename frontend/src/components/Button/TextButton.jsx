@@ -1,15 +1,13 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonWrap, ButtonIcon, ButtonText } from './style';
+import { ButtonWrap } from './style';
 
-const TextButton = ({ type, onClickEvent, icon, text }) => {
+const TextButton = ({ isFull = false, onClickEvent, icon, text }) => {
   return (
-    <ButtonWrap type={type}>
-      <button onClick={onClickEvent}>
-        <ButtonIcon className="icon">
-          <FontAwesomeIcon icon={icon} />
-        </ButtonIcon>
-        <ButtonText className="text">{text}</ButtonText>
+    <ButtonWrap isFull={isFull}>
+      <button type="button" onClick={onClickEvent}>
+        <FontAwesomeIcon icon={icon} />
+        <span className="text">{text}</span>
       </button>
     </ButtonWrap>
   );

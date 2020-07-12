@@ -2,18 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Spinner from '../Spinner';
-import { ButtonWrap, ButtonIconWrap, ButtonIcon } from './style';
+import { ButtonWrap } from './style';
 
 const LinkIconButton = ({ path, icon }) => {
   return (
     <ButtonWrap>
       <Link to={path}>
-        <ButtonIconWrap>
-          <Spinner />
-          <ButtonIcon>
-            <FontAwesomeIcon className="icon" icon={icon} />
-          </ButtonIcon>
-        </ButtonIconWrap>
+        <Spinner />
+        <FontAwesomeIcon className="icon" icon={icon} />
       </Link>
     </ButtonWrap>
   );

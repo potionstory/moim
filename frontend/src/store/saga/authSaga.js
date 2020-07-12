@@ -1,11 +1,11 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import forEach from 'lodash/forEach';
-import { SIGNIN, GET_USER } from '../module/auth';
-import { signinAction, getUserAction } from '../module/auth';
+import { SIGN_IN, SIGN_OUT, GET_USER } from '../module/auth';
+import { signInAction, signOutAction, getUserAction } from '../module/auth';
 import { modalCloseAction } from '../module/global';
-import { signin, getUser } from '../api/auth';
+import { signin, signout, getUser } from '../api/auth';
 
-function* workSignin(action) {
+function* workSignIn(action) {
   const bodyParams = {};
 
   forEach(action.payload, (item) => {
@@ -13,18 +13,23 @@ function* workSignin(action) {
   });
 
   const response = yield call(signin, bodyParams);
-  console.log(
-    '%c 🥑 response: ',
-    'font-size:20px;background-color: #3F7CFF;color:#fff;',
-    response,
-  );
 
   if (response.status === 200) {
-    yield put(signinAction.SUCCESS());
+    yield put(signInAction.SUCCESS());
     yield put(getUserAction.REQUEST());
     yield put(modalCloseAction());
   } else {
-    yield put(signinAction.FAILURE());
+    yield put(signInAction.FAILURE());
+  }
+}
+
+function* workSignOut() {
+  const response = yield call(signout);
+
+  if (response) {
+    yield put(signOutAction.SUCCESS());
+  } else {
+    yield put(signOutAction.FAILURE());
   }
 }
 
@@ -37,12 +42,16 @@ function* workGetUser() {
   }
 }
 
-function* watchSignin() {
-  yield takeEvery(SIGNIN.REQUEST, workSignin);
+function* watchSignIn() {
+  yield takeEvery(SIGN_IN.REQUEST, workSignIn);
+}
+
+function* watchSignOut() {
+  yield takeEvery(SIGN_OUT.REQUEST, workSignOut);
 }
 
 function* watchGetUser() {
   yield takeEvery(GET_USER.REQUEST, workGetUser);
 }
 
-export default [watchSignin, watchGetUser];
+export default [watchSignIn, watchSignOut, watchGetUser];

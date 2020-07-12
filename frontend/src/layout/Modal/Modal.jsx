@@ -32,7 +32,7 @@ const Modal = () => {
 
   const getModalContent = useCallback(() => {
     switch (name) {
-      case 'SIGNIN':
+      case 'SIGN_IN':
         return <SignIn />;
       case 'SIGNUP':
         return <SignUp />;

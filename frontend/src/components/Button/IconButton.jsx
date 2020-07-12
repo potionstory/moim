@@ -1,14 +1,12 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonWrap, ButtonIcon } from './style';
+import { ButtonWrap } from './style';
 
-const IconButton = ({ type, onClickEvent, icon }) => {
+const IconButton = ({ onClickEvent, icon }) => {
   return (
-    <ButtonWrap type={type}>
-      <button onClick={onClickEvent}>
-        <ButtonIcon className="icon">
-          <FontAwesomeIcon icon={icon} />
-        </ButtonIcon>
+    <ButtonWrap>
+      <button type="button" onClick={onClickEvent}>
+        <FontAwesomeIcon icon={icon} />
       </button>
     </ButtonWrap>
   );

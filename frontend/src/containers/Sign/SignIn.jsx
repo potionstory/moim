@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import map from 'lodash/map';
 import every from 'lodash/every';
 import { produce } from 'immer';
-import { signinAction } from '../../store/module/auth';
+import { signInAction } from '../../store/module/auth';
 import { signin } from '../../utils/formData';
 import { emailCheck, passwordCheck } from '../../utils/regexUtil';
 import InputBox from '../../components/InputBox';
@@ -23,7 +23,7 @@ const SignIn = () => {
   const dispatch = useDispatch();
 
   const onSignIn = useCallback(
-    (payload) => dispatch(signinAction.REQUEST(payload)),
+    (payload) => dispatch(signInAction.REQUEST(payload)),
     [dispatch],
   );
 
