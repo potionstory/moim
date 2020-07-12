@@ -1,7 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import map from 'lodash/map';
 import every from 'lodash/every';
 import { produce } from 'immer';
+import { signUpAction } from '../../store/module/auth';
 import { signup } from '../../utils/formData';
 import {
   emailCheck,
@@ -22,8 +24,19 @@ import {
 const validators = [emailCheck, passwordCheck, passwordCheck, usernameCheck];
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+
+  const onSignUp = useCallback(
+    (payload) => dispatch(signUpAction.REQUEST(payload)),
+    [dispatch],
+  );
+
   const [focusInput, setFocusInput] = useState(null);
   const [formData, setFormData] = useState(signup);
+
+  const isActive = useMemo(() => {
+    return every(formData, (item) => item.isCheck);
+  }, [formData]);
 
   const onInputFocus = useCallback((e) => {
     setFocusInput(e.target.name);
@@ -61,13 +74,20 @@ const SignUp = () => {
               onInputBlur={onInputBlur}
             />
           ))}
-          <InputSubmit isActive={every(formData, (item) => item.isCheck)}>
-            <button type="button">sign up</button>
+          <InputSubmit isActive={isActive}>
+            <button
+              type="button"
+              onClick={() => {
+                isActive && onSignUp(formData);
+              }}
+            >
+              sign up
+            </button>
           </InputSubmit>
-          <ValidationText>
+          {/* <ValidationText>
             <span>이메일 형식이 올바르지 않습니다.</span>
             <span>패스워드 형식이 올바르지 않습니다.</span>
-          </ValidationText>
+          </ValidationText> */}
         </SignBox>
         <SocialBox>
           <span className="subTitle">social login</span>

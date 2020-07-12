@@ -55,9 +55,9 @@ export const Member = styled.div`
       img {
         width: 48px;
         height: 48px;
-        border: 4px solid ${({ theme }) => theme.theme};
+        border: 4px solid ${({ theme }) => theme.sub};
         border-radius: 24px;
-        background-color: ${({ theme }) => theme.theme};
+        background-color: ${({ theme }) => theme.sub};
         transition: all 0.2s ease-out;
       }
       span {

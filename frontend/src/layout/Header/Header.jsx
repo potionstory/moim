@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { faSignInAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import api from '../../store/api/api';
+import api from '../../store/api';
 import {
   toggleModeAction,
   signInModalOpenAction,

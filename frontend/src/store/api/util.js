@@ -1,4 +1,4 @@
-import api from './api';
+import api from './index';
 
 export const setAuthorizationHeader = (token) => {
   const FBIdToken = `Bearer ${token}`;

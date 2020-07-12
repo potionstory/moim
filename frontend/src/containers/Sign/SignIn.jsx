@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import map from 'lodash/map';
 import every from 'lodash/every';
 import { produce } from 'immer';
