@@ -75,7 +75,7 @@ app.post("/signin", signin);
 app.get("/user", FBAuth, getAuthenticatedUser);
 app.post("/user", FBAuth, addUserDetails);
 app.post("/user/image", FBAuth, uploadImage);
-app.get("/user/:handle", getUserDetails);
+app.get("/user/:userName", getUserDetails);
 app.post("/notifications", FBAuth, markNotificationsRead);
 
 exports.api = functions.https.onRequest(app);
@@ -87,14 +87,11 @@ exports.createNotificationOnLike = functions.firestore
       .doc(`/communitys/${snapshot.data().communityId}`)
       .get()
       .then((doc) => {
-        if (
-          doc.exists &&
-          doc.data().userHandle !== snapshot.data().userHandle
-        ) {
+        if (doc.exists && doc.data().userName !== snapshot.data().userName) {
           return db.doc(`/notifications/${snapshot.id}`).set({
             createdAt: new Date().toISOString(),
-            recipient: doc.data().userHandle,
-            sender: snapshot.data().userHandle,
+            recipient: doc.data().userName,
+            sender: snapshot.data().userName,
             type: "like",
             read: false,
             communityId: doc.id,
@@ -126,14 +123,11 @@ exports.createNotificationOnComment = functions.firestore
       .doc(`/communitys/${snapshot.data().communityId}`)
       .get()
       .then((doc) => {
-        if (
-          doc.exists &&
-          doc.data().userHandle !== snapshot.data().userHandle
-        ) {
+        if (doc.exists && doc.data().userName !== snapshot.data().userName) {
           return db.doc(`/notifications/${snapshot.id}`).set({
             createdAt: new Date().toISOString(),
-            recipient: doc.data().userHandle,
-            sender: snapshot.data().userHandle,
+            recipient: doc.data().userName,
+            sender: snapshot.data().userName,
             type: "comment",
             read: false,
             communityId: doc.id,
@@ -154,7 +148,7 @@ exports.onUserImageChange = functions.firestore
       const batch = db.batch();
       return db
         .collection("communitys")
-        .where("userHandle", "==", change.before.data().handle)
+        .where("userName", "==", change.before.data().userName)
         .get()
         .then((data) => {
           data.forEach((doc) => {
@@ -165,7 +159,7 @@ exports.onUserImageChange = functions.firestore
           });
           return db
             .collection("meetings")
-            .where("userHandle", "==", change.before.data().handle)
+            .where("userName", "==", change.before.data().userName)
             .get()
             .then((data) => {
               data.forEach((doc) => {

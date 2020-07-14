@@ -14,7 +14,7 @@ exports.signup = (req, res) => {
     email: req.body.email,
     password: req.body.password,
     confirmPassword: req.body.confirmPassword,
-    handle: req.body.handle,
+    userName: req.body.userName,
   };
 
   const { valid, errors } = validateSignupData(newUser);
@@ -25,11 +25,13 @@ exports.signup = (req, res) => {
 
   let token, userId;
 
-  db.doc(`/users/${newUser.handle}`)
+  db.doc(`/users/${newUser.userName}`)
     .get()
     .then((doc) => {
       if (doc.exists) {
-        return res.status(400).json({ handle: "this handle is already taken" });
+        return res
+          .status(400)
+          .json({ userName: "this user name is already taken" });
       } else {
         return firebase
           .auth()
@@ -43,14 +45,14 @@ exports.signup = (req, res) => {
     .then((idToken) => {
       token = idToken;
       const userCredentials = {
-        handle: newUser.handle,
-        email: newUser.email,
-        createdAt: new Date().toISOString(),
-        userImageUrl: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noImg}?alt=media`,
-        userImagePath: "user/",
         userId,
+        email: newUser.email,
+        userName: newUser.userName,
+        userImagePath: "user/",
+        userImageUrl: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noImg}?alt=media`,
+        createdAt: new Date().toISOString(),
       };
-      return db.doc(`/users/${newUser.handle}`).set(userCredentials);
+      return db.doc(`/users/${newUser.userName}`).set(userCredentials);
     })
     .then(() => {
       return res.status(201).json({ token });
@@ -98,70 +100,17 @@ exports.signin = (req, res) => {
     });
 };
 
-// Add user details
-exports.addUserDetails = (req, res) => {
-  let userDetails = reduceUserDetails(req.body);
-
-  db.doc(`/users/${req.user.handle}`)
-    .update(userDetails)
-    .then(() => {
-      return res.json({ message: "Details added successfully" });
-    })
-    .catch((err) => {
-      console.error(err);
-      return res.status(500).json({ error: err.code });
-    });
-};
-
-exports.getUserDetails = (req, res) => {
-  let userData = {};
-  db.doc(`/users/${req.params.handle}`)
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        userData.user = doc.data();
-        return db
-          .collection("communitys")
-          .where("userHandle", "==", req.params.handle)
-          .orderBy("createdAt", "desc")
-          .get();
-      } else {
-        return res.status(404).json({ error: "User not found" });
-      }
-    })
-    .then((data) => {
-      userData.communitys = [];
-      data.forEach((doc) => {
-        userData.communitys.push({
-          name: doc.data().name,
-          url: doc.data().url,
-          createdAt: doc.data().createdAt,
-          userHandle: doc.data().userHandle,
-          userImage: doc.data().userImage,
-          likeCount: doc.data().likeCount,
-          commentCount: doc.data().commentCount,
-          communityId: doc.id,
-        });
-      });
-      return res.json(userData);
-    })
-    .catch((err) => {
-      console.error(err);
-      return res.status(500).json({ error: err.code });
-    });
-};
-
 // Get own user details
 exports.getAuthenticatedUser = (req, res) => {
   let userData = {};
-  db.doc(`/users/${req.user.handle}`)
+  db.doc(`/users/${req.user.userName}`)
     .get()
     .then((doc) => {
       if (doc.exists) {
         userData.credentials = doc.data();
         return db
           .collection("likes")
-          .where("userHandle", "==", req.user.handle)
+          .where("userName", "==", req.user.userName)
           .get();
       }
     })
@@ -172,7 +121,7 @@ exports.getAuthenticatedUser = (req, res) => {
       });
       return db
         .collection("notifications")
-        .where("recipient", "==", req.user.handle)
+        .where("recipient", "==", req.user.userName)
         .orderBy("createdAt", "desc")
         .limit(10)
         .get();
@@ -188,6 +137,79 @@ exports.getAuthenticatedUser = (req, res) => {
           type: doc.data().type,
           read: doc.data().read,
           notifications: doc.id,
+        });
+      });
+      return res.json(userData);
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+};
+
+// Add user details
+exports.addUserDetails = (req, res) => {
+  let userDetails = reduceUserDetails(req.body);
+
+  db.doc(`/users/${req.user.userName}`)
+    .update(userDetails)
+    .then(() => {
+      return res.json({ message: "Details added successfully" });
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+};
+
+exports.getUserDetails = (req, res) => {
+  let userData = {};
+  db.doc(`/users/${req.params.userName}`)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        userData.user = doc.data();
+        return db
+          .collection("communitys")
+          .where("userName", "==", req.params.userName)
+          .orderBy("createdAt", "desc")
+          .get();
+      } else {
+        return res.status(404).json({ error: "User not found" });
+      }
+    })
+    .then((data) => {
+      userData.communitys = [];
+      data.forEach((doc) => {
+        userData.communitys.push({
+          name: doc.data().name,
+          url: doc.data().url,
+          createdAt: doc.data().createdAt,
+          userName: doc.data().userName,
+          userImage: doc.data().userImage,
+          likeCount: doc.data().likeCount,
+          commentCount: doc.data().commentCount,
+          communityId: doc.id,
+        });
+      });
+      return db
+        .collection("meetings")
+        .where("userName", "==", req.params.userName)
+        .orderBy("createdAt", "desc")
+        .get();
+    })
+    .then((data) => {
+      userData.meetings = [];
+      data.forEach((doc) => {
+        userData.meetings.push({
+          name: doc.data().name,
+          url: doc.data().url,
+          createdAt: doc.data().createdAt,
+          userName: doc.data().userName,
+          userImage: doc.data().userImage,
+          likeCount: doc.data().likeCount,
+          commentCount: doc.data().commentCount,
+          meetingId: doc.id,
         });
       });
       return res.json(userData);
@@ -226,7 +248,7 @@ exports.uploadImage = async (req, res) => {
     let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
     let uniqueName = admin.database().ref().push().key;
 
-    storageFilepath = `user/${req.user.handle}/${uniqueName + fileext}`;
+    storageFilepath = `user/${req.user.userName}/${uniqueName + fileext}`;
     storageFile = bucket.file(storageFilepath);
 
     file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
@@ -245,12 +267,12 @@ exports.uploadImage = async (req, res) => {
         storageFilepath
       )}?alt=media&token=${generatedToken}`;
 
-      db.doc(`/users/${req.user.handle}`)
+      db.doc(`/users/${req.user.userName}`)
         .get()
         .then((doc) => {
           const deleteFilePath = doc.data().userImagePath;
           bucket.file(deleteFilePath).delete();
-          db.doc(`/users/${req.user.handle}`)
+          db.doc(`/users/${req.user.userName}`)
             .update({ userImageUrl, userImagePath: storageFilepath })
             .then(() => {
               res.status(201).json({ message: "Image uploaded successfully" }); // 201 CREATED

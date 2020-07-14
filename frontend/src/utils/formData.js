@@ -51,7 +51,7 @@ export const signup = [
   },
   {
     type: 'text',
-    name: 'handle',
+    name: 'userName',
     placeholder: 'user name',
     value: '',
     isCheck: false,
