@@ -19,7 +19,7 @@ exports.getAllCommunitys = (req, res) => {
           text: doc.data().text,
           url: doc.data().url,
           userImage: doc.data().userImage,
-          userHandle: doc.data().userHandle,
+          userName: doc.data().userName,
           createdAt: doc.data().createdAt,
           likeCount: doc.data().likeCount,
           commentCount: doc.data().commentCount,
@@ -87,11 +87,12 @@ exports.postCommunity = (req, res) => {
       service: req.body.service,
       title: req.body.title,
       status: req.body.status,
+      mainImagePath: "community/",
       mainImage: mainImageUrl,
       text: req.body.text,
       url: req.body.url,
       userImage: req.user.userImageUrl,
-      userHandle: req.user.handle,
+      userName: req.user.userName,
       createdAt: new Date().toISOString(),
       likeCount: 0,
       commentCount: 0,
@@ -198,13 +199,14 @@ exports.putCommunity = (req, res) => {
     db.doc(`/communitys/${req.params.communityId}`)
       .get()
       .then((doc) => {
-        const deleteFilePath = doc.data().mainImage;
+        const deleteFilePath = doc.data().mainImagePath;
         bucket.file(deleteFilePath).delete();
         db.doc(`/communitys/${req.params.communityId}`)
           .update({
             service,
             title,
             status,
+            mainImagePath: storageFilepath,
             mainImage: mainImageUrl,
             text,
             url,
@@ -231,7 +233,7 @@ exports.deleteCommunity = (req, res) => {
       if (!doc.exists) {
         return res.status(404).json({ error: "Community not found" });
       }
-      if (doc.data().userHandle !== req.user.handle) {
+      if (doc.data().userName !== req.user.userName) {
         return res.status(403).json({ error: "Unauthorized" });
       } else {
         return document.delete();

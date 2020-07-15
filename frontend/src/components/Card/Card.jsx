@@ -30,7 +30,7 @@ const Card = ({ item, category }) => {
       </CardBlock>
       <CardUserInfoComp
         image={item.userImage}
-        name={item.userHandle}
+        name={item.userName}
         count={item.likeCount}
       />
     </CardWarp>
