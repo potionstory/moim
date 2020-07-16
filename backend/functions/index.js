@@ -80,7 +80,7 @@ app.post("/notifications", FBAuth, markNotificationsRead);
 
 exports.api = functions.https.onRequest(app);
 
-exports.createNotificationOnLike = functions.firestore
+exports.createCommunityNotificationOnLike = functions.firestore
   .document("likes/{id}")
   .onCreate((snapshot) => {
     return db
@@ -104,6 +104,30 @@ exports.createNotificationOnLike = functions.firestore
       });
   });
 
+exports.createMeetingNotificationOnLike = functions.firestore
+  .document("likes/{id}")
+  .onCreate((snapshot) => {
+    return db
+      .doc(`/meetings/${snapshot.data().meetingId}`)
+      .get()
+      .then((doc) => {
+        if (doc.exists && doc.data().userName !== snapshot.data().userName) {
+          return db.doc(`/notifications/${snapshot.id}`).set({
+            createdAt: new Date().toISOString(),
+            recipient: doc.data().userName,
+            sender: snapshot.data().userName,
+            type: "like",
+            read: false,
+            meetingId: doc.id,
+          });
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        return;
+      });
+  });
+
 exports.deleteNotificationOnUnlike = functions.firestore
   .document("likes/{id}")
   .onDelete((snapshot) => {
@@ -116,7 +140,7 @@ exports.deleteNotificationOnUnlike = functions.firestore
       });
   });
 
-exports.createNotificationOnComment = functions.firestore
+exports.createCommunityNotificationOnComment = functions.firestore
   .document("comments/{id}")
   .onCreate((snapshot) => {
     return db
@@ -131,6 +155,29 @@ exports.createNotificationOnComment = functions.firestore
             type: "comment",
             read: false,
             communityId: doc.id,
+          });
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  });
+
+exports.createMeetingNotificationOnComment = functions.firestore
+  .document("comments/{id}")
+  .onCreate((snapshot) => {
+    return db
+      .doc(`/meetings/${snapshot.data().meetingId}`)
+      .get()
+      .then((doc) => {
+        if (doc.exists && doc.data().userName !== snapshot.data().userName) {
+          return db.doc(`/notifications/${snapshot.id}`).set({
+            createdAt: new Date().toISOString(),
+            recipient: doc.data().userName,
+            sender: snapshot.data().userName,
+            type: "comment",
+            read: false,
+            meetingId: doc.id,
           });
         }
       })
@@ -199,6 +246,42 @@ exports.onCommunityDelete = functions.firestore
         return db
           .collection("notifications")
           .where("communityId", "==", communityId)
+          .get();
+      })
+      .then((data) => {
+        data.forEach((doc) => {
+          batch.delete(db.doc(`/notifications/${doc.id}`));
+        });
+        return batch.commit();
+      })
+      .catch((err) => {
+        console.error(err);
+        return;
+      });
+  });
+
+exports.onMeetingDelete = functions.firestore
+  .document("/meetings/{meetingId}")
+  .onDelete((snapshot, context) => {
+    const meetingId = context.params.meetingId;
+    const batch = db.batch();
+    return db
+      .collection("comments")
+      .where("meetingId", "==", meetingId)
+      .get()
+      .then((data) => {
+        data.forEach((doc) => {
+          batch.delete(db.doc(`/comments/${doc.id}`));
+        });
+        return db.collection("likes").where("meetingId", "==", meetingId).get();
+      })
+      .then((data) => {
+        data.forEach((doc) => {
+          batch.delete(db.doc(`/likes/${doc.id}`));
+        });
+        return db
+          .collection("notifications")
+          .where("meetingId", "==", meetingId)
           .get();
       })
       .then((data) => {

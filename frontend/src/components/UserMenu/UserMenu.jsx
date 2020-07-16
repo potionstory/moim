@@ -42,7 +42,7 @@ const UserMenu = ({
             <div className="profile">
               <span className="user">
                 <img src={userInfo.userImageUrl} />
-                <span>{userInfo.handle}</span>
+                <span>{userInfo.userName}</span>
               </span>
               <IconButton onClickEvent={onSignInModalOpen} icon={faUserEdit} />
             </div>

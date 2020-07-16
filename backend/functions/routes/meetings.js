@@ -20,7 +20,7 @@ exports.getAllMeetings = (req, res) => {
           date: doc.data().date,
           location: doc.data().location,
           userImage: doc.data().userImage,
-          userHandle: doc.data().userHandle,
+          userName: doc.data().userName,
           createdAt: doc.data().createdAt,
           likeCount: doc.data().likeCount,
           commentCount: doc.data().commentCount,
@@ -88,12 +88,13 @@ exports.postMeeting = (req, res) => {
       type: req.body.type,
       title: req.body.title,
       status: req.body.status,
+      mainImagePath: "meeting/",
       mainImage: mainImageUrl,
       text: req.body.text,
       date: req.body.date,
       location: req.body.location,
       userImage: req.user.userImageUrl,
-      userHandle: req.user.handle,
+      userName: req.user.userName,
       createdAt: new Date().toISOString(),
       likeCount: 0,
       commentCount: 0,
@@ -199,13 +200,14 @@ exports.putMeeting = (req, res) => {
     db.doc(`/meetings/${req.params.meetingId}`)
       .get()
       .then((doc) => {
-        const deleteFilePath = doc.data().mainImage;
+        const deleteFilePath = doc.data().mainImagePath;
         bucket.file(deleteFilePath).delete();
         db.doc(`/meetings/${req.params.meetingId}`)
           .update({
             type,
             title,
             status,
+            mainImagePath: storageFilepath,
             mainImage: mainImageUrl,
             text,
             date,
@@ -233,7 +235,7 @@ exports.deleteMeeting = (req, res) => {
       if (!doc.exists) {
         return res.status(404).json({ error: "Meeting not found" });
       }
-      if (doc.data().userHandle !== req.user.handle) {
+      if (doc.data().userName !== req.user.userName) {
         return res.status(403).json({ error: "Unauthorized" });
       } else {
         return document.delete();
@@ -252,7 +254,7 @@ exports.deleteMeeting = (req, res) => {
 exports.likeMeeting = (req, res) => {
   const likeDocument = db
     .collection("likes")
-    .where("userHandle", "==", req.user.handle)
+    .where("userName", "==", req.user.userName)
     .where("meetingId", "==", req.params.meetingId)
     .limit(1);
 
@@ -277,7 +279,7 @@ exports.likeMeeting = (req, res) => {
           .collection("likes")
           .add({
             meetingId: req.params.meetingId,
-            userHandle: req.user.handle,
+            userName: req.user.userName,
           })
           .then(() => {
             meetingData.likeCount++;
@@ -302,7 +304,7 @@ exports.likeMeeting = (req, res) => {
 exports.unlikeMeeting = (req, res) => {
   const likeDocument = db
     .collection("likes")
-    .where("userHandle", "==", req.user.handle)
+    .where("userName", "==", req.user.userName)
     .where("meetingId", "==", req.params.meetingId)
     .limit(1);
 
@@ -354,7 +356,7 @@ exports.commentOnMeeting = (req, res) => {
     body: req.body.body,
     createdAt: new Date().toISOString(),
     meetingId: req.params.meetingId,
-    userHandle: req.user.handle,
+    userName: req.user.userName,
     userImage: req.user.userImageUrl,
   };
 

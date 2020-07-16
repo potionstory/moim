@@ -252,7 +252,7 @@ exports.deleteCommunity = (req, res) => {
 exports.likeCommunity = (req, res) => {
   const likeDocument = db
     .collection("likes")
-    .where("userHandle", "==", req.user.handle)
+    .where("userName", "==", req.user.userName)
     .where("communityId", "==", req.params.communityId)
     .limit(1);
 
@@ -277,7 +277,7 @@ exports.likeCommunity = (req, res) => {
           .collection("likes")
           .add({
             communityId: req.params.communityId,
-            userHandle: req.user.handle,
+            userName: req.user.userName,
           })
           .then(() => {
             communityData.likeCount++;
@@ -302,7 +302,7 @@ exports.likeCommunity = (req, res) => {
 exports.unlikeCommunity = (req, res) => {
   const likeDocument = db
     .collection("likes")
-    .where("userHandle", "==", req.user.handle)
+    .where("userName", "==", req.user.userName)
     .where("communityId", "==", req.params.communityId)
     .limit(1);
 
@@ -354,7 +354,7 @@ exports.commentOnCommunity = (req, res) => {
     body: req.body.body,
     createdAt: new Date().toISOString(),
     communityId: req.params.communityId,
-    userHandle: req.user.handle,
+    userName: req.user.userName,
     userImage: req.user.userImageUrl,
   };
 
