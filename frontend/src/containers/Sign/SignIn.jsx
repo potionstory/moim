@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux';
 import map from 'lodash/map';
 import every from 'lodash/every';
 import { produce } from 'immer';
-import { signInAction } from '../../store/module/auth';
 import { signin } from '../../utils/formData';
 import { emailCheck, passwordCheck } from '../../utils/regexUtil';
+import { socialSignInAction, signInAction } from '../../store/module/auth';
 import InputBox from '../../components/InputBox';
 import SocialList from '../../components/SocialList';
 import {
@@ -21,6 +21,11 @@ const validators = [emailCheck, passwordCheck];
 
 const SignIn = () => {
   const dispatch = useDispatch();
+
+  const onSocialSignIn = useCallback(
+    (payload) => dispatch(socialSignInAction.REQUEST(payload)),
+    [dispatch],
+  );
 
   const onSignIn = useCallback(
     (payload) => dispatch(signInAction.REQUEST(payload)),
@@ -90,7 +95,7 @@ const SignIn = () => {
         <SocialBox>
           <span className="subTitle">social login</span>
           <div className="socialList">
-            <SocialList />
+            <SocialList onSocialSign={onSocialSignIn} />
           </div>
         </SocialBox>
       </SignArea>

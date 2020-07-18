@@ -9,7 +9,7 @@ const isEmpty = (string) => {
   else return false;
 };
 
-exports.validateSignupData = (data) => {
+exports.validateSignUpData = (data) => {
   let errors = {};
 
   if (isEmpty(data.email)) {
@@ -29,7 +29,7 @@ exports.validateSignupData = (data) => {
   };
 };
 
-exports.validateSigninData = (data) => {
+exports.validateSignInData = (data) => {
   let errors = {};
 
   if (isEmpty(data.email)) errors.email = "Must not be empty";

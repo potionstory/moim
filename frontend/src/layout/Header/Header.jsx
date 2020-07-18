@@ -1,6 +1,10 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { faSignInAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSignInAlt,
+  faUserPlus,
+  faSignOutAlt,
+} from '@fortawesome/free-solid-svg-icons';
 import api from '../../store/api';
 import {
   toggleModeAction,
@@ -8,6 +12,7 @@ import {
   signUpModalOpenAction,
 } from '../../store/module/global';
 import { getUserAction, signOutAction } from '../../store/module/auth';
+import { auth } from '../../server/firebase.util';
 import TextButton from '../../components/Button/TextButton';
 import UserMenu from '../../components/UserMenu';
 import {
@@ -37,9 +42,10 @@ const Header = () => {
     dispatch,
   ]);
 
-  const onSignOut = useCallback(() => dispatch(signOutAction.REQUEST()), [
-    dispatch,
-  ]);
+  const onSignOut = useCallback(() => {
+    auth.signOut();
+    dispatch(signOutAction.REQUEST());
+  }, [dispatch]);
 
   const onSignInModalOpen = useCallback(() => {
     setIsUserActive(false);
@@ -91,6 +97,13 @@ const Header = () => {
                 onClickEvent={onSignUpModalOpen}
                 icon={faUserPlus}
                 text="sign up"
+              />
+            </MenuItem>
+            <MenuItem>
+              <TextButton
+                onClickEvent={onSignOut}
+                icon={faSignOutAlt}
+                text="sign out"
               />
             </MenuItem>
           </MenuList>

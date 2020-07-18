@@ -1,6 +1,21 @@
 import api from './index';
 import { setAuthorizationHeader, deleteAuthorizationHeader } from './util';
 
+// 소셜 회원 가입
+export const socialSignUp = (bodyParams) =>
+  api
+    .post('social-signup', bodyParams)
+    .then((res) => {
+      setAuthorizationHeader(res.data.token);
+      return res;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+
+// 소셜 회원 로그인
+export const socialSignIn = (token) => setAuthorizationHeader(token);
+
 // 회원 가입
 export const signUp = (bodyParams) =>
   api

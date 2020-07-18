@@ -27,14 +27,14 @@ const socials = [
   },
 ];
 
-const SocialList = () => {
+const SocialList = ({ onSocialSign }) => {
   return (
     <SocialListWrap>
       {map(socials, (item, index) => (
         <SocialItem key={index} bgColor={item.bgColor}>
-          <a href="#">
+          <button type="button" onClick={onSocialSign}>
             <img src={item.icon} />
-          </a>
+          </button>
         </SocialItem>
       ))}
     </SocialListWrap>

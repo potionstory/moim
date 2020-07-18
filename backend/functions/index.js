@@ -33,8 +33,9 @@ const {
 } = require("./routes/meetings");
 
 const {
-  signup,
-  signin,
+  socialSignUp,
+  signUp,
+  signIn,
   uploadImage,
   addUserDetails,
   getAuthenticatedUser,
@@ -70,8 +71,9 @@ app.get("/meeting/:meetingId/unlike", FBAuth, unlikeMeeting);
 app.post("/meeting/:meetingId/comment", FBAuth, commentOnMeeting);
 
 // users routes
-app.post("/signup", signup);
-app.post("/signin", signin);
+app.post("/social-signup", socialSignUp);
+app.post("/signup", signUp);
+app.post("/signin", signIn);
 app.get("/user", FBAuth, getAuthenticatedUser);
 app.post("/user", FBAuth, addUserDetails);
 app.post("/user/image", FBAuth, uploadImage);

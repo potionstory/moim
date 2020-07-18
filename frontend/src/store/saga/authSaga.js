@@ -1,14 +1,70 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import forEach from 'lodash/forEach';
-import { SIGN_UP, SIGN_IN, SIGN_OUT, GET_USER } from '../module/auth';
 import {
+  SOCIAL_SIGN_UP,
+  SOCIAL_SIGN_IN,
+  SIGN_UP,
+  SIGN_IN,
+  SIGN_OUT,
+  GET_USER,
+} from '../module/auth';
+import {
+  socialSignUpAction,
+  socialSignInAction,
   signUpAction,
   signInAction,
   signOutAction,
   getUserAction,
 } from '../module/auth';
 import { modalCloseAction } from '../module/global';
-import { signUp, signIn, signOut, getUser } from '../api/auth';
+import { auth, signInWithGoogle } from '../../server/firebase.util';
+import {
+  socialSignUp,
+  socialSignIn,
+  signUp,
+  signIn,
+  signOut,
+  getUser,
+} from '../api/auth';
+
+function* workSocialSignUp() {
+  const bodyParams = {};
+
+  yield signInWithGoogle().then((res) => {
+    const user = res.user;
+    if (user != null) {
+      bodyParams.userId = user.uid;
+      bodyParams.email = user.email;
+      bodyParams.userImageUrl = user.photoURL;
+      bodyParams.userName = user.displayName;
+      bodyParams.token = token;
+    }
+  });
+
+  const token = yield auth.currentUser.getIdToken();
+  bodyParams.token = token;
+
+  const response = yield call(socialSignUp, bodyParams);
+
+  if (response.status === 201) {
+    yield put(socialSignUpAction.SUCCESS());
+    yield put(getUserAction.REQUEST());
+    yield put(modalCloseAction());
+  } else {
+    yield put(socialSignUpAction.FAILURE());
+  }
+}
+
+function* workSocialSignIn() {
+  yield signInWithGoogle();
+
+  const token = yield auth.currentUser.getIdToken();
+
+  yield call(socialSignIn, token);
+  yield put(socialSignInAction.SUCCESS());
+  yield put(getUserAction.REQUEST());
+  yield put(modalCloseAction());
+}
 
 function* workSignUp(action) {
   const bodyParams = {};
@@ -58,11 +114,20 @@ function* workSignOut() {
 
 function* workGetUser() {
   const response = yield call(getUser);
+
   if (response.status === 200) {
     yield put(getUserAction.SUCCESS(response.data.credentials));
   } else {
     yield put(getUserAction.FAILURE());
   }
+}
+
+function* watchSocialSignUp() {
+  yield takeEvery(SOCIAL_SIGN_UP.REQUEST, workSocialSignUp);
+}
+
+function* watchSocialSignIn() {
+  yield takeEvery(SOCIAL_SIGN_IN.REQUEST, workSocialSignIn);
 }
 
 function* watchSignUp() {
@@ -81,4 +146,11 @@ function* watchGetUser() {
   yield takeEvery(GET_USER.REQUEST, workGetUser);
 }
 
-export default [watchSignUp, watchSignIn, watchSignOut, watchGetUser];
+export default [
+  watchSocialSignUp,
+  watchSocialSignIn,
+  watchSignUp,
+  watchSignIn,
+  watchSignOut,
+  watchGetUser,
+];

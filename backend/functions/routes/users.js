@@ -3,13 +3,59 @@ const { uuid } = require("uuidv4");
 const { admin, BusBoy, db } = require("../util/admin");
 const config = require("../util/config");
 const {
-  validateSignupData,
-  validateSigninData,
+  validateSignUpData,
+  validateSignInData,
   reduceUserDetails,
 } = require("../util/validators");
 
-// signup user
-exports.signup = (req, res) => {
+// social signUp user
+exports.socialSignUp = (req, res) => {
+  const newSocialUser = {
+    email: req.body.email,
+    userName: req.body.userName,
+    userImageUrl: req.body.userImageUrl,
+    userId: req.body.userId,
+    token: req.body.token,
+  };
+
+  db.doc(`/users/${newSocialUser.userName}`)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        return res
+          .status(400)
+          .json({ userName: "this user name is already taken" });
+      } else {
+        const userCredentials = {
+          userId: newSocialUser.userId,
+          email: newSocialUser.email,
+          userName: newSocialUser.userName,
+          userImagePath: "user/",
+          userImageUrl: newSocialUser.userImageUrl,
+          createdAt: new Date().toISOString(),
+        };
+        return db.doc(`/users/${newSocialUser.userName}`).set(userCredentials);
+      }
+    })
+    .then(() => {
+      return res.status(201).json({ token: newSocialUser.token });
+    })
+    .catch((err) => {
+      console.error(err);
+      if (err.code === "auth/email-already-in-use") {
+        return res
+          .statusMessage(400)
+          .json({ email: "Email is already in use" });
+      } else {
+        return res
+          .status(500)
+          .json({ general: "Something went wrong, please try again" });
+      }
+    });
+};
+
+// signUp user
+exports.signUp = (req, res) => {
   const newUser = {
     email: req.body.email,
     password: req.body.password,
@@ -17,7 +63,7 @@ exports.signup = (req, res) => {
     userName: req.body.userName,
   };
 
-  const { valid, errors } = validateSignupData(newUser);
+  const { valid, errors } = validateSignUpData(newUser);
 
   if (!valid) return res.status(400).json(errors);
 
@@ -71,14 +117,14 @@ exports.signup = (req, res) => {
     });
 };
 
-// signin user
-exports.signin = (req, res) => {
+// signIn user
+exports.signIn = (req, res) => {
   const user = {
     email: req.body.email,
     password: req.body.password,
   };
 
-  const { valid, errors } = validateSigninData(user);
+  const { valid, errors } = validateSignInData(user);
 
   if (!valid) return res.status(400).json(errors);
 

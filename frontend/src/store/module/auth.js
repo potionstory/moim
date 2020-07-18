@@ -2,12 +2,16 @@ import produce from 'immer';
 import { createType, createAction } from './helper';
 
 // action type
+export const SOCIAL_SIGN_UP = createType('SOCIAL_SIGN_UP');
+export const SOCIAL_SIGN_IN = createType('SOCIAL_SIGN_IN');
 export const SIGN_UP = createType('SIGN_UP');
 export const SIGN_IN = createType('SIGN_IN');
 export const SIGN_OUT = createType('SIGNOUT');
 export const GET_USER = createType('GET_USER');
 
 // action 생성자 함수
+export const socialSignUpAction = createAction(SOCIAL_SIGN_UP);
+export const socialSignInAction = createAction(SOCIAL_SIGN_IN);
 export const signUpAction = createAction(SIGN_UP);
 export const signInAction = createAction(SIGN_IN);
 export const signOutAction = createAction(SIGN_OUT);
@@ -23,6 +27,30 @@ const initialState = {
 export default (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
+      case SOCIAL_SIGN_UP.REQUEST: {
+        draft.loading = true;
+        break;
+      }
+      case SOCIAL_SIGN_UP.SUCCESS: {
+        draft.loading = false;
+        break;
+      }
+      case SOCIAL_SIGN_UP.FAILURE: {
+        draft.loading = false;
+        break;
+      }
+      case SOCIAL_SIGN_IN.REQUEST: {
+        draft.loading = true;
+        break;
+      }
+      case SOCIAL_SIGN_IN.SUCCESS: {
+        draft.loading = false;
+        break;
+      }
+      case SOCIAL_SIGN_IN.FAILURE: {
+        draft.loading = false;
+        break;
+      }
       case SIGN_UP.REQUEST: {
         draft.loading = true;
         break;

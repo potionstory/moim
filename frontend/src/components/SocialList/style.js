@@ -7,7 +7,7 @@ export const SocialListWrap = styled.ul`
 `;
 
 export const SocialItem = styled.li`
-  a {
+  button {
     overflow: hidden;
     display: flex;
     width: 40px;
