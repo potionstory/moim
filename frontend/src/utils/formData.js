@@ -5,7 +5,7 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 
-export const signin = [
+export const signInForm = [
   {
     type: 'email',
     name: 'email',
@@ -24,7 +24,7 @@ export const signin = [
   },
 ];
 
-export const signup = [
+export const signUpForm = [
   {
     type: 'email',
     name: 'email',
@@ -48,6 +48,25 @@ export const signup = [
     value: '',
     isCheck: false,
     icon: faRedoAlt,
+  },
+  {
+    type: 'text',
+    name: 'userName',
+    placeholder: 'user name',
+    value: '',
+    isCheck: false,
+    icon: faUser,
+  },
+];
+
+export const socialUpForm = [
+  {
+    type: 'email',
+    name: 'email',
+    placeholder: 'email',
+    value: '',
+    isCheck: false,
+    icon: faAt,
   },
   {
     type: 'text',

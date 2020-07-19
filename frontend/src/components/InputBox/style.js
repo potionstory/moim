@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { color } from '../../lib/styles/palette';
 
+export const InputBoxWrap = styled.div`
+  margin-top: 1.5rem;
+`;
+
 export const InputWrap = styled.div`
   display: flex;
   flex-direction: row;
@@ -40,6 +44,7 @@ export const InputWrap = styled.div`
     padding: 0 1rem;
     border-radius: 4px;
     background-color: ${({ theme }) => theme.main};
+    ${({ isDisable }) => isDisable && 'opacity: 0.6;'};
     font-size: 0.875rem;
     font-weight: 500;
     color: ${({ theme }) => theme.title};
@@ -50,5 +55,40 @@ export const InputWrap = styled.div`
   }
   .inputCheck + input {
     margin-left: 6px;
+  }
+`;
+
+export const InputSubmit = styled.div`
+  margin-top: 12px;
+  padding-left: 46px;
+  button {
+    width: 100%;
+    height: 40px;
+    box-sizing: content-box;
+    border-radius: 4px;
+    background-color: ${({ theme, isActive }) =>
+      !isActive ? theme.title : color.green};
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: ${({ theme }) => theme.main};
+    text-transform: uppercase;
+    text-align: center;
+    transition: all 0.2s ease-out;
+  }
+`;
+
+export const ValidationText = styled.div`
+  margin-top: 24px;
+  padding-left: 46px;
+  span {
+    display: block;
+    height: 40px;
+    margin-top: 6px;
+    padding: 0 1rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    background-color: ${color.red};
+    color: ${({ theme }) => theme.main};
+    line-height: 40px;
   }
 `;

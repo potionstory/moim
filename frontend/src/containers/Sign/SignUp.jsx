@@ -1,30 +1,34 @@
-import React, { useState, useMemo, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import map from 'lodash/map';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 import every from 'lodash/every';
+import findIndex from 'lodash/findIndex';
 import { produce } from 'immer';
-import { signup } from '../../utils/formData';
+import { signUpForm, socialUpForm } from '../../utils/formData';
+import { emailCheck, passwordCheck, nameCheck } from '../../utils/regexUtil';
 import {
-  emailCheck,
-  passwordCheck,
-  usernameCheck,
-} from '../../utils/regexUtil';
-import { socialSignUpAction, signUpAction } from '../../store/module/auth';
-import InputBox from '../../components/InputBox';
-import SocialList from '../../components/SocialList';
-import {
-  SignWrap,
-  SignArea,
-  SignBox,
-  InputSubmit,
-  ValidationText,
-  SocialBox,
-} from './style';
+  socialSignAction,
+  socialSignUpAction,
+  signUpAction,
+} from '../../store/module/auth';
+import SignUpBox from './SignUpBox';
+import SocialUpBox from './SocialUpBox';
+import { SignWrap, SignInner, SignBody } from './style';
 
-const validators = [emailCheck, passwordCheck, passwordCheck, usernameCheck];
+const formValidators = [
+  [emailCheck, passwordCheck, passwordCheck, nameCheck],
+  [emailCheck, nameCheck],
+];
 
 const SignUp = () => {
+  const socialInfo = useSelector((state) => state.auth.socialInfo);
+
   const dispatch = useDispatch();
+
+  const onSocialSign = useCallback(
+    (payload) => dispatch(socialSignAction.REQUEST(payload)),
+    [dispatch],
+  );
 
   const onSocialSignUp = useCallback(
     (payload) => dispatch(socialSignUpAction.REQUEST(payload)),
@@ -37,7 +41,12 @@ const SignUp = () => {
   );
 
   const [focusInput, setFocusInput] = useState(null);
-  const [formData, setFormData] = useState(signup);
+  const [formData, setFormData] = useState(signUpForm);
+  const [validator, setValidator] = useState(formValidators[0]);
+
+  const isSocial = useMemo(() => {
+    return !isEmpty(socialInfo);
+  }, [socialInfo]);
 
   const isActive = useMemo(() => {
     return every(formData, (item) => item.isCheck);
@@ -51,56 +60,68 @@ const SignUp = () => {
     setFocusInput(null);
   }, []);
 
-  const onInputChange = useCallback((e, i) => {
-    const { name, value } = e.target;
+  const onInputChange = useCallback(
+    (e, i) => {
+      const { name, value } = e.target;
 
-    setFormData(
-      produce((draft) => {
-        draft[i].name = name;
-        draft[i].value = value;
-        draft[i].isCheck = validators[i](value);
-      }),
-    );
-  }, []);
+      setFormData(
+        produce((draft) => {
+          draft[i].name = name;
+          draft[i].value = value;
+          draft[i].isCheck = validator[i](value);
+        }),
+      );
+    },
+    [validator],
+  );
+
+  useEffect(() => {
+    if (isSocial) {
+      setFormData(
+        produce(socialUpForm, (draft) => {
+          const emailIndex = findIndex(socialUpForm, { name: 'email' });
+          draft[emailIndex].value = socialInfo.email;
+          draft[emailIndex].isCheck = true;
+          draft[emailIndex].isDisable = true;
+        }),
+      );
+      setValidator(formValidators[1]);
+    } else {
+      setFormData(signUpForm);
+      setValidator(formValidators[0]);
+    }
+  }, [socialInfo, isSocial]);
 
   return (
     <SignWrap>
-      <SignArea>
-        <h4>sign up</h4>
-        <SignBox>
-          {map(formData, (form, index) => (
-            <InputBox
-              key={index}
-              isActive={form.name === focusInput}
-              index={index}
-              form={form}
+      <SignInner>
+        <h4>{!isSocial ? 'sign up' : 'social up'}</h4>
+        <SignBody>
+          {!isSocial ? (
+            <SignUpBox
+              formData={formData}
+              focusInput={focusInput}
+              isActive={isActive}
               onInputFocus={onInputFocus}
               onInputChange={onInputChange}
               onInputBlur={onInputBlur}
+              onConfirm={onSignUp}
+              onSocialSign={onSocialSign}
             />
-          ))}
-          <InputSubmit isActive={isActive}>
-            <button
-              type="button"
-              onClick={() => {
-                isActive && onSignUp(formData);
-              }}
-            >
-              sign up
-            </button>
-          </InputSubmit>
-          {/* <ValidationText>
-            <span>이메일 형식이 올바르지 않습니다.</span>
-            <span>패스워드 형식이 올바르지 않습니다.</span>
-          </ValidationText> */}
-        </SignBox>
-        <SocialBox>
-          <span className="subTitle">social login</span>
-          <div className="socialList">
-            <SocialList onSocialSign={onSocialSignUp} />
-          </div>
-        </SocialBox>
-      </SignArea>
+          ) : (
+            <SocialUpBox
+              socialInfo={socialInfo}
+              formData={formData}
+              focusInput={focusInput}
+              isActive={isActive}
+              onInputFocus={onInputFocus}
+              onInputChange={onInputChange}
+              onInputBlur={onInputBlur}
+              onConfirm={onSocialSignUp}
+            />
+          )}
+        </SignBody>
+      </SignInner>
     </SignWrap>
   );
 };

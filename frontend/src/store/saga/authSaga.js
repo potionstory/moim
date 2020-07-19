@@ -1,6 +1,8 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
+import isEmpty from 'lodash/isEmpty';
 import forEach from 'lodash/forEach';
 import {
+  SOCIAL_SIGN,
   SOCIAL_SIGN_UP,
   SOCIAL_SIGN_IN,
   SIGN_UP,
@@ -9,6 +11,7 @@ import {
   GET_USER,
 } from '../module/auth';
 import {
+  socialSignAction,
   socialSignUpAction,
   socialSignInAction,
   signUpAction,
@@ -27,17 +30,34 @@ import {
   getUser,
 } from '../api/auth';
 
+function* workSocialSign() {
+  const bodyParams = {};
+
+  yield signInWithGoogle().then((res) => {
+    const user = res.user;
+    if (user !== null) {
+      bodyParams.email = user.email;
+      bodyParams.userImageUrl = user.photoURL;
+    }
+  });
+
+  if (!isEmpty(bodyParams)) {
+    yield put(socialSignAction.SUCCESS(bodyParams));
+  } else {
+    yield put(socialSignAction.FAILURE());
+  }
+}
+
 function* workSocialSignUp() {
   const bodyParams = {};
 
   yield signInWithGoogle().then((res) => {
     const user = res.user;
-    if (user != null) {
+    if (user !== null) {
       bodyParams.userId = user.uid;
       bodyParams.email = user.email;
       bodyParams.userImageUrl = user.photoURL;
       bodyParams.userName = user.displayName;
-      bodyParams.token = token;
     }
   });
 
@@ -122,6 +142,10 @@ function* workGetUser() {
   }
 }
 
+function* watchSocialSign() {
+  yield takeEvery(SOCIAL_SIGN.REQUEST, workSocialSign);
+}
+
 function* watchSocialSignUp() {
   yield takeEvery(SOCIAL_SIGN_UP.REQUEST, workSocialSignUp);
 }
@@ -147,6 +171,7 @@ function* watchGetUser() {
 }
 
 export default [
+  watchSocialSign,
   watchSocialSignUp,
   watchSocialSignIn,
   watchSignUp,

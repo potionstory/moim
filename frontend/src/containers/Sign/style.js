@@ -7,7 +7,7 @@ export const SignWrap = styled.div`
   flex-direction: column;
 `;
 
-export const SignArea = styled.div`
+export const SignInner = styled.div`
   h4 {
     font-size: 2rem;
     color: ${({ theme }) => theme.main};
@@ -16,46 +16,12 @@ export const SignArea = styled.div`
   }
 `;
 
-export const InputSubmit = styled.div`
-  margin-top: 12px;
-  padding-left: 46px;
-  button {
-    width: 100%;
-    height: 40px;
-    box-sizing: content-box;
-    border-radius: 4px;
-    background-color: ${({ theme, isActive }) =>
-      !isActive ? theme.title : color.green};
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: ${({ theme }) => theme.main};
-    text-transform: uppercase;
-    text-align: center;
-    transition: all 0.2s ease-out;
-  }
+export const SignBody = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
-export const ValidationText = styled.div`
-  margin-top: 24px;
-  padding-left: 46px;
-  span {
-    display: block;
-    height: 40px;
-    margin-top: 6px;
-    padding: 0 1rem;
-    border-radius: 4px;
-    font-size: 0.875rem;
-    background-color: ${color.red};
-    color: ${({ theme }) => theme.main};
-    line-height: 40px;
-  }
-`;
-
-export const SignBox = styled.div`
-  margin-top: 1.5rem;
-`;
-
-export const SocialBox = styled.div`
+export const SocialArea = styled.div`
   margin-top: 1.5rem;
   padding-top: 1.5rem;
   margin-left: 46px;
@@ -74,5 +40,32 @@ export const SocialBox = styled.div`
   }
   .socialList {
     margin-top: 0.75rem;
+  }
+`;
+
+export const SocialBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1.5rem;
+  .userImage {
+    overflow: hidden;
+    flex: 1;
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    background-color: ${({ theme }) => theme.main};
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  .email {
+    flex: 1;
+    margin-top: 1.5rem;
+    font-size: 2rem;
+    font-weight: 800;
+    color: ${({ theme }) => theme.title};
   }
 `;
