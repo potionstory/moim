@@ -11,14 +11,14 @@ const socials = [
     bgColor: iconBg.google,
   },
   {
-    name: 'kakao',
-    icon: icon.kakao,
-    bgColor: iconBg.kakao,
-  },
-  {
     name: 'facebook',
     icon: icon.facebook,
     bgColor: iconBg.facebook,
+  },
+  {
+    name: 'kakao',
+    icon: icon.kakao,
+    bgColor: iconBg.kakao,
   },
   {
     name: 'naver',

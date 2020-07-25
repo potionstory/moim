@@ -1,9 +1,9 @@
 import React from 'react';
 import InputBox from '../../components/InputBox';
-import { SocialBox } from './style';
+import { UserImage } from './style';
 
-const SocialUpBox = ({
-  socialInfo,
+const UserInfoBox = ({
+  signInfo,
   formData,
   focusInput,
   isActive,
@@ -14,11 +14,11 @@ const SocialUpBox = ({
 }) => {
   return (
     <>
-      <SocialBox>
+      <UserImage>
         <span className="userImage">
-          <img src={socialInfo.userImageUrl} />
+          <img src={signInfo.userImageUrl} />
         </span>
-      </SocialBox>
+      </UserImage>
       <InputBox
         formData={formData}
         focusInput={focusInput}
@@ -27,10 +27,10 @@ const SocialUpBox = ({
         onInputBlur={onInputBlur}
         isActive={isActive}
         onConfirm={onConfirm}
-        confirmText="social up"
+        confirmText="sign up"
       />
     </>
   );
 };
 
-export default SocialUpBox;
+export default UserInfoBox;

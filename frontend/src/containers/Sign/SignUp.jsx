@@ -4,25 +4,24 @@ import isEmpty from 'lodash/isEmpty';
 import every from 'lodash/every';
 import findIndex from 'lodash/findIndex';
 import { produce } from 'immer';
-import { signUpForm, socialUpForm } from '../../utils/formData';
+import { signUpForm, userInfoForm } from '../../utils/formData';
 import { emailCheck, passwordCheck, nameCheck } from '../../utils/regexUtil';
 import {
   socialSignAction,
   socialSignUpAction,
+  signAction,
   signUpAction,
 } from '../../store/module/auth';
 import SignUpBox from './SignUpBox';
-import SocialUpBox from './SocialUpBox';
+import UserInfoBox from './UserInfoBox';
 import { SignWrap, SignInner, SignBody } from './style';
 
 const formValidators = [
-  [emailCheck, passwordCheck, passwordCheck, nameCheck],
+  [emailCheck, passwordCheck, passwordCheck],
   [emailCheck, nameCheck],
 ];
 
 const SignUp = () => {
-  const socialInfo = useSelector((state) => state.auth.socialInfo);
-
   const dispatch = useDispatch();
 
   const onSocialSign = useCallback(
@@ -35,18 +34,25 @@ const SignUp = () => {
     [dispatch],
   );
 
+  const onSign = useCallback(
+    (payload) => dispatch(signAction.REQUEST(payload)),
+    [dispatch],
+  );
+
   const onSignUp = useCallback(
     (payload) => dispatch(signUpAction.REQUEST(payload)),
     [dispatch],
   );
 
+  const { isSocial, signInfo } = useSelector((state) => state.auth);
+
   const [focusInput, setFocusInput] = useState(null);
   const [formData, setFormData] = useState(signUpForm);
   const [validator, setValidator] = useState(formValidators[0]);
 
-  const isSocial = useMemo(() => {
-    return !isEmpty(socialInfo);
-  }, [socialInfo]);
+  const isSignInfo = useMemo(() => {
+    return !isEmpty(signInfo);
+  }, [signInfo]);
 
   const isActive = useMemo(() => {
     return every(formData, (item) => item.isCheck);
@@ -76,11 +82,11 @@ const SignUp = () => {
   );
 
   useEffect(() => {
-    if (isSocial) {
+    if (isSignInfo) {
       setFormData(
-        produce(socialUpForm, (draft) => {
-          const emailIndex = findIndex(socialUpForm, { name: 'email' });
-          draft[emailIndex].value = socialInfo.email;
+        produce(userInfoForm, (draft) => {
+          const emailIndex = findIndex(userInfoForm, { name: 'email' });
+          draft[emailIndex].value = signInfo.email;
           draft[emailIndex].isCheck = true;
           draft[emailIndex].isDisable = true;
         }),
@@ -90,14 +96,14 @@ const SignUp = () => {
       setFormData(signUpForm);
       setValidator(formValidators[0]);
     }
-  }, [socialInfo, isSocial]);
+  }, [signInfo, isSignInfo]);
 
   return (
     <SignWrap>
       <SignInner>
-        <h4>{!isSocial ? 'sign up' : 'social up'}</h4>
+        <h4>sign up</h4>
         <SignBody>
-          {!isSocial ? (
+          {!isSignInfo ? (
             <SignUpBox
               formData={formData}
               focusInput={focusInput}
@@ -105,19 +111,19 @@ const SignUp = () => {
               onInputFocus={onInputFocus}
               onInputChange={onInputChange}
               onInputBlur={onInputBlur}
-              onConfirm={onSignUp}
+              onSign={onSign}
               onSocialSign={onSocialSign}
             />
           ) : (
-            <SocialUpBox
-              socialInfo={socialInfo}
+            <UserInfoBox
+              signInfo={signInfo}
               formData={formData}
               focusInput={focusInput}
               isActive={isActive}
               onInputFocus={onInputFocus}
               onInputChange={onInputChange}
               onInputBlur={onInputBlur}
-              onConfirm={onSocialSignUp}
+              onConfirm={isSocial ? onSocialSignUp : onSignUp}
             />
           )}
         </SignBody>

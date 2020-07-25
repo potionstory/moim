@@ -49,17 +49,9 @@ export const signUpForm = [
     isCheck: false,
     icon: faRedoAlt,
   },
-  {
-    type: 'text',
-    name: 'userName',
-    placeholder: 'user name',
-    value: '',
-    isCheck: false,
-    icon: faUser,
-  },
 ];
 
-export const socialUpForm = [
+export const userInfoForm = [
   {
     type: 'email',
     name: 'email',

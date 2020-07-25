@@ -5,6 +5,7 @@ import { createType, createAction } from './helper';
 export const SOCIAL_SIGN = createType('SOCIAL_SIGN');
 export const SOCIAL_SIGN_UP = createType('SOCIAL_SIGN_UP');
 export const SOCIAL_SIGN_IN = createType('SOCIAL_SIGN_IN');
+export const SIGN = createType('SIGN');
 export const SIGN_UP = createType('SIGN_UP');
 export const SIGN_IN = createType('SIGN_IN');
 export const SIGN_OUT = createType('SIGNOUT');
@@ -14,6 +15,7 @@ export const GET_USER = createType('GET_USER');
 export const socialSignAction = createAction(SOCIAL_SIGN);
 export const socialSignUpAction = createAction(SOCIAL_SIGN_UP);
 export const socialSignInAction = createAction(SOCIAL_SIGN_IN);
+export const signAction = createAction(SIGN);
 export const signUpAction = createAction(SIGN_UP);
 export const signInAction = createAction(SIGN_IN);
 export const signOutAction = createAction(SIGN_OUT);
@@ -22,7 +24,8 @@ export const getUserAction = createAction(GET_USER);
 // initialState
 const initialState = {
   loading: false,
-  socialInfo: null,
+  signInfo: null,
+  isSocial: false,
   isAuth: false,
   userInfo: null,
 };
@@ -36,7 +39,8 @@ export default (state = initialState, action) => {
       }
       case SOCIAL_SIGN.SUCCESS: {
         draft.loading = false;
-        draft.socialInfo = action.payload;
+        draft.isSocial = true;
+        draft.signInfo = action.payload;
         break;
       }
       case SOCIAL_SIGN.FAILURE: {
@@ -49,7 +53,7 @@ export default (state = initialState, action) => {
       }
       case SOCIAL_SIGN_UP.SUCCESS: {
         draft.loading = false;
-        draft.socialInfo = null;
+        draft.signInfo = null;
         break;
       }
       case SOCIAL_SIGN_UP.FAILURE: {
@@ -65,6 +69,20 @@ export default (state = initialState, action) => {
         break;
       }
       case SOCIAL_SIGN_IN.FAILURE: {
+        draft.loading = false;
+        break;
+      }
+      case SIGN.REQUEST: {
+        draft.loading = true;
+        break;
+      }
+      case SIGN.SUCCESS: {
+        draft.loading = false;
+        draft.isSocial = false;
+        draft.signInfo = action.payload;
+        break;
+      }
+      case SIGN.FAILURE: {
         draft.loading = false;
         break;
       }

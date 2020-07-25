@@ -10,7 +10,7 @@ const SignUpBox = ({
   onInputFocus,
   onInputChange,
   onInputBlur,
-  onConfirm,
+  onSign,
   onSocialSign,
 }) => {
   return (
@@ -22,8 +22,8 @@ const SignUpBox = ({
         onInputChange={onInputChange}
         onInputBlur={onInputBlur}
         isActive={isActive}
-        onConfirm={onConfirm}
-        confirmText="sign up"
+        onConfirm={onSign}
+        confirmText="sign info"
       />
       <SocialArea>
         <span className="subTitle">social login</span>

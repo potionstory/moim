@@ -27,6 +27,7 @@ export const ButtonWrap = styled.div`
       font-weight: 600;
       color: ${({ theme }) => theme.gray};
       text-transform: uppercase;
+      transition: all 0.2s ease-out;
     }
     &:hover {
       background-color: ${({ theme }) => theme.theme};

@@ -1,10 +1,13 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, select, takeEvery } from 'redux-saga/effects';
 import isEmpty from 'lodash/isEmpty';
 import forEach from 'lodash/forEach';
+import reduce from 'lodash/reduce';
+import assign from 'lodash/assign';
 import {
   SOCIAL_SIGN,
   SOCIAL_SIGN_UP,
   SOCIAL_SIGN_IN,
+  SIGN,
   SIGN_UP,
   SIGN_IN,
   SIGN_OUT,
@@ -14,6 +17,7 @@ import {
   socialSignAction,
   socialSignUpAction,
   socialSignInAction,
+  signAction,
   signUpAction,
   signInAction,
   signOutAction,
@@ -48,21 +52,20 @@ function* workSocialSign() {
   }
 }
 
-function* workSocialSignUp() {
+function* workSocialSignUp(action) {
   const bodyParams = {};
+  const user = auth.currentUser;
 
-  yield signInWithGoogle().then((res) => {
-    const user = res.user;
-    if (user !== null) {
-      bodyParams.userId = user.uid;
-      bodyParams.email = user.email;
-      bodyParams.userImageUrl = user.photoURL;
-      bodyParams.userName = user.displayName;
-    }
+  forEach(action.payload, (item) => {
+    bodyParams[item.name] = item.value;
   });
 
-  const token = yield auth.currentUser.getIdToken();
-  bodyParams.token = token;
+  if (user !== null) {
+    bodyParams.userId = user.uid;
+    bodyParams.email = user.email;
+    bodyParams.userImageUrl = user.photoURL;
+    bodyParams.token = yield user.getIdToken();
+  }
 
   const response = yield call(socialSignUp, bodyParams);
 
@@ -86,12 +89,29 @@ function* workSocialSignIn() {
   yield put(modalCloseAction());
 }
 
-function* workSignUp(action) {
+function* workSign(action) {
   const bodyParams = {};
 
   forEach(action.payload, (item) => {
     bodyParams[item.name] = item.value;
   });
+
+  if (!isEmpty(bodyParams)) {
+    yield put(signAction.SUCCESS(bodyParams));
+  } else {
+    yield put(signAction.FAILURE());
+  }
+}
+
+function* workSignUp(action) {
+  const { signInfo } = yield select(({ auth }) => auth);
+  const userInfo = reduce(
+    action.payload,
+    (acc, cur) => assign(acc, { [cur.name]: cur.value }),
+    {},
+  );
+
+  const bodyParams = { ...signInfo, ...userInfo };
 
   const response = yield call(signUp, bodyParams);
 
@@ -154,6 +174,10 @@ function* watchSocialSignIn() {
   yield takeEvery(SOCIAL_SIGN_IN.REQUEST, workSocialSignIn);
 }
 
+function* watchSign() {
+  yield takeEvery(SIGN.REQUEST, workSign);
+}
+
 function* watchSignUp() {
   yield takeEvery(SIGN_UP.REQUEST, workSignUp);
 }
@@ -174,6 +198,7 @@ export default [
   watchSocialSign,
   watchSocialSignUp,
   watchSocialSignIn,
+  watchSign,
   watchSignUp,
   watchSignIn,
   watchSignOut,

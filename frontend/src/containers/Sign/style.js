@@ -43,7 +43,7 @@ export const SocialArea = styled.div`
   }
 `;
 
-export const SocialBox = styled.div`
+export const UserImage = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

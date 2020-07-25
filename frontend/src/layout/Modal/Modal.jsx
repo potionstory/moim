@@ -8,13 +8,14 @@ import SignUp from '../../containers/Sign/SignUp';
 import { ModalWrap, ModalInner, CloseButton } from './style';
 
 const Modal = () => {
-  const mode = useSelector((state) => state.global.mode);
-  const { isVisible, name } = useSelector(({ global }) => global.modal);
-
   const dispatch = useDispatch();
+
   const onModalClose = useCallback(() => dispatch(modalCloseAction()), [
     dispatch,
   ]);
+
+  const { mode, modal } = useSelector(({ global }) => global);
+  const { isVisible, name } = modal;
 
   const [modalVisible, setModalVisible] = useState(false);
 

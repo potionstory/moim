@@ -36,8 +36,6 @@ const Header = () => {
     dispatch,
   ]);
 
-  const { isAuth, userInfo } = useSelector(({ auth }) => auth);
-
   const onGetUser = useCallback(() => dispatch(getUserAction.REQUEST()), [
     dispatch,
   ]);
@@ -56,6 +54,8 @@ const Header = () => {
     setIsUserActive(false);
     dispatch(signUpModalOpenAction());
   }, [dispatch]);
+
+  const { isAuth, userInfo } = useSelector(({ auth }) => auth);
 
   const [isUserActive, setIsUserActive] = useState(false);
 
