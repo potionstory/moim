@@ -10,111 +10,215 @@ const {
 
 // social signUp user
 exports.socialSignUp = (req, res) => {
-  const newSocialUser = {
-    email: req.body.email,
-    userName: req.body.userName,
-    userImageUrl: req.body.userImageUrl,
-    userId: req.body.userId,
-    token: req.body.token,
-  };
+  if (req.method !== "POST") {
+    return res.status(400).json({ error: "Method not defined" });
+  }
 
-  db.doc(`/users/${newSocialUser.userName}`)
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        return res
-          .status(400)
-          .json({ userName: "this user name is already taken" });
-      } else {
-        const userCredentials = {
-          userId: newSocialUser.userId,
-          email: newSocialUser.email,
-          userName: newSocialUser.userName,
-          userImagePath: "user/",
-          userImageUrl: newSocialUser.userImageUrl,
-          createdAt: new Date().toISOString(),
-        };
-        return db.doc(`/users/${newSocialUser.userName}`).set(userCredentials);
-      }
-    })
-    .then(() => {
-      return res.status(201).json({ token: newSocialUser.token });
-    })
-    .catch((err) => {
-      console.error(err);
-      if (err.code === "auth/email-already-in-use") {
-        return res
-          .statusMessage(400)
-          .json({ email: "Email is already in use" });
-      } else {
-        return res
-          .status(500)
-          .json({ general: "Something went wrong, please try again" });
-      }
-    });
+  let busboy = new BusBoy({ headers: req.headers });
+
+  let bucket = admin.storage().bucket();
+  let generatedToken = uuid();
+
+  let storageFilepath;
+  let storageFile;
+
+  let files = {};
+  req.body = {};
+
+  busboy.on("file", (fieldname, file, filename, encoding, mimetype) => {
+    if (mimetype !== "image/jpeg" && mimetype !== "image/png") {
+      return res.status(400).json({ error: "Wrong file type submitted" });
+    }
+
+    const metadata = {
+      contentType: mimetype,
+      metadata: {
+        firebaseStorageDownloadTokens: generatedToken,
+      },
+    };
+    let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
+    let uniqueName = admin.database().ref().push().key;
+
+    storageFilepath = `user/${req.body.userName}/${uniqueName + fileext}`;
+    storageFile = bucket.file(storageFilepath);
+
+    file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
+  });
+
+  busboy.on("field", (fieldname, value) => {
+    req.body[fieldname] = value;
+  });
+
+  busboy.on("finish", () => {
+    req.files = files;
+
+    const userImageUrl = `https://firebasestorage.googleapis.com/v0/b/${
+      config.storageBucket
+    }/o/${encodeURIComponent(
+      storageFilepath
+    )}?alt=media&token=${generatedToken}`;
+
+    const newSocialUser = {
+      email: req.body.email,
+      userName: req.body.userName,
+      userImageUrl:
+        req.body.userImageFile !== "undefined"
+          ? userImageUrl
+          : req.body.userImageUrl,
+      userId: req.body.userId,
+      token: req.body.token,
+    };
+
+    db.doc(`/users/${newSocialUser.userName}`)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          return res
+            .status(400)
+            .json({ userName: "this user name is already taken" });
+        } else {
+          const userCredentials = {
+            userId: newSocialUser.userId,
+            email: newSocialUser.email,
+            userName: newSocialUser.userName,
+            userImagePath: "user/",
+            userImageUrl: newSocialUser.userImageUrl,
+            createdAt: new Date().toISOString(),
+          };
+          return db
+            .doc(`/users/${newSocialUser.userName}`)
+            .set(userCredentials);
+        }
+      })
+      .then(() => {
+        return res.status(201).json({ token: newSocialUser.token });
+      })
+      .catch((err) => {
+        console.error(err);
+        if (err.code === "auth/email-already-in-use") {
+          return res
+            .statusMessage(400)
+            .json({ email: "Email is already in use" });
+        } else {
+          return res
+            .status(500)
+            .json({ general: "Something went wrong, please try again" });
+        }
+      });
+  });
+  busboy.end(req.rawBody);
 };
 
 // signUp user
 exports.signUp = (req, res) => {
-  const newUser = {
-    email: req.body.email,
-    password: req.body.password,
-    confirmPassword: req.body.confirmPassword,
-    userName: req.body.userName,
-  };
+  if (req.method !== "POST") {
+    return res.status(400).json({ error: "Method not defined" });
+  }
 
-  const { valid, errors } = validateSignUpData(newUser);
+  let busboy = new BusBoy({ headers: req.headers });
 
-  if (!valid) return res.status(400).json(errors);
+  let bucket = admin.storage().bucket();
+  let generatedToken = uuid();
 
-  const noImg = "firebase_28dp.png";
+  let storageFilepath;
+  let storageFile;
 
-  let token, userId;
+  let files = {};
+  req.body = {};
 
-  db.doc(`/users/${newUser.userName}`)
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        return res
-          .status(400)
-          .json({ userName: "this user name is already taken" });
-      } else {
-        return firebase
-          .auth()
-          .createUserWithEmailAndPassword(newUser.email, newUser.password);
-      }
-    })
-    .then((data) => {
-      userId = data.user.uid;
-      return data.user.getIdToken();
-    })
-    .then((idToken) => {
-      token = idToken;
-      const userCredentials = {
-        userId,
-        email: newUser.email,
-        userName: newUser.userName,
-        userImagePath: "user/",
-        userImageUrl: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noImg}?alt=media`,
-        createdAt: new Date().toISOString(),
-      };
-      return db.doc(`/users/${newUser.userName}`).set(userCredentials);
-    })
-    .then(() => {
-      return res.status(201).json({ token });
-    })
-    .catch((err) => {
-      console.error(err);
-      if (err.code === "auth/email-already-in-use") {
-        return res
-          .statusMessage(400)
-          .json({ email: "Email is already in use" });
-      } else {
-        return res
-          .status(500)
-          .json({ general: "Something went wrong, please try again" });
-      }
-    });
+  busboy.on("file", (fieldname, file, filename, encoding, mimetype) => {
+    if (mimetype !== "image/jpeg" && mimetype !== "image/png") {
+      return res.status(400).json({ error: "Wrong file type submitted" });
+    }
+
+    const metadata = {
+      contentType: mimetype,
+      metadata: {
+        firebaseStorageDownloadTokens: generatedToken,
+      },
+    };
+    let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
+    let uniqueName = admin.database().ref().push().key;
+
+    storageFilepath = `user/${req.body.userName}/${uniqueName + fileext}`;
+    storageFile = bucket.file(storageFilepath);
+
+    file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
+  });
+
+  busboy.on("field", (fieldname, value) => {
+    req.body[fieldname] = value;
+  });
+
+  busboy.on("finish", () => {
+    req.files = files;
+
+    const userImageUrl = `https://firebasestorage.googleapis.com/v0/b/${
+      config.storageBucket
+    }/o/${encodeURIComponent(
+      storageFilepath
+    )}?alt=media&token=${generatedToken}`;
+
+    const newUser = {
+      email: req.body.email,
+      password: req.body.password,
+      confirmPassword: req.body.confirmPassword,
+      userName: req.body.userName,
+    };
+
+    const { valid, errors } = validateSignUpData(newUser);
+
+    if (!valid) return res.status(400).json(errors);
+
+    let token, userId;
+
+    db.doc(`/users/${newUser.userName}`)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          return res
+            .status(400)
+            .json({ userName: "this user name is already taken" });
+        } else {
+          return firebase
+            .auth()
+            .createUserWithEmailAndPassword(newUser.email, newUser.password);
+        }
+      })
+      .then((data) => {
+        userId = data.user.uid;
+        return data.user.getIdToken();
+      })
+      .then((idToken) => {
+        token = idToken;
+        const userCredentials = {
+          userId,
+          email: newUser.email,
+          userName: newUser.userName,
+          userImagePath: "user/",
+          userImageUrl,
+          createdAt: new Date().toISOString(),
+        };
+        return db.doc(`/users/${newUser.userName}`).set(userCredentials);
+      })
+      .then(() => {
+        return res.status(201).json({ token });
+      })
+      .catch((err) => {
+        console.error(err);
+        if (err.code === "auth/email-already-in-use") {
+          return res
+            .statusMessage(400)
+            .json({ email: "Email is already in use" });
+        } else {
+          return res
+            .status(500)
+            .json({ general: "Something went wrong, please try again" });
+        }
+      });
+  });
+
+  busboy.end(req.rawBody);
 };
 
 // signIn user

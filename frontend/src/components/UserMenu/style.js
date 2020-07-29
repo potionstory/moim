@@ -30,6 +30,11 @@ export const Avatar = styled.button`
   border-radius: 24px;
   background-color: ${({ theme }) => theme.sub};
   transition: all 0.2s ease-out;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
   &:hover {
     border-color: ${({ theme }) => theme.theme};
   }
@@ -55,6 +60,7 @@ export const Member = styled.div`
       img {
         width: 48px;
         height: 48px;
+        object-fit: cover;
         border: 4px solid ${({ theme }) => theme.sub};
         border-radius: 24px;
         background-color: ${({ theme }) => theme.sub};

@@ -49,8 +49,9 @@ export const UserImage = styled.div`
   align-items: center;
   margin-top: 1.5rem;
   .userImage {
+    display: flex;
     overflow: hidden;
-    flex: 1;
+    position: relative;
     width: 200px;
     height: 200px;
     border-radius: 100px;
@@ -59,6 +60,31 @@ export const UserImage = styled.div`
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      svg {
+        font-size: 4rem;
+        color: ${({ theme }) => theme.gray};
+        opacity: 0.6;
+        transition: all 0.2s ease-out;
+      }
+    }
+    &:hover {
+      label {
+        svg {
+          color: ${({ theme }) => theme.theme};
+          opacity: 1;
+        }
+      }
     }
   }
   .email {

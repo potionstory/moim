@@ -53,17 +53,20 @@ function* workSocialSign() {
 }
 
 function* workSocialSignUp(action) {
-  const bodyParams = {};
-  const user = auth.currentUser;
+  const { signInfo } = yield select(({ auth }) => auth);
+  const userInfo = reduce(
+    action.payload,
+    (acc, cur) => assign(acc, { [cur.name]: cur.value }),
+    {},
+  );
 
-  forEach(action.payload, (item) => {
-    bodyParams[item.name] = item.value;
-  });
+  const bodyParams = { ...signInfo, ...userInfo };
+
+  const user = auth.currentUser;
 
   if (user !== null) {
     bodyParams.userId = user.uid;
     bodyParams.email = user.email;
-    bodyParams.userImageUrl = user.photoURL;
     bodyParams.token = yield user.getIdToken();
   }
 
