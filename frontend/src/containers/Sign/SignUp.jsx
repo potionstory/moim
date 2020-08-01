@@ -11,6 +11,7 @@ import {
   socialSignUpAction,
   signAction,
   signUpAction,
+  signUserImageAction,
 } from '../../store/module/auth';
 import SignUpBox from './SignUpBox';
 import UserInfoBox from './UserInfoBox';
@@ -44,11 +45,20 @@ const SignUp = () => {
     [dispatch],
   );
 
+  const onImageUpload = useCallback(
+    (e) => {
+      let file = e.target.files[0];
+      dispatch(signUserImageAction(file));
+    },
+    [dispatch],
+  );
+
   const { isSocial, signInfo } = useSelector((state) => state.auth);
 
   const [focusInput, setFocusInput] = useState(null);
   const [formData, setFormData] = useState(signUpForm);
   const [validator, setValidator] = useState(formValidators[0]);
+  const [userImage, serUserImage] = useState(null);
 
   const isSignInfo = useMemo(() => {
     return !isEmpty(signInfo);
@@ -57,6 +67,19 @@ const SignUp = () => {
   const isActive = useMemo(() => {
     return every(formData, (item) => item.isCheck);
   }, [formData]);
+
+  // const onImageUpload = useCallback((e) => {
+  //   e.preventDefault();
+  //   let reader = new FileReader();
+  //   let file = e.target.files[0];
+  //   reader.onloadend = () => {
+  //     serUserImage({
+  //       file,
+  //       previewURL: reader.result,
+  //     });
+  //   };
+  //   reader.readAsDataURL(file);
+  // }, []);
 
   const onInputFocus = useCallback((e) => {
     setFocusInput(e.target.name);
@@ -116,10 +139,12 @@ const SignUp = () => {
             />
           ) : (
             <UserInfoBox
+              userImage={userImage}
               signInfo={signInfo}
+              isActive={isActive}
               formData={formData}
               focusInput={focusInput}
-              isActive={isActive}
+              onImageUpload={onImageUpload}
               onInputFocus={onInputFocus}
               onInputChange={onInputChange}
               onInputBlur={onInputBlur}

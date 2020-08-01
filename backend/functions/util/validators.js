@@ -44,7 +44,6 @@ exports.validateSignInData = (data) => {
 exports.reduceUserDetails = (data) => {
   let userDetails = {};
 
-  if (!isEmpty(data.nickname.trim())) userDetails.nickname = data.nickname;
   if (!isEmpty(data.about.trim())) userDetails.about = data.about;
   if (!isEmpty(data.homepage.trim())) {
     if (data.homepage.trim().substring(0, 4) !== "http") {

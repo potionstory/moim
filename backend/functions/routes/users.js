@@ -61,7 +61,7 @@ exports.socialSignUp = (req, res) => {
     const newSocialUser = {
       email: req.body.email,
       userName: req.body.userName,
-      userImageUrl:
+      userImage:
         req.body.userImageFile !== "undefined"
           ? userImageUrl
           : req.body.userImageUrl,
@@ -81,8 +81,8 @@ exports.socialSignUp = (req, res) => {
             userId: newSocialUser.userId,
             email: newSocialUser.email,
             userName: newSocialUser.userName,
-            userImagePath: "user/",
-            userImageUrl: newSocialUser.userImageUrl,
+            userImagePath: storageFilepath,
+            userImage: newSocialUser.userImage,
             createdAt: new Date().toISOString(),
           };
           return db
@@ -153,7 +153,7 @@ exports.signUp = (req, res) => {
   busboy.on("finish", () => {
     req.files = files;
 
-    const userImageUrl = `https://firebasestorage.googleapis.com/v0/b/${
+    const userImage = `https://firebasestorage.googleapis.com/v0/b/${
       config.storageBucket
     }/o/${encodeURIComponent(
       storageFilepath
@@ -195,8 +195,8 @@ exports.signUp = (req, res) => {
           userId,
           email: newUser.email,
           userName: newUser.userName,
-          userImagePath: "user/",
-          userImageUrl,
+          userImagePath: storageFilepath,
+          userImage,
           createdAt: new Date().toISOString(),
         };
         return db.doc(`/users/${newUser.userName}`).set(userCredentials);
@@ -411,7 +411,7 @@ exports.uploadImage = async (req, res) => {
         return;
       }
 
-      const userImageUrl = `https://firebasestorage.googleapis.com/v0/b/${
+      const userImage = `https://firebasestorage.googleapis.com/v0/b/${
         config.storageBucket
       }/o/${encodeURIComponent(
         storageFilepath
@@ -423,7 +423,7 @@ exports.uploadImage = async (req, res) => {
           const deleteFilePath = doc.data().userImagePath;
           bucket.file(deleteFilePath).delete();
           db.doc(`/users/${req.user.userName}`)
-            .update({ userImageUrl, userImagePath: storageFilepath })
+            .update({ userImage, userImagePath: storageFilepath })
             .then(() => {
               res.status(201).json({ message: "Image uploaded successfully" }); // 201 CREATED
             })

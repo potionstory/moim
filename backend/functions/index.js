@@ -191,9 +191,7 @@ exports.createMeetingNotificationOnComment = functions.firestore
 exports.onUserImageChange = functions.firestore
   .document("/users/{userId}")
   .onUpdate((change) => {
-    if (
-      change.before.data().userImageUrl !== change.after.data().userImageUrl
-    ) {
+    if (change.before.data().userImage !== change.after.data().userImage) {
       const batch = db.batch();
       return db
         .collection("communitys")
@@ -203,7 +201,7 @@ exports.onUserImageChange = functions.firestore
           data.forEach((doc) => {
             const community = db.doc(`communitys/${doc.id}`);
             batch.update(community, {
-              userImage: change.after.data().userImageUrl,
+              userImage: change.after.data().userImage,
             });
           });
           return db
@@ -214,7 +212,7 @@ exports.onUserImageChange = functions.firestore
               data.forEach((doc) => {
                 const meetings = db.doc(`meetings/${doc.id}`);
                 batch.update(meetings, {
-                  userImage: change.after.data().userImageUrl,
+                  userImage: change.after.data().userImage,
                 });
               });
               return batch.commit();

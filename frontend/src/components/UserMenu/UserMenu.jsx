@@ -25,7 +25,7 @@ const UserMenu = ({
     <MenuWrap>
       <Avatar onClick={onUserMenuToggle} isActive={isUserActive}>
         {isAuth ? (
-          <img src={userInfo.userImageUrl} />
+          <img src={userInfo.userImage} />
         ) : (
           <FontAwesomeIcon icon={faGhost} />
         )}
@@ -41,7 +41,7 @@ const UserMenu = ({
           <Member>
             <div className="profile">
               <span className="user">
-                <img src={userInfo.userImageUrl} />
+                <img src={userInfo.userImage} />
                 <span>{userInfo.userName}</span>
               </span>
               <IconButton onClickEvent={onSignInModalOpen} icon={faUserEdit} />

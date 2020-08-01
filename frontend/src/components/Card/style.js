@@ -232,6 +232,7 @@ export const CardUserInfo = styled.div`
       border: 3px solid ${({ theme }) => theme.main};
       border-radius: 20px;
       background-color: ${({ theme }) => theme.main};
+      object-fit: cover;
       transition: all 0.2s ease-out;
     }
     span {

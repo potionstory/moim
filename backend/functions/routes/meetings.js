@@ -78,7 +78,7 @@ exports.postMeeting = (req, res) => {
   busboy.on("finish", () => {
     req.files = files;
 
-    const mainImageUrl = `https://firebasestorage.googleapis.com/v0/b/${
+    const mainImage = `https://firebasestorage.googleapis.com/v0/b/${
       config.storageBucket
     }/o/${encodeURIComponent(
       storageFilepath
@@ -89,11 +89,11 @@ exports.postMeeting = (req, res) => {
       title: req.body.title,
       status: req.body.status,
       mainImagePath: "meeting/",
-      mainImage: mainImageUrl,
+      mainImage,
       text: req.body.text,
       date: req.body.date,
       location: req.body.location,
-      userImage: req.user.userImageUrl,
+      userImage: req.user.userImage,
       userName: req.user.userName,
       createdAt: new Date().toISOString(),
       likeCount: 0,
@@ -189,7 +189,7 @@ exports.putMeeting = (req, res) => {
   busboy.on("finish", () => {
     req.files = files;
 
-    const mainImageUrl = `https://firebasestorage.googleapis.com/v0/b/${
+    const mainImage = `https://firebasestorage.googleapis.com/v0/b/${
       config.storageBucket
     }/o/${encodeURIComponent(
       storageFilepath
@@ -208,7 +208,7 @@ exports.putMeeting = (req, res) => {
             title,
             status,
             mainImagePath: storageFilepath,
-            mainImage: mainImageUrl,
+            mainImage,
             text,
             date,
             location,
@@ -357,7 +357,7 @@ exports.commentOnMeeting = (req, res) => {
     createdAt: new Date().toISOString(),
     meetingId: req.params.meetingId,
     userName: req.user.userName,
-    userImage: req.user.userImageUrl,
+    userImage: req.user.userImage,
   };
 
   db.doc(`/meetings/${req.params.meetingId}`)

@@ -77,7 +77,7 @@ exports.postCommunity = (req, res) => {
   busboy.on("finish", () => {
     req.files = files;
 
-    const mainImageUrl = `https://firebasestorage.googleapis.com/v0/b/${
+    const mainImage = `https://firebasestorage.googleapis.com/v0/b/${
       config.storageBucket
     }/o/${encodeURIComponent(
       storageFilepath
@@ -88,10 +88,10 @@ exports.postCommunity = (req, res) => {
       title: req.body.title,
       status: req.body.status,
       mainImagePath: "community/",
-      mainImage: mainImageUrl,
+      mainImage,
       text: req.body.text,
       url: req.body.url,
-      userImage: req.user.userImageUrl,
+      userImage: req.user.userImage,
       userName: req.user.userName,
       createdAt: new Date().toISOString(),
       likeCount: 0,
@@ -188,7 +188,7 @@ exports.putCommunity = (req, res) => {
   busboy.on("finish", () => {
     req.files = files;
 
-    const mainImageUrl = `https://firebasestorage.googleapis.com/v0/b/${
+    const mainImage = `https://firebasestorage.googleapis.com/v0/b/${
       config.storageBucket
     }/o/${encodeURIComponent(
       storageFilepath
@@ -207,7 +207,7 @@ exports.putCommunity = (req, res) => {
             title,
             status,
             mainImagePath: storageFilepath,
-            mainImage: mainImageUrl,
+            mainImage,
             text,
             url,
           })
@@ -355,7 +355,7 @@ exports.commentOnCommunity = (req, res) => {
     createdAt: new Date().toISOString(),
     communityId: req.params.communityId,
     userName: req.user.userName,
-    userImage: req.user.userImageUrl,
+    userImage: req.user.userImage,
   };
 
   db.doc(`/communitys/${req.params.communityId}`)
