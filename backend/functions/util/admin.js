@@ -10,5 +10,6 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
+db.settings({ ignoreUndefinedProperties: true });
 
 module.exports = { admin, BusBoy, db };

@@ -196,7 +196,7 @@ exports.signUp = (req, res) => {
           email: newUser.email,
           userName: newUser.userName,
           userImagePath: storageFilepath,
-          userImage,
+          userImage: req.body.userImageFile !== "undefined" ? userImage : null,
           createdAt: new Date().toISOString(),
         };
         return db.doc(`/users/${newUser.userName}`).set(userCredentials);
