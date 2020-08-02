@@ -28,7 +28,8 @@ export const Avatar = styled.button`
   height: 40px;
   border: 4px solid ${({ theme }) => theme.sub};
   border-radius: 24px;
-  background-color: ${({ theme }) => theme.sub};
+  background-color: ${({ theme, isImageNone }) =>
+    !isImageNone ? theme.sub : theme.theme};
   transition: all 0.2s ease-out;
   img {
     width: 100%;
@@ -41,7 +42,8 @@ export const Avatar = styled.button`
   ${({ theme, isActive }) => isActive && `border-color: ${theme.theme};`};
   svg {
     font-size: 1.6rem;
-    color: ${({ theme }) => theme.gray};
+    color: ${({ theme, isImageNone }) =>
+      !isImageNone ? theme.gray : theme.main};
   }
 `;
 
@@ -54,19 +56,33 @@ export const Member = styled.div`
     border-bottom: 1px solid ${({ theme }) => theme.sub};
     .user {
       display: flex;
+      align-items: center;
       overflow: hidden;
       height: 48px;
       padding-right: 12px;
-      img {
-        width: 48px;
-        height: 48px;
-        object-fit: cover;
-        border: 4px solid ${({ theme }) => theme.sub};
+      .avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        width: 40px;
+        height: 40px;
         border-radius: 24px;
-        background-color: ${({ theme }) => theme.sub};
+        background-color: ${({ theme, isImageNone }) =>
+          !isImageNone ? theme.sub : theme.theme};
         transition: all 0.2s ease-out;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        svg {
+          font-size: 1.6rem;
+          color: ${({ theme, isImageNone }) =>
+            !isImageNone ? theme.gray : theme.main};
+        }
       }
-      span {
+      .name {
         flex: 1;
         height: 48px;
         margin-left: 12px;

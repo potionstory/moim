@@ -21,10 +21,15 @@ const UserMenu = ({
   onSignInModalOpen,
   onSignUpModalOpen,
 }) => {
+  const isImageNone = isAuth && userInfo.userImage === null;
   return (
     <MenuWrap>
-      <Avatar onClick={onUserMenuToggle} isActive={isUserActive}>
-        {isAuth ? (
+      <Avatar
+        onClick={onUserMenuToggle}
+        isActive={isUserActive}
+        isImageNone={isImageNone}
+      >
+        {isAuth && !isImageNone ? (
           <img src={userInfo.userImage} />
         ) : (
           <FontAwesomeIcon icon={faGhost} />
@@ -38,11 +43,17 @@ const UserMenu = ({
         }}
       >
         {isAuth ? (
-          <Member>
+          <Member isImageNone={isImageNone}>
             <div className="profile">
               <span className="user">
-                <img src={userInfo.userImage} />
-                <span>{userInfo.userName}</span>
+                <span className="avatar">
+                  {isAuth && !isImageNone ? (
+                    <img src={userInfo.userImage} />
+                  ) : (
+                    <FontAwesomeIcon icon={faGhost} />
+                  )}
+                </span>
+                <span className="name">{userInfo.userName}</span>
               </span>
               <IconButton onClickEvent={onSignInModalOpen} icon={faUserEdit} />
             </div>

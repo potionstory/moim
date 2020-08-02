@@ -24,7 +24,8 @@ import {
   getUserAction,
 } from '../module/auth';
 import { modalCloseAction } from '../module/global';
-import { auth, signInWithGoogle } from '../../server/firebase.util';
+import { auth } from '../../server/firebase.util';
+import { getSocialSign } from '../../utils/commonUtil';
 import {
   socialSignUp,
   socialSignIn,
@@ -34,16 +35,8 @@ import {
   getUser,
 } from '../api/auth';
 
-function* workSocialSign() {
-  const bodyParams = {};
-
-  yield signInWithGoogle().then((res) => {
-    const user = res.user;
-    if (user !== null) {
-      bodyParams.email = user.email;
-      bodyParams.userImageUrl = user.photoURL;
-    }
-  });
+function* workSocialSign(action) {
+  const bodyParams = yield call(getSocialSign, action.payload);
 
   if (!isEmpty(bodyParams)) {
     yield put(socialSignAction.SUCCESS(bodyParams));
@@ -81,8 +74,8 @@ function* workSocialSignUp(action) {
   }
 }
 
-function* workSocialSignIn() {
-  yield signInWithGoogle();
+function* workSocialSignIn(action) {
+  yield call(getSocialSign, action.payload);
 
   const token = yield auth.currentUser.getIdToken();
 

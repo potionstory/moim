@@ -46,10 +46,7 @@ const SignUp = () => {
   );
 
   const onImageUpload = useCallback(
-    (e) => {
-      let file = e.target.files[0];
-      dispatch(signUserImageAction(file));
-    },
+    (payload) => dispatch(signUserImageAction(payload)),
     [dispatch],
   );
 
@@ -68,18 +65,22 @@ const SignUp = () => {
     return every(formData, (item) => item.isCheck);
   }, [formData]);
 
-  // const onImageUpload = useCallback((e) => {
-  //   e.preventDefault();
-  //   let reader = new FileReader();
-  //   let file = e.target.files[0];
-  //   reader.onloadend = () => {
-  //     serUserImage({
-  //       file,
-  //       previewURL: reader.result,
-  //     });
-  //   };
-  //   reader.readAsDataURL(file);
-  // }, []);
+  const onImageChange = useCallback(
+    (e) => {
+      e.preventDefault();
+
+      let reader = new FileReader();
+      let file = e.target.files[0];
+
+      reader.onloadend = () => {
+        serUserImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+
+      onImageUpload(file);
+    },
+    [dispatch],
+  );
 
   const onInputFocus = useCallback((e) => {
     setFocusInput(e.target.name);
@@ -115,6 +116,7 @@ const SignUp = () => {
         }),
       );
       setValidator(formValidators[1]);
+      serUserImage(signInfo.userImageUrl);
     } else {
       setFormData(signUpForm);
       setValidator(formValidators[0]);
@@ -140,11 +142,10 @@ const SignUp = () => {
           ) : (
             <UserInfoBox
               userImage={userImage}
-              signInfo={signInfo}
               isActive={isActive}
               formData={formData}
               focusInput={focusInput}
-              onImageUpload={onImageUpload}
+              onImageChange={onImageChange}
               onInputFocus={onInputFocus}
               onInputChange={onInputChange}
               onInputBlur={onInputBlur}

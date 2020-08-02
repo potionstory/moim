@@ -9,6 +9,6 @@ export const passwordCheck = (value) => {
 };
 
 export const nameCheck = (value) => {
-  const regExp = /^[가-힣a-zA-Z0-9]{4,8}$/;
+  const regExp = /^[가-힣a-zA-Z0-9]{4,12}$/;
   return regExp.test(value);
 };

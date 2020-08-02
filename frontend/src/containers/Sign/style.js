@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { hidden } from '../../lib/styles/util';
 import { color } from '../../lib/styles/palette';
 
 export const SignWrap = styled.div`
@@ -41,6 +42,10 @@ export const SocialArea = styled.div`
   .socialList {
     margin-top: 0.75rem;
   }
+`;
+
+export const InputAvatar = styled.input`
+  ${hidden};
 `;
 
 export const UserImage = styled.div`

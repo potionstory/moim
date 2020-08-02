@@ -2,15 +2,14 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import InputBox from '../../components/InputBox';
-import { UserImage } from './style';
+import { UserImage, InputAvatar } from './style';
 
 const UserInfoBox = ({
   userImage,
-  signInfo,
   isActive,
   formData,
   focusInput,
-  onImageUpload,
+  onImageChange,
   onInputFocus,
   onInputChange,
   onInputBlur,
@@ -20,13 +19,13 @@ const UserInfoBox = ({
     <>
       <UserImage>
         <span className="userImage">
-          <img src={signInfo.userImage} />
+          <img src={userImage} />
           <label>
             <FontAwesomeIcon icon={faPlus} />
-            <input
+            <InputAvatar
               type="file"
               accept="image/jpg,image/png,image/jpeg"
-              onChange={onImageUpload}
+              onChange={onImageChange}
             />
           </label>
         </span>

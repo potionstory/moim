@@ -13,3 +13,13 @@ export const ellipsisMulti = css`
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
 `;
+
+export const hidden = css`
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  z-index: 1;
+`;
