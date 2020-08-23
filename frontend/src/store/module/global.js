@@ -51,7 +51,7 @@ export default (state = initialState, action) => {
       }
       case SIGNUP_MODAL_OPEN: {
         draft.modal.isVisible = true;
-        draft.modal.name = 'SIGNUP';
+        draft.modal.name = 'SIGN_UP';
         break;
       }
       case MODAL_CLOSE: {

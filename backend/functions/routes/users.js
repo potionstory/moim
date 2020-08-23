@@ -1,3 +1,4 @@
+const https = require("https");
 const firebase = require("firebase");
 const { uuid } = require("uuidv4");
 const { admin, BusBoy, db } = require("../util/admin");
@@ -7,6 +8,68 @@ const {
   validateSignInData,
   reduceUserDetails,
 } = require("../util/validators");
+
+function updateOrCreateUser(userId, displayName, photoURL) {
+  const updateParams = {
+    provider: "KAKAO",
+    displayName: displayName,
+  };
+  if (displayName) {
+    updateParams["displayName"] = displayName;
+  }
+  if (photoURL) {
+    updateParams["photoURL"] = photoURL;
+  }
+  return admin
+    .auth()
+    .updateUser(userId, updateParams)
+    .catch((error) => {
+      if (error.code === "auth/user-not-found") {
+        updateParams["uid"] = userId;
+        return admin.auth().createUser(updateParams);
+      }
+      throw error;
+    });
+}
+
+function createFirebaseToken(user) {
+  const { id, nickname, userImageUrl } = user;
+
+  const userId = `kakao:${id}`;
+
+  if (!userId) {
+    return res
+      .status(404)
+      .send({ message: "There was no user with the given access token." });
+  }
+  return updateOrCreateUser(userId, nickname, userImageUrl).then(
+    (userRecord) => {
+      const uid = userRecord.uid;
+
+      return admin.auth().createCustomToken(uid, { provider: "KAKAO" });
+    }
+  );
+}
+
+exports.getFirebaseToken = (req, res) => {
+  const token = req.body.token;
+  const user = {
+    id: req.body.id,
+    nickname: req.body.nickname,
+    userImageUrl: req.body.userImageUrl,
+  };
+
+  if (token) {
+    createFirebaseToken(user).then((firebaseToken) => {
+      res.send({ token: firebaseToken });
+    });
+  } else {
+    return res
+      .status(400)
+      .send({ error: "There is no token." })
+      .send({ message: "Access token is a required parameter." });
+  }
+};
 
 // social signUp user
 exports.socialSignUp = (req, res) => {
@@ -91,6 +154,20 @@ exports.socialSignUp = (req, res) => {
         }
       })
       .then(() => {
+        const { userId, email } = newSocialUser;
+
+        admin
+          .auth()
+          .getUser(userId)
+          .then((userRecord) => {
+            const user = userRecord.toJSON();
+
+            if (user.email === undefined) {
+              admin.auth().updateUser(userId, {
+                email,
+              });
+            }
+          });
         return res.status(201).json({ token: newSocialUser.token });
       })
       .catch((err) => {

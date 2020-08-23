@@ -35,7 +35,7 @@ const Modal = () => {
     switch (name) {
       case 'SIGN_IN':
         return <SignIn />;
-      case 'SIGNUP':
+      case 'SIGN_UP':
         return <SignUp />;
       default:
         return;

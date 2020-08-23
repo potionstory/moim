@@ -7,6 +7,7 @@ import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from './store/module';
 import rootSaga from './store/saga';
+import { KakaoInitialize } from './server/kakao.util';
 import Root from './Root';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -17,6 +18,8 @@ const store = createStore(
 );
 
 sagaMiddleware.run(rootSaga);
+
+KakaoInitialize();
 
 const StoreRoot = () => (
   <Provider store={store}>

@@ -59,7 +59,6 @@ function* workSocialSignUp(action) {
 
   if (user !== null) {
     bodyParams.userId = user.uid;
-    bodyParams.email = user.email;
     bodyParams.token = yield user.getIdToken();
   }
 

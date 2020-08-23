@@ -109,10 +109,12 @@ const SignUp = () => {
     if (isSignInfo) {
       setFormData(
         produce(userInfoForm, (draft) => {
-          const emailIndex = findIndex(userInfoForm, { name: 'email' });
-          draft[emailIndex].value = signInfo.email;
-          draft[emailIndex].isCheck = true;
-          draft[emailIndex].isDisable = true;
+          if (signInfo.email) {
+            const emailIndex = findIndex(userInfoForm, { name: 'email' });
+
+            draft[emailIndex].value = signInfo.email;
+            draft[emailIndex].isCheck = true;
+          }
         }),
       );
       setValidator(formValidators[1]);

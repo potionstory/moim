@@ -33,6 +33,7 @@ const {
 } = require("./routes/meetings");
 
 const {
+  getFirebaseToken,
   socialSignUp,
   signUp,
   signIn,
@@ -44,7 +45,7 @@ const {
 } = require("./routes/users");
 
 // cors
-app.use(cors());
+app.use(cors({ origin: true }));
 
 app.get("/", (req, res) => {
   res.send("Hello from Firebase!");
@@ -71,6 +72,7 @@ app.get("/meeting/:meetingId/unlike", FBAuth, unlikeMeeting);
 app.post("/meeting/:meetingId/comment", FBAuth, commentOnMeeting);
 
 // users routes
+app.post("/firebase-token", getFirebaseToken);
 app.post("/social-signup", socialSignUp);
 app.post("/signup", signUp);
 app.post("/signin", signIn);

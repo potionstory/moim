@@ -1,5 +1,10 @@
 import { faWifi, faShoePrints } from '@fortawesome/free-solid-svg-icons';
-import { signInWithGoogle, signInWithFacebook } from '../server/firebase.util';
+import {
+  auth,
+  signInWithGoogle,
+  signInWithFacebook,
+} from '../server/firebase.util';
+import { firebaseToken } from '../store/api/auth';
 import icon from '../lib/icons';
 
 // get community icon
@@ -63,6 +68,40 @@ export const getSocialSign = (service) => {
             userImageUrl: user.photoURL,
           };
         }
+      });
+    }
+    case 'kakao': {
+      return new Promise((resolve, reject) => {
+        Kakao.Auth.login({
+          scope: 'profile',
+          success: (authObj) => {
+            Kakao.API.request({
+              url: '/v2/user/me',
+              success: (res) => {
+                const token = Kakao.Auth.getAccessToken();
+                const {
+                  kakao_account: { profile },
+                } = res;
+                firebaseToken({
+                  token,
+                  id: res.id,
+                  nickname: profile.nickname,
+                  userImageUrl: profile.profile_image_url,
+                }).then((res) => {
+                  auth.signInWithCustomToken(res.data.token).then((res) => {
+                    const { user } = res;
+
+                    if (user !== null) {
+                      resolve({
+                        userImageUrl: user.photoURL,
+                      });
+                    }
+                  });
+                });
+              },
+            });
+          },
+        });
       });
     }
     default:
