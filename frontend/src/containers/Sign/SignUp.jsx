@@ -114,6 +114,7 @@ const SignUp = () => {
 
             draft[emailIndex].value = signInfo.email;
             draft[emailIndex].isCheck = true;
+            draft[emailIndex].isDisable = true;
           }
         }),
       );
