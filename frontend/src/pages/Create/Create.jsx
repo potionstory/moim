@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { faCommentAlt, faMugHot } from '@fortawesome/free-solid-svg-icons';
-import Community from '../containers/Community';
-import TabTitle from '../containers/TabTitle';
+import MoimCreate from '../../containers/MoimCreate';
+import TabTitle from '../../containers/TabTitle';
 
 const tabMenu = [
   {
@@ -27,7 +27,7 @@ const Home = () => {
         activeIndex={activeIndex}
         onTabClick={onTabClick}
       />
-      <Community category={tabMenu[activeIndex].title} />
+      <MoimCreate category={activeIndex} />
     </>
   );
 };

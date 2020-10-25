@@ -4,9 +4,9 @@ import map from 'lodash/map';
 import { getAllCommunityAction } from '../../store/module/community';
 import { getAllMeetingAction } from '../../store/module/meeting';
 import Card from '../../components/Card';
-import { MoimList } from './style';
+import { MoimListWrap } from './style';
 
-const Community = ({ category }) => {
+const MoimList = ({ category }) => {
   const dispatch = useDispatch();
 
   const onGetAllCommunity = useCallback(
@@ -30,14 +30,14 @@ const Community = ({ category }) => {
   }, []);
 
   return (
-    <MoimList>
+    <MoimListWrap>
       {map(list[category], (item) => {
         return (
           <Card key={item[`${category}Id`]} item={item} category={category} />
         );
       })}
-    </MoimList>
+    </MoimListWrap>
   );
 };
 
-export default Community;
+export default MoimList;
