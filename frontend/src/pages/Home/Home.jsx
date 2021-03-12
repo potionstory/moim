@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
-import { faCommentAlt, faMugHot } from '@fortawesome/free-solid-svg-icons';
+import { faCommentAlt, faMugHot, faFilter, faSortAmountDown } from '@fortawesome/free-solid-svg-icons';
 import MoimList from '../../containers/MoimList';
-import TabTitle from '../../containers/TabTitle';
+import MoimHeader from '../../containers/MoimHeader';
 
-const tabMenu = [
+const tab = [
   {
     icon: faCommentAlt,
     title: 'community',
@@ -14,20 +14,40 @@ const tabMenu = [
   },
 ];
 
+const util = [
+  {
+    icon: faFilter,
+    title: 'filter',
+  },
+  {
+    icon: faSortAmountDown,
+    title: 'sort',
+  },
+];
+
 const Home = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [tabIndex, setTabIndex] = useState(0);
+  const [utilIndex, setUtilIndex] = useState(-1);
 
   const onTabClick = useCallback((index) => {
-    setActiveIndex(index);
+    setTabIndex(index);
   }, []);
+
+  const onUtilClick = useCallback((index) => {
+    setUtilIndex(utilIndex !== index ? index : -1);
+  }, [utilIndex]);
+
   return (
     <>
-      <TabTitle
-        menu={tabMenu}
-        activeIndex={activeIndex}
+      <MoimHeader
+        tab={tab}
+        util={util}
+        tabIndex={tabIndex}
+        utilIndex={utilIndex}
         onTabClick={onTabClick}
+        onUtilClick={onUtilClick}
       />
-      <MoimList category={tabMenu[activeIndex].title} />
+      <MoimList category={tab[tabIndex].title} />
     </>
   );
 };

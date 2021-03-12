@@ -147,7 +147,7 @@ export const CardTabMenu = styled.div`
         }
         &:hover {
           svg {
-            color: ${({ theme }) => theme.theme};
+            color: ${({ theme }) => theme.title};
           }
         }
       }
@@ -239,7 +239,7 @@ export const CardUserInfo = styled.div`
       flex: 1;
       height: 40px;
       margin-left: 12px;
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       font-weight: 400;
       color: ${({ theme }) => theme.gray};
       line-height: 40px;

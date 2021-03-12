@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import map from 'lodash/map';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { tabMenu } from '../../lib/const';
+import { cardTabMenu } from '../../lib/const';
 import CardCommunityComp from './CardCommunityComp';
 import CardMeetingComp from './CardMeetingComp';
 import {
@@ -32,7 +32,7 @@ const CardTabComp = ({ image, text, category }) => {
             }}
           />
           <ul>
-            {map(tabMenu[category], (item, index) => (
+            {map(cardTabMenu[category], (item, index) => (
               <li key={index}>
                 <button type="button" onClick={() => onTabClick(index)}>
                   <FontAwesomeIcon icon={item} />

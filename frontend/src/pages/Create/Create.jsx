@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { faCommentAlt, faMugHot } from '@fortawesome/free-solid-svg-icons';
 import MoimCreate from '../../containers/MoimCreate';
-import TabTitle from '../../containers/TabTitle';
+import MoimHeader from '../../containers/MoimHeader';
 
 const tabMenu = [
   {
@@ -22,7 +22,7 @@ const Home = () => {
   }, []);
   return (
     <>
-      <TabTitle
+      <MoimHeader
         menu={tabMenu}
         activeIndex={activeIndex}
         onTabClick={onTabClick}

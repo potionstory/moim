@@ -21,7 +21,7 @@ const Modal = () => {
 
   const onButtonClose = useCallback(() => setModalVisible(false));
 
-  const onModalOpen = useCallback(() => console.log('111111'));
+  const onModalOpen = useCallback(() => console.log('onModalOpen'));
 
   const onModalAnimationEnd = useCallback((isStart) => {
     if (isStart) {

@@ -8,8 +8,14 @@ import {
 import icon from './icons';
 import { iconBg } from './styles/palette';
 
-// card tabmenu icon
-export const tabMenu = {
+// moim header util menu icon
+export const utilTabMenu = {
+  filter: [faImage, faAlignLeft, faEllipsisH],
+  sort: [faImage, faAlignLeft, faClock, faMapMarkerAlt, faEllipsisH],
+};
+
+// moim list card tab menu icon
+export const cardTabMenu = {
   community: [faImage, faAlignLeft, faEllipsisH],
   meeting: [faImage, faAlignLeft, faClock, faMapMarkerAlt, faEllipsisH],
 };
