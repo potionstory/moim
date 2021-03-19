@@ -81,11 +81,11 @@ export const UtilButton = styled.li`
     background-color: ${({ isActive, theme }) => isActive && theme.title};
     svg {
       font-size: 1rem;
-      color: ${({ isActive, theme }) => !isActive ? theme.gray : theme.main};
+      color: ${({ isActive, theme }) => !isActive ? theme.gray : color.red};
     }
     &:hover {
       svg {
-        color: ${({ isActive, theme }) => !isActive ? theme.title : theme.main};
+        color: ${({ isActive, theme }) => !isActive ? theme.title : color.red};
       }
     }
   }
@@ -125,11 +125,11 @@ export const UtilHeader = styled.div`
     }
   }
   .info {
-  display: flex;
-  overflow: hidden;
-  flex: 1;
-  align-items: center;
-  margin-left: 12px;
+    display: flex;
+    overflow: hidden;
+    flex: 1;
+    align-items: center;
+    margin-left: 12px;
     h3 {
       display: block;
       font-size: 1rem;
@@ -150,14 +150,14 @@ export const UtilHeader = styled.div`
         color: ${({ theme }) => theme.title};
       }
       &:hover {
-        background-color: ${({ theme }) => theme.theme};
+        background-color: ${({ theme }) => color.green};
       }
     }
   }
 `;
 
 export const UtilBody = styled.div`
-  display: flex;
+  display: ${({ isVisible }) => isVisible ? 'flex' : 'none'};
   flex: 1;
   margin-top: 12px;
 `;
@@ -226,7 +226,6 @@ export const UtilTabContentInner = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.theme}; /* [TODO]: DELETE */
   .utilTabBox {
     display: none;
     height: 100%;

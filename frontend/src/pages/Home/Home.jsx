@@ -3,7 +3,7 @@ import { faCommentAlt, faMugHot, faFilter, faSortAmountDown } from '@fortawesome
 import MoimList from '../../containers/MoimList';
 import MoimHeader from '../../containers/MoimHeader';
 
-const tab = [
+const tabMenu = [
   {
     icon: faCommentAlt,
     title: 'community',
@@ -14,7 +14,7 @@ const tab = [
   },
 ];
 
-const util = [
+const utilMenu = [
   {
     icon: faFilter,
     title: 'filter',
@@ -40,14 +40,14 @@ const Home = () => {
   return (
     <>
       <MoimHeader
-        tab={tab}
-        util={util}
+        tabMenu={tabMenu}
+        utilMenu={utilMenu}
         tabIndex={tabIndex}
         utilIndex={utilIndex}
         onTabClick={onTabClick}
         onUtilClick={onUtilClick}
       />
-      <MoimList category={tab[tabIndex].title} />
+      <MoimList category={tabMenu[tabIndex].title} />
     </>
   );
 };

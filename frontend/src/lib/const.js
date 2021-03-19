@@ -1,4 +1,10 @@
 import {
+  faDiceD6,
+  faLock,
+  faPlug,
+  faSpinner,
+  faSortAlphaUp,
+  faCalendarDay,
   faImage,
   faAlignLeft,
   faMapMarkerAlt,
@@ -10,8 +16,11 @@ import { iconBg } from './styles/palette';
 
 // moim header util menu icon
 export const utilTabMenu = {
-  filter: [faImage, faAlignLeft, faEllipsisH],
-  sort: [faImage, faAlignLeft, faClock, faMapMarkerAlt, faEllipsisH],
+  filter: [
+    [faDiceD6, faLock], // community
+    [faPlug, faSpinner], // meeting
+  ],
+  sort: [faSortAlphaUp, faCalendarDay],
 };
 
 // moim list card tab menu icon
@@ -43,3 +52,106 @@ export const socials = [
     bgColor: iconBg.naver,
   },
 ];
+
+export const util = {
+  filter: [
+    [
+      [
+        {
+          name: 'kakao',
+          type: 'checkbox',
+          isChecked: false,
+        },
+        {
+          name: 'line',
+          type: 'checkbox',
+          isChecked: false,
+        },
+        {
+          name: 'slack',
+          type: 'checkbox',
+          isChecked: false,
+        },
+        {
+          name: 'discord',
+          type: 'checkbox',
+          isChecked: false,
+        },
+        {
+          name: 'etc',
+          type: 'checkbox',
+          isChecked: false,
+        },
+      ],
+      [
+        {
+          name: 'open',
+          type: 'checkbox',
+          isChecked: false,
+        },
+        {
+          name: 'close',
+          type: 'checkbox',
+          isChecked: false,
+        },
+      ],
+    ],
+    [
+      [
+        {
+          name: 'online',
+          type: 'checkbox',
+          isChecked: false,
+        },
+        {
+          name: 'offline',
+          type: 'checkbox',
+          isChecked: false,
+        },
+      ],
+      [
+        {
+          name: 'empty',
+          type: 'checkbox',
+          isChecked: false,
+        },
+        {
+          name: 'full',
+          type: 'checkbox',
+          isChecked: false,
+        },
+        {
+          name: 'proceeding',
+          type: 'checkbox',
+          isChecked: false,
+        },
+        {
+          name: 'complete',
+          type: 'checkbox',
+          isChecked: false,
+        },
+      ],
+    ]
+  ],
+  sort: [
+    [
+      {
+        name: 'title',
+        type: 'radio',
+        isChecked: false,
+      }
+    ],
+    [
+      {
+        name: 'start',
+        type: 'radio',
+        isChecked: false,
+      },
+      {
+        name: 'create',
+        type: 'radio',
+        isChecked: false,
+      }
+    ],
+  ],
+};

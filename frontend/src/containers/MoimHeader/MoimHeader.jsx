@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import MoimHeaderTabComp from './MoimHeaderTabComp';
-import MoimHeaderUtilWrap from './MoimHeaderUtilComp';
+import MoimHeaderUtilComp from './MoimHeaderUtilComp';
 import { MoimHeaderWrap } from './style';
 
-const MoimHeader = ({ tab, util, tabIndex, utilIndex, onTabClick, onUtilClick }) => {
+const MoimHeader = ({ tabMenu, utilMenu, tabIndex, utilIndex, onTabClick, onUtilClick }) => {
+  const tabTitle = useMemo(() => tabMenu[tabIndex].title, [tabIndex]);
 
   return (
     <MoimHeaderWrap>
       <div className="moimHeader">
-        <MoimHeaderTabComp tab={tab} activeIndex={tabIndex} onTabClick={onTabClick} />
-        <MoimHeaderUtilWrap util={util} activeIndex={utilIndex} onUtilClick={onUtilClick} />
+        <MoimHeaderTabComp tabMenu={tabMenu} activeIndex={tabIndex} onTabClick={onTabClick} />
+        <MoimHeaderUtilComp tabIndex={tabIndex} utilMenu={utilMenu} activeIndex={utilIndex} onUtilClick={onUtilClick} />
       </div>
-      <h2>{tab[tabIndex].title}</h2>
+      <h2>{tabTitle}</h2>
     </MoimHeaderWrap>
   );
 };

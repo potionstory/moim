@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MoimHeaderTabWrap, TabButton } from './style';
 
-const MoimHeaderTabComp = ({ tab, activeIndex, onTabClick }) => {
+const MoimHeaderTabComp = ({ tabMenu, activeIndex, onTabClick }) => {
   return (
     <MoimHeaderTabWrap>
       <motion.div
@@ -15,7 +15,7 @@ const MoimHeaderTabComp = ({ tab, activeIndex, onTabClick }) => {
         }}
       />
       <ul className="tabList">
-        {map(tab, (item, index) => (
+        {map(tabMenu, (item, index) => (
           <TabButton key={index} isActive={index === activeIndex}>
             <button type="button" onClick={() => onTabClick(index)}>
               <FontAwesomeIcon icon={item.icon} />
