@@ -20,11 +20,7 @@ const Card = ({ item, category }) => {
             category={category}
           />
           <CardBody>
-            <CardTabComp
-              image={item.mainImage}
-              text={item.text}
-              category={category}
-            />
+            <CardTabComp item={item} category={category} />
           </CardBody>
         </CardInner>
       </CardBlock>

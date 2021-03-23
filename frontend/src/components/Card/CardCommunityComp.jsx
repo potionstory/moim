@@ -1,19 +1,26 @@
 import React from 'react';
-import { CardImage, CardText, CardMore } from './style';
+import { CardImage, CardText, CardLink, CardMore } from './style';
 
-const CardCommunityComp = ({ image, text }) => {
+const CardCommunityComp = ({ item }) => {
+  const { mainImage, text, url, tags } = item;
+
   return (
     <>
       <div className="cardTabBox">
         <CardImage>
-          <img src={image} />
+          <img src={mainImage} />
         </CardImage>
       </div>
       <div className="cardTabBox">
         <CardText>{text}</CardText>
       </div>
       <div className="cardTabBox">
-        <CardMore>기타 내용들 보여주기(바로가기 / 참여하기 등등)</CardMore>
+        <CardLink>
+          <a href={url} target="_blank">{url}</a>
+        </CardLink>
+      </div>
+      <div className="cardTabBox">
+        <CardMore>{tags}</CardMore>
       </div>
     </>
   );

@@ -9,6 +9,7 @@ import {
   faAlignLeft,
   faMapMarkerAlt,
   faClock,
+  faLink,
   faEllipsisH,
 } from '@fortawesome/free-solid-svg-icons';
 import icon from './icons';
@@ -25,8 +26,8 @@ export const utilTabMenu = {
 
 // moim list card tab menu icon
 export const cardTabMenu = {
-  community: [faImage, faAlignLeft, faEllipsisH],
-  meeting: [faImage, faAlignLeft, faClock, faMapMarkerAlt, faEllipsisH],
+  community: [faImage, faAlignLeft, faLink, faEllipsisH],
+  meeting: [faImage, faAlignLeft, faMapMarkerAlt, faClock, faEllipsisH],
 };
 
 // social

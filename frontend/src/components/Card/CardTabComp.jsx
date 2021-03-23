@@ -13,7 +13,7 @@ import {
   CardTabContentInner,
 } from './style';
 
-const CardTabComp = ({ image, text, category }) => {
+const CardTabComp = ({ item, category }) => {
   const [tabIndex, setTabIndex] = useState(0);
 
   const onTabClick = useCallback((index) => {
@@ -32,10 +32,10 @@ const CardTabComp = ({ image, text, category }) => {
             }}
           />
           <ul>
-            {map(cardTabMenu[category], (item, index) => (
+            {map(cardTabMenu[category], (menu, index) => (
               <li key={index}>
                 <button type="button" onClick={() => onTabClick(index)}>
-                  <FontAwesomeIcon icon={item} />
+                  <FontAwesomeIcon icon={menu} />
                 </button>
               </li>
             ))}
@@ -46,9 +46,9 @@ const CardTabComp = ({ image, text, category }) => {
         <CardTabContentBlock>
           <CardTabContentInner activeIndex={tabIndex + 1}>
             {category === 'community' ? (
-              <CardCommunityComp image={image} text={text} />
+              <CardCommunityComp item={item} />
             ) : (
-              <CardMeetingComp image={image} text={text} />
+              <CardMeetingComp item={item} />
             )}
           </CardTabContentInner>
         </CardTabContentBlock>

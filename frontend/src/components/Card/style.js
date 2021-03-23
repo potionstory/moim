@@ -174,12 +174,14 @@ export const CardTabContentBlock = styled.div`
 `;
 
 export const CardTabContentInner = styled.div`
+  overflow: hidden;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.theme}; /* [TODO]: DELETE */
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.sub};
   .cardTabBox {
     display: none;
     height: 100%;
@@ -194,7 +196,6 @@ export const CardImage = styled.span`
   overflow: hidden;
   position: relative;
   height: 100%;
-  border-radius: 4px;
   img {
     width: 100%;
     height: 100%;
@@ -203,11 +204,20 @@ export const CardImage = styled.span`
 `;
 
 export const CardText = styled.p`
-  font-size: 0.875rem;
-  color: ${({ theme }) => theme.gray};
-  word-wrap: break-word;
-  line-height: 1.25rem;
-  ${ellipsisMulti};
+  padding: 12px;
+  font-size: 0.750rem;
+  color: ${({ theme }) => theme.text};
+  word-break: break-all;
+  line-height: 1.5;
+`;
+
+export const CardLink = styled.div`
+  padding: 12px;
+  font-size: 0.750rem;
+  font-weight: bold;
+  color: ${({ theme }) => theme.text};
+  word-break: break-all;
+  line-height: 1.5;
 `;
 
 export const CardMap = styled.div``;
