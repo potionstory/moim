@@ -1,9 +1,12 @@
 import React, { useCallback } from 'react';
+import map from 'lodash/map';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExternalLinkAlt, faCopy, faTag } from '@fortawesome/free-solid-svg-icons';
 import DropButton from '../DropButton';
 import { CardImage, CardText, CardLink, CardMore } from './style';
-import { faExternalLinkAlt, faCopy } from '@fortawesome/free-solid-svg-icons';
 
 const linkIcon = [faExternalLinkAlt, faCopy];
+const tagData = ["discord", "community", "react", "develop", "moim", "한글 태그"]; // delete
 
 const CardCommunityComp = ({ item }) => {
   const { mainImage, text, url, tags } = item;
@@ -35,7 +38,25 @@ const CardCommunityComp = ({ item }) => {
         </CardLink>
       </div>
       <div className="cardTabBox">
-        <CardMore>{tags}</CardMore>
+        <CardMore>
+          <div className="contentWrap">
+            <div className="contentHead">
+              <span className="iconBox">
+                <FontAwesomeIcon className="icon" icon={faTag} />
+              </span>
+              <span className="title">tags</span>
+            </div>
+            <div className="contentBody">
+              <ul className="tagList">
+                {map(tagData, (item, index) => (
+                  <li key={index}>
+                    <button type="button">{item}</button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </CardMore>
       </div>
     </>
   );

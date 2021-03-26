@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import map from 'lodash/map';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -24,7 +25,7 @@ const DropButton = ({ menu, onHandle }) => {
         <FontAwesomeIcon className="icon" icon={faPlus} />
       </motion.button>
       <ul className="dropMenu">
-        {menu.map((icon, index) => (
+        {map(menu, (icon, index) => (
           <motion.li
             key={icon + index}
             animate={{ y: isActive ? (index + 1) * 45 : 0 }}

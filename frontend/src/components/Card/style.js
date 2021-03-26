@@ -241,7 +241,66 @@ export const CardMap = styled.div``;
 
 export const CardTime = styled.div``;
 
-export const CardMore = styled.div``;
+export const CardMore = styled.div`
+  padding: 12px;
+  .contentWrap {    
+    .contentHead {
+      display: flex;
+      align-items: center;
+      .iconBox {
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+        background-color: ${color.gray};
+        font-size: 0.625rem;
+        line-height: 24px;
+        text-align: center;
+        svg {
+          color: ${({ theme }) => theme.main};
+        }
+      }
+      .title {
+        display: block;
+        flex: 1;
+        margin-left: 6px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: ${color.gray};
+        line-height: 24px;
+        text-transform: uppercase;
+        ${ellipsis};
+      }
+    }
+    .contentBody {
+      margin-top: 6px;
+      .tagList {
+        display: flex;
+        flex-wrap: wrap;
+        li {
+          height: 20px;
+          margin: 0 4px 4px 0;
+          button {
+            height: 20px;
+            padding: 0 10px;
+            border-radius: 10px;
+            background-color: ${color.blue};
+            font-size: 0.625rem;
+            color: ${({ theme }) => theme.main};
+            line-height: 1;
+            transition: all 0.2s ease-out;
+            &:hover {
+              color: ${({ theme }) => theme.title};
+              background-color: ${({ theme }) => theme.main};
+            }
+          }
+        }
+      }
+    }
+    + .contentWrap {
+      margin-top: 20px;
+    }
+  }
+`;
 
 export const CardUserInfo = styled.div`
   display: flex;
