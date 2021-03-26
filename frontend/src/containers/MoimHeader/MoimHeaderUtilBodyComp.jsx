@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CheckBox from '../../components/CheckBox';
 import Toggle from '../../components/Toggle';
-import { UtilBody, UtilTabMenuWrap, UtilTabMenu, UtilTabContentWarp, UtilTabContentBlock, UtilTabContentInner } from './style';
+import { UtilBody, UtilTabMenuWrap, UtilTabMenu, UtilTabContentWrap, UtilTabContentBlock, UtilTabContentInner } from './style';
 
 const MoimHeaderUtilBodyComp = ({ menu, cont, activeIndex, onTabClick, isVisible, onItemCheck }) => {
 
@@ -31,7 +31,7 @@ const MoimHeaderUtilBodyComp = ({ menu, cont, activeIndex, onTabClick, isVisible
           </ul>
         </UtilTabMenu>
       </UtilTabMenuWrap>
-      <UtilTabContentWarp>
+      <UtilTabContentWrap>
         <UtilTabContentBlock>
           <UtilTabContentInner activeIndex={activeIndex + 1}>
             {map(cont, (array, utilIndex) => (
@@ -52,7 +52,7 @@ const MoimHeaderUtilBodyComp = ({ menu, cont, activeIndex, onTabClick, isVisible
             ))}
           </UtilTabContentInner>
         </UtilTabContentBlock>
-      </UtilTabContentWarp>
+      </UtilTabContentWrap>
     </UtilBody>
   );
 };

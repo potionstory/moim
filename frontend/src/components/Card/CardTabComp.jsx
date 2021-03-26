@@ -8,7 +8,7 @@ import CardMeetingComp from './CardMeetingComp';
 import {
   CardTabMenuWrap,
   CardTabMenu,
-  CardTabContentWarp,
+  CardTabContentWrap,
   CardTabContentBlock,
   CardTabContentInner,
 } from './style';
@@ -42,7 +42,7 @@ const CardTabComp = ({ item, category }) => {
           </ul>
         </CardTabMenu>
       </CardTabMenuWrap>
-      <CardTabContentWarp>
+      <CardTabContentWrap>
         <CardTabContentBlock>
           <CardTabContentInner activeIndex={tabIndex + 1}>
             {category === 'community' ? (
@@ -52,7 +52,7 @@ const CardTabComp = ({ item, category }) => {
             )}
           </CardTabContentInner>
         </CardTabContentBlock>
-      </CardTabContentWarp>
+      </CardTabContentWrap>
     </>
   );
 };

@@ -2,12 +2,12 @@ import React from 'react';
 import CardHeaderComp from './CardHeaderComp';
 import CardTabComp from './CardTabComp';
 import CardUserInfoComp from './CardUserInfoComp';
-import { CardWarp, CardBlock, CardInner, CardBody } from './style';
+import { CardWrap, CardBlock, CardInner, CardBody } from './style';
 import { getMeetingStatus } from '../../utils/commonUtil';
 
 const Card = ({ item, category }) => {
   return (
-    <CardWarp>
+    <CardWrap>
       <CardBlock>
         <CardInner className="inner">
           <CardHeaderComp
@@ -29,7 +29,7 @@ const Card = ({ item, category }) => {
         name={item.userName}
         count={item.likeCount}
       />
-    </CardWarp>
+    </CardWrap>
   );
 };
 

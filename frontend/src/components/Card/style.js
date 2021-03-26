@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { color } from '../../lib/styles/palette';
-import { ellipsis, ellipsisMulti } from '../../lib/styles/util';
+import { ellipsis } from '../../lib/styles/util';
 
-export const CardWarp = styled.li`
+export const CardWrap = styled.li`
   display: flex;
   flex: 1;
   flex-grow: 0;
@@ -162,7 +162,7 @@ export const CardTabMenu = styled.div`
   }
 `;
 
-export const CardTabContentWarp = styled.div`
+export const CardTabContentWrap = styled.div`
   flex: 1;
   margin-left: 12px;
 `;
@@ -213,11 +213,28 @@ export const CardText = styled.p`
 
 export const CardLink = styled.div`
   padding: 12px;
-  font-size: 0.750rem;
-  font-weight: bold;
-  color: ${({ theme }) => theme.text};
-  word-break: break-all;
-  line-height: 1.5;
+  .linkBox {
+    display: flex;
+    height: 40px;
+    border-radius: 20px;
+    background-color: ${({ theme }) => theme.main};
+    .url {
+      flex: 1;
+      padding: 8px 20px;
+      font-size: 0.625rem;
+      font-weight: 600;
+      color: ${color.blue};
+      line-height: 1.5rem;
+      word-break: break-all;
+      text-transform: uppercase;
+      opacity: 0.6;
+      transition: all 0.2s ease-out;
+      ${ellipsis};
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 export const CardMap = styled.div``;

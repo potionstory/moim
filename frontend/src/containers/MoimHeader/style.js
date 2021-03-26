@@ -209,7 +209,7 @@ export const UtilTabMenu = styled.div`
   }
 `;
 
-export const UtilTabContentWarp = styled.div`
+export const UtilTabContentWrap = styled.div`
   flex: 1;
   margin-left: 12px;
 `;
