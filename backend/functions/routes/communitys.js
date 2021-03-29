@@ -18,6 +18,7 @@ exports.getAllCommunitys = (req, res) => {
           mainImage: doc.data().mainImage,
           text: doc.data().text,
           url: doc.data().url,
+          tags: doc.data().tags,
           userImage: doc.data().userImage,
           userName: doc.data().userName,
           createdAt: doc.data().createdAt,
@@ -91,6 +92,7 @@ exports.postCommunity = (req, res) => {
       mainImage,
       text: req.body.text,
       url: req.body.url,
+      tags: req.body.tags,
       userImage: req.user.userImage,
       userName: req.user.userName,
       createdAt: new Date().toISOString(),
@@ -194,7 +196,7 @@ exports.putCommunity = (req, res) => {
       storageFilepath
     )}?alt=media&token=${generatedToken}`;
 
-    const { service, title, status, text, url } = req.body;
+    const { service, title, status, text, url, tags } = req.body;
 
     db.doc(`/communitys/${req.params.communityId}`)
       .get()
@@ -210,6 +212,7 @@ exports.putCommunity = (req, res) => {
             mainImage,
             text,
             url,
+            tags,
           })
           .then(() => {
             res.status(201).json({ message: "community update successfully" }); // 201 CREATED
