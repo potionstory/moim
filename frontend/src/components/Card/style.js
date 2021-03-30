@@ -292,7 +292,6 @@ export const CardMore = styled.div`
             font-size: 0.625rem;
             color: ${({ theme }) => theme.main};
             line-height: 1;
-            transition: all 0.2s ease-out;
             &:hover {
               color: ${({ theme }) => theme.title};
               background-color: ${({ theme }) => theme.main};
