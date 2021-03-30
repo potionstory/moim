@@ -6,7 +6,6 @@ import DropButton from '../DropButton';
 import { CardImage, CardText, CardLink, CardMore } from './style';
 
 const linkIcon = [faExternalLinkAlt, faCopy];
-const tagData = ["discord", "community", "react", "develop", "moim", "한글 태그"]; // delete
 
 const CardCommunityComp = ({ item }) => {
   const { mainImage, text, url, tags } = item;
@@ -48,7 +47,7 @@ const CardCommunityComp = ({ item }) => {
             </div>
             <div className="contentBody">
               <ul className="tagList">
-                {map(tagData, (item, index) => (
+                {map(tags, (item, index) => (
                   <li key={index}>
                     <button type="button">{item}</button>
                   </li>
