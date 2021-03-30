@@ -151,7 +151,7 @@ export const CardTabMenu = styled.div`
           }
         }
       }
-      &:nth-child(${({ activeIndex }) => activeIndex}) {
+      &:nth-child(${({ activeIndex }) => activeIndex + 1}) {
         button {
           svg {
             color: ${({ theme }) => theme.main};
@@ -185,7 +185,7 @@ export const CardTabContentInner = styled.div`
   .cardTabBox {
     display: none;
     height: 100%;
-    &:nth-child(${({ activeIndex }) => activeIndex}) {
+    &:nth-child(${({ activeIndex }) => activeIndex + 1}) {
       display: block;
     }
   }
@@ -237,7 +237,12 @@ export const CardLink = styled.div`
   }
 `;
 
-export const CardMap = styled.div``;
+export const CardMap = styled.div`
+  height: 100%;
+  .mapArea {
+    height: 100%;
+  }
+`;
 
 export const CardTime = styled.div``;
 

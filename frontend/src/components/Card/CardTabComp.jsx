@@ -23,7 +23,7 @@ const CardTabComp = ({ item, category }) => {
   return (
     <>
       <CardTabMenuWrap>
-        <CardTabMenu activeIndex={tabIndex + 1}>
+        <CardTabMenu activeIndex={tabIndex}>
           <motion.div
             className="activeBox"
             animate={{ y: tabIndex * 40 }}
@@ -44,11 +44,11 @@ const CardTabComp = ({ item, category }) => {
       </CardTabMenuWrap>
       <CardTabContentWrap>
         <CardTabContentBlock>
-          <CardTabContentInner activeIndex={tabIndex + 1}>
+          <CardTabContentInner activeIndex={tabIndex}>
             {category === 'community' ? (
               <CardCommunityComp item={item} />
             ) : (
-              <CardMeetingComp item={item} />
+              <CardMeetingComp item={item} activeIndex={tabIndex} />
             )}
           </CardTabContentInner>
         </CardTabContentBlock>
