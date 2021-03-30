@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import map from 'lodash/map';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
@@ -9,16 +9,17 @@ const mapIndex = 2; //map menu index
 
 const CardMeetingComp = ({ item, activeIndex }) => {
   const { meetingId, mainImage, text, tags } = item;
+  const mapRef = useRef(meetingId);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (mapIndex === activeIndex) {
-      const container = document.getElementById(`${meetingId}`);
-      container.innerHTML = "";
+      mapRef.current.innerHTML = "";
+
       const options = {
         center: new kakao.maps.LatLng(33.450701, 126.570667),
         level: 3
       };
-      const map = new kakao.maps.Map(container, options);
+      const map = new kakao.maps.Map(mapRef.current, options);
       const markerPosition  = new kakao.maps.LatLng(33.450701, 126.570667); 
       const marker = new kakao.maps.Marker({
         position: markerPosition
@@ -40,7 +41,7 @@ const CardMeetingComp = ({ item, activeIndex }) => {
       </div>
       <div className="cardTabBox">
         <CardMap>
-          <div id={`${meetingId}`} className="mapArea">
+          <div ref={mapRef} className="mapArea">
           </div>
         </CardMap>
       </div>
