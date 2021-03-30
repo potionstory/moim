@@ -1,8 +1,11 @@
 import React from 'react';
+import map from 'lodash/map';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { CardImage, CardText, CardMap, CardTime, CardMore } from './style';
 
 const CardMeetingComp = ({ item }) => {
-  const { mainImage, text } = item;
+  const { mainImage, text, tags } = item;
 
   return (
     <>
@@ -25,7 +28,25 @@ const CardMeetingComp = ({ item }) => {
         </CardTime>
       </div>
       <div className="cardTabBox">
-        <CardMore>기타 내용들 보여주기(바로가기 / 참여하기 등등)</CardMore>
+        <CardMore>
+          <div className="contentWrap">
+            <div className="contentHead">
+              <span className="iconBox">
+                <FontAwesomeIcon className="icon" icon={faTag} />
+              </span>
+              <span className="title">tags</span>
+            </div>
+            <div className="contentBody">
+              <ul className="tagList">
+                {map(tags, (item, index) => (
+                  <li key={index}>
+                    <button type="button">{item}</button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </CardMore>
       </div>
     </>
   );

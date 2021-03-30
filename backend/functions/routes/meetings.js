@@ -19,6 +19,7 @@ exports.getAllMeetings = (req, res) => {
           text: doc.data().text,
           date: doc.data().date,
           location: doc.data().location,
+          tags: doc.data().tags,
           userImage: doc.data().userImage,
           userName: doc.data().userName,
           createdAt: doc.data().createdAt,
@@ -93,6 +94,7 @@ exports.postMeeting = (req, res) => {
       text: req.body.text,
       date: req.body.date,
       location: req.body.location,
+      tags: req.body.tags,
       userImage: req.user.userImage,
       userName: req.user.userName,
       createdAt: new Date().toISOString(),
@@ -195,7 +197,7 @@ exports.putMeeting = (req, res) => {
       storageFilepath
     )}?alt=media&token=${generatedToken}`;
 
-    const { type, title, status, text, date, location } = req.body;
+    const { type, title, status, text, date, location, tags } = req.body;
 
     db.doc(`/meetings/${req.params.meetingId}`)
       .get()
@@ -212,6 +214,7 @@ exports.putMeeting = (req, res) => {
             text,
             date,
             location,
+            tags,
           })
           .then(() => {
             res.status(201).json({ message: "meeting update successfully" }); // 201 CREATED
