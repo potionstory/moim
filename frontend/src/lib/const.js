@@ -27,7 +27,7 @@ export const utilTabMenu = {
 // moim list card tab menu icon
 export const cardTabMenu = {
   community: [faImage, faAlignLeft, faLink, faEllipsisH],
-  meeting: [faImage, faAlignLeft, faMapMarkerAlt, faClock, faEllipsisH],
+  meeting: [faImage, faAlignLeft, faClock, faMapMarkerAlt, faEllipsisH],
 };
 
 // social

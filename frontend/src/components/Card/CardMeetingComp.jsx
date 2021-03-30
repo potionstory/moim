@@ -5,10 +5,10 @@ import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { CardImage, CardText, CardMap, CardTime, CardMore } from './style';
 
 const { kakao } = window;
-const mapIndex = 2; //map menu index
+const mapIndex = 3; //map menu index
 
 const CardMeetingComp = ({ item, activeIndex }) => {
-  const { meetingId, mainImage, text, tags } = item;
+  const { meetingId, mainImage, text, startDate, tags } = item;
   const mapRef = useRef(meetingId);
 
   useLayoutEffect(() => {
@@ -40,17 +40,17 @@ const CardMeetingComp = ({ item, activeIndex }) => {
         <CardText>{text}</CardText>
       </div>
       <div className="cardTabBox">
-        <CardMap>
-          <div ref={mapRef} className="mapArea">
-          </div>
-        </CardMap>
-      </div>
-      <div className="cardTabBox">
         <CardTime>
           모임 시간: 네모 블럭으로 넣기 모임 시간까지의 카운트는
           생각해보기(최적화 문제) 많은 카드들이 동시에 카운트가 되면 느려질거
           예상 (시작전/진행중/완료 상태 표시)
         </CardTime>
+      </div>
+      <div className="cardTabBox">
+        <CardMap>
+          <div ref={mapRef} className="mapArea">
+          </div>
+        </CardMap>
       </div>
       <div className="cardTabBox">
         <CardMore>

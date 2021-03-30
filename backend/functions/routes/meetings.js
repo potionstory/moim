@@ -17,7 +17,8 @@ exports.getAllMeetings = (req, res) => {
           status: doc.data().status,
           mainImage: doc.data().mainImage,
           text: doc.data().text,
-          date: doc.data().date,
+          startDate: doc.data().startDate,
+          endDate: doc.data().endDate,
           location: doc.data().location,
           tags: doc.data().tags,
           userImage: doc.data().userImage,
@@ -92,7 +93,8 @@ exports.postMeeting = (req, res) => {
       mainImagePath: "meeting/",
       mainImage,
       text: req.body.text,
-      date: req.body.date,
+      startDate: req.body.startDate,
+      endDate: req.body.endDate,
       location: req.body.location,
       tags: req.body.tags,
       userImage: req.user.userImage,
@@ -197,7 +199,7 @@ exports.putMeeting = (req, res) => {
       storageFilepath
     )}?alt=media&token=${generatedToken}`;
 
-    const { type, title, status, text, date, location, tags } = req.body;
+    const { type, title, status, text, startDate, endDate, location, tags } = req.body;
 
     db.doc(`/meetings/${req.params.meetingId}`)
       .get()
@@ -212,7 +214,8 @@ exports.putMeeting = (req, res) => {
             mainImagePath: storageFilepath,
             mainImage,
             text,
-            date,
+            startDate,
+            endDate,
             location,
             tags,
           })
