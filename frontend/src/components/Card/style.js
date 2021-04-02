@@ -244,7 +244,52 @@ export const CardMap = styled.div`
   }
 `;
 
-export const CardTime = styled.div``;
+export const CardTime = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-family: 'Rubik';
+  .dateBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 60%;
+    height: 60%;
+    border-radius: 4px;
+    background-color: ${color.blue};
+    .week {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      height: 1rem;
+      padding: 0 6px;
+      border-radius: 8px;
+      background-color: ${({ theme }) => theme.main};
+      font-size: 0.625rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      line-height: 1rem;
+      transform: translateX(-50%);
+      color: ${({ theme }) => theme.title};
+    }
+    .day {
+      font-size: 5rem;
+      font-weight: 600;
+      color: ${({ theme }) => theme.main};
+    }
+  }
+  .month {
+    font-weight: 600;
+    color: ${color.blue};
+  }
+  .time {
+    color: ${color.blue};
+  }
+`;
 
 export const CardMore = styled.div`
   padding: 12px;
@@ -278,6 +323,10 @@ export const CardMore = styled.div`
     }
     .contentBody {
       margin-top: 6px;
+      .memberCount {
+        font-family: 'Rubik';
+        color: ${({ theme }) => theme.title};
+      }
       .tagList {
         display: flex;
         flex-wrap: wrap;

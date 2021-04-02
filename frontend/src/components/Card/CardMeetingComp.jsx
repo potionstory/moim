@@ -1,17 +1,24 @@
 import React, { useLayoutEffect, useRef } from 'react';
+import dayjs from 'dayjs';
 import map from 'lodash/map';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTag } from '@fortawesome/free-solid-svg-icons';
+import { faTag, faUser } from '@fortawesome/free-solid-svg-icons';
 import { CardImage, CardText, CardMap, CardTime, CardMore } from './style';
 
 const { kakao } = window;
 const mapIndex = 3; //map menu index
 
 const CardMeetingComp = ({ item, activeIndex }) => {
-  const { meetingId, mainImage, text, startDate, tags } = item;
+  const { meetingId, mainImage, text, startDate, endDate, tags } = item;
   const mapRef = useRef(meetingId);
+  
+  // meeting date
+  const eventStartDate = dayjs.unix(startDate._seconds).format('YYYY/MM/DD/HH/mm').split('/');
+  const eventEndDate = dayjs.unix(endDate._seconds).format('YYYY/MM/DD/HH/mm').split('/');
+  const eventWeek = dayjs.unix(startDate._seconds).format('ddd');
 
   useLayoutEffect(() => {
+    // meeting location
     if (mapIndex === activeIndex) {
       mapRef.current.innerHTML = "";
 
@@ -41,9 +48,12 @@ const CardMeetingComp = ({ item, activeIndex }) => {
       </div>
       <div className="cardTabBox">
         <CardTime>
-          모임 시간: 네모 블럭으로 넣기 모임 시간까지의 카운트는
-          생각해보기(최적화 문제) 많은 카드들이 동시에 카운트가 되면 느려질거
-          예상 (시작전/진행중/완료 상태 표시)
+          <span className="month">{`${eventStartDate[0]}.${eventStartDate[1]}`}</span>
+          <div className="dateBox">
+            <span className="week">{eventWeek}</span>
+            <span className="day">{eventStartDate[2]}</span>
+          </div>
+          <span className="time">{`${eventStartDate[3]}:${eventStartDate[4]} - ${eventEndDate[3] !== "00" ? eventEndDate[3] : "24"}:${eventEndDate[4]}`}</span>
         </CardTime>
       </div>
       <div className="cardTabBox">
@@ -54,6 +64,17 @@ const CardMeetingComp = ({ item, activeIndex }) => {
       </div>
       <div className="cardTabBox">
         <CardMore>
+          <div className="contentWrap">
+            <div className="contentHead">
+              <span className="iconBox">
+                <FontAwesomeIcon className="icon" icon={faUser} />
+              </span>
+              <span className="title">members</span>
+            </div>
+            <div className="contentBody">
+              <span className="memberCount">10/30</span>
+            </div>
+          </div>
           <div className="contentWrap">
             <div className="contentHead">
               <span className="iconBox">
