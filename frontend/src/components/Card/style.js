@@ -205,7 +205,7 @@ export const CardImage = styled.span`
 
 export const CardText = styled.p`
   padding: 12px;
-  font-size: 0.750rem;
+  font-size: 0.75rem;
   color: ${({ theme }) => theme.text};
   word-break: break-all;
   line-height: 1.5;
@@ -260,7 +260,7 @@ export const CardTime = styled.div`
     width: 60%;
     height: 60%;
     border-radius: 4px;
-    background-color: ${color.blue};
+    background-color: ${({ theme }) => theme.theme};
     .week {
       position: absolute;
       top: 12px;
@@ -276,24 +276,60 @@ export const CardTime = styled.div`
       transform: translateX(-50%);
       color: ${({ theme }) => theme.title};
     }
+    .weekDot {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      position: absolute;
+      top: 12px;
+      left: 6px;
+      width: calc(100% - 12px);
+      svg {
+        font-size: 0.5rem;
+        color: ${({ theme }) => theme.title};
+        &:nth-child(1) {
+          color: ${color.red};
+        }
+        &:nth-child(7) {
+          color: ${color.blue};
+        }
+      }
+      span {
+        height: 1rem;
+        padding: 0 6px;
+        border-radius: 8px;
+        background-color: ${({ theme }) => theme.title};
+        font-size: 0.625rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        line-height: 1rem;
+        color: ${({ theme }) => theme.main};
+        &:nth-child(1) {
+          background-color: ${color.red};
+        }
+        &:nth-child(7) {
+          background-color: ${color.blue};
+        }
+      }
+    }
     .day {
-      font-size: 5rem;
+      font-size: 4rem;
       font-weight: 600;
       color: ${({ theme }) => theme.main};
     }
   }
   .month {
     font-weight: 600;
-    color: ${color.blue};
+    color: ${({ theme }) => theme.title};
   }
   .time {
-    color: ${color.blue};
+    color: ${({ theme }) => theme.title};
   }
 `;
 
 export const CardMore = styled.div`
   padding: 12px;
-  .contentWrap {    
+  .contentWrap {
     .contentHead {
       display: flex;
       align-items: center;
@@ -315,7 +351,7 @@ export const CardMore = styled.div`
         margin-left: 6px;
         font-size: 0.875rem;
         font-weight: 600;
-        color: ${color.gray};
+        color: ${({ theme }) => theme.title};
         line-height: 24px;
         text-transform: uppercase;
         ${ellipsis};
@@ -325,7 +361,14 @@ export const CardMore = styled.div`
       margin-top: 6px;
       .memberCount {
         font-family: 'Rubik';
-        color: ${({ theme }) => theme.title};
+        font-weight: 600;
+        color: ${color.gray};
+        .now {
+          color: ${color.green};
+        }
+        .max {
+          color: ${color.blue};
+        }
       }
       .tagList {
         display: flex;
@@ -339,6 +382,7 @@ export const CardMore = styled.div`
             border-radius: 10px;
             background-color: ${color.blue};
             font-size: 0.625rem;
+            font-weight: 600;
             color: ${({ theme }) => theme.main};
             line-height: 1;
             &:hover {
