@@ -10,6 +10,11 @@ export const HeaderWrap = styled.section`
   box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.08);
   background-color: ${({ theme }) => theme.main};
   z-index: 50;
+  .avatarToast {
+    position: fixed;
+    top: 144px;
+    right: -336px;
+  }
 `;
 
 export const HeaderInnder = styled.div`

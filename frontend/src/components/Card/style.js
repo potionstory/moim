@@ -84,7 +84,7 @@ export const CardHeader = styled.div`
         ${({ status }) => {
           switch (status) {
             case 'open':
-              return `background-color: ${color.orange}`;
+              return `background-color: ${color.blue}`;
             case 'close':
               return `background-color: ${color.gray}`;
             case 'empty':
@@ -101,7 +101,7 @@ export const CardHeader = styled.div`
         }};
         font-size: 0.625rem;
         font-weight: 600;
-        color: ${({ theme }) => theme.main};
+        color: ${color.white};
         line-height: 1rem;
         text-transform: uppercase;
       }
@@ -286,7 +286,7 @@ export const CardTime = styled.div`
       width: calc(100% - 12px);
       svg {
         font-size: 0.5rem;
-        color: ${({ theme }) => theme.title};
+        color: ${color.black};
         &:nth-child(1) {
           color: ${color.red};
         }
@@ -298,12 +298,12 @@ export const CardTime = styled.div`
         height: 1rem;
         padding: 0 6px;
         border-radius: 8px;
-        background-color: ${({ theme }) => theme.title};
+        background-color: ${color.black};
         font-size: 0.625rem;
         font-weight: 600;
         text-transform: uppercase;
         line-height: 1rem;
-        color: ${({ theme }) => theme.main};
+        color: ${color.white};
         &:nth-child(1) {
           background-color: ${color.red};
         }
@@ -385,9 +385,9 @@ export const CardMore = styled.div`
             font-weight: 600;
             color: ${({ theme }) => theme.main};
             line-height: 1;
+            transition: all 0.2s ease-out;
             &:hover {
-              color: ${({ theme }) => theme.title};
-              background-color: ${({ theme }) => theme.main};
+              background-color: ${({ theme }) => theme.title};
             }
           }
         }

@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSignInAlt,
@@ -67,7 +68,9 @@ const Header = () => {
     setIsUserActive((prev) => !prev);
   }, []);
 
-  const isImageNone = useMemo(() => isAuth && userInfo.userImage === null, [userInfo]);
+  const isImageNone = useMemo(() => isAuth && userInfo.userImage === null, [
+    userInfo,
+  ]);
 
   useEffect(() => {
     if (token) {
@@ -128,11 +131,22 @@ const Header = () => {
           </Menu>
         </RightHead>
       </HeaderInnder>
-      {isUserActive && (
+      <motion.div
+        className="avatarToast"
+        animate={{ x: isUserActive ? -384 : -48 }}
+        transition={{
+          ease: 'backInOut',
+        }}
+      >
         <AvatarToast
-          isUserActive={isUserActive}
+          isAuth={isAuth}
+          isImageNone={isImageNone}
+          userInfo={userInfo}
+          onSignOut={onSignOut}
+          onSignInModalOpen={onSignInModalOpen}
+          onSignUpModalOpen={onSignUpModalOpen}
         />
-      )}
+      </motion.div>
     </HeaderWrap>
   );
 };

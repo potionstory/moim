@@ -3,48 +3,15 @@ import { ellipsis } from '../../lib/styles/util';
 
 export const AvatarToastWrap = styled.div`
   display: flex;
-  position: relative;
-  margin-left: 24px;
-  .menuBox {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    position: absolute;
-    top: 96px;
-    right: -288px;
-    width: 240px;
-    padding: 12px;
-    box-sizing: border-box;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 16px 0px;
-    border-radius: 4px;
-    background-color: ${({ theme }) => theme.main};
-    transition: all 0.2s ease-out;
-  }
-`;
-
-export const AvatarMenu = styled.button`
-  overflow: hidden;
-  width: 40px;
-  height: 40px;
-  border: 4px solid ${({ theme }) => theme.sub};
-  border-radius: 24px;
-  background-color: ${({ theme, isImageNone }) =>
-    !isImageNone ? theme.sub : theme.theme};
+  flex: 1;
+  flex-direction: column;
+  width: 240px;
+  padding: 12px;
+  box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 16px 0px;
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.main};
   transition: all 0.2s ease-out;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  &:hover {
-    border-color: ${({ theme }) => theme.theme};
-  }
-  ${({ theme, isActive }) => isActive && `border-color: ${theme.theme};`};
-  svg {
-    font-size: 1.6rem;
-    color: ${({ theme, isImageNone }) =>
-      !isImageNone ? theme.gray : theme.main};
-  }
 `;
 
 export const Member = styled.div`

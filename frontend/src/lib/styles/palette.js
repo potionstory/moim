@@ -16,12 +16,14 @@ export const dark = {
   gray: '#757575',
 };
 
-export const color = {  
+export const color = {
   red: '#f4511e',
   orange: '#f8b408',
   green: '#7cb342',
   blue: '#1e88e5',
   gray: '#757575',
+  black: '#212121',
+  white: '#fafafa',
   none: 'transparent',
 };
 
