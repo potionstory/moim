@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { ellipsis } from '../../lib/styles/util';
 
 export const HeaderWrap = styled.section`
-  display: flex;
   position: fixed;
   top: 0;
   left: 0;
@@ -13,9 +12,15 @@ export const HeaderWrap = styled.section`
   z-index: 50;
 `;
 
+export const HeaderInnder = styled.div`
+  display: flex;
+  width: 1280px;
+  margin: 0 auto;
+`;
+
 export const LeftHead = styled.div`
   display: flex;
-  padding: 24px;
+  padding: 24px 0;
 `;
 
 export const Logo = styled.h1`
@@ -43,7 +48,7 @@ export const ModeToggle = styled.button`
 export const RightHead = styled.div`
   display: flex;
   flex: 1;
-  padding: 24px;
+  padding: 24px 0;
   align-items: center;
   justify-content: flex-end;
 `;
@@ -61,5 +66,31 @@ export const MenuItem = styled.li`
   padding-left: 12px;
   &:first-child {
     padding-left: 0;
+  }
+`;
+
+export const Avatar = styled.button`
+  overflow: hidden;
+  margin-left: 24px;
+  width: 40px;
+  height: 40px;
+  border: 4px solid ${({ theme }) => theme.sub};
+  border-radius: 24px;
+  background-color: ${({ theme, isImageNone }) =>
+    !isImageNone ? theme.sub : theme.theme};
+  transition: all 0.2s ease-out;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  &:hover {
+    border-color: ${({ theme }) => theme.theme};
+  }
+  ${({ theme, isActive }) => isActive && `border-color: ${theme.theme};`};
+  svg {
+    font-size: 1.6rem;
+    color: ${({ theme, isImageNone }) =>
+      !isImageNone ? theme.gray : theme.main};
   }
 `;

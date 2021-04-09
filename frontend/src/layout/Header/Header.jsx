@@ -1,9 +1,11 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSignInAlt,
   faUserPlus,
   faSignOutAlt,
+  faGhost,
 } from '@fortawesome/free-solid-svg-icons';
 import api from '../../store/api';
 import {
@@ -14,9 +16,10 @@ import {
 import { getUserAction, signOutAction } from '../../store/module/auth';
 import { auth } from '../../server/firebase.util';
 import TextButton from '../../components/Button/TextButton';
-import UserMenu from '../../components/UserMenu';
+import AvatarToast from '../../components/AvatarToast';
 import {
   HeaderWrap,
+  HeaderInnder,
   LeftHead,
   Logo,
   ModeToggle,
@@ -24,6 +27,7 @@ import {
   Menu,
   MenuList,
   MenuItem,
+  Avatar,
 } from './style';
 
 const token = localStorage.FBIdToken;
@@ -63,6 +67,8 @@ const Header = () => {
     setIsUserActive((prev) => !prev);
   }, []);
 
+  const isImageNone = useMemo(() => isAuth && userInfo.userImage === null, [userInfo]);
+
   useEffect(() => {
     if (token) {
       onGetUser();
@@ -77,47 +83,56 @@ const Header = () => {
 
   return (
     <HeaderWrap>
-      <LeftHead>
-        <Logo>
-          <ModeToggle onClick={onToggleMode}>M</ModeToggle>
-        </Logo>
-      </LeftHead>
-      <RightHead>
-        <Menu>
-          <MenuList>
-            <MenuItem>
-              <TextButton
-                onClickEvent={onSignInModalOpen}
-                icon={faSignInAlt}
-                text="sign in"
-              />
-            </MenuItem>
-            <MenuItem>
-              <TextButton
-                onClickEvent={onSignUpModalOpen}
-                icon={faUserPlus}
-                text="sign up"
-              />
-            </MenuItem>
-            <MenuItem>
-              <TextButton
-                onClickEvent={onSignOut}
-                icon={faSignOutAlt}
-                text="sign out"
-              />
-            </MenuItem>
-          </MenuList>
-          <UserMenu
-            isAuth={isAuth}
-            userInfo={userInfo}
-            isUserActive={isUserActive}
-            onUserMenuToggle={onUserMenuToggle}
-            onSignOut={onSignOut}
-            onSignInModalOpen={onSignInModalOpen}
-            onSignUpModalOpen={onSignUpModalOpen}
-          />
-        </Menu>
-      </RightHead>
+      <HeaderInnder>
+        <LeftHead>
+          <Logo>
+            <ModeToggle onClick={onToggleMode}>M</ModeToggle>
+          </Logo>
+        </LeftHead>
+        <RightHead>
+          <Menu>
+            <MenuList>
+              <MenuItem>
+                <TextButton
+                  onClickEvent={onSignInModalOpen}
+                  icon={faSignInAlt}
+                  text="sign in"
+                />
+              </MenuItem>
+              <MenuItem>
+                <TextButton
+                  onClickEvent={onSignUpModalOpen}
+                  icon={faUserPlus}
+                  text="sign up"
+                />
+              </MenuItem>
+              <MenuItem>
+                <TextButton
+                  onClickEvent={onSignOut}
+                  icon={faSignOutAlt}
+                  text="sign out"
+                />
+              </MenuItem>
+            </MenuList>
+            <Avatar
+              onClick={onUserMenuToggle}
+              isActive={isUserActive}
+              isImageNone={isImageNone}
+            >
+              {isAuth && !isImageNone ? (
+                <img src={userInfo.userImage} />
+              ) : (
+                <FontAwesomeIcon icon={faGhost} />
+              )}
+            </Avatar>
+          </Menu>
+        </RightHead>
+      </HeaderInnder>
+      {isUserActive && (
+        <AvatarToast
+          isUserActive={isUserActive}
+        />
+      )}
     </HeaderWrap>
   );
 };

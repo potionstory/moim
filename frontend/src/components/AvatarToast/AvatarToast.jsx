@@ -10,9 +10,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import TextButton from '../../components/Button/TextButton';
 import IconButton from '../../components/Button/IconButton';
-import { MenuWrap, Avatar, Member, NonMember, Menus } from './style';
+import { AvatarToastWrap, AvatarMenu, Member, NonMember, Menus } from './style';
 
-const UserMenu = ({
+const AvatarToast = ({
   isAuth,
   userInfo,
   isUserActive,
@@ -23,8 +23,8 @@ const UserMenu = ({
 }) => {
   const isImageNone = isAuth && userInfo.userImage === null;
   return (
-    <MenuWrap>
-      <Avatar
+    <AvatarToastWrap>
+      <AvatarMenu
         onClick={onUserMenuToggle}
         isActive={isUserActive}
         isImageNone={isImageNone}
@@ -34,7 +34,7 @@ const UserMenu = ({
         ) : (
           <FontAwesomeIcon icon={faGhost} />
         )}
-      </Avatar>
+      </AvatarMenu>
       <motion.div
         className="menuBox"
         animate={{ x: isUserActive ? -288 : 48 }}
@@ -98,8 +98,8 @@ const UserMenu = ({
           </NonMember>
         )}
       </motion.div>
-    </MenuWrap>
+    </AvatarToastWrap>
   );
 };
 
-export default UserMenu;
+export default AvatarToast;

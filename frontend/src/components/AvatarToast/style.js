@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ellipsis } from '../../lib/styles/util';
 
-export const MenuWrap = styled.div`
+export const AvatarToastWrap = styled.div`
   display: flex;
   position: relative;
   margin-left: 24px;
@@ -22,7 +22,7 @@ export const MenuWrap = styled.div`
   }
 `;
 
-export const Avatar = styled.button`
+export const AvatarMenu = styled.button`
   overflow: hidden;
   width: 40px;
   height: 40px;
