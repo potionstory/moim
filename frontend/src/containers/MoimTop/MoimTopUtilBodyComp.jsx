@@ -4,10 +4,23 @@ import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CheckBox from '../../components/CheckBox';
 import Toggle from '../../components/Toggle';
-import { UtilBody, UtilTabMenuWrap, UtilTabMenu, UtilTabContentWrap, UtilTabContentBlock, UtilTabContentInner } from './style';
+import {
+  UtilBody,
+  UtilTabMenuWrap,
+  UtilTabMenu,
+  UtilTabContentWrap,
+  UtilTabContentBlock,
+  UtilTabContentInner,
+} from './style';
 
-const MoimHeaderUtilBodyComp = ({ menu, cont, activeIndex, onTabClick, isVisible, onItemCheck }) => {
-
+const MoimTopUtilBodyComp = ({
+  menu,
+  cont,
+  activeIndex,
+  onTabClick,
+  isVisible,
+  onItemCheck,
+}) => {
   return (
     <UtilBody isVisible={isVisible}>
       <UtilTabMenuWrap>
@@ -42,8 +55,21 @@ const MoimHeaderUtilBodyComp = ({ menu, cont, activeIndex, onTabClick, isVisible
 
                     return (
                       <li key={itemIndex}>
-                        {type === "checkbox" && <CheckBox name={name} isChecked={isChecked} onCheck={() => onItemCheck(utilIndex, itemIndex)} />}
-                        {type === "radio" && <Toggle index={itemIndex} name={name} isChecked={isChecked} onCheck={() => onItemCheck(utilIndex, itemIndex)} />}
+                        {type === 'checkbox' && (
+                          <CheckBox
+                            name={name}
+                            isChecked={isChecked}
+                            onCheck={() => onItemCheck(utilIndex, itemIndex)}
+                          />
+                        )}
+                        {type === 'radio' && (
+                          <Toggle
+                            index={itemIndex}
+                            name={name}
+                            isChecked={isChecked}
+                            onCheck={() => onItemCheck(utilIndex, itemIndex)}
+                          />
+                        )}
                       </li>
                     );
                   })}
@@ -57,4 +83,4 @@ const MoimHeaderUtilBodyComp = ({ menu, cont, activeIndex, onTabClick, isVisible
   );
 };
 
-export default MoimHeaderUtilBodyComp;
+export default MoimTopUtilBodyComp;

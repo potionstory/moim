@@ -2,11 +2,11 @@ import React from 'react';
 import map from 'lodash/map';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MoimHeaderTabWrap, TabButton } from './style';
+import { MoimTopTabWrap, TabButton } from './style';
 
-const MoimHeaderTabComp = ({ tabMenu, activeIndex, onTabClick }) => {
+const MoimTopTabComp = ({ tabMenu, activeIndex, onTabClick }) => {
   return (
-    <MoimHeaderTabWrap>
+    <MoimTopTabWrap>
       <motion.div
         className="motionTab"
         animate={{ x: activeIndex * 80 }}
@@ -23,8 +23,8 @@ const MoimHeaderTabComp = ({ tabMenu, activeIndex, onTabClick }) => {
           </TabButton>
         ))}
       </ul>
-    </MoimHeaderTabWrap>
+    </MoimTopTabWrap>
   );
 };
 
-export default MoimHeaderTabComp;
+export default MoimTopTabComp;

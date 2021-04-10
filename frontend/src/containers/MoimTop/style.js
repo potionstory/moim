@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { color } from '../../lib/styles/palette';
 
-export const MoimHeaderWrap = styled.div`
+export const MoimTopWrap = styled.div`
   position: relative;
   z-index: 30;
-  .moimHeader {
+  .moimTop {
     display: flex;
     justify-content: space-between;
     position: relative;
@@ -24,21 +24,21 @@ export const MoimHeaderWrap = styled.div`
   }
 `;
 
-export const MoimHeaderTabWrap = styled.div`
+export const MoimTopTabWrap = styled.div`
   position: relative;
   .motionTab {
-      position: absolute;
-      top: 0;
-      width: 80px;
-      height: 80px;
-      border-radius: 4px;
-      background-color: ${({ theme }) => theme.theme};
-    }
-    .tabList {
-      display: flex;
-      flex-direction: row;
-      position: relative;
-    }
+    position: absolute;
+    top: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    background-color: ${({ theme }) => theme.theme};
+  }
+  .tabList {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+  }
 `;
 
 export const TabButton = styled.li`
@@ -50,7 +50,7 @@ export const TabButton = styled.li`
     border-radius: 4px;
     svg {
       font-size: 2rem;
-      color: ${({ isActive, theme }) => !isActive ? theme.gray : theme.main};
+      color: ${({ isActive, theme }) => (!isActive ? theme.gray : theme.main)};
       transition: all 0.2s ease-out;
     }
     &:hover {
@@ -62,7 +62,7 @@ export const TabButton = styled.li`
   }
 `;
 
-export const MoimHeaderUtilWrap = styled.div`
+export const MoimTopUtilWrap = styled.div`
   position: relative;
   .utilList {
     display: flex;
@@ -81,15 +81,16 @@ export const UtilButton = styled.li`
     background-color: ${({ isActive, theme }) => isActive && theme.title};
     svg {
       font-size: 1rem;
-      color: ${({ isActive, theme }) => !isActive ? theme.gray : color.red};
+      color: ${({ isActive, theme }) => (!isActive ? theme.gray : color.red)};
     }
     &:hover {
       svg {
-        color: ${({ isActive, theme }) => !isActive ? theme.title : color.red};
+        color: ${({ isActive, theme }) =>
+          !isActive ? theme.title : color.red};
       }
     }
   }
-`
+`;
 
 export const UtilWrap = styled.div`
   display: flex;
@@ -144,7 +145,7 @@ export const UtilHeader = styled.div`
       margin-left: 6px;
       border-radius: 12px;
       background-color: ${({ theme }) => theme.gray};
-      font-size: 0.750rem;
+      font-size: 0.75rem;
       transition: all 0.2s ease-out;
       svg {
         color: ${({ theme }) => theme.title};
@@ -157,7 +158,7 @@ export const UtilHeader = styled.div`
 `;
 
 export const UtilBody = styled.div`
-  display: ${({ isVisible }) => isVisible ? 'flex' : 'none'};
+  display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
   flex: 1;
   margin-top: 12px;
 `;
