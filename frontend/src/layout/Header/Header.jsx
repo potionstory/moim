@@ -1,11 +1,15 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  faSun,
+  faMoon,
   faSignInAlt,
   faUserPlus,
   faSignOutAlt,
+  faPlus,
   faGhost,
 } from '@fortawesome/free-solid-svg-icons';
 import api from '../../store/api';
@@ -17,6 +21,7 @@ import {
 import { getUserAction, signOutAction } from '../../store/module/auth';
 import { auth } from '../../server/firebase.util';
 import TextButton from '../../components/Button/TextButton';
+import IconButton from '../../components/Button/IconButton';
 import AvatarToast from '../../components/AvatarToast';
 import {
   HeaderWrap,
@@ -36,6 +41,18 @@ api.defaults.headers.common['Authorization'] = token;
 
 const Header = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const { isAuth, userInfo } = useSelector(({ auth }) => auth);
+  const { mode } = useSelector(({ global }) => global);
+
+  const onLinkToHome = useCallback(() => {
+    history.push('/');
+  }, []);
+
+  const onLinkToCreate = useCallback(() => {
+    history.push('/create');
+  }, []);
 
   const onToggleMode = useCallback(() => dispatch(toggleModeAction.REQUEST()), [
     dispatch,
@@ -59,8 +76,6 @@ const Header = () => {
     setIsUserActive(false);
     dispatch(signUpModalOpenAction());
   }, [dispatch]);
-
-  const { isAuth, userInfo } = useSelector(({ auth }) => auth);
 
   const [isUserActive, setIsUserActive] = useState(false);
 
@@ -87,10 +102,25 @@ const Header = () => {
   return (
     <HeaderWrap>
       <HeaderInnder>
-        <LeftHead>
+        <LeftHead isLight={mode}>
           <Logo>
-            <ModeToggle onClick={onToggleMode}>M</ModeToggle>
+            <ModeToggle onClick={onLinkToHome}>M</ModeToggle>
           </Logo>
+          <div className="modeToggle">
+            <label>
+              <input type="checkbox" checked={mode} onChange={onToggleMode} />
+              <motion.div
+                className="activeBar"
+                initial={{ x: (mode === false ? 1 : 0) * 40 }}
+                animate={{ x: (mode === false ? 1 : 0) * 40 }}
+                transition={{
+                  ease: 'backInOut',
+                }}
+              >
+                <FontAwesomeIcon icon={mode ? faSun : faMoon} />
+              </motion.div>
+            </label>
+          </div>
         </LeftHead>
         <RightHead>
           <Menu>
@@ -115,6 +145,9 @@ const Header = () => {
                   icon={faSignOutAlt}
                   text="sign out"
                 />
+              </MenuItem>
+              <MenuItem>
+                <IconButton onClickEvent={onLinkToCreate} icon={faPlus} />
               </MenuItem>
             </MenuList>
             <Avatar

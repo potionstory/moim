@@ -1,7 +1,12 @@
 import React, { useState, useCallback } from 'react';
-import { faCommentAlt, faMugHot, faFilter, faSortAmountDown } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCommentAlt,
+  faMugHot,
+  faFilter,
+  faSortAmountDown,
+} from '@fortawesome/free-solid-svg-icons';
 import MoimList from '../../containers/MoimList';
-import MoimHeader from '../../containers/MoimHeader';
+import MoimTop from '../../containers/MoimTop';
 
 const tabMenu = [
   {
@@ -33,13 +38,16 @@ const Home = () => {
     setTabIndex(index);
   }, []);
 
-  const onUtilClick = useCallback((index) => {
-    setUtilIndex(utilIndex !== index ? index : -1);
-  }, [utilIndex]);
+  const onUtilClick = useCallback(
+    (index) => {
+      setUtilIndex(utilIndex !== index ? index : -1);
+    },
+    [utilIndex],
+  );
 
   return (
     <>
-      <MoimHeader
+      <MoimTop
         tabMenu={tabMenu}
         utilMenu={utilMenu}
         tabIndex={tabIndex}

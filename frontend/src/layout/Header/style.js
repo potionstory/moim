@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { color } from '../../lib/styles/palette';
 import { ellipsis } from '../../lib/styles/util';
 
 export const HeaderWrap = styled.section`
@@ -26,6 +27,41 @@ export const HeaderInnder = styled.div`
 export const LeftHead = styled.div`
   display: flex;
   padding: 24px 0;
+  .modeToggle {
+    margin-left: 24px;
+    label {
+      display: block;
+      width: 80px;
+      height: 40px;
+      padding: 4px;
+      background-color: ${({ isLight }) =>
+        isLight ? color.orange : color.blue};
+      border-radius: 24px;
+      font-weight: 600;
+      color: ${({ isLight, theme }) => (isLight ? theme.main : theme.gray)};
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease-out;
+      input {
+        display: none;
+        width: initial;
+        height: initial;
+      }
+      .activeBar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 20px;
+        background-color: ${({ theme }) => theme.main};
+        svg {
+          font-size: 1.5rem;
+          color: ${({ isLight }) => (isLight ? color.orange : color.blue)};
+        }
+      }
+    }
+  }
 `;
 
 export const Logo = styled.h1`
