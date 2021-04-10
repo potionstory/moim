@@ -8,7 +8,7 @@ const MoimTopTabComp = ({ tabMenu, activeIndex, onTabClick }) => {
   return (
     <MoimTopTabWrap>
       <motion.div
-        className="motionTab"
+        className="activeBar"
         animate={{ x: activeIndex * 80 }}
         transition={{
           ease: 'backInOut',

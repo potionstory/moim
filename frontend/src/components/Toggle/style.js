@@ -5,9 +5,9 @@ export const ToggleWrap = styled.div`
   padding: 8px 0;
   label {
     display: block;
-    font-size: 0.750rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    color: ${({ isChecked, theme }) => isChecked ? theme.main : theme.gray};
+    color: ${({ isChecked, theme }) => (isChecked ? theme.main : theme.gray)};
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.2s ease-out;
@@ -22,15 +22,17 @@ export const ToggleWrap = styled.div`
       margin-right: 8px;
       width: 40px;
       height: 24px;
-      border: 4px solid ${({ isChecked }) => isChecked ? color.blue : color.gray};;
+      border: 4px solid
+        ${({ isChecked }) => (isChecked ? color.blue : color.gray)};
       border-radius: 12px;
       vertical-align: middle;
       transition: all 0.2s ease-out;
-      .toggleActive {
+      .activeBar {
         width: 16px;
         height: 16px;
         border-radius: 8px;
-        background-color: ${({ isChecked }) => isChecked ? color.blue : color.gray};;
+        background-color: ${({ isChecked }) =>
+          isChecked ? color.blue : color.gray};
       }
     }
     &:hover {

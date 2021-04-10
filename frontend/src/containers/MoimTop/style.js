@@ -26,7 +26,7 @@ export const MoimTopWrap = styled.div`
 
 export const MoimTopTabWrap = styled.div`
   position: relative;
-  .motionTab {
+  .activeBar {
     position: absolute;
     top: 0;
     width: 80px;

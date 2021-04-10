@@ -124,7 +124,7 @@ export const CardTabMenu = styled.div`
   position: relative;
   border-radius: 20px;
   background-color: ${({ theme }) => theme.sub};
-  .activeBox {
+  .activeBar {
     position: absolute;
     top: 0;
     left: 0;

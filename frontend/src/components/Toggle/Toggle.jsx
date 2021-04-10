@@ -9,7 +9,7 @@ const Toggle = ({ name, isChecked, onCheck }) => {
         <input type="checkbox" checked={isChecked} onChange={onCheck} />
         <div className="toggleBar">
           <motion.div
-            className="toggleActive"
+            className="activeBar"
             initial={{ x: (isChecked === true ? 1 : 0) * 16 }}
             animate={{ x: (isChecked === true ? 1 : 0) * 16 }}
             transition={{

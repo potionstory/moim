@@ -25,7 +25,7 @@ const CardTabComp = ({ item, category }) => {
       <CardTabMenuWrap>
         <CardTabMenu activeIndex={tabIndex}>
           <motion.div
-            className="activeBox"
+            className="activeBar"
             animate={{ y: tabIndex * 40 }}
             transition={{
               ease: 'backInOut',
