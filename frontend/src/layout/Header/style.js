@@ -56,7 +56,7 @@ export const LeftHead = styled.div`
         border-radius: 20px;
         background-color: ${({ theme }) => theme.main};
         svg {
-          font-size: 1.5rem;
+          font-size: 1.2rem;
           color: ${({ isLight }) => (isLight ? color.orange : color.blue)};
         }
       }
