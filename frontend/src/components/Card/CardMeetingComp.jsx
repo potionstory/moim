@@ -48,12 +48,6 @@ const CardMeetingComp = ({ item, activeIndex }) => {
     }
   }, [activeIndex, type]);
 
-  console.log(
-    '%c 🥛 type: ',
-    'font-size:20px;background-color: #2EAFB0;color:#fff;',
-    type,
-  );
-
   return (
     <>
       <div className="cardTabBox">
