@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CardHeader } from './style';
 import { getCommunityIcon, getMeetingIcon } from '../../utils/commonUtil';
 
-const CardHeaderComp = ({ service, type, title, status, category }) => {
+const CardHeaderComp = ({ id, service, type, title, status, category }) => {
   return (
     <CardHeader status={status}>
       <span className="icon" type={type}>
@@ -14,7 +15,9 @@ const CardHeaderComp = ({ service, type, title, status, category }) => {
         )}
       </span>
       <div className="info">
-        <h3>{title}</h3>
+        <Link to={`/detail/${category}/${id}`} className="title">
+          {title}
+        </Link>
         <div className="status">
           <span>{status}</span>
         </div>

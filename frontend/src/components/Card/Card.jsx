@@ -6,17 +6,18 @@ import { CardWrap, CardBlock, CardInner, CardBody } from './style';
 import { getMeetingStatus } from '../../utils/commonUtil';
 
 const Card = ({ item, category }) => {
+  const { service, type, title, status } = item;
+
   return (
     <CardWrap>
       <CardBlock>
         <CardInner className="inner">
           <CardHeaderComp
-            service={item.service}
-            type={item.type}
-            title={item.title}
-            status={
-              category === 'community' ? item.status : getMeetingStatus(item)
-            }
+            id={item[`${category}Id`]}
+            service={service}
+            type={type}
+            title={title}
+            status={category === 'community' ? status : getMeetingStatus(item)}
             category={category}
           />
           <CardBody>

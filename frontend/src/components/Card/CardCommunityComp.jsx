@@ -1,14 +1,19 @@
 import React, { useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import map from 'lodash/map';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExternalLinkAlt, faCopy, faTag } from '@fortawesome/free-solid-svg-icons';
+import {
+  faExternalLinkAlt,
+  faCopy,
+  faTag,
+} from '@fortawesome/free-solid-svg-icons';
 import DropButton from '../DropButton';
 import { CardImage, CardText, CardLink, CardMore } from './style';
 
 const linkIcon = [faExternalLinkAlt, faCopy];
 
 const CardCommunityComp = ({ item }) => {
-  const { mainImage, text, url, tags } = item;
+  const { communityId, mainImage, text, url, tags } = item;
 
   const onNewTab = useCallback(() => {
     window.open(url);
@@ -22,7 +27,9 @@ const CardCommunityComp = ({ item }) => {
     <>
       <div className="cardTabBox">
         <CardImage>
-          <img src={mainImage} />
+          <Link to={`/detail/community/${communityId}`}>
+            <img src={mainImage} />
+          </Link>
         </CardImage>
       </div>
       <div className="cardTabBox">
@@ -31,7 +38,9 @@ const CardCommunityComp = ({ item }) => {
       <div className="cardTabBox">
         <CardLink>
           <div className="linkBox">
-            <a className="url" href={url} target="_blank">{url}</a>
+            <a className="url" href={url} target="_blank">
+              {url}
+            </a>
             <DropButton menu={linkIcon} onHandle={[onNewTab, onUrlCopy]} />
           </div>
         </CardLink>

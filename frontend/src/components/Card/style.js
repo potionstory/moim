@@ -64,7 +64,7 @@ export const CardHeader = styled.div`
     flex: 1;
     justify-content: center;
     margin-left: 12px;
-    h3 {
+    .title {
       display: block;
       font-size: 1rem;
       font-weight: 600;

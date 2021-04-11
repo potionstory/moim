@@ -1,4 +1,5 @@
 import React, { useLayoutEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import map from 'lodash/map';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -52,7 +53,9 @@ const CardMeetingComp = ({ item, activeIndex }) => {
     <>
       <div className="cardTabBox">
         <CardImage>
-          <img src={mainImage} />
+          <Link to={`/detail/meeting/${meetingId}`}>
+            <img src={mainImage} />
+          </Link>
         </CardImage>
       </div>
       <div className="cardTabBox">
