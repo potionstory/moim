@@ -68,9 +68,13 @@ export const CardHeader = styled.div`
       display: block;
       font-size: 1rem;
       font-weight: 600;
-      color: ${({ theme }) => theme.title};
+      color: ${color.gray};
       line-height: 1rem;
       ${ellipsis};
+      transition: all 0.2s ease-out;
+      &:hover {
+        color: ${({ theme }) => theme.title};
+      }
     }
     .status {
       display: flex;
@@ -196,19 +200,62 @@ export const CardImage = styled.span`
   overflow: hidden;
   position: relative;
   height: 100%;
-  img {
+  .thumb {
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  .cover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    opacity: 0;
+    transition: all 0.2s ease-out;
+    &:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: ${({ theme }) => theme.title};
+      opacity: 0.6;
+      content: '';
+    }
+    svg {
+      position: relative;
+      font-size: 6rem;
+      color: ${({ theme }) => theme.main};
+    }
+  }
+  &:hover {
+    .cover {
+      opacity: 1;
+    }
   }
 `;
 
-export const CardText = styled.p`
-  padding: 12px;
-  font-size: 0.75rem;
-  color: ${({ theme }) => theme.text};
-  word-break: break-all;
-  line-height: 1.5;
+export const CardText = styled.div`
+  height: 100%;
+  a {
+    display: block;
+    height: 100%;
+    padding: 12px;
+    font-size: 0.75rem;
+    color: ${color.gray};
+    word-break: break-all;
+    line-height: 1.5;
+    transition: all 0.2s ease-out;
+    &:hover {
+      color: ${({ theme }) => theme.text};
+    }
+  }
 `;
 
 export const CardLink = styled.div`

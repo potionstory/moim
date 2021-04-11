@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import map from 'lodash/map';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  faDiceD6,
   faMapMarkerAlt,
   faCircle,
   faTag,
@@ -53,13 +54,18 @@ const CardMeetingComp = ({ item, activeIndex }) => {
     <>
       <div className="cardTabBox">
         <CardImage>
-          <Link to={`/detail/meeting/${meetingId}`}>
+          <Link to={`/detail/meeting/${meetingId}`} className="thumb">
             <img src={mainImage} />
+          </Link>
+          <Link to={`/detail/meeting/${meetingId}`} className="cover">
+            <FontAwesomeIcon className="icon" icon={faDiceD6} />
           </Link>
         </CardImage>
       </div>
       <div className="cardTabBox">
-        <CardText>{text}</CardText>
+        <CardText>
+          <Link to={`/detail/community/${meetingId}`}>{text}</Link>
+        </CardText>
       </div>
       <div className="cardTabBox">
         <CardTime>

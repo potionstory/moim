@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faExternalLinkAlt,
   faCopy,
+  faDiceD6,
   faTag,
 } from '@fortawesome/free-solid-svg-icons';
 import DropButton from '../DropButton';
@@ -27,13 +28,18 @@ const CardCommunityComp = ({ item }) => {
     <>
       <div className="cardTabBox">
         <CardImage>
-          <Link to={`/detail/community/${communityId}`}>
+          <Link to={`/detail/community/${communityId}`} className="thumb">
             <img src={mainImage} />
+          </Link>
+          <Link to={`/detail/community/${communityId}`} className="cover">
+            <FontAwesomeIcon className="icon" icon={faDiceD6} />
           </Link>
         </CardImage>
       </div>
       <div className="cardTabBox">
-        <CardText>{text}</CardText>
+        <CardText>
+          <Link to={`/detail/community/${communityId}`}>{text}</Link>
+        </CardText>
       </div>
       <div className="cardTabBox">
         <CardLink>
