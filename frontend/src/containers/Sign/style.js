@@ -96,7 +96,7 @@ export const UserImage = styled.div`
     flex: 1;
     margin-top: 1.5rem;
     font-size: 2rem;
-    font-weight: 800;
+    font-weight: 600;
     color: ${({ theme }) => theme.title};
   }
 `;

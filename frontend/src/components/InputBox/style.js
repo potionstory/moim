@@ -46,7 +46,7 @@ export const InputWrap = styled.div`
     background-color: ${({ theme }) => theme.main};
     ${({ isDisable }) => isDisable && 'opacity: 0.6;'};
     font-size: 0.875rem;
-    font-weight: 500;
+    font-weight: 600;
     color: ${({ theme }) => theme.title};
     &:-webkit-autofill {
       -webkit-text-fill-color: ${({ theme }) => theme.title};
