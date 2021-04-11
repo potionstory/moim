@@ -1,18 +1,15 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import MoimTopTabComp from './MoimTopTabComp';
 import MoimTopUtilComp from './MoimTopUtilComp';
 import { MoimTopWrap } from './style';
 
 const MoimTop = ({
   tabMenu,
-  utilMenu,
+  tabTitle,
   tabIndex,
-  utilIndex,
   onTabClick,
-  onUtilClick,
+  isUtilVisible,
 }) => {
-  const tabTitle = useMemo(() => tabMenu[tabIndex].title, [tabIndex]);
-
   return (
     <MoimTopWrap>
       <div className="moimTop">
@@ -21,12 +18,7 @@ const MoimTop = ({
           activeIndex={tabIndex}
           onTabClick={onTabClick}
         />
-        <MoimTopUtilComp
-          tabIndex={tabIndex}
-          utilMenu={utilMenu}
-          activeIndex={utilIndex}
-          onUtilClick={onUtilClick}
-        />
+        {isUtilVisible && <MoimTopUtilComp tabIndex={tabIndex} />}
       </div>
       <h2>{tabTitle}</h2>
     </MoimTopWrap>

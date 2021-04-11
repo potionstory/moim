@@ -23,7 +23,6 @@ const CardMeetingComp = ({ item, activeIndex }) => {
     .format('YYYY/MM/DD/HH/mm')
     .split('/');
   const eventWeek = dayjs.unix(startDate._seconds).format('ddd');
-  console.log('eventWeek: ', eventWeek);
 
   useLayoutEffect(() => {
     // meeting location

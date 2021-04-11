@@ -11,23 +11,32 @@ import {
 } from '../../../src/store/module/util';
 import { utilTabMenu } from '../../lib/const';
 import MoimTopUtilBodyComp from './MoimTopUtilBodyComp';
+import { utilMenu } from '../../lib/const';
 import { MoimTopUtilWrap, UtilButton, UtilWrap, UtilHeader } from './style';
 
-const MoimTopUtilComp = ({ tabIndex, utilMenu, activeIndex, onUtilClick }) => {
+const MoimTopUtilComp = ({ tabIndex }) => {
   const util = useSelector(({ util }) => util);
   const dispatch = useDispatch();
 
+  const [utilIndex, setUtilIndex] = useState(-1);
   const [filterTabIndex, setFilterTabIndex] = useState([0, 0]);
   const [sortTabIndex, setSortTabIndex] = useState(0);
 
   const utilTitle = useMemo(
-    () => activeIndex !== -1 && utilMenu[activeIndex].title,
-    [util, activeIndex],
+    () => utilIndex !== -1 && utilMenu[utilIndex].title,
+    [util, utilIndex],
+  );
+
+  const onUtilClick = useCallback(
+    (index) => {
+      setUtilIndex(utilIndex !== index ? index : -1);
+    },
+    [utilIndex],
   );
 
   const onTabClick = useCallback(
     (index) => {
-      if (activeIndex === 0) {
+      if (utilIndex === 0) {
         setFilterTabIndex(
           produce((draft) => {
             draft[tabIndex] = index;
@@ -37,7 +46,7 @@ const MoimTopUtilComp = ({ tabIndex, utilMenu, activeIndex, onUtilClick }) => {
         setSortTabIndex(index);
       }
     },
-    [activeIndex, tabIndex],
+    [utilIndex, tabIndex],
   );
 
   const onReset = useCallback(() => {
@@ -62,7 +71,7 @@ const MoimTopUtilComp = ({ tabIndex, utilMenu, activeIndex, onUtilClick }) => {
     <MoimTopUtilWrap>
       <ul className="utilList">
         {map(utilMenu, (item, index) => {
-          const isActive = index === activeIndex;
+          const isActive = index === utilIndex;
 
           return (
             <UtilButton key={index} isActive={isActive}>
@@ -73,11 +82,11 @@ const MoimTopUtilComp = ({ tabIndex, utilMenu, activeIndex, onUtilClick }) => {
           );
         })}
       </ul>
-      {activeIndex !== -1 && (
-        <UtilWrap isRound={activeIndex === 0}>
+      {utilIndex !== -1 && (
+        <UtilWrap isRound={utilIndex === 0}>
           <UtilHeader>
             <span className="icon">
-              <FontAwesomeIcon icon={utilMenu[activeIndex].icon} />
+              <FontAwesomeIcon icon={utilMenu[utilIndex].icon} />
             </span>
             <div className="info">
               <h3>{utilTitle}</h3>
@@ -86,23 +95,23 @@ const MoimTopUtilComp = ({ tabIndex, utilMenu, activeIndex, onUtilClick }) => {
               </button>
             </div>
           </UtilHeader>
-          {activeIndex === 0 && (
+          {utilIndex === 0 && (
             <MoimTopUtilBodyComp
               menu={utilTabMenu[utilTitle][tabIndex]}
               cont={util[utilTitle][tabIndex]}
               activeIndex={filterTabIndex[tabIndex]}
               onTabClick={onTabClick}
-              isVisible={activeIndex === 0}
+              isVisible={utilIndex === 0}
               onItemCheck={onFilterCheck}
             />
           )}
-          {activeIndex === 1 && (
+          {utilIndex === 1 && (
             <MoimTopUtilBodyComp
               menu={utilTabMenu[utilTitle]}
               cont={util[utilTitle]}
               activeIndex={sortTabIndex}
               onTabClick={onTabClick}
-              isVisible={activeIndex === 1}
+              isVisible={utilIndex === 1}
               onItemCheck={onSortCheck}
             />
           )}

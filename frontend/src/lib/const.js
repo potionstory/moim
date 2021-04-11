@@ -1,7 +1,11 @@
 import {
+  faCommentAlt,
+  faMugHot,
+  faFilter,
+  faSortAmountDown,
   faDiceD6,
   faLock,
-  faPlug,
+  faPowerOff,
   faSpinner,
   faSortAlphaUp,
   faCalendarDay,
@@ -15,11 +19,33 @@ import {
 import icon from './icons';
 import { iconBg } from './styles/palette';
 
+export const categoryTabMenu = [
+  {
+    icon: faCommentAlt,
+    title: 'community',
+  },
+  {
+    icon: faMugHot,
+    title: 'meeting',
+  },
+];
+
+export const utilMenu = [
+  {
+    icon: faFilter,
+    title: 'filter',
+  },
+  {
+    icon: faSortAmountDown,
+    title: 'sort',
+  },
+];
+
 // moim header util menu icon
 export const utilTabMenu = {
   filter: [
     [faDiceD6, faLock], // community
-    [faPlug, faSpinner], // meeting
+    [faPowerOff, faSpinner], // meeting
   ],
   sort: [faSortAlphaUp, faCalendarDay],
 };
@@ -132,7 +158,7 @@ export const util = {
           isChecked: false,
         },
       ],
-    ]
+    ],
   ],
   sort: [
     [
@@ -140,7 +166,7 @@ export const util = {
         name: 'title',
         type: 'radio',
         isChecked: false,
-      }
+      },
     ],
     [
       {
@@ -152,7 +178,7 @@ export const util = {
         name: 'create',
         type: 'radio',
         isChecked: false,
-      }
+      },
     ],
   ],
 };
