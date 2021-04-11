@@ -2,7 +2,12 @@ import React, { useLayoutEffect, useRef } from 'react';
 import dayjs from 'dayjs';
 import map from 'lodash/map';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle, faTag, faUser } from '@fortawesome/free-solid-svg-icons';
+import {
+  faMapMarkerAlt,
+  faCircle,
+  faTag,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons';
 import { CardImage, CardText, CardMap, CardTime, CardMore } from './style';
 
 const { kakao } = window;
@@ -10,7 +15,7 @@ const mapIndex = 3; //map menu index
 const weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const CardMeetingComp = ({ item, activeIndex }) => {
-  const { meetingId, mainImage, text, startDate, endDate, tags } = item;
+  const { meetingId, type, mainImage, text, startDate, endDate, tags } = item;
   const mapRef = useRef(meetingId);
 
   // meeting date
@@ -26,7 +31,7 @@ const CardMeetingComp = ({ item, activeIndex }) => {
 
   useLayoutEffect(() => {
     // meeting location
-    if (mapIndex === activeIndex) {
+    if (mapIndex === activeIndex && type === 'offline') {
       mapRef.current.innerHTML = '';
 
       const options = {
@@ -41,7 +46,13 @@ const CardMeetingComp = ({ item, activeIndex }) => {
 
       marker.setMap(map);
     }
-  }, [activeIndex]);
+  }, [activeIndex, type]);
+
+  console.log(
+    '%c 🥛 type: ',
+    'font-size:20px;background-color: #2EAFB0;color:#fff;',
+    type,
+  );
 
   return (
     <>
@@ -78,7 +89,14 @@ const CardMeetingComp = ({ item, activeIndex }) => {
       </div>
       <div className="cardTabBox">
         <CardMap>
-          <div ref={mapRef} className="mapArea"></div>
+          {type === 'offline' ? (
+            <div ref={mapRef} className="mapArea"></div>
+          ) : (
+            <div className="mapNone">
+              <FontAwesomeIcon icon={faMapMarkerAlt} />
+              <span>online meeting</span>
+            </div>
+          )}
         </CardMap>
       </div>
       <div className="cardTabBox">

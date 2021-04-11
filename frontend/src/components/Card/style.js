@@ -67,7 +67,7 @@ export const CardHeader = styled.div`
     h3 {
       display: block;
       font-size: 1rem;
-      font-weight: 700;
+      font-weight: 600;
       color: ${({ theme }) => theme.title};
       line-height: 1rem;
       ${ellipsis};
@@ -241,6 +241,22 @@ export const CardMap = styled.div`
   height: 100%;
   .mapArea {
     height: 100%;
+  }
+  .mapNone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: ${color.gray};
+    svg {
+      font-size: 6rem;
+    }
+    span {
+      margin-top: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
   }
 `;
 
@@ -428,7 +444,7 @@ export const CardUserInfo = styled.div`
       line-height: 40px;
       ${ellipsis};
       b {
-        font-weight: 700;
+        font-weight: 600;
         color: ${({ theme }) => theme.title};
         transition: all 0.2s ease-out;
       }
