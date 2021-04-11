@@ -5,10 +5,12 @@ export const CheckBoxWrap = styled.div`
   position: relative;
   padding: 8px 0;
   label {
+    display: flex;
+    align-items: center;
     position: relative;
-    font-size: 0.750rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    color: ${({ isChecked, theme }) => isChecked ? theme.main : theme.gray};
+    color: ${({ isChecked, theme }) => (isChecked ? theme.main : theme.gray)};
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.2s ease-out;
@@ -25,9 +27,10 @@ export const CheckBoxWrap = styled.div`
       height: 16px;
       border: 4px solid ${color.blue};
       border-radius: 4px;
-      background-color: ${({ isChecked }) => isChecked ? color.blue : color.transparent};
+      background-color: ${({ isChecked }) =>
+        isChecked ? color.blue : color.transparent};
       vertical-align: top;
-      content:'';
+      content: '';
       transition: all 0.2s ease-out;
     }
     &:hover {
