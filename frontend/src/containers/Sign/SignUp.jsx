@@ -50,7 +50,7 @@ const SignUp = () => {
     [dispatch],
   );
 
-  const { isSocial, signInfo } = useSelector((state) => state.auth);
+  const { isSocial, signInfo } = useSelector(({ auth }) => auth);
 
   const [focusInput, setFocusInput] = useState(null);
   const [formData, setFormData] = useState(signUpForm);

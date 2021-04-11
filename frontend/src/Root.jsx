@@ -6,7 +6,8 @@ import { light, dark } from '../src/lib/styles/palette';
 import App from './App';
 
 const Root = () => {
-  const mode = useSelector((state) => state.global.mode);
+  const { mode } = useSelector(({ global }) => global);
+
   return (
     <BrowserRouter>
       <ThemeProvider theme={mode ? light : dark}>
