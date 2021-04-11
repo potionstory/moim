@@ -22,20 +22,25 @@ export const ToggleWrap = styled.div`
       margin-right: 8px;
       width: 40px;
       height: 24px;
-      border: 4px solid
-        ${({ isChecked }) => (isChecked ? color.blue : color.gray)};
+      padding: 4px;
       border-radius: 12px;
+      background-color: ${({ isChecked, theme }) =>
+        isChecked ? color.blue : theme.gray};
       vertical-align: middle;
       transition: all 0.2s ease-out;
       .activeBar {
         width: 16px;
         height: 16px;
         border-radius: 8px;
-        background-color: ${({ isChecked }) =>
-          isChecked ? color.blue : color.gray};
+        background-color: ${({ isChecked, theme }) =>
+          isChecked ? theme.title : theme.title};
       }
     }
     &:hover {
+      .toggleBar {
+        background-color: ${({ isChecked, theme }) =>
+          isChecked ? color.blue : theme.main};
+      }
       color: ${({ theme }) => theme.main};
       .toggleBar {
         border-color: ${color.blue};
