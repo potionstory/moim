@@ -5,6 +5,7 @@ import { getAllMeetingAPI } from '../api/meeting';
 
 function* workGetAllMeeting() {
   const res = yield call(getAllMeetingAPI);
+  
   if (res.status === 200) {
     yield put(getAllMeetingAction.SUCCESS(res.data));
   }

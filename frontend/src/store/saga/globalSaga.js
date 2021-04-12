@@ -4,6 +4,7 @@ import { toggleModeAction } from '../module/global';
 
 function* workToggleMode() {
   const { mode } = yield select(({ global }) => global);
+  
   yield put(toggleModeAction.SUCCESS(!mode));
 }
 

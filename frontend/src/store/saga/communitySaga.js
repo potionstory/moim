@@ -5,6 +5,7 @@ import { getAllCommunityAPI } from '../api/community';
 
 function* workGetAllCommunity() {
   const res = yield call(getAllCommunityAPI);
+  
   if (res.status === 200) {
     yield put(getAllCommunityAction.SUCCESS(res.data));
   }

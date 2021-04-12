@@ -3,6 +3,7 @@ import global from './global';
 import auth from './auth';
 import community from './community';
 import meeting from './meeting';
+import detail from './detail';
 import util from './util';
 
 const rootReducer = combineReducers({
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   auth,
   community,
   meeting,
+  detail,
   util,
 });
 

@@ -1,4 +1,7 @@
 import api from './index';
 
-// 모든 모임 조회
+// get all meeting
 export const getAllMeetingAPI = () => api.get('/meetings');
+
+// get one meeting
+export const getMeetingAPI = (meetingId) => api.get(`/meeting/${meetingId}`);
