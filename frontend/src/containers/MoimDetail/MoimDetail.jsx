@@ -1,10 +1,24 @@
-import React, { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getCommunityAction, getMeetingAction } from '../../store/module/detail';
-import { MoimDetailWrap } from './style';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import findIndex from 'lodash/findIndex';
+import isEmpty from 'lodash/isEmpty';
+import { getCommunityAction, getMeetingAction, resetDetailAction } from '../../store/module/detail';
+import { communityType, meetingType } from '../../lib/const';
+import UserInfo from '../../components/UserInfo';
+import IconList from '../../components/IconList';
+import { MoimDetailWrap, MoimDetailBase } from './style';
 
-const MoimDetail = ({ category, id }) => {
+const MoimDetail = ({ category, id }) => {  
+  const { moim } = useSelector(({ detail }) => detail);
   const dispatch = useDispatch();
+
+  const [typeIndex, setTypeIndex] = useState(0);
+  
+  const moimType = useMemo(() => category === 'community' ? communityType : meetingType, [category]);
+  
+  const onTypeChange = useCallback((index) => {
+    setTypeIndex(index);
+  }, []);
 
   const onGetCommunity = useCallback(
     () => dispatch(getCommunityAction.REQUEST(id)),
@@ -16,19 +30,49 @@ const MoimDetail = ({ category, id }) => {
     [dispatch],
   );
 
+  const onResetDetail = useCallback(
+    () => dispatch(resetDetailAction()),
+    [dispatch],
+  );
+
   useEffect(() => {
-    if (category === "community") {
+    if (category === 'community') {
       onGetCommunity(id);
     } else {
       onGetMeeting(id);
     }
+    return () => {
+      onResetDetail();
+    };
   }, []);
 
-  console.log(category, id);
+  useEffect(() => {
+    setTypeIndex(findIndex(moimType, item => item.name === moim.type));
+  }, [moimType, moim]);
+
+  const { mainImage, userImage, userName, likeCount, title, status, text, tags } = moim;
 
   return (
     <MoimDetailWrap>
-      Moim Detail
+      <MoimDetailBase>
+        <div className="info">
+          <div className="thumb">
+            <img src={mainImage} />
+          </div>
+          <UserInfo
+            image={userImage}
+            name={userName}
+            count={likeCount}
+          />
+        </div>
+        <div className="summary">
+          {isEmpty(moim) || <IconList list={moimType} checkIndex={typeIndex} isEdit={true} isIcon={category === 'community' ? false : true} onCheckChange={onTypeChange} />}
+          <span>{title}</span>
+          <span>{status}</span>
+          <span>{text}</span>
+          <span>{tags}</span>
+        </div>
+      </MoimDetailBase>
     </MoimDetailWrap>
   );
 };
