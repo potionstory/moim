@@ -12,7 +12,7 @@ exports.getAllCommunitys = (req, res) => {
       data.forEach((doc) => {
         communitys.push({
           communityId: doc.id,
-          service: doc.data().service,
+          type: doc.data().type,
           title: doc.data().title,
           status: doc.data().status,
           mainImage: doc.data().mainImage,
@@ -85,7 +85,7 @@ exports.postCommunity = (req, res) => {
     )}?alt=media&token=${generatedToken}`;
 
     const newCommunity = {
-      service: req.body.service,
+      type: req.body.type,
       title: req.body.title,
       status: req.body.status,
       mainImagePath: "community/",
@@ -196,7 +196,7 @@ exports.putCommunity = (req, res) => {
       storageFilepath
     )}?alt=media&token=${generatedToken}`;
 
-    const { service, title, status, text, url, tags } = req.body;
+    const { type, title, status, text, url, tags } = req.body;
 
     db.doc(`/communitys/${req.params.communityId}`)
       .get()
@@ -205,7 +205,7 @@ exports.putCommunity = (req, res) => {
         bucket.file(deleteFilePath).delete();
         db.doc(`/communitys/${req.params.communityId}`)
           .update({
-            service,
+            type,
             title,
             status,
             mainImagePath: storageFilepath,
