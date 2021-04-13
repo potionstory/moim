@@ -12,7 +12,7 @@ const MoimDetail = ({ category, id }) => {
   const { moim } = useSelector(({ detail }) => detail);
   const dispatch = useDispatch();
 
-  const [typeIndex, setTypeIndex] = useState(0);
+  const [typeIndex, setTypeIndex] = useState(-1);
   
   const moimType = useMemo(() => category === 'community' ? communityType : meetingType, [category]);
   
@@ -53,27 +53,31 @@ const MoimDetail = ({ category, id }) => {
   const { mainImage, userImage, userName, likeCount, title, status, text, tags } = moim;
 
   return (
-    <MoimDetailWrap>
-      <MoimDetailBase>
-        <div className="info">
-          <div className="thumb">
-            <img src={mainImage} />
-          </div>
-          <UserInfo
-            image={userImage}
-            name={userName}
-            count={likeCount}
-          />
-        </div>
-        <div className="summary">
-          {isEmpty(moim) || <IconList list={moimType} checkIndex={typeIndex} isEdit={true} isIcon={category === 'community' ? false : true} onCheckChange={onTypeChange} />}
-          <span>{title}</span>
-          <span>{status}</span>
-          <span>{text}</span>
-          <span>{tags}</span>
-        </div>
-      </MoimDetailBase>
-    </MoimDetailWrap>
+    <>
+      {!isEmpty(moim) && (
+        <MoimDetailWrap>
+          <MoimDetailBase>
+            <div className="info">
+              <div className="thumb">
+                <img src={mainImage} />
+              </div>
+              <UserInfo
+                image={userImage}
+                name={userName}
+                count={likeCount}
+              />
+            </div>
+            <div className="summary">
+              {typeIndex !== -1 && <IconList list={moimType} checkIndex={typeIndex} isEdit={true} isIcon={category === 'community' ? false : true} onCheckChange={onTypeChange} />}
+              <span>{title}</span>
+              <span>{status}</span>
+              <span>{text}</span>
+              <span>{tags}</span>
+            </div>
+          </MoimDetailBase>
+        </MoimDetailWrap>
+      )}
+    </>
   );
 };
 

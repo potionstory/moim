@@ -8,15 +8,17 @@ export const IconListWrap = styled.div`
       overflow: hidden;
       margin: 0 6px;
       border-radius: 4px;
-      .icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        background-color: ${({ theme }) => theme.sub};
-      }
     }
+  }
+  .icon {
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: ${({ theme }) => theme.sub};
   }
 `;
 
