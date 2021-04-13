@@ -15,6 +15,8 @@ import {
   faClock,
   faLink,
   faEllipsisH,
+  faWifi,
+  faShoePrints,
 } from '@fortawesome/free-solid-svg-icons';
 import icon from './icons';
 import { iconBg } from './styles/palette';
@@ -55,6 +57,38 @@ export const cardTabMenu = {
   community: [faImage, faAlignLeft, faLink, faEllipsisH],
   meeting: [faImage, faAlignLeft, faClock, faMapMarkerAlt, faEllipsisH],
 };
+
+// community type
+export const communityType = [
+  {
+    name: 'kakao',
+    icon: icon.kakao,
+  },
+  {
+    name: 'line',
+    icon: icon.line,
+  },
+  {
+    name: 'slack',
+    icon: icon.slack,
+  },
+  {
+    name: 'discord',
+    icon: icon.discord,
+  },
+];
+
+// meeting type
+export const meetingType = [
+  {
+    name: 'online',
+    icon: faWifi,
+  },
+  {
+    name: 'offline',
+    icon: faShoePrints,
+  },
+];
 
 // social
 export const socials = [

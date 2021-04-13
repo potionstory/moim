@@ -64,7 +64,7 @@ const CardMeetingComp = ({ item, activeIndex }) => {
       </div>
       <div className="cardTabBox">
         <CardText>
-          <Link to={`/detail/community/${meetingId}`}>{text}</Link>
+          <Link to={`/detail/meeting/${meetingId}`}>{text}</Link>
         </CardText>
       </div>
       <div className="cardTabBox">

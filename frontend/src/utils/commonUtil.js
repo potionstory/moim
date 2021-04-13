@@ -8,8 +8,8 @@ import { firebaseToken } from '../store/api/auth';
 import icon from '../lib/icons';
 
 // get community icon
-export const getCommunityIcon = (service) => {
-  switch (service) {
+export const getCommunityIcon = (type) => {
+  switch (type) {
     case 'kakao':
       return icon.kakao;
     case 'line':

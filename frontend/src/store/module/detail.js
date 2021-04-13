@@ -4,10 +4,14 @@ import { createType, createAction } from './helper';
 // action type
 export const GET_COMMUNITY = createType('GET_COMMUNITY');
 export const GET_MEETING = createType('GET_MEETING');
+export const RESET_DETAIL = 'RESET_DETAIL';
 
 // action 생성자 함수
 export const getCommunityAction = createAction(GET_COMMUNITY);
 export const getMeetingAction = createAction(GET_MEETING);
+export const resetDetailAction = () => ({
+  type: RESET_DETAIL,
+});
 
 // initialState
 const initialState = {
@@ -41,6 +45,9 @@ export default (state = initialState, action) => {
       case GET_MEETING.FAILURE: {
         draft.loading = false;
         break;
+      }
+      case RESET_DETAIL: {
+        draft.moim = {}
       }
       default:
     }

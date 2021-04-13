@@ -1,12 +1,12 @@
 import React from 'react';
 import CardHeaderComp from './CardHeaderComp';
 import CardTabComp from './CardTabComp';
-import CardUserInfoComp from './CardUserInfoComp';
+import UserInfo from '../UserInfo';
 import { CardWrap, CardBlock, CardInner, CardBody } from './style';
 import { getMeetingStatus } from '../../utils/commonUtil';
 
 const Card = ({ item, category }) => {
-  const { service, type, title, status } = item;
+  const { type, title, status } = item;
 
   return (
     <CardWrap>
@@ -14,7 +14,6 @@ const Card = ({ item, category }) => {
         <CardInner className="inner">
           <CardHeaderComp
             id={item[`${category}Id`]}
-            service={service}
             type={type}
             title={title}
             status={category === 'community' ? status : getMeetingStatus(item)}
@@ -25,7 +24,7 @@ const Card = ({ item, category }) => {
           </CardBody>
         </CardInner>
       </CardBlock>
-      <CardUserInfoComp
+      <UserInfo
         image={item.userImage}
         name={item.userName}
         count={item.likeCount}
