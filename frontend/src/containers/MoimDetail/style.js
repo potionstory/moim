@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { color } from '../../lib/styles/palette';
+import { css } from 'styled-components';
+import { ellipsis } from '../../lib/styles/util';
 
 export const MoimDetailWrap = styled.section`
   display: flex;
@@ -26,9 +27,40 @@ export const MoimDetailBase = styled.div`
     }
   }
   .summary {
+    display: flex;
+    flex-direction: column;
     flex: 1;
+    overflow: hidden;
     margin-left: 24px;
   }
+`;
+
+export const MoimDetailTitle = styled.div`
+  height: 4rem;
+  margin-top: 12px;
+  padding: 12px 0;
+  line-height: 4rem;
+  ${({ isEdit }) => isEdit && css`
+    padding: 12px;
+    border-radius: 4px;
+    background-color: ${({ theme }) => theme.title};
+  `};
+  h3 {
+    font-size: 4rem;
+    font-weight: 600;
+    color: ${({ theme }) => theme.title};
+    ${ellipsis};
+  }
+  input {
+    height: 4rem;
+    font-size: 4rem;
+    font-weight: 600;
+    color: ${({ theme }) => theme.main};
+  }
+`;
+
+export const MoimDetailStatus = styled.div`
+  margin-top: 12px;
 `;
 
 export const MoimDetailInfo = styled.div`

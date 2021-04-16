@@ -19,7 +19,7 @@ import {
   faShoePrints,
 } from '@fortawesome/free-solid-svg-icons';
 import icon from './icons';
-import { iconBg } from './styles/palette';
+import { color, iconBg } from './styles/palette';
 
 export const categoryTabMenu = [
   {
@@ -87,6 +87,38 @@ export const meetingType = [
   {
     name: 'offline',
     icon: faShoePrints,
+  },
+];
+
+// community status
+export const communityStatus = [
+  {
+    name: 'open',
+    bgColor: color.blue,
+  },
+  {
+    name: 'close',
+    bgColor: color.gray,
+  },
+];
+
+// meeting status
+export const meetingStatus = [
+  {
+    name: 'empty',
+    bgColor: color.blue,
+  },
+  {
+    name: 'full',
+    bgColor: color.red,
+  },
+  {
+    name: 'proceeding',
+    bgColor: color.green,
+  },
+  {
+    name: 'complete',
+    bgColor: color.gray,
   },
 ];
 
