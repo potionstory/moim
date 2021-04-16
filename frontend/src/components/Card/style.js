@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { css } from 'styled-components';
 import { color } from '../../lib/styles/palette';
 import { ellipsis } from '../../lib/styles/util';
 
@@ -88,17 +89,17 @@ export const CardHeader = styled.div`
         ${({ status }) => {
           switch (status) {
             case 'open':
-              return `background-color: ${color.blue}`;
+              return css`{ background-color: ${color.blue}; }`;
             case 'close':
-              return `background-color: ${color.gray}`;
+              return css`{ background-color: ${color.gray}; }`;
             case 'empty':
-              return `background-color: ${color.blue}`;
+              return css`{ background-color: ${color.blue}; }`;
             case 'full':
-              return `background-color: ${color.red}`;
+              return css`{ background-color: ${color.red}; }`;
             case 'proceeding':
-              return `background-color: ${color.green}`;
+              return css`{ background-color: ${color.green}; }`;
             case 'complete':
-              return `background-color: ${color.gray}`;
+              return css`{ background-color: ${color.gray}; }`;
             default:
               return;
           }

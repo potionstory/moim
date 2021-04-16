@@ -1,6 +1,6 @@
 import styled from 'styled-components';
+import { css } from 'styled-components';
 import { color } from '../../lib/styles/palette';
-import { ellipsis } from '../../lib/styles/util';
 
 export const HeaderWrap = styled.section`
   position: fixed;
@@ -128,7 +128,7 @@ export const Avatar = styled.button`
   &:hover {
     border-color: ${({ theme }) => theme.theme};
   }
-  ${({ theme, isActive }) => isActive && `border-color: ${theme.theme};`};
+  ${({ theme, isActive }) => isActive && css`{ border-color: ${theme.theme}; }`};
   svg {
     font-size: 1.6rem;
     color: ${({ theme, isImageNone }) =>

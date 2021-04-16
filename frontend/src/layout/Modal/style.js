@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { css } from 'styled-components';
 import { fadeIn, fadeOut } from '../../lib/styles/keyframe';
 
 export const ModalWrap = styled.section`
@@ -18,8 +19,8 @@ export const ModalWrap = styled.section`
   box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 16px 0px;
   ${({ mode }) =>
     mode
-      ? 'background-color: rgba(33, 33, 33, 0.5);'
-      : 'background-color: rgba(250, 250, 250, 0.5);'};
+      ? css`{ background-color: rgba(33, 33, 33, 0.5); }`
+      : css`{ background-color: rgba(250, 250, 250, 0.5); }`}
   animation: ${({ modalVisible }) => (modalVisible ? fadeIn : fadeOut)} 0.2s
     ease-out forwards;
 `;
