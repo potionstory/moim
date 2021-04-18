@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const ButtonWrap = styled.div`
   a,
@@ -8,7 +7,13 @@ export const ButtonWrap = styled.div`
     align-items: center;
     justify-content: center;
     min-width: 40px;
-    ${({ isFull }) => isFull && css`{width: 100%;}`};
+    ${({ isFull }) =>
+      isFull &&
+      css`
+         {
+          width: 100%;
+        }
+      `};
     height: 40px;
     padding: 8px;
     box-sizing: border-box;

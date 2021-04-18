@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 import { color } from '../../lib/styles/palette';
 
 export const InputBoxWrap = styled.div`
@@ -45,7 +44,13 @@ export const InputWrap = styled.div`
     padding: 0 1rem;
     border-radius: 4px;
     background-color: ${({ theme }) => theme.main};
-    ${({ isDisable }) => isDisable && css`{ opacity: 0.6; }`};
+    ${({ isDisable }) =>
+      isDisable &&
+      css`
+         {
+          opacity: 0.6;
+        }
+      `};
     font-size: 0.875rem;
     font-weight: 600;
     color: ${({ theme }) => theme.title};

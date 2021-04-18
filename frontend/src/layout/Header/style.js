@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 import { color } from '../../lib/styles/palette';
 
 export const HeaderWrap = styled.section`
@@ -128,7 +127,13 @@ export const Avatar = styled.button`
   &:hover {
     border-color: ${({ theme }) => theme.theme};
   }
-  ${({ theme, isActive }) => isActive && css`{ border-color: ${theme.theme}; }`};
+  ${({ theme, isActive }) =>
+    isActive &&
+    css`
+       {
+        border-color: ${theme.theme};
+      }
+    `};
   svg {
     font-size: 1.6rem;
     color: ${({ theme, isImageNone }) =>

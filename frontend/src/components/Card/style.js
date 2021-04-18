@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 import { color } from '../../lib/styles/palette';
 import { ellipsis } from '../../lib/styles/util';
 
@@ -89,17 +88,29 @@ export const CardHeader = styled.div`
         ${({ status }) => {
           switch (status) {
             case 'open':
-              return css`{ background-color: ${color.blue}; }`;
+              return css`
+                background-color: ${color.blue};
+              `;
             case 'close':
-              return css`{ background-color: ${color.gray}; }`;
+              return css`
+                background-color: ${color.gray};
+              `;
             case 'empty':
-              return css`{ background-color: ${color.blue}; }`;
+              return css`
+                background-color: ${color.blue};
+              `;
             case 'full':
-              return css`{ background-color: ${color.red}; }`;
+              return css`
+                background-color: ${color.red};
+              `;
             case 'proceeding':
-              return css`{ background-color: ${color.green}; }`;
+              return css`
+                background-color: ${color.green};
+              `;
             case 'complete':
-              return css`{ background-color: ${color.gray}; }`;
+              return css`
+                background-color: ${color.gray};
+              `;
             default:
               return;
           }
@@ -432,28 +443,6 @@ export const CardMore = styled.div`
         }
         .max {
           color: ${color.blue};
-        }
-      }
-      .tagList {
-        display: flex;
-        flex-wrap: wrap;
-        li {
-          height: 20px;
-          margin: 0 4px 4px 0;
-          button {
-            height: 20px;
-            padding: 0 10px;
-            border-radius: 10px;
-            background-color: ${color.blue};
-            font-size: 0.625rem;
-            font-weight: 600;
-            color: ${({ theme }) => theme.main};
-            line-height: 1;
-            transition: all 0.2s ease-out;
-            &:hover {
-              background-color: ${({ theme }) => theme.title};
-            }
-          }
         }
       }
     }
