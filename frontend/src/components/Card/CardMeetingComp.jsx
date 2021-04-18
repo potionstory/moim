@@ -10,6 +10,7 @@ import {
   faTag,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
+import TagList from '../TagList';
 import { CardImage, CardText, CardMap, CardTime, CardMore } from './style';
 
 const { kakao } = window;
@@ -127,13 +128,7 @@ const CardMeetingComp = ({ item, activeIndex }) => {
               <span className="title">tags</span>
             </div>
             <div className="contentBody">
-              <ul className="tagList">
-                {map(tags, (item, index) => (
-                  <li key={index}>
-                    <button type="button">{item}</button>
-                  </li>
-                ))}
-              </ul>
+              <TagList list={tags} />
             </div>
           </div>
         </CardMore>

@@ -9,6 +9,7 @@ import {
   faTag,
 } from '@fortawesome/free-solid-svg-icons';
 import DropButton from '../DropButton';
+import TagList from '../TagList';
 import { CardImage, CardText, CardLink, CardMore } from './style';
 
 const linkIcon = [faExternalLinkAlt, faCopy];
@@ -61,13 +62,7 @@ const CardCommunityComp = ({ item }) => {
               <span className="title">tags</span>
             </div>
             <div className="contentBody">
-              <ul className="tagList">
-                {map(tags, (item, index) => (
-                  <li key={index}>
-                    <button type="button">{item}</button>
-                  </li>
-                ))}
-              </ul>
+              <TagList list={tags} />
             </div>
           </div>
         </CardMore>
