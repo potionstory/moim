@@ -3,12 +3,28 @@ import { useSelector, useDispatch } from 'react-redux';
 import findIndex from 'lodash/findIndex';
 import isEmpty from 'lodash/isEmpty';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import { getCommunityAction, getMeetingAction, resetDetailAction } from '../../store/module/detail';
-import { communityType, meetingType, communityStatus, meetingStatus } from '../../lib/const';
+import {
+  getCommunityAction,
+  getMeetingAction,
+  resetDetailAction,
+} from '../../store/module/detail';
+import {
+  communityType,
+  meetingType,
+  communityStatus,
+  meetingStatus,
+} from '../../lib/const';
+import MoimDetailStatus from './MoimDetailStatus';
 import UserInfo from '../../components/UserInfo';
 import IconList from '../../components/IconList';
+import TagList from '../../components/TagList';
 import IconButton from '../../components/Button/IconButton';
-import { MoimDetailWrap, MoimDetailBase, MoimDetailTitle, MoimDetailStatus } from './style';
+import {
+  MoimDetailWrap,
+  MoimDetailBase,
+  MoimDetailTitle,
+  MoimDetailTags,
+} from './style';
 
 const MoimDetail = ({ category, id }) => {
   const { moim } = useSelector(({ detail }) => detail);
@@ -17,31 +33,49 @@ const MoimDetail = ({ category, id }) => {
   const [detail, setDetail] = useState({});
   const [isEdit, setIsEdit] = useState(false);
   const [typeIndex, setTypeIndex] = useState(-1);
-  
-  const moimType = useMemo(() => category === 'community' ? communityType : meetingType, [category]);
-  const moimStatus = useMemo(() => category === 'community' ? communityStatus : meetingStatus, [category]);
-  
+
+  const moimType = useMemo(
+    () => (category === 'community' ? communityType : meetingType),
+    [category],
+  );
+  const moimStatus = useMemo(
+    () => (category === 'community' ? communityStatus : meetingStatus),
+    [category],
+  );
+
   const onEditToggle = useCallback(() => {
-    setIsEdit(isEdit => !isEdit);
+    setIsEdit((isEdit) => !isEdit);
   }, []);
 
-  const onTypeChange = useCallback((index) => {
-    setDetail(detail => {
-      return {
-        ...detail,
-        type: moimType[index].name,
-      }
-    });
-  }, [moimType]);
+  const onTypeChange = useCallback(
+    (index) => {
+      setDetail((detail) => {
+        return {
+          ...detail,
+          type: moimType[index].name,
+        };
+      });
+    },
+    [moimType],
+  );
 
   const onTitleChange = useCallback((e) => {
     const { value } = e.target;
 
-    setDetail(detail => {
+    setDetail((detail) => {
       return {
         ...detail,
         title: value,
-      }
+      };
+    });
+  }, []);
+
+  const onIsOpenChange = useCallback(() => {
+    setDetail((detail) => {
+      return {
+        ...detail,
+        status: detail.status === 'open' ? 'close' : 'open',
+      };
     });
   }, []);
 
@@ -55,10 +89,9 @@ const MoimDetail = ({ category, id }) => {
     [dispatch],
   );
 
-  const onResetDetail = useCallback(
-    () => dispatch(resetDetailAction()),
-    [dispatch],
-  );
+  const onResetDetail = useCallback(() => dispatch(resetDetailAction()), [
+    dispatch,
+  ]);
 
   useEffect(() => {
     if (category === 'community') {
@@ -76,10 +109,19 @@ const MoimDetail = ({ category, id }) => {
   }, [moim]);
 
   useEffect(() => {
-    setTypeIndex(findIndex(moimType, item => item.name === detail.type));
+    setTypeIndex(findIndex(moimType, (item) => item.name === detail.type));
   }, [moimType, detail]);
 
-  const { mainImage, userImage, userName, likeCount, title, status, text, tags } = detail;
+  const {
+    mainImage,
+    userImage,
+    userName,
+    likeCount,
+    title,
+    status,
+    text,
+    tags,
+  } = detail;
 
   return (
     <>
@@ -90,27 +132,35 @@ const MoimDetail = ({ category, id }) => {
               <div className="thumb">
                 <img src={mainImage} />
               </div>
-              <UserInfo
-                image={userImage}
-                name={userName}
-                count={likeCount}
-              />
+              <UserInfo image={userImage} name={userName} count={likeCount} />
             </div>
             <div className="summary">
-              {typeIndex !== -1 && <IconList list={moimType} checkIndex={typeIndex} isEdit={isEdit} isIcon={category === 'community' ? false : true} onCheckChange={onTypeChange} />}
+              {typeIndex !== -1 && (
+                <IconList
+                  list={moimType}
+                  checkIndex={typeIndex}
+                  isEdit={isEdit}
+                  isIcon={category === 'community' ? false : true}
+                  onCheckChange={onTypeChange}
+                />
+              )}
               <MoimDetailTitle isEdit={isEdit}>
-                {!isEdit ? <h3>{title}</h3> : <input type="text" value={title} onChange={onTitleChange} />}
+                {!isEdit ? (
+                  <h3>{title}</h3>
+                ) : (
+                  <input type="text" value={title} onChange={onTitleChange} />
+                )}
               </MoimDetailTitle>
-              <MoimDetailStatus>
-                {status}
-                <ul>
-                {moimStatus.map((item => {
-                  return <li key={item.name}>{item.name}</li>
-                }))}
-                </ul>
-              </MoimDetailStatus>
-              <span>{text}</span>
-              <span>{tags}</span>
+              <MoimDetailStatus
+                category={category}
+                list={moimStatus}
+                status={status}
+                isEdit={isEdit}
+                onIsOpenChange={onIsOpenChange}
+              />
+              <MoimDetailTags>
+                <TagList list={tags} />
+              </MoimDetailTags>
             </div>
           </MoimDetailBase>
         </MoimDetailWrap>
