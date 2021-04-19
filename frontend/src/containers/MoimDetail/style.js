@@ -54,6 +54,7 @@ export const MoimDetailTitle = styled.div`
     ${ellipsis};
   }
   input {
+    width: 100%;
     height: 4rem;
     font-size: 4rem;
     font-weight: 600;
