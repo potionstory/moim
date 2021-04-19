@@ -1,8 +1,17 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, {
+  useState,
+  useRef,
+  useMemo,
+  useCallback,
+  useEffect,
+} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import findIndex from 'lodash/findIndex';
 import isEmpty from 'lodash/isEmpty';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import trim from 'lodash/trim';
+import filter from 'lodash/filter';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faPlus } from '@fortawesome/free-solid-svg-icons';
 import {
   getCommunityAction,
   getMeetingAction,
@@ -33,6 +42,9 @@ const MoimDetail = ({ category, id }) => {
   const [detail, setDetail] = useState({});
   const [isEdit, setIsEdit] = useState(false);
   const [typeIndex, setTypeIndex] = useState(-1);
+  const [tagInput, setTagInput] = useState('');
+
+  const tagInputRef = useRef();
 
   const moimType = useMemo(
     () => (category === 'community' ? communityType : meetingType),
@@ -78,6 +90,47 @@ const MoimDetail = ({ category, id }) => {
       };
     });
   }, []);
+
+  const onTagInputChange = useCallback((e) => {
+    setTagInput(e.target.value);
+  }, []);
+
+  const onTagAdd = useCallback(() => {
+    const trimValue = trim(tagInput);
+
+    if (
+      findIndex(detail.tags, (item) => item === trimValue) === -1 &&
+      trimValue !== ''
+    ) {
+      setDetail((detail) => {
+        return {
+          ...detail,
+          tags: [...detail.tags, trimValue],
+        };
+      });
+    }
+
+    setTagInput('');
+    tagInputRef.current.focus();
+  }, [detail, tagInput]);
+
+  const onTagRemove = useCallback(
+    (tag) => {
+      const tags = filter(detail.tags, (item) => item !== tag);
+
+      setDetail({ ...detail, tags });
+    },
+    [detail],
+  );
+
+  const onKeyTagEnter = useCallback(
+    (e) => {
+      if (e.key === 'Enter') {
+        onTagAdd();
+      }
+    },
+    [tagInput],
+  );
 
   const onGetCommunity = useCallback(
     () => dispatch(getCommunityAction.REQUEST(id)),
@@ -159,7 +212,22 @@ const MoimDetail = ({ category, id }) => {
                 onIsOpenChange={onIsOpenChange}
               />
               <MoimDetailTags>
-                <TagList list={tags} />
+                {isEdit && (
+                  <div className="tagInput">
+                    <input
+                      type="text"
+                      placeholder="태그를 입력해주세요"
+                      value={tagInput}
+                      ref={tagInputRef}
+                      onChange={onTagInputChange}
+                      onKeyPress={onKeyTagEnter}
+                    />
+                    <button type="button" onClick={onTagAdd}>
+                      <FontAwesomeIcon icon={faPlus} />
+                    </button>
+                  </div>
+                )}
+                <TagList list={tags} isEdit={isEdit} onRemove={onTagRemove} />
               </MoimDetailTags>
             </div>
           </MoimDetailBase>

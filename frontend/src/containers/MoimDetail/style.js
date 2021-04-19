@@ -96,6 +96,42 @@ export const MoimDetailStatusWrap = styled.div`
 
 export const MoimDetailTags = styled.div`
   margin-top: 12px;
+  .tagInput {
+    display: inline-flex;
+    overflow: hidden;
+    margin-bottom: 12px;
+    background-color: ${({ theme }) => theme.title};
+    border-radius: 20px;
+    input {
+      width: 180px;
+      height: 40px;
+      padding: 8px 20px;
+      box-sizing: border-box;
+      font-size: 0.875rem;
+      color: ${({ theme }) => theme.main};
+      font-weight: 600;
+    }
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      background-color: ${color.blue};
+      svg {
+        font-size: 1rem;
+        color: ${({ theme }) => theme.main};
+        opacity: 0.6;
+        transition: all 0.2s ease-out;
+      }
+      &:hover {
+        svg {
+          opacity: 1;
+        }
+      }
+    }
+  }
 `;
 
 export const MoimDetailInfo = styled.div``;
