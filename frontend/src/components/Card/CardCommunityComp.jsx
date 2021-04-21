@@ -15,7 +15,7 @@ import { CardImage, CardText, CardLink, CardMore } from './style';
 const linkIcon = [faExternalLinkAlt, faCopy];
 
 const CardCommunityComp = ({ item }) => {
-  const { communityId, mainImage, text, url, tags } = item;
+  const { communityId, mainImage, description, url, tags } = item;
 
   const onNewTab = useCallback(() => {
     window.open(url);
@@ -39,7 +39,7 @@ const CardCommunityComp = ({ item }) => {
       </div>
       <div className="cardTabBox">
         <CardText>
-          <Link to={`/detail/community/${communityId}`}>{text}</Link>
+          <Link to={`/detail/community/${communityId}`}>{description}</Link>
         </CardText>
       </div>
       <div className="cardTabBox">

@@ -18,7 +18,7 @@ const mapIndex = 3; //map menu index
 const weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const CardMeetingComp = ({ item, activeIndex }) => {
-  const { meetingId, type, mainImage, text, startDate, endDate, tags } = item;
+  const { meetingId, type, mainImage, description, startDate, endDate, tags } = item;
   const mapRef = useRef(meetingId);
 
   // meeting date
@@ -65,7 +65,7 @@ const CardMeetingComp = ({ item, activeIndex }) => {
       </div>
       <div className="cardTabBox">
         <CardText>
-          <Link to={`/detail/meeting/${meetingId}`}>{text}</Link>
+          <Link to={`/detail/meeting/${meetingId}`}>{description}</Link>
         </CardText>
       </div>
       <div className="cardTabBox">
