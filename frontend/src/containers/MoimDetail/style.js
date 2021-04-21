@@ -95,40 +95,64 @@ export const MoimDetailStatusWrap = styled.div`
   }
 `;
 
-export const MoimDetailTags = styled.div`
+export const MoimDetailTagWrap = styled.div`
+  display: flex;
   margin-top: 12px;
-  .tagInput {
-    display: inline-flex;
-    overflow: hidden;
-    margin-bottom: 12px;
-    background-color: ${({ theme }) => theme.title};
-    border-radius: 20px;
-    input {
-      width: 180px;
-      height: 40px;
-      padding: 8px 20px;
-      box-sizing: border-box;
-      font-size: 0.875rem;
-      color: ${({ theme }) => theme.main};
-      font-weight: 600;
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-right: 12px;
+    border-radius: 4px;
+    background-color: ${({ theme }) => theme.sub};
+    svg {
+      font-size: 1rem;
+      color: ${({ theme }) => theme.title};
+      transition: all 0.2s ease-out;
     }
-    button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
+  }
+  .tagContent {
+    flex: 1;
+    ${({ isEdit }) =>
+      !isEdit &&
+      css`{
+        padding-top: 10px;
+      `};
+    .tagInput {
+      display: inline-flex;
+      overflow: hidden;
+      margin-bottom: 12px;
+      background-color: ${({ theme }) => theme.title};
       border-radius: 20px;
-      background-color: ${color.blue};
-      svg {
-        font-size: 1rem;
+      input {
+        width: 180px;
+        height: 40px;
+        padding: 8px 20px;
+        box-sizing: border-box;
+        font-size: 0.875rem;
         color: ${({ theme }) => theme.main};
-        opacity: 0.6;
-        transition: all 0.2s ease-out;
+        font-weight: 600;
       }
-      &:hover {
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 20px;
+        background-color: ${color.blue};
         svg {
-          opacity: 1;
+          font-size: 1rem;
+          color: ${({ theme }) => theme.main};
+          opacity: 0.6;
+          transition: all 0.2s ease-out;
+        }
+        &:hover {
+          svg {
+            opacity: 1;
+          }
         }
       }
     }

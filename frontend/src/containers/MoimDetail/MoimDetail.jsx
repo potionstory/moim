@@ -24,6 +24,7 @@ import {
   meetingStatus,
 } from '../../lib/const';
 import MoimDetailStatus from './MoimDetailStatus';
+import MoimDetailTag from './MoimDetailTag';
 import UserInfo from '../../components/UserInfo';
 import IconList from '../../components/IconList';
 import TagList from '../../components/TagList';
@@ -32,7 +33,6 @@ import {
   MoimDetailWrap,
   MoimDetailBase,
   MoimDetailTitle,
-  MoimDetailTags,
 } from './style';
 
 const MoimDetail = ({ category, id }) => {
@@ -172,7 +172,7 @@ const MoimDetail = ({ category, id }) => {
     likeCount,
     title,
     status,
-    text,
+    description,
     tags,
   } = detail;
 
@@ -211,24 +211,19 @@ const MoimDetail = ({ category, id }) => {
                 isEdit={isEdit}
                 onIsOpenChange={onIsOpenChange}
               />
-              <MoimDetailTags>
-                {isEdit && (
-                  <div className="tagInput">
-                    <input
-                      type="text"
-                      placeholder="태그를 입력해주세요"
-                      value={tagInput}
-                      ref={tagInputRef}
-                      onChange={onTagInputChange}
-                      onKeyPress={onKeyTagEnter}
-                    />
-                    <button type="button" onClick={onTagAdd}>
-                      <FontAwesomeIcon icon={faPlus} />
-                    </button>
-                  </div>
-                )}
-                <TagList list={tags} isEdit={isEdit} onRemove={onTagRemove} />
-              </MoimDetailTags>
+              <MoimDetailTag
+                tags={tags}
+                isEdit={isEdit}
+                tagInput={tagInput}
+                tagInputRef={tagInputRef}
+                onTagInputChange={onTagInputChange}
+                onKeyTagEnter={onKeyTagEnter}
+                onTagAdd={onTagAdd}
+                onTagRemove={onTagRemove}
+              />
+              <div className="description">
+                {description}
+              </div>
             </div>
           </MoimDetailBase>
         </MoimDetailWrap>
