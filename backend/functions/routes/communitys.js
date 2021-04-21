@@ -16,7 +16,7 @@ exports.getAllCommunitys = (req, res) => {
           title: doc.data().title,
           status: doc.data().status,
           mainImage: doc.data().mainImage,
-          text: doc.data().text,
+          description: doc.data().description,
           url: doc.data().url,
           tags: doc.data().tags,
           userImage: doc.data().userImage,
@@ -90,7 +90,7 @@ exports.postCommunity = (req, res) => {
       status: req.body.status,
       mainImagePath: "community/",
       mainImage,
-      text: req.body.text,
+      description: req.body.description,
       url: req.body.url,
       tags: req.body.tags,
       userImage: req.user.userImage,
@@ -196,7 +196,7 @@ exports.putCommunity = (req, res) => {
       storageFilepath
     )}?alt=media&token=${generatedToken}`;
 
-    const { type, title, status, text, url, tags } = req.body;
+    const { type, title, status, description, url, tags } = req.body;
 
     db.doc(`/communitys/${req.params.communityId}`)
       .get()
@@ -210,7 +210,7 @@ exports.putCommunity = (req, res) => {
             status,
             mainImagePath: storageFilepath,
             mainImage,
-            text,
+            description,
             url,
             tags,
           })
