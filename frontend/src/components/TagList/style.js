@@ -34,7 +34,6 @@ export const TagListWrap = styled.ul`
         border-radius: 10px;
         background-color: ${({ theme }) => theme.title};
         svg {
-          width: 8px !important;
           color: ${({ theme }) => theme.main};
         }
       }

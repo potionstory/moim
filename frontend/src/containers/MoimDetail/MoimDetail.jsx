@@ -201,7 +201,7 @@ const MoimDetail = ({ category, id }) => {
                 {!isEdit ? (
                   <h3>{title}</h3>
                 ) : (
-                  <input type="text" value={title} onChange={onTitleChange} />
+                  <input type="text" placeholder="제목을 입력해주세요" value={title} onChange={onTitleChange} />
                 )}
               </MoimDetailTitle>
               <MoimDetailStatus
