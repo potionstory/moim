@@ -14,9 +14,9 @@ export const StatusListWrap = styled.div`
 `;
 
 export const StatusItem = styled.span`
-  height: 1rem;
-  padding: 0 6px;
-  border-radius: 8px;
+  height: 20px;
+  padding: 0 10px;
+  border-radius: 10px;
   ${({ status }) => {
     switch (status) {
       case 'open':
@@ -50,7 +50,7 @@ export const StatusItem = styled.span`
   font-size: 0.625rem;
   font-weight: 600;
   color: ${color.white};
-  line-height: 1rem;
+  line-height: 20px;
   text-transform: uppercase;
   opacity: ${({ isCheck }) => (isCheck ? 1 : 0.6)};
 `;

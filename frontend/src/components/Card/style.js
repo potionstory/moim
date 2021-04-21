@@ -80,11 +80,11 @@ export const CardHeader = styled.div`
       display: flex;
       flex-grow: 0;
       align-items: flex-start;
-      margin-top: 6px;
+      margin-top: 4px;
       span {
-        height: 1rem;
-        padding: 0 6px;
-        border-radius: 8px;
+        height: 20px;
+        padding: 0 10px;
+        border-radius: 10px;
         ${({ status }) => {
           switch (status) {
             case 'open':
@@ -118,7 +118,7 @@ export const CardHeader = styled.div`
         font-size: 0.625rem;
         font-weight: 600;
         color: ${color.white};
-        line-height: 1rem;
+        line-height: 20px;
         text-transform: uppercase;
       }
     }
