@@ -82,14 +82,14 @@ const MoimDetail = ({ category, id }) => {
     });
   }, []);
 
-  const onIsOpenChange = useCallback(() => {
+  const onStatusChange = useCallback((index) => {
     setDetail((detail) => {
       return {
         ...detail,
-        status: detail.status === 'open' ? 'close' : 'open',
+        status: moimStatus[index].name,
       };
     });
-  }, []);
+  }, [moimStatus]);
 
   const onTagInputChange = useCallback((e) => {
     setTagInput(e.target.value);
@@ -188,14 +188,19 @@ const MoimDetail = ({ category, id }) => {
               <UserInfo image={userImage} name={userName} count={likeCount} />
             </div>
             <div className="summary">
+              {/* IconList 와 이름을 포함한 MoimDetailType 만들기(아이콘과 이름은 가로정렬 flex) */}
+              {/* 타입 Container 를 제외한 다른 Container 의 앞에 있는 아이콘은 좀 더 특별한 색상으로 디자인 하기 */}
               {typeIndex !== -1 && (
-                <IconList
-                  list={moimType}
-                  checkIndex={typeIndex}
-                  isEdit={isEdit}
-                  isIcon={category === 'community' ? false : true}
-                  onCheckChange={onTypeChange}
-                />
+                <>
+                  <IconList
+                    list={moimType}
+                    checkIndex={typeIndex}
+                    isEdit={isEdit}
+                    isIcon={category === 'community' ? false : true}
+                    onCheckChange={onTypeChange}
+                  />
+                  {/* <span>{moimType[typeIndex].name}</span> */}
+                </>
               )}
               <MoimDetailTitle isEdit={isEdit}>
                 {!isEdit ? (
@@ -209,7 +214,7 @@ const MoimDetail = ({ category, id }) => {
                 list={moimStatus}
                 status={status}
                 isEdit={isEdit}
-                onIsOpenChange={onIsOpenChange}
+                onStatusChange={onStatusChange}
               />
               <MoimDetailTag
                 tags={tags}
