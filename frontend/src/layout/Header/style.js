@@ -6,13 +6,13 @@ export const HeaderWrap = styled.section`
   top: 0;
   left: 0;
   width: 100%;
-  height: 96px;
+  height: 88px;
   box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.08);
   background-color: ${({ theme }) => theme.main};
   z-index: 50;
   .avatarToast {
     position: fixed;
-    top: 144px;
+    top: 136px;
     right: -336px;
   }
 `;
@@ -25,17 +25,20 @@ export const HeaderInnder = styled.div`
 
 export const LeftHead = styled.div`
   display: flex;
+  align-items: center;
   padding: 24px 0;
   .modeToggle {
     margin-left: 24px;
     label {
       display: block;
-      width: 80px;
+      position: relative;
+      width: 72px;
       height: 40px;
       padding: 4px;
+      border-radius: 24px;
+      box-sizing: border-box;
       background-color: ${({ isLight }) =>
         isLight ? color.orange : color.blue};
-      border-radius: 24px;
       font-weight: 600;
       color: ${({ isLight, theme }) => (isLight ? theme.main : theme.gray)};
       text-transform: uppercase;
@@ -47,16 +50,23 @@ export const LeftHead = styled.div`
         height: initial;
       }
       .activeBar {
+        width: 32px;
+        height: 32px;
+        border-radius: 16px;
+        background-color: ${({ theme }) => theme.main};
+      }
+      .activeIcon {
         display: flex;
         align-items: center;
         justify-content: center;
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 40px;
         height: 40px;
-        border-radius: 20px;
-        background-color: ${({ theme }) => theme.main};
         svg {
           font-size: 1.2rem;
-          color: ${({ isLight }) => (isLight ? color.orange : color.blue)};
+          color: ${({ theme }) => theme.main};
         }
       }
     }
@@ -72,8 +82,8 @@ export const Logo = styled.h1`
 
 export const ModeToggle = styled.button`
   display: block;
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   position: relative;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.theme};
@@ -81,7 +91,7 @@ export const ModeToggle = styled.button`
   font-weight: 600;
   color: ${({ theme }) => theme.main};
   text-align: center;
-  line-height: 48px;
+  line-height: 40px;
   transition: all 0.2s ease-out;
 `;
 
@@ -114,29 +124,33 @@ export const Avatar = styled.button`
   margin-left: 24px;
   width: 40px;
   height: 40px;
-  border: 4px solid ${({ theme }) => theme.sub};
+  box-sizing: border-box;
   border-radius: 24px;
   background-color: ${({ theme, isImageNone }) =>
     !isImageNone ? theme.sub : theme.theme};
   transition: all 0.2s ease-out;
+  svg {
+    font-size: 1.6rem;
+    color: ${({ theme, isImageNone }) =>
+      !isImageNone ? theme.gray : theme.main};
+  }
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
   &:hover {
-    border-color: ${({ theme }) => theme.theme};
+    background-color: ${({ theme }) => theme.theme};
+    svg {
+      color: ${({ theme }) => theme.main};
+    }
   }
   ${({ theme, isActive }) =>
-    isActive &&
-    css`
-       {
-        border-color: ${theme.theme};
+    isActive && css`
+      background-color: ${theme.theme};
+      svg {
+        color: ${theme.main};
       }
-    `};
-  svg {
-    font-size: 1.6rem;
-    color: ${({ theme, isImageNone }) =>
-      !isImageNone ? theme.gray : theme.main};
-  }
+    `
+  };
 `;

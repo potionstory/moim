@@ -111,8 +111,16 @@ const Header = () => {
               <input type="checkbox" checked={mode} onChange={onToggleMode} />
               <motion.div
                 className="activeBar"
-                initial={{ x: (mode === false ? 1 : 0) * 40 }}
-                animate={{ x: (mode === false ? 1 : 0) * 40 }}
+                initial={{ x: (mode === false ? 1 : 0) * 32 }}
+                animate={{ x: (mode === false ? 1 : 0) * 32 }}
+                transition={{
+                  ease: 'backInOut',
+                }}
+              />
+              <motion.div
+                className="activeIcon"
+                initial={{ x: (mode === false ? 0 : 1) * 32 }}
+                animate={{ x: (mode === false ? 0 : 1) * 32 }}
                 transition={{
                   ease: 'backInOut',
                 }}
