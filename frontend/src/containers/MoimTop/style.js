@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { color } from '../../lib/styles/palette';
 
 export const MoimTopWrap = styled.div`
@@ -103,7 +103,7 @@ export const UtilWrap = styled.div`
   min-height: 296px;
   padding: 12px;
   box-sizing: border-box;
-  border-radius: ${({ isRound }) => `${isRound ? '4px 0 4px 4px' : '4px'}`};
+  ${({ isRound }) => css`border-radius: ${isRound ? '4px 0 4px 4px' : '4px'};`};
   background-color: ${({ theme }) => theme.title};
 `;
 
@@ -151,7 +151,7 @@ export const UtilHeader = styled.div`
         color: ${({ theme }) => theme.title};
       }
       &:hover {
-        background-color: ${({ theme }) => color.green};
+        background-color: ${color.green};
       }
     }
   }

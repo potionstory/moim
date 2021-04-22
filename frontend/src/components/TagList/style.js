@@ -10,7 +10,7 @@ export const TagListWrap = styled.ul`
     button {
       position: relative;
       height: 20px;
-      ${({ isEdit }) => css`{padding: ${!isEdit ? '0 10px' : '0 30px 0 10px'}`};
+      ${({ isEdit }) => css`padding: ${!isEdit ? '0 10px' : '0 30px 0 10px'};`};
       border-radius: 10px;
       background-color: ${color.blue};
       font-size: 0.625rem;

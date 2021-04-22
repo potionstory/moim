@@ -36,17 +36,17 @@ export const MoimDetailBase = styled.div`
 `;
 
 export const MoimDetailTitle = styled.div`
-  height: 4rem;
+  height: 92px;
   margin-top: 12px;
   padding: 12px 0;
-  line-height: 4rem;
+  line-height: 92px;
   ${({ isEdit }) =>
-    isEdit &&
-    css`{
-      padding: 12px;
+    isEdit && css`
+      padding: 12px 24px;
       border-radius: 4px;
-      background-color: ${({ theme }) => theme.title};
-    `};
+      background-color: ${({ theme }) => theme.sub};
+    `
+  };
   h3 {
     font-size: 4rem;
     font-weight: 600;
@@ -55,10 +55,10 @@ export const MoimDetailTitle = styled.div`
   }
   input {
     width: 100%;
-    height: 4rem;
+    height: 92px;
     font-size: 4rem;
     font-weight: 600;
-    color: ${({ theme }) => theme.main};
+    color: ${({ theme }) => theme.title};
   }
 `;
 
@@ -66,7 +66,6 @@ export const MoimDetailStatusWrap = styled.div`
   margin-top: 12px;
   display: flex;
   align-items: center;
-  button.icon,
   span.icon {
     display: flex;
     align-items: center;
@@ -78,19 +77,7 @@ export const MoimDetailStatusWrap = styled.div`
     background-color: ${({ theme }) => theme.sub};
     svg {
       font-size: 1rem;
-      color: ${({ status, theme }) =>
-        status === 'open' ? color.blue : theme.title};
-      transition: all 0.2s ease-out;
-    }
-  }
-  button.icon {
-    svg {
-      opacity: ${({ isEdit }) => (isEdit ? 0.6 : 1)};
-    }
-    &:hover {
-      svg {
-        opacity: 1;
-      }
+      color: ${({ theme }) => theme.title};
     }
   }
 `;
@@ -115,16 +102,12 @@ export const MoimDetailTagWrap = styled.div`
   }
   .tagContent {
     flex: 1;
-    ${({ isEdit }) =>
-      !isEdit &&
-      css`{
-        padding-top: 10px;
-      `};
+    ${({ isEdit }) => !isEdit && css`padding-top: 10px;`};
     .tagInput {
       display: inline-flex;
       overflow: hidden;
       margin-bottom: 12px;
-      background-color: ${({ theme }) => theme.title};
+      background-color: ${({ theme }) => theme.sub};
       border-radius: 20px;
       input {
         width: 180px;
@@ -132,7 +115,7 @@ export const MoimDetailTagWrap = styled.div`
         padding: 8px 20px;
         box-sizing: border-box;
         font-size: 0.875rem;
-        color: ${({ theme }) => theme.main};
+        color: ${({ theme }) => theme.title};
         font-weight: 600;
       }
       button {
@@ -145,7 +128,7 @@ export const MoimDetailTagWrap = styled.div`
         background-color: ${color.blue};
         svg {
           font-size: 1rem;
-          color: ${({ theme }) => theme.main};
+          color: ${({ theme }) => theme.title};
           opacity: 0.6;
           transition: all 0.2s ease-out;
         }

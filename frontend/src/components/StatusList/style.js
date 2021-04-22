@@ -13,36 +13,25 @@ export const StatusListWrap = styled.div`
   }
 `;
 
-export const StatusItem = styled.span`
+export const StatusItem = styled.button`
+  position: relative;
   height: 20px;
-  padding: 0 10px;
+  ${({ isEdit }) => css`padding: ${!isEdit ? '0 10px' : '0 10px 0 30px'};`};
   border-radius: 10px;
   ${({ status }) => {
     switch (status) {
       case 'open':
-        return css`
-          background-color: ${color.blue};
-        `;
+        return css`background-color: ${color.blue};`;
       case 'close':
-        return css`
-          background-color: ${color.gray};
-        `;
+        return css`background-color: ${color.gray};`;
       case 'empty':
-        return css`
-          background-color: ${color.blue};
-        `;
+        return css`background-color: ${color.blue};`;
       case 'full':
-        return css`
-          background-color: ${color.red};
-        `;
+        return css`background-color: ${color.red};`;
       case 'proceeding':
-        return css`
-          background-color: ${color.green};
-        `;
+        return css`background-color: ${color.green};`;
       case 'complete':
-        return css`
-          background-color: ${color.gray};
-        `;
+        return css`background-color: ${color.gray};`;
       default:
         return;
     }
@@ -52,5 +41,24 @@ export const StatusItem = styled.span`
   color: ${color.white};
   line-height: 20px;
   text-transform: uppercase;
-  opacity: ${({ isCheck }) => (isCheck ? 1 : 0.6)};
+  opacity: ${({ isChecked }) => (isChecked ? 1 : 0.6)};
+  transition: all 0.2s ease-out;
+  &:hover {
+    opacity: 1;
+  }
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: ${({ theme }) => theme.title};
+    svg {
+      color: ${({ theme }) => theme.main};
+    }
+  }
 `;

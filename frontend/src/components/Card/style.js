@@ -88,29 +88,17 @@ export const CardHeader = styled.div`
         ${({ status }) => {
           switch (status) {
             case 'open':
-              return css`
-                background-color: ${color.blue};
-              `;
+              return css`background-color: ${color.blue};`;
             case 'close':
-              return css`
-                background-color: ${color.gray};
-              `;
+              return css`background-color: ${color.gray};`;
             case 'empty':
-              return css`
-                background-color: ${color.blue};
-              `;
+              return css`background-color: ${color.blue};`;
             case 'full':
-              return css`
-                background-color: ${color.red};
-              `;
+              return css`background-color: ${color.red};`;
             case 'proceeding':
-              return css`
-                background-color: ${color.green};
-              `;
+              return css`background-color: ${color.green};`;
             case 'complete':
-              return css`
-                background-color: ${color.gray};
-              `;
+              return css`background-color: ${color.gray};`;
             default:
               return;
           }
