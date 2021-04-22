@@ -16,22 +16,37 @@ export const StatusListWrap = styled.div`
 export const StatusItem = styled.button`
   position: relative;
   height: 20px;
-  ${({ isEdit }) => css`padding: ${!isEdit ? '0 10px' : '0 10px 0 30px'};`};
+  ${({ isEdit }) =>
+    css`
+      padding: ${!isEdit ? '0 10px' : '0 10px 0 30px'};
+    `};
   border-radius: 10px;
-  ${({ status }) => {
+  ${({ status, theme }) => {
     switch (status) {
       case 'open':
-        return css`background-color: ${color.blue};`;
+        return css`
+          background-color: ${theme.theme};
+        `;
       case 'close':
-        return css`background-color: ${color.gray};`;
+        return css`
+          background-color: ${color.gray};
+        `;
       case 'empty':
-        return css`background-color: ${color.blue};`;
+        return css`
+          background-color: ${color.blue};
+        `;
       case 'full':
-        return css`background-color: ${color.red};`;
+        return css`
+          background-color: ${color.red};
+        `;
       case 'proceeding':
-        return css`background-color: ${color.green};`;
+        return css`
+          background-color: ${color.green};
+        `;
       case 'complete':
-        return css`background-color: ${color.gray};`;
+        return css`
+          background-color: ${color.gray};
+        `;
       default:
         return;
     }

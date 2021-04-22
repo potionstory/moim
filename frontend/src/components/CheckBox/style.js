@@ -25,10 +25,10 @@ export const CheckBoxWrap = styled.div`
       margin-right: 8px;
       width: 16px;
       height: 16px;
-      border: 4px solid ${color.blue};
+      border: 4px solid ${({ theme }) => theme.theme};
       border-radius: 4px;
-      background-color: ${({ isChecked }) =>
-        isChecked ? color.blue : color.transparent};
+      background-color: ${({ isChecked, theme }) =>
+        isChecked ? theme.theme : color.none};
       vertical-align: top;
       content: '';
       transition: all 0.2s ease-out;

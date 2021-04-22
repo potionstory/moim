@@ -10,7 +10,7 @@ export const light = {
 export const dark = {
   main: '#202020',
   sub: '#303030',
-  theme: '#f8b408',
+  theme: '#1e88e5',
   title: '#fafafa',
   text: '#eeeeee',
   gray: '#757575',

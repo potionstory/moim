@@ -14,7 +14,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import api from '../../store/api';
 import {
-  toggleModeAction,
+  themeToggleAction,
   signInModalOpenAction,
   signUpModalOpenAction,
 } from '../../store/module/global';
@@ -28,7 +28,7 @@ import {
   HeaderInnder,
   LeftHead,
   Logo,
-  ModeToggle,
+  ThemeToggle,
   RightHead,
   Menu,
   MenuList,
@@ -44,7 +44,7 @@ const Header = () => {
   const history = useHistory();
 
   const { isAuth, userInfo } = useSelector(({ auth }) => auth);
-  const { mode } = useSelector(({ global }) => global);
+  const { theme } = useSelector(({ global }) => global);
 
   const onLinkToHome = useCallback(() => {
     history.push('/');
@@ -54,7 +54,7 @@ const Header = () => {
     history.push('/create');
   }, []);
 
-  const onToggleMode = useCallback(() => dispatch(toggleModeAction.REQUEST()), [
+  const onThemeToggle = useCallback(() => dispatch(themeToggleAction()), [
     dispatch,
   ]);
 
@@ -102,30 +102,30 @@ const Header = () => {
   return (
     <HeaderWrap>
       <HeaderInnder>
-        <LeftHead isLight={mode}>
+        <LeftHead isLight={theme}>
           <Logo>
-            <ModeToggle onClick={onLinkToHome}>M</ModeToggle>
+            <ThemeToggle onClick={onLinkToHome}>M</ThemeToggle>
           </Logo>
-          <div className="modeToggle">
+          <div className="themeToggle">
             <label>
-              <input type="checkbox" checked={mode} onChange={onToggleMode} />
+              <input type="checkbox" checked={theme} onChange={onThemeToggle} />
               <motion.div
                 className="activeBar"
-                initial={{ x: (mode === false ? 1 : 0) * 32 }}
-                animate={{ x: (mode === false ? 1 : 0) * 32 }}
+                initial={{ x: (theme === false ? 1 : 0) * 32 }}
+                animate={{ x: (theme === false ? 1 : 0) * 32 }}
                 transition={{
                   ease: 'backInOut',
                 }}
               />
               <motion.div
                 className="activeIcon"
-                initial={{ x: (mode === false ? 0 : 1) * 32 }}
-                animate={{ x: (mode === false ? 0 : 1) * 32 }}
+                initial={{ x: (theme === false ? 0 : 1) * 32 }}
+                animate={{ x: (theme === false ? 0 : 1) * 32 }}
                 transition={{
                   ease: 'backInOut',
                 }}
               >
-                <FontAwesomeIcon icon={mode ? faSun : faMoon} />
+                <FontAwesomeIcon icon={theme ? faSun : faMoon} />
               </motion.div>
             </label>
           </div>

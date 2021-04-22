@@ -10,17 +10,20 @@ export const TagListWrap = styled.ul`
     button {
       position: relative;
       height: 20px;
-      ${({ isEdit }) => css`padding: ${!isEdit ? '0 10px' : '0 30px 0 10px'};`};
+      ${({ isEdit }) =>
+        css`
+          padding: ${!isEdit ? '0 10px' : '0 30px 0 10px'};
+        `};
       border-radius: 10px;
-      background-color: ${color.blue};
+      background-color: ${({ theme }) => theme.theme};
       font-size: 0.625rem;
       font-weight: 600;
       color: ${color.white};
       line-height: 20px;
       transition: background-color 0.2s ease-out;
       &:hover {
-        background-color: ${({ isEdit, theme }) =>
-          !isEdit ? theme.theme : color.red};
+        background-color: ${({ isEdit }) =>
+          !isEdit ? color.green : color.red};
       }
       span {
         display: flex;

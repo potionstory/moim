@@ -85,20 +85,32 @@ export const CardHeader = styled.div`
         height: 20px;
         padding: 0 10px;
         border-radius: 10px;
-        ${({ status }) => {
+        ${({ status, theme }) => {
           switch (status) {
             case 'open':
-              return css`background-color: ${color.blue};`;
+              return css`
+                background-color: ${theme.theme};
+              `;
             case 'close':
-              return css`background-color: ${color.gray};`;
+              return css`
+                background-color: ${color.gray};
+              `;
             case 'empty':
-              return css`background-color: ${color.blue};`;
+              return css`
+                background-color: ${color.blue};
+              `;
             case 'full':
-              return css`background-color: ${color.red};`;
+              return css`
+                background-color: ${color.red};
+              `;
             case 'proceeding':
-              return css`background-color: ${color.green};`;
+              return css`
+                background-color: ${color.green};
+              `;
             case 'complete':
-              return css`background-color: ${color.gray};`;
+              return css`
+                background-color: ${color.gray};
+              `;
             default:
               return;
           }
@@ -270,7 +282,7 @@ export const CardLink = styled.div`
       padding: 8px 20px;
       font-size: 0.625rem;
       font-weight: 600;
-      color: ${color.blue};
+      color: ${({ theme }) => theme.text};
       line-height: 1.5rem;
       word-break: break-all;
       text-transform: uppercase;
@@ -323,7 +335,7 @@ export const CardTime = styled.div`
     width: 60%;
     height: 60%;
     border-radius: 4px;
-    background-color: ${({ theme }) => theme.theme};
+    background-color: ${({ theme }) => theme.main};
     .week {
       position: absolute;
       top: 12px;
@@ -349,7 +361,7 @@ export const CardTime = styled.div`
       width: calc(100% - 12px);
       svg {
         font-size: 0.5rem;
-        color: ${color.black};
+        color: ${color.gray};
         &:nth-child(1) {
           color: ${color.red};
         }
@@ -361,7 +373,7 @@ export const CardTime = styled.div`
         height: 1rem;
         padding: 0 6px;
         border-radius: 8px;
-        background-color: ${color.black};
+        background-color: ${color.gray};
         font-size: 0.625rem;
         font-weight: 600;
         text-transform: uppercase;
@@ -378,7 +390,7 @@ export const CardTime = styled.div`
     .day {
       font-size: 4rem;
       font-weight: 600;
-      color: ${({ theme }) => theme.main};
+      color: ${({ theme }) => theme.title};
     }
   }
   .month {
@@ -425,12 +437,12 @@ export const CardMore = styled.div`
       .memberCount {
         font-family: 'Rubik';
         font-weight: 600;
-        color: ${color.gray};
+        color: ${({ theme }) => theme.title};
         .now {
-          color: ${color.green};
+          color: ${color.gray};
         }
         .max {
-          color: ${color.blue};
+          color: ${color.green};
         }
       }
     }

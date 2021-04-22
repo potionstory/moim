@@ -41,12 +41,12 @@ export const MoimDetailTitle = styled.div`
   padding: 12px 0;
   line-height: 92px;
   ${({ isEdit }) =>
-    isEdit && css`
+    isEdit &&
+    css`
       padding: 12px 24px;
       border-radius: 4px;
       background-color: ${({ theme }) => theme.sub};
-    `
-  };
+    `};
   h3 {
     font-size: 4rem;
     font-weight: 600;
@@ -102,7 +102,11 @@ export const MoimDetailTagWrap = styled.div`
   }
   .tagContent {
     flex: 1;
-    ${({ isEdit }) => !isEdit && css`padding-top: 10px;`};
+    ${({ isEdit }) =>
+      !isEdit &&
+      css`
+        padding-top: 10px;
+      `};
     .tagInput {
       display: inline-flex;
       overflow: hidden;
@@ -125,10 +129,10 @@ export const MoimDetailTagWrap = styled.div`
         width: 40px;
         height: 40px;
         border-radius: 20px;
-        background-color: ${color.blue};
+        background-color: ${({ theme }) => theme.theme};
         svg {
           font-size: 1rem;
-          color: ${({ theme }) => theme.title};
+          color: ${({ theme }) => theme.main};
           opacity: 0.6;
           transition: all 0.2s ease-out;
         }

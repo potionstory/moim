@@ -14,7 +14,7 @@ const Modal = () => {
     dispatch,
   ]);
 
-  const { mode, modal } = useSelector(({ global }) => global);
+  const { theme, modal } = useSelector(({ global }) => global);
   const { isVisible, name } = modal;
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -49,7 +49,7 @@ const Modal = () => {
   return (
     <ModalWrap
       isVisible={isVisible || modalVisible}
-      mode={mode ? 1 : 0}
+      isLight={theme}
       modalVisible={modalVisible}
       onAnimationEnd={() => onModalAnimationEnd(modalVisible)}
     >

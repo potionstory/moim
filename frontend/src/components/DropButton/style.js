@@ -15,7 +15,8 @@ export const DropButtonWrap = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 20px;
-    background-color: ${({ isActive }) => isActive ? color.red : color.blue};
+    background-color: ${({ isActive, theme }) =>
+      isActive ? color.red : theme.theme};
     font-size: 0.875rem;
     transition: all 0.2s ease-out;
     svg {
@@ -40,7 +41,7 @@ export const DropButtonWrap = styled.div`
       width: 40px;
       height: 40px;
       border-radius: 20px;
-      background-color: ${color.blue};
+      background-color: ${({ theme }) => theme.theme};
       text-align: center;
       line-height: 40px;
       button {

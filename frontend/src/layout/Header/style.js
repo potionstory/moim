@@ -6,7 +6,7 @@ export const HeaderWrap = styled.section`
   top: 0;
   left: 0;
   width: 100%;
-  height: 88px;
+  height: 80px;
   box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.08);
   background-color: ${({ theme }) => theme.main};
   z-index: 50;
@@ -26,8 +26,8 @@ export const HeaderInnder = styled.div`
 export const LeftHead = styled.div`
   display: flex;
   align-items: center;
-  padding: 24px 0;
-  .modeToggle {
+  padding: 20px 0;
+  .themeToggle {
     margin-left: 24px;
     label {
       display: block;
@@ -37,8 +37,7 @@ export const LeftHead = styled.div`
       padding: 4px;
       border-radius: 24px;
       box-sizing: border-box;
-      background-color: ${({ isLight }) =>
-        isLight ? color.orange : color.blue};
+      background-color: ${({ theme }) => theme.theme};
       font-weight: 600;
       color: ${({ isLight, theme }) => (isLight ? theme.main : theme.gray)};
       text-transform: uppercase;
@@ -80,7 +79,7 @@ export const Logo = styled.h1`
   justify-content: space-between;
 `;
 
-export const ModeToggle = styled.button`
+export const ThemeToggle = styled.button`
   display: block;
   width: 40px;
   height: 40px;
@@ -98,7 +97,7 @@ export const ModeToggle = styled.button`
 export const RightHead = styled.div`
   display: flex;
   flex: 1;
-  padding: 24px 0;
+  padding: 20px 0;
   align-items: center;
   justify-content: flex-end;
 `;
@@ -146,11 +145,11 @@ export const Avatar = styled.button`
     }
   }
   ${({ theme, isActive }) =>
-    isActive && css`
+    isActive &&
+    css`
       background-color: ${theme.theme};
       svg {
         color: ${theme.main};
       }
-    `
-  };
+    `};
 `;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { color } from '../../lib/styles/palette';
 import { ellipsis } from '../../lib/styles/util';
 
 export const UserInfoWrap = styled.div`
@@ -14,7 +15,7 @@ export const UserInfoWrap = styled.div`
     img {
       width: 34px;
       height: 34px;
-      border: 3px solid ${({ theme }) => theme.main};
+      border: 3px solid ${color.gray};
       border-radius: 20px;
       background-color: ${({ theme }) => theme.main};
       object-fit: cover;

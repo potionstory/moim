@@ -25,7 +25,7 @@ export const ToggleWrap = styled.div`
       padding: 4px;
       border-radius: 12px;
       background-color: ${({ isChecked, theme }) =>
-        isChecked ? color.blue : theme.gray};
+        isChecked ? theme.theme : theme.gray};
       vertical-align: middle;
       transition: all 0.2s ease-out;
       .activeBar {
@@ -39,11 +39,11 @@ export const ToggleWrap = styled.div`
     &:hover {
       .toggleBar {
         background-color: ${({ isChecked, theme }) =>
-          isChecked ? color.blue : theme.main};
+          isChecked ? theme.theme : theme.main};
       }
       color: ${({ theme }) => theme.main};
       .toggleBar {
-        border-color: ${color.blue};
+        border-color: ${({ theme }) => theme.theme};
       }
     }
   }
