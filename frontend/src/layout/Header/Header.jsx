@@ -174,7 +174,7 @@ const Header = () => {
       </HeaderInnder>
       <motion.div
         className="avatarToast"
-        animate={{ x: isUserActive ? -384 : -48 }}
+        animate={{ x: isUserActive ? -360 : -40 }}
         transition={{
           ease: 'backInOut',
         }}

@@ -12,8 +12,8 @@ export const HeaderWrap = styled.section`
   z-index: 50;
   .avatarToast {
     position: fixed;
-    top: 136px;
-    right: -336px;
+    top: 120px;
+    right: -320px;
   }
 `;
 
