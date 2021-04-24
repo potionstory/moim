@@ -76,12 +76,27 @@ export const CardHeader = styled.div`
         color: ${({ theme }) => theme.title};
       }
     }
-    .status {
+    .subInfo {
       display: flex;
       flex-grow: 0;
       align-items: flex-start;
       margin-top: 4px;
-      span {
+      .dues {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        margin-right: 6px;
+        border-radius: 10px;
+        background-color: ${({ isFree }) =>
+          isFree ? color.gray : color.orange};
+        svg {
+          font-size: 0.625rem;
+          color: ${color.black};
+        }
+      }
+      .status {
         height: 20px;
         padding: 0 10px;
         border-radius: 10px;
@@ -155,11 +170,11 @@ export const CardTabMenu = styled.div`
       button {
         display: block;
         width: 100%;
-        font-size: 0.875rem;
         line-height: 40px;
         svg {
-          transition: all 0.2s ease-out;
+          font-size: 0.875rem;
           color: ${({ theme }) => theme.gray};
+          transition: all 0.2s ease-out;
         }
         &:hover {
           svg {
