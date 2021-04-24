@@ -10,8 +10,7 @@ import findIndex from 'lodash/findIndex';
 import isEmpty from 'lodash/isEmpty';
 import trim from 'lodash/trim';
 import filter from 'lodash/filter';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import {
   getCommunityAction,
   getMeetingAction,
@@ -23,17 +22,13 @@ import {
   communityStatus,
   meetingStatus,
 } from '../../lib/const';
+import MoimDetailCost from './MoimDetailCost';
 import MoimDetailStatus from './MoimDetailStatus';
 import MoimDetailTag from './MoimDetailTag';
 import UserInfo from '../../components/UserInfo';
 import IconList from '../../components/IconList';
-import TagList from '../../components/TagList';
 import IconButton from '../../components/Button/IconButton';
-import {
-  MoimDetailWrap,
-  MoimDetailBase,
-  MoimDetailTitle,
-} from './style';
+import { MoimDetailWrap, MoimDetailBase, MoimDetailTitle } from './style';
 
 const MoimDetail = ({ category, id }) => {
   const { moim } = useSelector(({ detail }) => detail);
@@ -44,6 +39,7 @@ const MoimDetail = ({ category, id }) => {
   const [typeIndex, setTypeIndex] = useState(-1);
   const [tagInput, setTagInput] = useState('');
 
+  const costInputRef = useRef();
   const tagInputRef = useRef();
 
   const moimType = useMemo(
@@ -82,14 +78,37 @@ const MoimDetail = ({ category, id }) => {
     });
   }, []);
 
-  const onStatusChange = useCallback((index) => {
+  const onStatusChange = useCallback(
+    (index) => {
+      setDetail((detail) => {
+        return {
+          ...detail,
+          status: moimStatus[index].name,
+        };
+      });
+    },
+    [moimStatus],
+  );
+
+  const onCostInputChange = useCallback((e) => {
+    const value = Number(e.target.value);
+
     setDetail((detail) => {
       return {
         ...detail,
-        status: moimStatus[index].name,
+        cost: value,
       };
     });
-  }, [moimStatus]);
+  }, []);
+
+  const onCostInputReset = useCallback(() => {
+    setDetail((detail) => {
+      return {
+        ...detail,
+        cost: 0,
+      };
+    });
+  }, []);
 
   const onTagInputChange = useCallback((e) => {
     setTagInput(e.target.value);
@@ -171,6 +190,7 @@ const MoimDetail = ({ category, id }) => {
     userName,
     likeCount,
     title,
+    cost,
     status,
     description,
     tags,
@@ -206,9 +226,23 @@ const MoimDetail = ({ category, id }) => {
                 {!isEdit ? (
                   <h3>{title}</h3>
                 ) : (
-                  <input type="text" placeholder="제목을 입력해주세요" value={title} onChange={onTitleChange} />
+                  <input
+                    type="text"
+                    placeholder="제목을 입력해주세요"
+                    value={title}
+                    onChange={onTitleChange}
+                  />
                 )}
               </MoimDetailTitle>
+              {cost !== undefined && (
+                <MoimDetailCost
+                  cost={cost}
+                  isEdit={isEdit}
+                  costInputRef={costInputRef}
+                  onCostInputChange={onCostInputChange}
+                  onCostInputReset={onCostInputReset}
+                />
+              )}
               <MoimDetailStatus
                 category={category}
                 list={moimStatus}
@@ -226,9 +260,7 @@ const MoimDetail = ({ category, id }) => {
                 onTagAdd={onTagAdd}
                 onTagRemove={onTagRemove}
               />
-              <div className="description">
-                {description}
-              </div>
+              <div className="description">{description}</div>
             </div>
           </MoimDetailBase>
         </MoimDetailWrap>
