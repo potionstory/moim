@@ -81,7 +81,7 @@ export const CardHeader = styled.div`
       flex-grow: 0;
       align-items: flex-start;
       margin-top: 4px;
-      .dues {
+      .cost {
         display: flex;
         align-items: center;
         justify-content: center;

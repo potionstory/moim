@@ -6,11 +6,11 @@ import { CardHeader } from './style';
 import { getCommunityIcon, getMeetingIcon } from '../../utils/commonUtil';
 
 const CardHeaderComp = ({ item, category }) => {
-  const { type, title, dues, status } = item;
+  const { type, title, cost, status } = item;
   const id = item[`${category}Id`];
 
   return (
-    <CardHeader status={status} isFree={dues === 0}>
+    <CardHeader status={status} isFree={cost === 0}>
       <span className="icon" type={type}>
         {category === 'community' ? (
           <img src={getCommunityIcon(type)} />
@@ -23,8 +23,8 @@ const CardHeaderComp = ({ item, category }) => {
           {title}
         </Link>
         <div className="subInfo">
-          {dues !== undefined && (
-            <span className="dues">
+          {cost !== undefined && (
+            <span className="cost">
               <FontAwesomeIcon icon={faWonSign} />
             </span>
           )}
