@@ -25,6 +25,7 @@ import {
 import MoimDetailType from './MoimDetailType';
 import MoimDetailCost from './MoimDetailCost';
 import MoimDetailStatus from './MoimDetailStatus';
+import MoimDetailUrl from './MoimDetailUrl';
 import MoimDetailTag from './MoimDetailTag';
 import MoimDetailDescription from './MoimDetailDescription';
 import UserInfo from '../../components/UserInfo';
@@ -43,6 +44,7 @@ const MoimDetail = ({ category, id }) => {
   const [tagInput, setTagInput] = useState('');
 
   const costInputRef = useRef();
+  const urlInputRef = useRef();
   const tagInputRef = useRef();
 
   const moimType = useMemo(
@@ -129,6 +131,28 @@ const MoimDetail = ({ category, id }) => {
     costInputRef.current.focus();
   }, []);
 
+  const onUrlInputChange = useCallback((e) => {
+    const value = e.target.value;
+
+    setDetail((detail) => {
+      return {
+        ...detail,
+        url: value,
+      };
+    });
+  }, []);
+
+  const onUrlInputReset = useCallback(() => {
+    setDetail((detail) => {
+      return {
+        ...detail,
+        url: '',
+      };
+    });
+
+    urlInputRef.current.focus();
+  }, []);
+
   const onTagInputChange = useCallback((e) => {
     setTagInput(e.target.value);
   }, []);
@@ -211,6 +235,7 @@ const MoimDetail = ({ category, id }) => {
     cost,
     status,
     description,
+    url,
     tags,
   } = detail;
 
@@ -264,6 +289,15 @@ const MoimDetail = ({ category, id }) => {
                 isEdit={isEdit}
                 onStatusChange={onStatusChange}
               />
+              {url !== undefined && (
+                <MoimDetailUrl
+                  url={url}
+                  isEdit={isEdit}
+                  urlInputRef={urlInputRef}
+                  onUrlInputChange={onUrlInputChange}
+                  onUrlInputReset={onUrlInputReset}
+                />
+              )}
               <MoimDetailTag
                 tags={tags}
                 isEdit={isEdit}

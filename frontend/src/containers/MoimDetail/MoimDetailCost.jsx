@@ -17,11 +17,11 @@ const MoimDetailCost = ({
       <span className="icon">
         <FontAwesomeIcon icon={faWonSign} />
       </span>
-      <span className="amount">
+      <div className="costContent">
         {!isEdit ? (
           <span>{isFree ? 'free' : cost.toLocaleString()}</span>
         ) : (
-          <div className="amountInput">
+          <div className="costInput">
             <input
               type="number"
               placeholder="금액을 입력해주세요"
@@ -34,7 +34,7 @@ const MoimDetailCost = ({
             </button>
           </div>
         )}
-      </span>
+      </div>
     </MoimDetailCostWrap>
   );
 };

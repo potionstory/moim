@@ -91,7 +91,7 @@ export const MoimDetailCostWrap = styled.div`
       transition: all 0.2s ease-out;
     }
   }
-  .amount {
+  .costContent {
     margin-left: 12px;
     span {
       ${({ isFree }) =>
@@ -105,7 +105,7 @@ export const MoimDetailCostWrap = styled.div`
       text-transform: uppercase;
       line-height: 40px;
     }
-    .amountInput {
+    .costInput {
       display: inline-flex;
       overflow: hidden;
       background-color: ${({ theme }) => theme.sub};
@@ -163,6 +163,78 @@ export const MoimDetailStatusWrap = styled.div`
   }
   .statusContent {
     margin-left: 12px;
+  }
+`;
+
+export const MoimDetailUrlWrap = styled.div`
+  display: flex;
+  margin-top: 12px;
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: ${({ theme }) => theme.sub};
+    svg {
+      font-size: 1rem;
+      color: ${({ theme }) => theme.title};
+    }
+  }
+  .urlContent {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    margin-left: 12px;
+    a {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: ${color.blue};
+      line-height: 40px;
+      ${ellipsis};
+      opacity: 0.6;
+      transition: all 0.2s ease-out;
+      &:hover {
+        opacity: 1;
+      }
+    }
+    .urlInput {
+      display: inline-flex;
+      overflow: hidden;
+      background-color: ${({ theme }) => theme.sub};
+      border-radius: 20px;
+      input {
+        width: 180px;
+        height: 40px;
+        padding: 8px 20px;
+        box-sizing: border-box;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: ${color.blue};
+        ${ellipsis};
+      }
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 20px;
+        background-color: ${({ theme }) => theme.theme};
+        svg {
+          font-size: 1rem;
+          color: ${({ theme }) => theme.main};
+          opacity: 0.6;
+          transition: all 0.2s ease-out;
+        }
+        &:hover {
+          svg {
+            opacity: 1;
+          }
+        }
+      }
+    }
   }
 `;
 

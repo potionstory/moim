@@ -299,7 +299,7 @@ export const CardLink = styled.div`
       padding: 8px 20px;
       font-size: 0.625rem;
       font-weight: 600;
-      color: ${({ theme }) => theme.text};
+      color: ${color.blue};
       line-height: 1.5rem;
       word-break: break-all;
       text-transform: uppercase;
@@ -443,7 +443,7 @@ export const CardMore = styled.div`
         margin-left: 6px;
         font-size: 0.875rem;
         font-weight: 600;
-        color: ${({ theme }) => theme.title};
+        color: ${color.gray};
         line-height: 24px;
         text-transform: uppercase;
         ${ellipsis};

@@ -13,13 +13,67 @@ export const StatusListWrap = styled.div`
   }
 `;
 
-export const StatusItem = styled.button`
+export const StatusItem = styled.span`
   position: relative;
   height: 20px;
-  ${({ isEdit }) =>
-    css`
-      padding: ${!isEdit ? '0 10px' : '0 10px 0 30px'};
-    `};
+  padding: 0 10px;
+  border-radius: 10px;
+  ${({ status, theme }) => {
+    switch (status) {
+      case 'open':
+        return css`
+          background-color: ${theme.theme};
+        `;
+      case 'close':
+        return css`
+          background-color: ${color.gray};
+        `;
+      case 'empty':
+        return css`
+          background-color: ${color.blue};
+        `;
+      case 'full':
+        return css`
+          background-color: ${color.red};
+        `;
+      case 'proceeding':
+        return css`
+          background-color: ${color.green};
+        `;
+      case 'complete':
+        return css`
+          background-color: ${color.gray};
+        `;
+      default:
+        return;
+    }
+  }};
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: ${color.white};
+  line-height: 20px;
+  text-transform: uppercase;
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: ${({ theme }) => theme.title};
+    svg {
+      color: ${({ theme }) => theme.main};
+    }
+  }
+`;
+
+export const StatusItemButton = styled.button`
+  position: relative;
+  height: 20px;
+  padding: 0 10px 0 30px;
   border-radius: 10px;
   ${({ status, theme }) => {
     switch (status) {
