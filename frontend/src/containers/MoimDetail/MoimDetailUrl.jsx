@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLink, faRedo } from '@fortawesome/free-solid-svg-icons';
+import { faLink, faEraser } from '@fortawesome/free-solid-svg-icons';
 import { MoimDetailUrlWrap } from './style';
 
 const MoimDetailUrl = ({
@@ -30,7 +30,7 @@ const MoimDetailUrl = ({
               onChange={onUrlInputChange}
             />
             <button type="button" onClick={onUrlInputReset}>
-              <FontAwesomeIcon icon={faRedo} />
+              <FontAwesomeIcon icon={faEraser} />
             </button>
           </div>
         )}

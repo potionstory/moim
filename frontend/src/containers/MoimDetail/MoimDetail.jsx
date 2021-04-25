@@ -28,6 +28,7 @@ import MoimDetailStatus from './MoimDetailStatus';
 import MoimDetailUrl from './MoimDetailUrl';
 import MoimDetailTag from './MoimDetailTag';
 import MoimDetailDescription from './MoimDetailDescription';
+import MoimDetailContent from './MoimDetailContent';
 import UserInfo from '../../components/UserInfo';
 import IconButton from '../../components/Button/IconButton';
 import { MoimDetailWrap, MoimDetailBase, MoimDetailTitle } from './style';
@@ -314,6 +315,7 @@ const MoimDetail = ({ category, id }) => {
                 max={DESCRIPTION_MAX_LENGTH}
                 onDescriptionChange={onDescriptionChange}
               />
+              <MoimDetailContent />
             </div>
           </MoimDetailBase>
         </MoimDetailWrap>

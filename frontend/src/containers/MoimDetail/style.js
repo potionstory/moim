@@ -357,4 +357,8 @@ export const MoimDetailDescriptionWrap = styled.div`
   }
 `;
 
+export const MoimDetailContentWrap = styled.div`
+  margin-top: 12px;
+`;
+
 export const MoimDetailInfo = styled.div``;

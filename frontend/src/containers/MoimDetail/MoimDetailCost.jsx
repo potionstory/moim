@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWonSign, faRedo } from '@fortawesome/free-solid-svg-icons';
+import { faWonSign, faEraser } from '@fortawesome/free-solid-svg-icons';
 import { MoimDetailCostWrap } from './style';
 
 const MoimDetailCost = ({
@@ -30,7 +30,7 @@ const MoimDetailCost = ({
               onChange={onCostInputChange}
             />
             <button type="button" onClick={onCostInputReset}>
-              <FontAwesomeIcon icon={faRedo} />
+              <FontAwesomeIcon icon={faEraser} />
             </button>
           </div>
         )}
