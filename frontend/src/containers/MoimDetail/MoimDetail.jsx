@@ -22,13 +22,16 @@ import {
   communityStatus,
   meetingStatus,
 } from '../../lib/const';
+import MoimDetailType from './MoimDetailType';
 import MoimDetailCost from './MoimDetailCost';
 import MoimDetailStatus from './MoimDetailStatus';
 import MoimDetailTag from './MoimDetailTag';
+import MoimDetailDescription from './MoimDetailDescription';
 import UserInfo from '../../components/UserInfo';
-import IconList from '../../components/IconList';
 import IconButton from '../../components/Button/IconButton';
 import { MoimDetailWrap, MoimDetailBase, MoimDetailTitle } from './style';
+
+const DESCRIPTION_MAX_LENGTH = 150;
 
 const MoimDetail = ({ category, id }) => {
   const { moim } = useSelector(({ detail }) => detail);
@@ -50,6 +53,20 @@ const MoimDetail = ({ category, id }) => {
     () => (category === 'community' ? communityStatus : meetingStatus),
     [category],
   );
+
+  const onGetCommunity = useCallback(
+    () => dispatch(getCommunityAction.REQUEST(id)),
+    [dispatch],
+  );
+
+  const onGetMeeting = useCallback(
+    () => dispatch(getMeetingAction.REQUEST(id)),
+    [dispatch],
+  );
+
+  const onResetDetail = useCallback(() => dispatch(resetDetailAction()), [
+    dispatch,
+  ]);
 
   const onEditToggle = useCallback(() => {
     setIsEdit((isEdit) => !isEdit);
@@ -108,6 +125,8 @@ const MoimDetail = ({ category, id }) => {
         cost: 0,
       };
     });
+
+    costInputRef.current.focus();
   }, []);
 
   const onTagInputChange = useCallback((e) => {
@@ -151,19 +170,18 @@ const MoimDetail = ({ category, id }) => {
     [tagInput],
   );
 
-  const onGetCommunity = useCallback(
-    () => dispatch(getCommunityAction.REQUEST(id)),
-    [dispatch],
-  );
+  const onDescriptionChange = useCallback((e) => {
+    const value = e.target.value;
 
-  const onGetMeeting = useCallback(
-    () => dispatch(getMeetingAction.REQUEST(id)),
-    [dispatch],
-  );
-
-  const onResetDetail = useCallback(() => dispatch(resetDetailAction()), [
-    dispatch,
-  ]);
+    if (value.length <= DESCRIPTION_MAX_LENGTH) {
+      setDetail((detail) => {
+        return {
+          ...detail,
+          description: value,
+        };
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (category === 'community') {
@@ -208,19 +226,15 @@ const MoimDetail = ({ category, id }) => {
               <UserInfo image={userImage} name={userName} count={likeCount} />
             </div>
             <div className="summary">
-              {/* IconList 와 이름을 포함한 MoimDetailType 만들기(아이콘과 이름은 가로정렬 flex) */}
-              {/* 타입 Container 를 제외한 다른 Container 의 앞에 있는 아이콘은 좀 더 특별한 색상으로 디자인 하기 */}
               {typeIndex !== -1 && (
-                <>
-                  <IconList
-                    list={moimType}
-                    checkIndex={typeIndex}
-                    isEdit={isEdit}
-                    isIcon={category === 'community' ? false : true}
-                    onCheckChange={onTypeChange}
-                  />
-                  {/* <span>{moimType[typeIndex].name}</span> */}
-                </>
+                <MoimDetailType
+                  list={moimType}
+                  checkIndex={typeIndex}
+                  isEdit={isEdit}
+                  isIcon={category === 'community' ? false : true}
+                  name={moimType[typeIndex].name}
+                  onCheckChange={onTypeChange}
+                />
               )}
               <MoimDetailTitle isEdit={isEdit}>
                 {!isEdit ? (
@@ -260,7 +274,12 @@ const MoimDetail = ({ category, id }) => {
                 onTagAdd={onTagAdd}
                 onTagRemove={onTagRemove}
               />
-              <div className="description">{description}</div>
+              <MoimDetailDescription
+                description={description}
+                isEdit={isEdit}
+                max={DESCRIPTION_MAX_LENGTH}
+                onDescriptionChange={onDescriptionChange}
+              />
             </div>
           </MoimDetailBase>
         </MoimDetailWrap>

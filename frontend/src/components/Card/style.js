@@ -275,9 +275,11 @@ export const CardText = styled.div`
     height: 100%;
     padding: 12px;
     font-size: 0.75rem;
+    font-weight: 600;
     color: ${color.gray};
     word-break: break-all;
     line-height: 1.5;
+    white-space: pre-wrap;
     transition: all 0.2s ease-out;
     &:hover {
       color: ${({ theme }) => theme.text};

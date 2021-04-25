@@ -35,6 +35,18 @@ export const MoimDetailBase = styled.div`
   }
 `;
 
+export const MoimDetailTypeWrap = styled.div`
+  display: flex;
+  .name {
+    margin-left: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: ${({ theme }) => theme.theme};
+    text-transform: uppercase;
+    line-height: 40px;
+  }
+`;
+
 export const MoimDetailTitle = styled.div`
   height: 92px;
   margin-top: 12px;
@@ -71,7 +83,6 @@ export const MoimDetailCostWrap = styled.div`
     justify-content: center;
     width: 40px;
     height: 40px;
-    margin-right: 12px;
     border-radius: 20px;
     background-color: ${({ isFree }) => (isFree ? color.gray : color.orange)};
     svg {
@@ -81,6 +92,7 @@ export const MoimDetailCostWrap = styled.div`
     }
   }
   .amount {
+    margin-left: 12px;
     span {
       ${({ isFree }) =>
         !isFree &&
@@ -89,7 +101,7 @@ export const MoimDetailCostWrap = styled.div`
         `};
       font-size: 1rem;
       font-weight: 600;
-      color: ${({ isFree, theme }) => (isFree ? theme.title : color.orange)};
+      color: ${({ isFree }) => (isFree ? color.gray : color.orange)};
       text-transform: uppercase;
       line-height: 40px;
     }
@@ -142,13 +154,15 @@ export const MoimDetailStatusWrap = styled.div`
     justify-content: center;
     width: 40px;
     height: 40px;
-    margin-right: 12px;
     border-radius: 4px;
     background-color: ${({ theme }) => theme.sub};
     svg {
       font-size: 1rem;
       color: ${({ theme }) => theme.title};
     }
+  }
+  .statusContent {
+    margin-left: 12px;
   }
 `;
 
@@ -161,7 +175,6 @@ export const MoimDetailTagWrap = styled.div`
     justify-content: center;
     width: 40px;
     height: 40px;
-    margin-right: 12px;
     border-radius: 4px;
     background-color: ${({ theme }) => theme.sub};
     svg {
@@ -172,6 +185,7 @@ export const MoimDetailTagWrap = styled.div`
   }
   .tagContent {
     flex: 1;
+    margin-left: 12px;
     ${({ isEdit }) =>
       !isEdit &&
       css`
@@ -211,6 +225,61 @@ export const MoimDetailTagWrap = styled.div`
             opacity: 1;
           }
         }
+      }
+    }
+  }
+`;
+
+export const MoimDetailDescriptionWrap = styled.div`
+  display: flex;
+  margin-top: 12px;
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: ${({ theme }) => theme.sub};
+    svg {
+      font-size: 1rem;
+      color: ${({ theme }) => theme.title};
+    }
+  }
+  .desciptionBox {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-left: 12px;
+    .description {
+      min-height: 40px;
+      ${({ isEdit, theme }) =>
+        css`
+          padding: ${!isEdit ? '6px 0' : '6px 12px'};
+          background-color: ${!isEdit ? color.none : theme.sub};
+          color: ${!isEdit ? color.gray : theme.text};
+        `};
+      box-sizing: border-box;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      font-weight: bold;
+      white-space: pre-wrap;
+      line-height: 28px;
+    }
+    .limit {
+      display: block;
+      height: 40px;
+      font-family: 'Rubik';
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: ${({ theme }) => theme.title};
+      text-align: right;
+      line-height: 40px;
+      .now {
+        color: ${color.gray};
+      }
+      .max {
+        color: ${color.green};
       }
     }
   }

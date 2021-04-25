@@ -1,10 +1,7 @@
 import React from 'react';
 import findIndex from 'lodash/findIndex';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faLock,
-  faSpinner,
-} from '@fortawesome/free-solid-svg-icons';
+import { faLock, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import StatusList from '../../components/StatusList';
 import { MoimDetailStatusWrap } from './style';
 
@@ -15,7 +12,6 @@ const MoimDetailStatus = ({
   isEdit,
   onStatusChange,
 }) => {
-
   return (
     <MoimDetailStatusWrap status={status} isEdit={isEdit}>
       <span className="icon">
@@ -25,12 +21,14 @@ const MoimDetailStatus = ({
           <FontAwesomeIcon icon={faSpinner} />
         )}
       </span>
-      <StatusList
-        isEdit={isEdit}
-        list={list}
-        checkIndex={findIndex(list, (item) => item.name === status)}
-        onStatusChange={onStatusChange}
-      />
+      <span className="statusContent">
+        <StatusList
+          isEdit={isEdit}
+          list={list}
+          checkIndex={findIndex(list, (item) => item.name === status)}
+          onStatusChange={onStatusChange}
+        />
+      </span>
     </MoimDetailStatusWrap>
   );
 };

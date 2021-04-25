@@ -64,6 +64,10 @@ const global = createGlobalStyle`
     margin: 0;
   }
 
+  textarea {
+    resize: none;
+  }
+
   img {
     width: 100%;
   }

@@ -4,8 +4,16 @@ import { faTag, faPlus } from '@fortawesome/free-solid-svg-icons';
 import TagList from '../../components/TagList';
 import { MoimDetailTagWrap } from './style';
 
-const MoimDetailTag = ({ tags, isEdit, tagInput, tagInputRef, onTagInputChange, onKeyTagEnter, onTagAdd, onTagRemove }) => {
-
+const MoimDetailTag = ({
+  tags,
+  isEdit,
+  tagInput,
+  tagInputRef,
+  onTagInputChange,
+  onKeyTagEnter,
+  onTagAdd,
+  onTagRemove,
+}) => {
   return (
     <MoimDetailTagWrap isEdit={isEdit}>
       <span className="icon">
