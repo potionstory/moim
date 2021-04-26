@@ -358,7 +358,16 @@ export const MoimDetailDescriptionWrap = styled.div`
 `;
 
 export const MoimDetailContentWrap = styled.div`
+  position: relative;
   margin-top: 12px;
+  padding-top: 50%;
+  .editorInner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export const MoimDetailInfo = styled.div``;
