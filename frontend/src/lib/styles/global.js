@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import editor from './editor';
 
 const global = createGlobalStyle`
   @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
@@ -75,6 +76,8 @@ const global = createGlobalStyle`
   img, button {
     vertical-align: top;
   }
+
+  ${editor}
 `;
 
 export default global;
