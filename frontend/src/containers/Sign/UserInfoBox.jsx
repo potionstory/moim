@@ -19,7 +19,7 @@ const UserInfoBox = ({
     <>
       <UserImage>
         <span className="userImage">
-          <img src={userImage} />
+          {userImage && <img src={userImage} />}
           <label>
             <FontAwesomeIcon icon={faPlus} />
             <InputAvatar

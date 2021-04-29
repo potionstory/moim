@@ -274,7 +274,7 @@ const MoimDetail = ({ category, id }) => {
                   />
                 )}
               </MoimDetailTitle>
-              {cost !== undefined && (
+              {cost && (
                 <MoimDetailCost
                   cost={cost}
                   isEdit={isEdit}
@@ -290,7 +290,7 @@ const MoimDetail = ({ category, id }) => {
                 isEdit={isEdit}
                 onStatusChange={onStatusChange}
               />
-              {url !== undefined && (
+              {url && (
                 <MoimDetailUrl
                   url={url}
                   isEdit={isEdit}
