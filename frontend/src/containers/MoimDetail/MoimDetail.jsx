@@ -8,6 +8,7 @@ import React, {
 import { useSelector, useDispatch } from 'react-redux';
 import findIndex from 'lodash/findIndex';
 import isEmpty from 'lodash/isEmpty';
+import isUndefined from 'lodash/isUndefined';
 import trim from 'lodash/trim';
 import filter from 'lodash/filter';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -274,7 +275,14 @@ const MoimDetail = ({ category, id }) => {
                   />
                 )}
               </MoimDetailTitle>
-              {cost && (
+              <MoimDetailStatus
+                category={category}
+                list={moimStatus}
+                status={status}
+                isEdit={isEdit}
+                onStatusChange={onStatusChange}
+              />
+              {!isUndefined(cost) && (
                 <MoimDetailCost
                   cost={cost}
                   isEdit={isEdit}
@@ -283,14 +291,7 @@ const MoimDetail = ({ category, id }) => {
                   onCostInputReset={onCostInputReset}
                 />
               )}
-              <MoimDetailStatus
-                category={category}
-                list={moimStatus}
-                status={status}
-                isEdit={isEdit}
-                onStatusChange={onStatusChange}
-              />
-              {url && (
+              {!isUndefined(url) && (
                 <MoimDetailUrl
                   url={url}
                   isEdit={isEdit}
