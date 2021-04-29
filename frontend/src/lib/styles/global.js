@@ -2,13 +2,6 @@ import { createGlobalStyle } from 'styled-components';
 import editor from './editor';
 
 const global = createGlobalStyle`
-  @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
-  @import url(//fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap);
-
-  /* html, body, #root {
-    height: 100%;
-  } */
-
   html {
     background-color: ${({ theme }) => theme.sub};
   }

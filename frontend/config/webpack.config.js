@@ -13,9 +13,10 @@ module.exports = {
     filename: '[name].[hash].js',
     chunkFilename: '[name].[chunkhash].js',
     publicPath: '/',
+    sourceMapFilename: '[name].js.map',
   },
 
-  devtool: 'eval',
+  devtool: 'source-map',
 
   resolve: {
     extensions: ['.js', '.jsx'],
