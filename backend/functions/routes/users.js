@@ -1,4 +1,3 @@
-const https = require("https");
 const firebase = require("firebase");
 const { uuid } = require("uuidv4");
 const { admin, BusBoy, db } = require("../util/admin");
@@ -102,7 +101,7 @@ exports.socialSignUp = (req, res) => {
     let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
     let uniqueName = admin.database().ref().push().key;
 
-    storageFilepath = `user/${req.body.userName}/${uniqueName + fileext}`;
+    storageFilepath = `${req.body.userName}/${uniqueName + fileext}`;
     storageFile = bucket.file(storageFilepath);
 
     file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
@@ -144,7 +143,7 @@ exports.socialSignUp = (req, res) => {
             userId: newSocialUser.userId,
             email: newSocialUser.email,
             userName: newSocialUser.userName,
-            userImagePath: storageFilepath,
+            imagePath: storageFilepath,
             userImage: newSocialUser.userImage,
             createdAt: new Date().toISOString(),
           };
@@ -217,7 +216,7 @@ exports.signUp = (req, res) => {
     let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
     let uniqueName = admin.database().ref().push().key;
 
-    storageFilepath = `user/${req.body.userName}/${uniqueName + fileext}`;
+    storageFilepath = `${req.body.userName}/${uniqueName + fileext}`;
     storageFile = bucket.file(storageFilepath);
 
     file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
@@ -272,7 +271,7 @@ exports.signUp = (req, res) => {
           userId,
           email: newUser.email,
           userName: newUser.userName,
-          userImagePath: storageFilepath,
+          imagePath: storageFilepath,
           userImage: req.body.userImageFile !== "undefined" ? userImage : null,
           createdAt: new Date().toISOString(),
         };
@@ -475,7 +474,7 @@ exports.uploadImage = async (req, res) => {
     let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
     let uniqueName = admin.database().ref().push().key;
 
-    storageFilepath = `user/${req.user.userName}/${uniqueName + fileext}`;
+    storageFilepath = `${req.user.userName}/${uniqueName + fileext}`;
     storageFile = bucket.file(storageFilepath);
 
     file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
@@ -497,10 +496,10 @@ exports.uploadImage = async (req, res) => {
       db.doc(`/users/${req.user.userName}`)
         .get()
         .then((doc) => {
-          const deleteFilePath = doc.data().userImagePath;
+          const deleteFilePath = doc.data().imagePath;
           bucket.file(deleteFilePath).delete();
           db.doc(`/users/${req.user.userName}`)
-            .update({ userImage, userImagePath: storageFilepath })
+            .update({ userImage, imagePath: storageFilepath })
             .then(() => {
               res.status(201).json({ message: "Image uploaded successfully" }); // 201 CREATED
             })

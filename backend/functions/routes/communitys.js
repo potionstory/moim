@@ -65,7 +65,7 @@ exports.postCommunity = (req, res) => {
     let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
     let uniqueName = admin.database().ref().push().key;
 
-    storageFilepath = `community/${uniqueName + fileext}`;
+    storageFilepath = `${req.user.userName}/${uniqueName + fileext}`;
     storageFile = bucket.file(storageFilepath);
 
     file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
@@ -88,7 +88,7 @@ exports.postCommunity = (req, res) => {
       type: req.body.type,
       title: req.body.title,
       status: req.body.status,
-      mainImagePath: "community/",
+      imagePath: `${req.user.userName}/`,
       mainImage,
       description: req.body.description,
       url: req.body.url,
@@ -177,7 +177,7 @@ exports.putCommunity = (req, res) => {
     let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
     let uniqueName = admin.database().ref().push().key;
 
-    storageFilepath = `community/${uniqueName + fileext}`;
+    storageFilepath = `${req.user.userName}/${uniqueName + fileext}`;
     storageFile = bucket.file(storageFilepath);
 
     file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
@@ -201,14 +201,14 @@ exports.putCommunity = (req, res) => {
     db.doc(`/communitys/${req.params.communityId}`)
       .get()
       .then((doc) => {
-        const deleteFilePath = doc.data().mainImagePath;
+        const deleteFilePath = doc.data().imagePath;
         bucket.file(deleteFilePath).delete();
         db.doc(`/communitys/${req.params.communityId}`)
           .update({
             type,
             title,
             status,
-            mainImagePath: storageFilepath,
+            imagePath: storageFilepath,
             mainImage,
             description,
             url,

@@ -68,7 +68,7 @@ exports.postMeeting = (req, res) => {
     let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
     let uniqueName = admin.database().ref().push().key;
 
-    storageFilepath = `meeting/${uniqueName + fileext}`;
+    storageFilepath = `${req.user.userName}/${uniqueName + fileext}`;
     storageFile = bucket.file(storageFilepath);
 
     file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
@@ -92,7 +92,7 @@ exports.postMeeting = (req, res) => {
       title: req.body.title,
       status: req.body.status,
       cost: req.body.cost,
-      mainImagePath: "meeting/",
+      imagePath: `${req.user.userName}/`,
       mainImage,
       description: req.body.description,
       startDate: req.body.startDate,
@@ -182,7 +182,7 @@ exports.putMeeting = (req, res) => {
     let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
     let uniqueName = admin.database().ref().push().key;
 
-    storageFilepath = `meeting/${uniqueName + fileext}`;
+    storageFilepath = `${req.user.userName}/${uniqueName + fileext}`;
     storageFile = bucket.file(storageFilepath);
 
     file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
@@ -216,7 +216,7 @@ exports.putMeeting = (req, res) => {
     db.doc(`/meetings/${req.params.meetingId}`)
       .get()
       .then((doc) => {
-        const deleteFilePath = doc.data().mainImagePath;
+        const deleteFilePath = doc.data().imagePath;
         bucket.file(deleteFilePath).delete();
         db.doc(`/meetings/${req.params.meetingId}`)
           .update({
@@ -224,7 +224,7 @@ exports.putMeeting = (req, res) => {
             title,
             status,
             cost,
-            mainImagePath: storageFilepath,
+            imagePath: storageFilepath,
             mainImage,
             description,
             startDate,
