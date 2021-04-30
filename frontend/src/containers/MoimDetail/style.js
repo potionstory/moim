@@ -4,35 +4,39 @@ import { ellipsis } from '../../lib/styles/util';
 
 export const MoimDetailWrap = styled.section`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin-top: 2rem;
   padding: 24px;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.main};
 `;
 
-export const MoimDetailBase = styled.div`
-  display: flex;
-  .info {
-    width: 220px;
-    .thumb {
-      overflow: hidden;
-      height: 220px;
-      border-radius: 4px;
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
+export const MoimDetailSummary = styled.div`
+  width: 220px;
+  .thumb {
+    overflow: hidden;
+    height: 220px;
+    border-radius: 4px;
+    background-color: ${({ theme }) => theme.sub};
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
-  .summary {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    overflow: hidden;
-    margin-left: 24px;
-  }
+`;
+
+export const MoimDetailInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  margin-left: 24px;
+`;
+
+export const MoimDetailBase = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const MoimDetailTypeWrap = styled.div`
@@ -327,7 +331,7 @@ export const MoimDetailDescriptionWrap = styled.div`
       min-height: 40px;
       ${({ isEdit, theme }) =>
         css`
-          padding: ${!isEdit ? '6px 0' : '6px 12px'};
+          padding: ${!isEdit ? '6px 0 0' : '6px 12px'};
           background-color: ${!isEdit ? color.none : theme.sub};
           color: ${!isEdit ? color.gray : theme.text};
         `};
@@ -357,17 +361,71 @@ export const MoimDetailDescriptionWrap = styled.div`
   }
 `;
 
-export const MoimDetailContentWrap = styled.div`
-  position: relative;
+export const MoimDetailAdditional = styled.div`
   margin-top: 12px;
-  padding-top: 50%;
-  .editorInner {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  padding-top: 12px;
+  border-top: 1px solid ${color.gray};
+  .tabMenu {
+    position: relative;
+    .activeBar {
+      position: absolute;
+      top: 0;
+      width: 80px;
+      height: 80px;
+      border-radius: 4px;
+      background-color: ${({ theme }) => theme.theme};
+    }
+    .tabList {
+      display: flex;
+      flex-direction: row;
+      position: relative;
+    }
+  }
+  .tabContent {
+    overflow: hidden;
+    position: relative;
+    margin-top: 12px;
+    padding-top: 50%;
+    border-radius: 4px;
+    .contentInner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: ${color.gray};
+      .contentBox {
+        display: none;
+        height: 100%;
+        &:nth-child(${({ activeIndex }) => activeIndex + 1}) {
+          display: block;
+        }
+      }
+    }
   }
 `;
 
-export const MoimDetailInfo = styled.div``;
+export const MoimDetailTabItem = styled.li`
+  position: relative;
+  button {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    svg {
+      font-size: 2rem;
+      color: ${({ isActive, theme }) => (!isActive ? theme.gray : theme.main)};
+      transition: all 0.2s ease-out;
+    }
+    &:hover {
+      svg {
+        color: ${({ isActive, theme }) =>
+          !isActive ? theme.title : theme.main};
+      }
+    }
+  }
+`;
+
+export const MoimDetailDateWrap = styled.div`
+  display: flex;
+`;

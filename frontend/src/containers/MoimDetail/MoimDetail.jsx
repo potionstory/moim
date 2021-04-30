@@ -11,6 +11,9 @@ import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
 import trim from 'lodash/trim';
 import filter from 'lodash/filter';
+import map from 'lodash/map';
+import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import {
   getCommunityAction,
@@ -30,9 +33,11 @@ import MoimDetailUrl from './MoimDetailUrl';
 import MoimDetailTag from './MoimDetailTag';
 import MoimDetailDescription from './MoimDetailDescription';
 import MoimDetailContent from './MoimDetailContent';
+import MoimDetailDate from './MoimDetailDate';
 import UserInfo from '../../components/UserInfo';
 import IconButton from '../../components/Button/IconButton';
-import { MoimDetailWrap, MoimDetailBase, MoimDetailTitle } from './style';
+import { MoimDetailWrap, MoimDetailSummary, MoimDetailInfo, MoimDetailBase, MoimDetailTitle, MoimDetailAdditional, MoimDetailTabItem } from './style';
+import { detailTabMenu } from '../../lib/const';
 
 const DESCRIPTION_MAX_LENGTH = 150;
 
@@ -44,6 +49,7 @@ const MoimDetail = ({ category, id }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [typeIndex, setTypeIndex] = useState(-1);
   const [tagInput, setTagInput] = useState('');
+  const [tabIndex, setTabIndex] = useState(0);
 
   const costInputRef = useRef();
   const urlInputRef = useRef();
@@ -209,6 +215,10 @@ const MoimDetail = ({ category, id }) => {
     }
   }, []);
 
+  const onTabClick = useCallback((index) => {
+    setTabIndex(index);
+  }, []);
+
   useEffect(() => {
     if (category === 'community') {
       onGetCommunity(id);
@@ -239,20 +249,21 @@ const MoimDetail = ({ category, id }) => {
     description,
     url,
     tags,
+    startDate,
   } = detail;
 
   return (
     <>
       {!isEmpty(detail) && (
         <MoimDetailWrap>
-          <MoimDetailBase>
-            <div className="info">
-              <div className="thumb">
-                <img src={mainImage} />
-              </div>
-              <UserInfo image={userImage} name={userName} count={likeCount} />
+          <MoimDetailSummary>
+            <div className="thumb">
+              <img src={mainImage} />
             </div>
-            <div className="summary">
+            <UserInfo image={userImage} name={userName} count={likeCount} />
+          </MoimDetailSummary>
+          <MoimDetailInfo>
+            <MoimDetailBase>
               {typeIndex !== -1 && (
                 <MoimDetailType
                   list={moimType}
@@ -316,9 +327,43 @@ const MoimDetail = ({ category, id }) => {
                 max={DESCRIPTION_MAX_LENGTH}
                 onDescriptionChange={onDescriptionChange}
               />
-              <MoimDetailContent />
-            </div>
-          </MoimDetailBase>
+            </MoimDetailBase>
+            <MoimDetailAdditional activeIndex={tabIndex}>
+              <div className="tabMenu">
+                <motion.div
+                  className="activeBar"
+                  animate={{ x: tabIndex * 80 }}
+                  transition={{
+                    ease: 'backInOut',
+                  }}
+                />
+                <ul className="tabList">
+                  {map(detailTabMenu[category], (item, index) => (
+                    <MoimDetailTabItem key={index} isActive={index === tabIndex}>
+                      <button type="button" onClick={() => onTabClick(index)}>
+                        <FontAwesomeIcon icon={item} />
+                      </button>
+                    </MoimDetailTabItem>
+                  ))}
+                </ul>
+              </div>
+              <div className="tabContent">
+                <div className="contentInner">
+                  <div className="contentBox">
+                    <MoimDetailContent />
+                  </div>
+                  {!isUndefined(startDate) && (
+                    <div className="contentBox">
+                      <MoimDetailDate date={startDate} />
+                    </div>
+                  )}
+                  <div className="contentBox">
+                    장소
+                  </div>
+                </div>
+              </div>
+            </MoimDetailAdditional>
+          </MoimDetailInfo>
         </MoimDetailWrap>
       )}
       <IconButton onClickEvent={onEditToggle} icon={faEdit} />

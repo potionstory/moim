@@ -17,6 +17,7 @@ import {
   faEllipsisH,
   faWifi,
   faShoePrints,
+  faSearchPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import icon from './icons';
 import { color, iconBg } from './styles/palette';
@@ -247,4 +248,10 @@ export const util = {
       },
     ],
   ],
+};
+
+// moim detail tab menu icon
+export const detailTabMenu = {
+  community: [faSearchPlus],
+  meeting: [faSearchPlus, faClock, faMapMarkerAlt],
 };
