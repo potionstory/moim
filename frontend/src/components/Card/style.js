@@ -9,7 +9,7 @@ export const CardWrap = styled.li`
   flex-direction: column;
   justify-content: space-between;
   min-width: 296px;
-  margin: 2rem 1rem 1rem;
+  margin: 0 1rem 2rem;
   .inner {
     transition: all 0.2s ease-out;
   }

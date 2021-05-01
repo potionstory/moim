@@ -4,17 +4,17 @@ import { color } from '../../lib/styles/palette';
 export const MoimTopWrap = styled.div`
   position: relative;
   z-index: 30;
+  margin-bottom: 2rem;
   .moimTop {
     display: flex;
     justify-content: space-between;
     position: relative;
-    margin-bottom: 2rem;
   }
   h2 {
     display: flex;
     flex-grow: 0;
     height: 4rem;
-    padding-bottom: 2rem;
+    margin-top: 2rem;
     font-size: 4rem;
     font-weight: 600;
     color: ${({ theme }) => theme.title};
@@ -103,7 +103,10 @@ export const UtilWrap = styled.div`
   min-height: 296px;
   padding: 12px;
   box-sizing: border-box;
-  ${({ isRound }) => css`border-radius: ${isRound ? '4px 0 4px 4px' : '4px'};`};
+  ${({ isRound }) =>
+    css`
+      border-radius: ${isRound ? '4px 0 4px 4px' : '4px'};
+    `};
   background-color: ${({ theme }) => theme.title};
 `;
 

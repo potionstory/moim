@@ -5,7 +5,6 @@ import { ellipsis } from '../../lib/styles/util';
 export const MoimDetailWrap = styled.section`
   display: flex;
   flex-direction: row;
-  margin-top: 2rem;
   padding: 24px;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.main};
