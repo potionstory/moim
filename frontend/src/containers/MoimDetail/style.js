@@ -50,11 +50,12 @@ export const MoimDetailTypeWrap = styled.div`
   }
 `;
 
-export const MoimDetailTitle = styled.div`
-  height: 92px;
+export const MoimDetailTitleWrap = styled.div`
+  display: flex;
+  align-items: center;
   margin-top: 12px;
   padding: 12px 0;
-  line-height: 92px;
+  min-height: 92px;
   ${({ isEdit }) =>
     isEdit &&
     css`
@@ -63,17 +64,18 @@ export const MoimDetailTitle = styled.div`
       background-color: ${({ theme }) => theme.sub};
     `};
   h3 {
-    font-size: 4rem;
+    font-size: 3.6rem;
     font-weight: 600;
     color: ${({ theme }) => theme.title};
-    ${ellipsis};
+    line-height: 72px;
   }
-  input {
+  textarea {
     width: 100%;
-    height: 92px;
-    font-size: 4rem;
+    font-size: 3.6rem;
     font-weight: 600;
     color: ${({ theme }) => theme.title};
+    line-height: 72px;
+    vertical-align: top;
   }
 `;
 
@@ -386,19 +388,15 @@ export const MoimDetailAdditional = styled.div`
     margin-top: 12px;
     padding-top: 50%;
     border-radius: 4px;
-    .contentInner {
+    .tabContentInner {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: ${color.gray};
-      .contentBox {
-        display: none;
+      background-color: ${({ theme }) => theme.sub};
+      .tabContentBox {
         height: 100%;
-        &:nth-child(${({ activeIndex }) => activeIndex + 1}) {
-          display: block;
-        }
       }
     }
   }
@@ -425,6 +423,145 @@ export const MoimDetailTabItem = styled.li`
   }
 `;
 
-export const MoimDetailDateWrap = styled.div`
+export const MoimDetailScheduleWrap = styled.div`
   display: flex;
+  position: relative;
+  height: 100%;
+  .dateTimePicker {
+    display: none;
+  }
+  .dateInner {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    font-family: 'Rubik';
+    font-size: 2rem;
+    .dateBox {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 264px;
+      height: 264px;
+      border-radius: 4px;
+      background-color: ${({ theme }) => theme.main};
+      .week {
+        position: absolute;
+        top: 15px;
+        left: 50%;
+        height: 1rem;
+        padding: 0 6px;
+        border-radius: 8px;
+        background-color: ${({ theme }) => theme.main};
+        font-size: 0.625rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        line-height: 1rem;
+        transform: translateX(-50%);
+        color: ${({ theme }) => theme.title};
+      }
+      .weekDot {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        position: absolute;
+        top: 12px;
+        left: 6px;
+        width: calc(100% - 12px);
+        svg {
+          font-size: 1rem;
+          color: ${color.gray};
+          &:nth-child(1) {
+            color: ${color.red};
+          }
+          &:nth-child(7) {
+            color: ${color.blue};
+          }
+        }
+        span {
+          height: 32px;
+          padding: 0 10px;
+          border-radius: 20px;
+          background-color: ${color.gray};
+          font-size: 1rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          line-height: 32px;
+          color: ${color.white};
+          &:nth-child(1) {
+            background-color: ${color.red};
+          }
+          &:nth-child(7) {
+            background-color: ${color.blue};
+          }
+        }
+      }
+      .day {
+        font-size: 8rem;
+        font-weight: 600;
+        color: ${({ theme }) => theme.title};
+      }
+      .btnCalendar {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        bottom: 15px;
+        left: 0;
+        width: 100%;
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 4px;
+          background-color: ${({ theme }) => theme.theme};
+          svg {
+            font-size: 1rem;
+            color: ${({ theme }) => theme.main};
+            opacity: 0.6;
+            transition: all 0.2s ease-out;
+          }
+          &:hover {
+            svg {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+    .month {
+      margin-bottom: 12px;
+      font-weight: 600;
+      color: ${({ theme }) => theme.title};
+    }
+    .time {
+      margin-top: 12px;
+      color: ${({ theme }) => theme.title};
+    }
+  }
+  .progress {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120px;
+    transform: translate(-50%, -50%);
+    span {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      svg {
+        font-size: 4rem;
+      }
+    }
+  }
 `;
+
+export const MoimDetailScheduleDatePicker = styled.div``;

@@ -12,6 +12,7 @@ import isUndefined from 'lodash/isUndefined';
 import trim from 'lodash/trim';
 import filter from 'lodash/filter';
 import map from 'lodash/map';
+import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -27,16 +28,24 @@ import {
   meetingStatus,
 } from '../../lib/const';
 import MoimDetailType from './MoimDetailType';
+import MoimDetailTitle from './MoimDetailTitle';
 import MoimDetailCost from './MoimDetailCost';
 import MoimDetailStatus from './MoimDetailStatus';
 import MoimDetailUrl from './MoimDetailUrl';
 import MoimDetailTag from './MoimDetailTag';
 import MoimDetailDescription from './MoimDetailDescription';
 import MoimDetailContent from './MoimDetailContent';
-import MoimDetailDate from './MoimDetailDate';
+import MoimDetailSchedule from './MoimDetailSchedule';
 import UserInfo from '../../components/UserInfo';
 import IconButton from '../../components/Button/IconButton';
-import { MoimDetailWrap, MoimDetailSummary, MoimDetailInfo, MoimDetailBase, MoimDetailTitle, MoimDetailAdditional, MoimDetailTabItem } from './style';
+import {
+  MoimDetailWrap,
+  MoimDetailSummary,
+  MoimDetailInfo,
+  MoimDetailBase,
+  MoimDetailAdditional,
+  MoimDetailTabItem,
+} from './style';
 import { detailTabMenu } from '../../lib/const';
 
 const DESCRIPTION_MAX_LENGTH = 150;
@@ -219,6 +228,51 @@ const MoimDetail = ({ category, id }) => {
     setTabIndex(index);
   }, []);
 
+  const onScheduleChange = useCallback((name, date) => {
+    setDetail((detail) => {
+      return {
+        ...detail,
+        [name]: {
+          ...detail[name],
+          _seconds: dayjs(date).unix(),
+        },
+      };
+    });
+  }, []);
+
+  const DetailComminityTabBoxSwitch = useMemo(() => {
+    switch (tabIndex) {
+      case 0:
+        return <MoimDetailContent />;
+      default:
+        return false;
+    }
+  }, [detail, isEdit, tabIndex]);
+
+  const DetailMeetingTabBoxSwitch = useMemo(() => {
+    switch (tabIndex) {
+      case 0:
+        return <MoimDetailContent />;
+      case 1:
+        const { startDate, endDate } = detail;
+
+        return (
+          <MoimDetailSchedule
+            isEdit={isEdit}
+            startDate={startDate}
+            endDate={endDate}
+            onScheduleChange={onScheduleChange}
+          />
+        );
+      case 2:
+        return '장소';
+      case 3:
+        return '멤버';
+      default:
+        return false;
+    }
+  }, [detail, isEdit, tabIndex]);
+
   useEffect(() => {
     if (category === 'community') {
       onGetCommunity(id);
@@ -249,7 +303,6 @@ const MoimDetail = ({ category, id }) => {
     description,
     url,
     tags,
-    startDate,
   } = detail;
 
   return (
@@ -274,18 +327,11 @@ const MoimDetail = ({ category, id }) => {
                   onCheckChange={onTypeChange}
                 />
               )}
-              <MoimDetailTitle isEdit={isEdit}>
-                {!isEdit ? (
-                  <h3>{title}</h3>
-                ) : (
-                  <input
-                    type="text"
-                    placeholder="제목을 입력해주세요"
-                    value={title}
-                    onChange={onTitleChange}
-                  />
-                )}
-              </MoimDetailTitle>
+              <MoimDetailTitle
+                isEdit={isEdit}
+                title={title}
+                onTitleChange={onTitleChange}
+              />
               <MoimDetailStatus
                 category={category}
                 list={moimStatus}
@@ -339,7 +385,10 @@ const MoimDetail = ({ category, id }) => {
                 />
                 <ul className="tabList">
                   {map(detailTabMenu[category], (item, index) => (
-                    <MoimDetailTabItem key={index} isActive={index === tabIndex}>
+                    <MoimDetailTabItem
+                      key={index}
+                      isActive={index === tabIndex}
+                    >
                       <button type="button" onClick={() => onTabClick(index)}>
                         <FontAwesomeIcon icon={item} />
                       </button>
@@ -348,17 +397,11 @@ const MoimDetail = ({ category, id }) => {
                 </ul>
               </div>
               <div className="tabContent">
-                <div className="contentInner">
-                  <div className="contentBox">
-                    <MoimDetailContent />
-                  </div>
-                  {!isUndefined(startDate) && (
-                    <div className="contentBox">
-                      <MoimDetailDate date={startDate} />
-                    </div>
-                  )}
-                  <div className="contentBox">
-                    장소
+                <div className="tabContentInner">
+                  <div className="tabContentBox">
+                    {category === 'community'
+                      ? DetailComminityTabBoxSwitch
+                      : DetailMeetingTabBoxSwitch}
                   </div>
                 </div>
               </div>
