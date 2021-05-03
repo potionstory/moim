@@ -11,16 +11,21 @@ import {
   faCalendarDay,
   faImage,
   faAlignLeft,
-  faMapMarkerAlt,
   faClock,
+  faMapMarkerAlt,
+  faUser,
   faLink,
   faEllipsisH,
   faWifi,
   faShoePrints,
   faSearchPlus,
+  faExternalLinkAlt,
+  faCopy,
 } from '@fortawesome/free-solid-svg-icons';
 import icon from './icons';
 import { color, iconBg } from './styles/palette';
+
+export const weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export const categoryTabMenu = [
   {
@@ -58,6 +63,8 @@ export const cardTabMenu = {
   community: [faImage, faAlignLeft, faLink, faEllipsisH],
   meeting: [faImage, faAlignLeft, faClock, faMapMarkerAlt, faEllipsisH],
 };
+
+export const linkIcon = [faExternalLinkAlt, faCopy];
 
 // community type
 export const communityType = [
@@ -253,5 +260,5 @@ export const util = {
 // moim detail tab menu icon
 export const detailTabMenu = {
   community: [faSearchPlus],
-  meeting: [faSearchPlus, faClock, faMapMarkerAlt],
+  meeting: [faSearchPlus, faClock, faMapMarkerAlt, faUser],
 };

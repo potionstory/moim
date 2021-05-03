@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import editor from './editor';
+import dateTimePicker from './dateTimePicker';
 
 const global = createGlobalStyle`
   html {
@@ -71,6 +72,7 @@ const global = createGlobalStyle`
   }
 
   ${editor}
+  ${dateTimePicker}
 `;
 
 export default global;

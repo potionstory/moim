@@ -23,7 +23,9 @@ export const color = {
   blue: '#1e88e5',
   gray: '#757575',
   black: '#202020',
+  blackGray: '#303030',
   white: '#fafafa',
+  whiteGray: '#eeeeee',
   none: 'transparent',
 };
 
