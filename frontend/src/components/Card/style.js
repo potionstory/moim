@@ -10,38 +10,36 @@ export const CardWrap = styled.li`
   justify-content: space-between;
   min-width: 296px;
   margin: 0 1rem 2rem;
-  .inner {
-    transition: all 0.2s ease-out;
+  .cardBlock {
+    display: block;
+    position: relative;
+    padding-top: 100%;
+    .cardInner {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 12px;
+      box-sizing: border-box;
+      border-radius: 4px;
+      background-color: ${({ theme }) => theme.main};
+      transition: all 0.2s ease-out;
+    }
   }
   &:hover {
-    .inner {
-      box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 16px 0px;
+    .cardBlock {
+      .cardInner {
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 16px 0px;
+      }
     }
   }
 `;
 
-export const CardBlock = styled.div`
-  display: block;
-  position: relative;
-  padding-top: 100%;
-`;
-
-export const CardInner = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  padding: 12px;
-  box-sizing: border-box;
-  border-radius: 4px;
-  background-color: ${({ theme }) => theme.main};
-`;
-
-export const CardHeader = styled.div`
+export const CardHeaderWrap = styled.div`
   display: flex;
   align-items: center;
   .icon {
@@ -140,14 +138,13 @@ export const CardHeader = styled.div`
   }
 `;
 
-export const CardBody = styled.div`
+export const CardBodyWrap = styled.div`
   display: flex;
   flex: 1;
   margin-top: 12px;
-`;
-
-export const CardTabMenuWrap = styled.div`
-  width: 40px;
+  .cardBodyInner {
+    width: 40px;
+  }
 `;
 
 export const CardTabMenu = styled.div`
@@ -196,15 +193,14 @@ export const CardTabMenu = styled.div`
 export const CardTabContentWrap = styled.div`
   flex: 1;
   margin-left: 12px;
+  .cardTabBlock {
+    display: block;
+    position: relative;
+    padding-top: 100%;
+  }
 `;
 
-export const CardTabContentBlock = styled.div`
-  display: block;
-  position: relative;
-  padding-top: 100%;
-`;
-
-export const CardTabContentInner = styled.div`
+export const CardTabBoxWrap = styled.div`
   overflow: hidden;
   position: absolute;
   top: 0;
@@ -214,15 +210,11 @@ export const CardTabContentInner = styled.div`
   border-radius: 4px;
   background-color: ${({ theme }) => theme.sub};
   .cardTabBox {
-    display: none;
     height: 100%;
-    &:nth-child(${({ activeIndex }) => activeIndex + 1}) {
-      display: block;
-    }
   }
 `;
 
-export const CardImage = styled.span`
+export const CardMainImageBoxWrap = styled.span`
   display: block;
   overflow: hidden;
   position: relative;
@@ -268,7 +260,7 @@ export const CardImage = styled.span`
   }
 `;
 
-export const CardText = styled.div`
+export const CardDescriptionBoxWrap = styled.div`
   height: 100%;
   a {
     display: block;
@@ -287,7 +279,7 @@ export const CardText = styled.div`
   }
 `;
 
-export const CardLink = styled.div`
+export const CardUrlBoxWrap = styled.div`
   padding: 12px;
   .linkBox {
     display: flex;
@@ -313,7 +305,149 @@ export const CardLink = styled.div`
   }
 `;
 
-export const CardMap = styled.div`
+export const CardScheduleBoxWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 100%;
+  padding: 6px;
+  font-family: 'Rubik';
+  .dateBox {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 144px;
+    padding: 0 6px;
+    text-align: center;
+    .dayBox {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 100%;
+      height: 132px;
+      border-radius: 4px;
+      background-color: ${({ theme }) => theme.main};
+      .weekDot {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        position: absolute;
+        top: 9px;
+        left: 6px;
+        width: calc(100% - 12px);
+        svg {
+          font-size: 0.5rem;
+          color: ${color.gray};
+          &:nth-child(1) {
+            color: ${color.red};
+          }
+          &:nth-child(7) {
+            color: ${color.blue};
+          }
+        }
+        span {
+          height: 20px;
+          padding: 0 10px;
+          border-radius: 10px;
+          background-color: ${color.gray};
+          font-size: 0.625rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          line-height: 20px;
+          color: ${color.white};
+          &:nth-child(1) {
+            background-color: ${color.red};
+          }
+          &:nth-child(7) {
+            background-color: ${color.blue};
+          }
+        }
+      }
+      .day {
+        font-size: 4rem;
+        font-weight: 600;
+        color: ${({ theme }) => theme.title};
+      }
+    }
+    .month {
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: ${({ theme }) => theme.title};
+    }
+    .time {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 6px;
+      color: ${({ theme }) => theme.title};
+      .timeToMotion {
+        display: block;
+        width: 20px;
+        height: 20px;
+        margin: 0 6px;
+        border-radius: 10px;
+        background-color: ${({ theme }) => theme.theme};
+        span {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 20px;
+          svg {
+            font-size: 1rem;
+            color: ${({ theme }) => theme.main};
+          }
+        }
+      }
+    }
+  }
+  .dateBox.to {
+    .dayBox {
+      height: 92px;
+      .weekDot {
+        svg {
+          display: none;
+        }
+        span {
+          background-color: ${color.none};
+          color: ${color.gray};
+          &:nth-child(1) {
+            color: ${color.red};
+          }
+          &:nth-child(7) {
+            color: ${color.blue};
+          }
+        }
+      }
+      .day {
+        font-size: 2rem;
+      }
+    }
+  }
+  .dateToMotion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: ${({ theme }) => theme.theme};
+    transform: translate(-50%, -50%);
+    svg {
+      font-size: 2rem;
+      color: ${({ theme }) => theme.main};
+    }
+  }
+`;
+
+export const CardMapBoxWrap = styled.div`
   height: 100%;
   .mapArea {
     height: 100%;
@@ -336,90 +470,7 @@ export const CardMap = styled.div`
   }
 `;
 
-export const CardTime = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  font-family: 'Rubik';
-  .dateBox {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    width: 60%;
-    height: 60%;
-    border-radius: 4px;
-    background-color: ${({ theme }) => theme.main};
-    .week {
-      position: absolute;
-      top: 12px;
-      left: 50%;
-      height: 1rem;
-      padding: 0 6px;
-      border-radius: 8px;
-      background-color: ${({ theme }) => theme.main};
-      font-size: 0.625rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      line-height: 1rem;
-      transform: translateX(-50%);
-      color: ${({ theme }) => theme.title};
-    }
-    .weekDot {
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      position: absolute;
-      top: 12px;
-      left: 6px;
-      width: calc(100% - 12px);
-      svg {
-        font-size: 0.5rem;
-        color: ${color.gray};
-        &:nth-child(1) {
-          color: ${color.red};
-        }
-        &:nth-child(7) {
-          color: ${color.blue};
-        }
-      }
-      span {
-        height: 1rem;
-        padding: 0 6px;
-        border-radius: 8px;
-        background-color: ${color.gray};
-        font-size: 0.625rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        line-height: 1rem;
-        color: ${color.white};
-        &:nth-child(1) {
-          background-color: ${color.red};
-        }
-        &:nth-child(7) {
-          background-color: ${color.blue};
-        }
-      }
-    }
-    .day {
-      font-size: 4rem;
-      font-weight: 600;
-      color: ${({ theme }) => theme.title};
-    }
-  }
-  .month {
-    font-weight: 600;
-    color: ${({ theme }) => theme.title};
-  }
-  .time {
-    color: ${({ theme }) => theme.title};
-  }
-`;
-
-export const CardMore = styled.div`
+export const CardAddInfoBoxWrap = styled.div`
   padding: 12px;
   .contentWrap {
     .contentHead {

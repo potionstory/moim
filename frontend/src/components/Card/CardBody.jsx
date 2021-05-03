@@ -3,17 +3,11 @@ import map from 'lodash/map';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cardTabMenu } from '../../lib/const';
-import CardCommunityComp from './CardCommunityComp';
-import CardMeetingComp from './CardMeetingComp';
-import {
-  CardTabMenuWrap,
-  CardTabMenu,
-  CardTabContentWrap,
-  CardTabContentBlock,
-  CardTabContentInner,
-} from './style';
+import CardCommunity from './CardCommunity';
+import CardMeeting from './CardMeeting';
+import { CardBodyWrap, CardTabMenu, CardTabContentWrap } from './style';
 
-const CardTabComp = ({ item, category }) => {
+const CardBody = ({ item, category }) => {
   const [tabIndex, setTabIndex] = useState(0);
 
   const onTabClick = useCallback((index) => {
@@ -21,8 +15,8 @@ const CardTabComp = ({ item, category }) => {
   }, []);
 
   return (
-    <>
-      <CardTabMenuWrap>
+    <CardBodyWrap>
+      <div className="cardBodyInner">
         <CardTabMenu activeIndex={tabIndex}>
           <motion.div
             className="activeBar"
@@ -41,20 +35,18 @@ const CardTabComp = ({ item, category }) => {
             ))}
           </ul>
         </CardTabMenu>
-      </CardTabMenuWrap>
+      </div>
       <CardTabContentWrap>
-        <CardTabContentBlock>
-          <CardTabContentInner activeIndex={tabIndex}>
-            {category === 'community' ? (
-              <CardCommunityComp item={item} />
-            ) : (
-              <CardMeetingComp item={item} activeIndex={tabIndex} />
-            )}
-          </CardTabContentInner>
-        </CardTabContentBlock>
+        <div className="cardTabBlock">
+          {category === 'community' ? (
+            <CardCommunity item={item} activeIndex={tabIndex} />
+          ) : (
+            <CardMeeting item={item} activeIndex={tabIndex} />
+          )}
+        </div>
       </CardTabContentWrap>
-    </>
+    </CardBodyWrap>
   );
 };
 
-export default CardTabComp;
+export default CardBody;

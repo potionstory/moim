@@ -1,20 +1,18 @@
 import React from 'react';
-import CardHeaderComp from './CardHeaderComp';
-import CardTabComp from './CardTabComp';
+import CardHeader from './CardHeader';
+import CardBody from './CardBody';
 import UserInfo from '../UserInfo';
-import { CardWrap, CardBlock, CardInner, CardBody } from './style';
+import { CardWrap } from './style';
 
 const Card = ({ item, category }) => {
   return (
     <CardWrap>
-      <CardBlock>
-        <CardInner className="inner">
-          <CardHeaderComp item={item} category={category} />
-          <CardBody>
-            <CardTabComp item={item} category={category} />
-          </CardBody>
-        </CardInner>
-      </CardBlock>
+      <div className="cardBlock">
+        <div className="cardInner">
+          <CardHeader item={item} category={category} />
+          <CardBody item={item} category={category} />
+        </div>
+      </div>
       <UserInfo
         image={item.userImage}
         name={item.userName}

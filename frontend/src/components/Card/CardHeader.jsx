@@ -2,15 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWonSign } from '@fortawesome/free-solid-svg-icons';
-import { CardHeader } from './style';
+import { CardHeaderWrap } from './style';
 import { getCommunityIcon, getMeetingIcon } from '../../utils/commonUtil';
 
-const CardHeaderComp = ({ item, category }) => {
+const CardHeader = ({ item, category }) => {
   const { type, title, cost, status } = item;
   const id = item[`${category}Id`];
 
   return (
-    <CardHeader status={status} isFree={!cost}>
+    <CardHeaderWrap status={status} isFree={!cost}>
       <span className="icon" type={type}>
         {category === 'community' ? (
           <img src={getCommunityIcon(type)} />
@@ -31,8 +31,8 @@ const CardHeaderComp = ({ item, category }) => {
           <span className="status">{status}</span>
         </div>
       </div>
-    </CardHeader>
+    </CardHeaderWrap>
   );
 };
 
-export default CardHeaderComp;
+export default CardHeader;
