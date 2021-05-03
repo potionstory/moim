@@ -10,11 +10,11 @@ import {
   utilReset,
 } from '../../../src/store/module/util';
 import { utilTabMenu } from '../../lib/const';
-import MoimTopUtilBodyComp from './MoimTopUtilBodyComp';
+import MoimTopUtilBody from './MoimTopUtilBody';
 import { utilMenu } from '../../lib/const';
 import { MoimTopUtilWrap, UtilButton, UtilWrap, UtilHeader } from './style';
 
-const MoimTopUtilComp = ({ tabIndex }) => {
+const MoimTopUtil = ({ tabIndex }) => {
   const util = useSelector(({ util }) => util);
   const dispatch = useDispatch();
 
@@ -96,7 +96,7 @@ const MoimTopUtilComp = ({ tabIndex }) => {
             </div>
           </UtilHeader>
           {utilIndex === 0 && (
-            <MoimTopUtilBodyComp
+            <MoimTopUtilBody
               menu={utilTabMenu[utilTitle][tabIndex]}
               cont={util[utilTitle][tabIndex]}
               activeIndex={filterTabIndex[tabIndex]}
@@ -106,7 +106,7 @@ const MoimTopUtilComp = ({ tabIndex }) => {
             />
           )}
           {utilIndex === 1 && (
-            <MoimTopUtilBodyComp
+            <MoimTopUtilBody
               menu={utilTabMenu[utilTitle]}
               cont={util[utilTitle]}
               activeIndex={sortTabIndex}
@@ -121,4 +121,4 @@ const MoimTopUtilComp = ({ tabIndex }) => {
   );
 };
 
-export default MoimTopUtilComp;
+export default MoimTopUtil;

@@ -5,15 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CheckBox from '../../components/CheckBox';
 import Toggle from '../../components/Toggle';
 import {
-  UtilBody,
-  UtilTabMenuWrap,
-  UtilTabMenu,
-  UtilTabContentWrap,
-  UtilTabContentBlock,
-  UtilTabContentInner,
+  MoimTopUtilBodyWrap,
+  MoimTopUtilTabMenu,
+  MoimTopUtilTabBody,
 } from './style';
 
-const MoimTopUtilBodyComp = ({
+const MoimTopUtilBody = ({
   menu,
   cont,
   activeIndex,
@@ -22,9 +19,9 @@ const MoimTopUtilBodyComp = ({
   onItemCheck,
 }) => {
   return (
-    <UtilBody isVisible={isVisible}>
-      <UtilTabMenuWrap>
-        <UtilTabMenu activeIndex={activeIndex + 1}>
+    <MoimTopUtilBodyWrap isVisible={isVisible}>
+      <div className="tabMemu">
+        <MoimTopUtilTabMenu activeIndex={activeIndex + 1}>
           <motion.div
             className="activeBox"
             initial={{ y: activeIndex * 40 }}
@@ -42,13 +39,13 @@ const MoimTopUtilBodyComp = ({
               </li>
             ))}
           </ul>
-        </UtilTabMenu>
-      </UtilTabMenuWrap>
-      <UtilTabContentWrap>
-        <UtilTabContentBlock>
-          <UtilTabContentInner activeIndex={activeIndex + 1}>
+        </MoimTopUtilTabMenu>
+      </div>
+      <MoimTopUtilTabBody activeIndex={activeIndex + 1}>
+        <div className="tabBlock">
+          <div className="tabInner">
             {map(cont, (array, utilIndex) => (
-              <div className="utilTabBox" key={utilIndex}>
+              <div className="tabBox" key={utilIndex}>
                 <ul>
                   {map(array, (item, itemIndex) => {
                     const { name, type, isChecked } = item;
@@ -76,11 +73,11 @@ const MoimTopUtilBodyComp = ({
                 </ul>
               </div>
             ))}
-          </UtilTabContentInner>
-        </UtilTabContentBlock>
-      </UtilTabContentWrap>
-    </UtilBody>
+          </div>
+        </div>
+      </MoimTopUtilTabBody>
+    </MoimTopUtilBodyWrap>
   );
 };
 
-export default MoimTopUtilBodyComp;
+export default MoimTopUtilBody;

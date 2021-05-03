@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MoimTopTabWrap, TabButton } from './style';
 
-const MoimTopTabComp = ({ tabMenu, activeIndex, onTabClick }) => {
+const MoimTopTab = ({ tabMenu, activeIndex, onTabClick }) => {
   return (
     <MoimTopTabWrap>
       <motion.div
@@ -27,4 +27,4 @@ const MoimTopTabComp = ({ tabMenu, activeIndex, onTabClick }) => {
   );
 };
 
-export default MoimTopTabComp;
+export default MoimTopTab;

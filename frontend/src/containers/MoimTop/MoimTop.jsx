@@ -1,6 +1,6 @@
 import React from 'react';
-import MoimTopTabComp from './MoimTopTabComp';
-import MoimTopUtilComp from './MoimTopUtilComp';
+import MoimTopTab from './MoimTopTab';
+import MoimTopUtil from './MoimTopUtil';
 import { MoimTopWrap } from './style';
 
 const MoimTop = ({
@@ -13,12 +13,12 @@ const MoimTop = ({
   return (
     <MoimTopWrap>
       <div className="moimTop">
-        <MoimTopTabComp
+        <MoimTopTab
           tabMenu={tabMenu}
           activeIndex={tabIndex}
           onTabClick={onTabClick}
         />
-        {isUtilVisible && <MoimTopUtilComp tabIndex={tabIndex} />}
+        {isUtilVisible && <MoimTopUtil tabIndex={tabIndex} />}
       </div>
       <h2>{tabTitle}</h2>
     </MoimTopWrap>

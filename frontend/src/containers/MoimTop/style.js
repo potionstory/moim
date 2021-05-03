@@ -160,17 +160,16 @@ export const UtilHeader = styled.div`
   }
 `;
 
-export const UtilBody = styled.div`
+export const MoimTopUtilBodyWrap = styled.div`
   display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
   flex: 1;
   margin-top: 12px;
+  .tabMemu {
+    width: 40px;
+  }
 `;
 
-export const UtilTabMenuWrap = styled.div`
-  width: 40px;
-`;
-
-export const UtilTabMenu = styled.div`
+export const MoimTopUtilTabMenu = styled.div`
   overflow: hidden;
   position: relative;
   border-radius: 20px;
@@ -213,28 +212,26 @@ export const UtilTabMenu = styled.div`
   }
 `;
 
-export const UtilTabContentWrap = styled.div`
+export const MoimTopUtilTabBody = styled.div`
   flex: 1;
   margin-left: 12px;
-`;
-
-export const UtilTabContentBlock = styled.div`
-  display: block;
-  position: relative;
-  padding-top: 100%;
-`;
-
-export const UtilTabContentInner = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  .utilTabBox {
-    display: none;
-    height: 100%;
-    &:nth-child(${({ activeIndex }) => activeIndex}) {
-      display: block;
+  .tabBlock {
+    display: block;
+    position: relative;
+    padding-top: 100%;
+    .tabInner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      .tabBox {
+        display: none;
+        height: 100%;
+        &:nth-child(${({ activeIndex }) => activeIndex}) {
+          display: block;
+        }
+      }
     }
   }
 `;
