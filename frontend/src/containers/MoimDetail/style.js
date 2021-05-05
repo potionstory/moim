@@ -564,4 +564,170 @@ export const MoimDetailScheduleWrap = styled.div`
   }
 `;
 
-export const MoimDetailScheduleDatePicker = styled.div``;
+export const MoimDetailMapWrap = styled.div`
+  height: 100%;
+  .mapArea {
+    height: 100%;
+  }
+  .searchWrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    height: 100%;
+    padding: 10px 0 30px 10px;
+    box-sizing: border-box;
+    .searchInner {
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+      min-height: 60px;
+      max-height: 100%;
+      border-radius: 4px;
+      background: ${({ theme }) => theme.main};
+    }
+    .searchBox {
+      width: 100%;
+      span {
+        display: flex;
+        overflow: hidden;
+        margin: 10px;
+        border-radius: 4px;
+        input {
+          flex: 1;
+          padding: 8px;
+          height: 40px;
+          background-color: ${({ theme }) => theme.title};
+          font-size: 1rem;
+          font-weight: 600;
+          color: ${({ theme }) => theme.main};
+          &:-webkit-autofill {
+            -webkit-text-fill-color: ${({ theme }) => theme.main};
+            -webkit-box-shadow: 0 0 0 1000px ${({ theme }) => theme.title} inset;
+          }
+        }
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          background-color: ${({ theme }) => theme.theme};
+          svg {
+            font-size: 1rem;
+            color: ${({ theme }) => theme.main};
+            opacity: 0.6;
+            transition: all 0.2s ease-out;
+          }
+          &:hover {
+            svg {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+    .searchList {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      overflow-y: auto;
+      height: calc(100% - 120px);
+      padding: 0 10px 10px;
+      ul {
+        flex: 1;
+        overflow-y: auto;
+        li {
+          display: flex;
+          position: relative;
+          padding: 10px;
+          overflow: hidden;
+          cursor: pointer;
+          min-height: 65px;
+          .marker {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            background-color: ${({ theme }) => theme.theme};
+            font-family: 'Rubik';
+            font-size: 1rem;
+            font-weight: 600;
+            color: ${({ theme }) => theme.main};
+            text-align: center;
+            line-height: 24px;
+          }
+          .info {
+            flex: 1;
+            overflow: hidden;
+            margin-left: 10px;
+            font-weight: 600;
+            span {
+              display: block;
+            }
+            .title {
+              font-size: 1rem;
+              color: ${({ theme }) => theme.theme};
+              line-height: 24px;
+              ${ellipsis};
+            }
+            .address {
+              margin-top: 6px;
+              font-size: 0.825rem;
+              .road {
+                color: ${({ theme }) => theme.text};
+              }
+              .jibun {
+                color: ${({ theme }) => theme.gray};
+              }
+            }
+            .tel {
+              margin-top: 6px;
+              font-size: 0.825rem;
+              color: ${color.green};
+            }
+          }
+          &:after {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            border-bottom: 1px dashed ${color.gray};
+            content: '';
+          }
+          &:last-child:after {
+            display: none;
+          }
+          &:hover {
+            background-color: ${({ theme }) => theme.sub};
+          }
+        }
+      }
+      .pagination {
+        display: flex;
+        justify-content: center;
+        padding-top: 10px;
+        border-top: 1px dashed ${color.gray};
+        button {
+          width: 24px;
+          height: 24px;
+          font-family: 'Rubik';
+          font-size: 1rem;
+          font-weight: 600;
+          color: ${color.gray};
+          text-align: center;
+          line-height: 24px;
+          transition: all 0.2s ease-out;
+          &:hover {
+            color: ${({ theme }) => theme.title};
+          }
+          &.on {
+            border-radius: 4px;
+            background-color: ${color.green};
+            color: ${({ theme }) => theme.main};
+          }
+        }
+      }
+    }
+  }
+`;

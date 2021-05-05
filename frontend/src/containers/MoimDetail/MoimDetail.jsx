@@ -36,6 +36,7 @@ import MoimDetailTag from './MoimDetailTag';
 import MoimDetailDescription from './MoimDetailDescription';
 import MoimDetailContent from './MoimDetailContent';
 import MoimDetailSchedule from './MoimDetailSchedule';
+import MoimDetailMap from './MoimDetailMap';
 import UserInfo from '../../components/UserInfo';
 import IconButton from '../../components/Button/IconButton';
 import {
@@ -265,7 +266,7 @@ const MoimDetail = ({ category, id }) => {
           />
         );
       case 2:
-        return '장소';
+        return <MoimDetailMap detail={detail} />;
       case 3:
         return '멤버';
       default:
