@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useLayoutEffect } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import dayjs from 'dayjs';
 import CardMainImageBox from './CardMainImageBox';
 import CardDescriptionBox from './CardDescriptionBox';
@@ -85,7 +85,7 @@ const CardMeeting = ({ item, activeIndex }) => {
     }
   }, [item, activeIndex]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     // meeting location
     if (mapIndex === activeIndex && type === 'offline') {
       mapRef.current.innerHTML = '';
