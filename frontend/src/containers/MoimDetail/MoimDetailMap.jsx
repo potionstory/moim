@@ -98,7 +98,6 @@ const MoimDetailMap = ({ detail }) => {
               el.onclick = (function (i) {
                 return function () {
                   removeMarker();
-                  searchListRef.current.scrollTo(0, 0);
                   pagination.gotoPage(i);
                 };
               })(i);
@@ -106,6 +105,7 @@ const MoimDetailMap = ({ detail }) => {
 
             fragment.appendChild(el);
           }
+          searchListRef.current.scrollTo(0, 0);
           paginationRef.current.className = 'pagination';
           paginationRef.current.appendChild(fragment);
         } else {
