@@ -241,13 +241,16 @@ const MoimDetail = ({ category, id }) => {
     });
   }, []);
 
-  const onHandleLocation = useCallback((locate) => {
+  const onHandleLocation = useCallback((name, coord) => {
     setDetail((detail) => {
       return {
         ...detail,
         location: {
-          _latitude: locate[0],
-          _longitude: locate[1],
+          name,
+          coordinate: {
+            _latitude: coord[0],
+            _longitude: coord[1],
+          },
         },
       };
     });
@@ -280,7 +283,12 @@ const MoimDetail = ({ category, id }) => {
       case 2:
         const { location } = detail;
 
-        return <MoimDetailMap location={location} onHandleLocation={onHandleLocation} />;
+        return (
+          <MoimDetailMap
+            location={location}
+            onHandleLocation={onHandleLocation}
+          />
+        );
       case 3:
         return '멤버';
       default:
@@ -320,7 +328,7 @@ const MoimDetail = ({ category, id }) => {
     tags,
   } = detail;
 
-  console.log("detail.location: ", detail.location);
+  console.log('detail.location: ', detail.location);
 
   return (
     <>

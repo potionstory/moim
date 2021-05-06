@@ -7,10 +7,8 @@ import { MoimDetailMapWrap } from './style';
 const { kakao } = window;
 
 const MoimDetailMap = ({ location, onHandleLocation }) => {
+  const [locateName, setLocateName] = useState('');
   const [locateCoords, setLocateCoords] = useState([0, 0]);
-
-
-
 
   const [place, setPlace] = useState([37.56292028474936, 126.96727831458435]);
   const [searchWord, setSearchWord] = useState('');
@@ -19,6 +17,18 @@ const MoimDetailMap = ({ location, onHandleLocation }) => {
   const mapRef = useRef();
   const searchListRef = useRef();
   const paginationRef = useRef();
+
+  const onLocateNameChange = useCallback((e) => {
+    setLocateName(e.target.value);
+  }, []);
+
+  const onLocationChange = useCallback(
+    (e) => {
+      e.preventDefault();
+      onHandleLocation(locateName, locateCoords);
+    },
+    [locateName, locateCoords],
+  );
 
   const onHandleSearch = useCallback(
     (e) => {
@@ -32,19 +42,20 @@ const MoimDetailMap = ({ location, onHandleLocation }) => {
     setSearchWord(e.target.value);
   }, []);
 
-  const onLocationChange = useCallback(() => {
-    onHandleLocation(locateCoords);
-  }, [locateCoords]);
-
   const createMap = useCallback(() => {
+    const { coordinate } = location;
+
     mapRef.current.innerHTML = '';
 
     let overlay = null;
     let options = {
-      center: new kakao.maps.LatLng(location._latitude, location._longitude),
+      center: new kakao.maps.LatLng(
+        coordinate._latitude,
+        coordinate._longitude,
+      ),
       level: 3,
-    }
-    const map = new kakao.maps.Map(mapRef.current, options)
+    };
+    const map = new kakao.maps.Map(mapRef.current, options);
     const marker = new kakao.maps.Marker({ position: map.getCenter() });
     const geocoder = new kakao.maps.services.Geocoder();
 
@@ -52,39 +63,43 @@ const MoimDetailMap = ({ location, onHandleLocation }) => {
 
     // 좌표로 주소정보 가져오기
     const searchDetailAddrFromCoords = (coords) => {
-      geocoder.coord2Address(coords.getLng(), coords.getLat(), (result, status) => {
-        if (status === kakao.maps.services.Status.OK) {
-          console.log(result[0].place_name);
-          let detailAddr = !!result[0].road_address
-            ? '<div className="dddddd" class="bbbbbbb">도로명주소 : ' +
-              result[0].road_address.address_name +
-              '</div>'
-            : '';
-          detailAddr +=
-            '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
-      
-          const content =  `<div class="customoverlay">
+      geocoder.coord2Address(
+        coords.getLng(),
+        coords.getLat(),
+        (result, status) => {
+          if (status === kakao.maps.services.Status.OK) {
+            console.log('result: ', result);
+            let detailAddr = !!result[0].road_address
+              ? '<div className="dddddd" class="bbbbbbb">도로명주소 : ' +
+                result[0].road_address.address_name +
+                '</div>'
+              : '';
+            detailAddr +=
+              '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+
+            const content = `<div class="customoverlay">
                             <span class="overlayInner">
                               <span class="title">${detailAddr}</span>
                             </span>
                           </div>`;
 
-          overlay = new kakao.maps.CustomOverlay({
-            map,
-            position: new kakao.maps.LatLng(coords.getLat(), coords.getLng()),
-            content,
-            clickable: true,
-            yAnchor: 1 
-          });
-        }
-      });
-    }
+            overlay = new kakao.maps.CustomOverlay({
+              map,
+              position: new kakao.maps.LatLng(coords.getLat(), coords.getLng()),
+              content,
+              clickable: true,
+              yAnchor: 1,
+            });
+          }
+        },
+      );
+    };
 
     searchDetailAddrFromCoords(marker.getPosition());
 
     kakao.maps.event.addListener(map, 'click', (e) => {
-      const { latLng } = e; 
-      
+      const { latLng } = e;
+
       // 마커 위치를 클릭한 위치로 옮깁니다
       marker.setPosition(latLng);
       marker.setMap(map);
@@ -94,27 +109,31 @@ const MoimDetailMap = ({ location, onHandleLocation }) => {
 
       setLocateCoords([latLng.getLat(), latLng.getLng()]);
     });
-  }, [location._latitude]);
+  }, [location]);
 
   const createmarker = useCallback(() => {
-    const tempArr = []
-    locationArr.forEach(e => {
+    const tempArr = [];
+    locationArr.forEach((e) => {
       tempArr.push(
         new kakao.maps.Marker({
           map: map,
           position: new kakao.maps.LatLng(e.mapY, e.mapX),
-        })
-      )
-    })
-    setMarkerArr(tempArr)
+        }),
+      );
+    });
+    setMarkerArr(tempArr);
   }, []);
 
   useEffect(() => {
+    const { name, coordinate } = location;
+
+    setLocateName(name);
+    setLocateCoords([coordinate._latitude, coordinate._longitude]);
+
     createMap();
-    setLocateCoords([location._latitude, location._longitude]);
   }, [location]);
 
-  console.log("locateCoords: ", locateCoords);
+  console.log('locateCoords: ', locateCoords);
 
   // useEffect(() => {
   //   mapRef.current.innerHTML = '';
@@ -127,7 +146,7 @@ const MoimDetailMap = ({ location, onHandleLocation }) => {
   //   const location = new kakao.maps.Marker({ position: map.getCenter() });
   //   const ps = new kakao.maps.services.Places();
   //   const geocoder = new kakao.maps.services.Geocoder();
-    
+
   //   let selectedMarker = null;
 
   //   let markers = [];
@@ -136,22 +155,22 @@ const MoimDetailMap = ({ location, onHandleLocation }) => {
 
   //   ps.keywordSearch(searchPlace, placesSearchCB);
 
-  //   kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
-  
-  //     // 클릭한 위도, 경도 정보를 가져옵니다 
-  //     var latlng = mouseEvent.latLng; 
-      
+  //   kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+
+  //     // 클릭한 위도, 경도 정보를 가져옵니다
+  //     var latlng = mouseEvent.latLng;
+
   //     // 마커 위치를 클릭한 위치로 옮깁니다
   //     location.setPosition(latlng);
   //     location.setMap(map);
 
   //     setPlace([latlng.getLat(), latlng.getLng()]);
-      
+
   //     var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
   //     message += '경도는 ' + latlng.getLng() + ' 입니다';
-      
+
   //     console.log('message: ', message);
-      
+
   //   });
 
   //   function placesSearchCB(data, status, pagination) {
@@ -325,9 +344,23 @@ const MoimDetailMap = ({ location, onHandleLocation }) => {
   return (
     <MoimDetailMapWrap isSearch={isEmpty(searchList)}>
       <div ref={mapRef} className="mapArea"></div>
-      <div className="searchWrap">
-        <div className="searchInner">
-          <div className="searchBox">
+      <div className="locationWrap">
+        <div className="locationInner">
+          <div className="locationBox">
+            <form onSubmit={onLocationChange}>
+              <span>
+                <input
+                  type="text"
+                  value={locateName}
+                  placeholder="모임 장소의 이름을 입력해주세요"
+                  size="15"
+                  onChange={onLocateNameChange}
+                />
+                <button type="submit">
+                  <FontAwesomeIcon icon={faMapMarkerAlt} />
+                </button>
+              </span>
+            </form>
             <form onSubmit={onHandleSearch}>
               <span>
                 <input
@@ -365,9 +398,6 @@ const MoimDetailMap = ({ location, onHandleLocation }) => {
           </div>
         </div>
       </div>
-      <button type="button" className="btnLocation" onClick={onLocationChange}>
-        <FontAwesomeIcon icon={faMapMarkerAlt} />
-      </button>
     </MoimDetailMapWrap>
   );
 };

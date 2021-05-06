@@ -574,36 +574,36 @@ export const MoimDetailMapWrap = styled.div`
       border-radius: 6px;
       border: 1px solid #ccc;
       border-bottom: 2px solid #ddd;
-      float:left;
+      float: left;
       .overlayInner {
-        display:block;
-        text-decoration:none;
-        color:#000;
-        text-align:center;
-        border-radius:6px;
-        font-size:14px;
-        font-weight:bold;
-        overflow:hidden;
+        display: block;
+        text-decoration: none;
+        color: #000;
+        text-align: center;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: bold;
+        overflow: hidden;
         background: #d95050;
       }
       .title {
-        display:block;
-        text-align:center;
-        background:#fff;
-        margin-right:35px;
-        padding:10px 15px;
-        font-size:14px;
-        font-weight:bold;
+        display: block;
+        text-align: center;
+        background: #fff;
+        margin-right: 35px;
+        padding: 10px 15px;
+        font-size: 14px;
+        font-weight: bold;
       }
       &:after {
-        content:'';
-        position:absolute;
-        margin-left:-12px;
-        left:50%;
-        bottom:-12px;
-        width:22px;
-        height:12px;
-        background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png');
+        content: '';
+        position: absolute;
+        margin-left: -12px;
+        left: 50%;
+        bottom: -12px;
+        width: 22px;
+        height: 12px;
+        background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png');
       }
       &:nth-of-type(n) {
         border: 0;
@@ -611,7 +611,7 @@ export const MoimDetailMapWrap = styled.div`
       }
     }
   }
-  .searchWrap {
+  .locationWrap {
     position: absolute;
     top: 0;
     left: 0;
@@ -622,7 +622,7 @@ export const MoimDetailMapWrap = styled.div`
         padding: ${isSearch ? '10px' : '10px 10px 30px'};
       `};
     box-sizing: border-box;
-    .searchInner {
+    .locationInner {
       display: flex;
       flex-direction: column;
       width: 300px;
@@ -631,7 +631,7 @@ export const MoimDetailMapWrap = styled.div`
       border-radius: 4px;
       background-color: ${({ theme }) => theme.main};
     }
-    .searchBox {
+    .locationBox {
       width: 100%;
       span {
         display: flex;
@@ -772,30 +772,6 @@ export const MoimDetailMapWrap = styled.div`
             color: ${({ theme }) => theme.main};
           }
         }
-      }
-    }
-  }
-  .btnLocation {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 10;
-    width: 40px;
-    height: 40px;
-    border-radius: 4px;
-    background-color: ${({ theme }) => theme.theme};
-    svg {
-      font-size: 1rem;
-      color: ${({ theme }) => theme.main};
-      opacity: 0.6;
-      transition: all 0.2s ease-out;
-    }
-    &:hover {
-      svg {
-        opacity: 1;
       }
     }
   }
