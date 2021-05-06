@@ -241,6 +241,18 @@ const MoimDetail = ({ category, id }) => {
     });
   }, []);
 
+  const onHandleLocation = useCallback((locate) => {
+    setDetail((detail) => {
+      return {
+        ...detail,
+        location: {
+          _latitude: locate[0],
+          _longitude: locate[1],
+        },
+      };
+    });
+  }, []);
+
   const DetailComminityTabBoxSwitch = useMemo(() => {
     switch (tabIndex) {
       case 0:
@@ -266,7 +278,9 @@ const MoimDetail = ({ category, id }) => {
           />
         );
       case 2:
-        return <MoimDetailMap detail={detail} />;
+        const { location } = detail;
+
+        return <MoimDetailMap location={location} onHandleLocation={onHandleLocation} />;
       case 3:
         return '멤버';
       default:
@@ -305,6 +319,8 @@ const MoimDetail = ({ category, id }) => {
     url,
     tags,
   } = detail;
+
+  console.log("detail.location: ", detail.location);
 
   return (
     <>

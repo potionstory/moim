@@ -568,14 +568,59 @@ export const MoimDetailMapWrap = styled.div`
   height: 100%;
   .mapArea {
     height: 100%;
+    .customoverlay {
+      position: relative;
+      bottom: 55px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      border-bottom: 2px solid #ddd;
+      float:left;
+      .overlayInner {
+        display:block;
+        text-decoration:none;
+        color:#000;
+        text-align:center;
+        border-radius:6px;
+        font-size:14px;
+        font-weight:bold;
+        overflow:hidden;
+        background: #d95050;
+      }
+      .title {
+        display:block;
+        text-align:center;
+        background:#fff;
+        margin-right:35px;
+        padding:10px 15px;
+        font-size:14px;
+        font-weight:bold;
+      }
+      &:after {
+        content:'';
+        position:absolute;
+        margin-left:-12px;
+        left:50%;
+        bottom:-12px;
+        width:22px;
+        height:12px;
+        background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png');
+      }
+      &:nth-of-type(n) {
+        border: 0;
+        box-shadow: 0px 1px 2px #888;
+      }
+    }
   }
   .searchWrap {
     position: absolute;
     top: 0;
     left: 0;
     z-index: 10;
-    height: 100%;
-    padding: 10px 0 30px 10px;
+    max-height: 100%;
+    ${({ isSearch }) =>
+      css`
+        padding: ${isSearch ? '10px' : '10px 10px 30px'};
+      `};
     box-sizing: border-box;
     .searchInner {
       display: flex;
@@ -584,7 +629,7 @@ export const MoimDetailMapWrap = styled.div`
       min-height: 60px;
       max-height: 100%;
       border-radius: 4px;
-      background: ${({ theme }) => theme.main};
+      background-color: ${({ theme }) => theme.main};
     }
     .searchBox {
       width: 100%;
@@ -727,6 +772,30 @@ export const MoimDetailMapWrap = styled.div`
             color: ${({ theme }) => theme.main};
           }
         }
+      }
+    }
+  }
+  .btnLocation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: ${({ theme }) => theme.theme};
+    svg {
+      font-size: 1rem;
+      color: ${({ theme }) => theme.main};
+      opacity: 0.6;
+      transition: all 0.2s ease-out;
+    }
+    &:hover {
+      svg {
+        opacity: 1;
       }
     }
   }
