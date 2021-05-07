@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -27,8 +27,6 @@ import {
   HeaderWrap,
   HeaderInnder,
   LeftHead,
-  Logo,
-  ThemeToggle,
   RightHead,
   Menu,
   MenuList,
@@ -45,10 +43,6 @@ const Header = () => {
 
   const { isAuth, userInfo } = useSelector(({ auth }) => auth);
   const { theme } = useSelector(({ global }) => global);
-
-  const onLinkToHome = useCallback(() => {
-    history.push('/');
-  }, []);
 
   const onLinkToCreate = useCallback(() => {
     history.push('/create');
@@ -103,9 +97,9 @@ const Header = () => {
     <HeaderWrap>
       <HeaderInnder>
         <LeftHead isLight={theme}>
-          <Logo>
-            <ThemeToggle onClick={onLinkToHome}>M</ThemeToggle>
-          </Logo>
+          <h1>
+            <Link to="/">M</Link>
+          </h1>
           <div className="themeToggle">
             <label>
               <input type="checkbox" checked={theme} onChange={onThemeToggle} />

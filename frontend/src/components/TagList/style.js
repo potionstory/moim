@@ -18,7 +18,7 @@ export const TagListWrap = styled.ul`
       background-color: ${({ theme }) => theme.theme};
       font-size: 0.625rem;
       font-weight: 600;
-      color: ${color.white};
+      color: ${({ theme }) => theme.title};
       line-height: 20px;
       transition: background-color 0.2s ease-out;
       &:hover {

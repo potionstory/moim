@@ -20,7 +20,7 @@ export const DropButtonWrap = styled.div`
     font-size: 0.875rem;
     transition: all 0.2s ease-out;
     svg {
-      color: ${({ theme }) => theme.main};
+      color: ${({ theme }) => theme.title};
       opacity: 0.6;
       transition: all 0.2s ease-out;
     }
@@ -51,7 +51,7 @@ export const DropButtonWrap = styled.div`
         width: 40px;
         height: 40px;
         svg {
-          color: ${({ theme }) => theme.main};
+          color: ${({ theme }) => theme.title};
           opacity: 0.6;
           transition: all 0.2s ease-out;
         }

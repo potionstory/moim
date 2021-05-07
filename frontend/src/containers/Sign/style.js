@@ -36,7 +36,7 @@ export const SocialArea = styled.div`
     background-color: ${({ theme }) => theme.theme};
     font-size: 0.875rem;
     font-weight: 600;
-    color: ${({ theme }) => theme.main};
+    color: ${({ theme }) => theme.title};
     text-transform: uppercase;
   }
   .socialList {

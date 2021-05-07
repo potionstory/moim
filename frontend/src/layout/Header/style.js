@@ -27,6 +27,20 @@ export const LeftHead = styled.div`
   display: flex;
   align-items: center;
   padding: 20px 0;
+  h1 {
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      background-color: ${({ theme }) => theme.theme};
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: ${({ theme }) => theme.title};
+    }
+  }
   .themeToggle {
     margin-left: 24px;
     label {
@@ -37,9 +51,8 @@ export const LeftHead = styled.div`
       padding: 4px;
       border-radius: 24px;
       box-sizing: border-box;
-      background-color: ${({ theme }) => theme.theme};
+      background-color: ${({ theme }) => theme.title};
       font-weight: 600;
-      color: ${({ isLight, theme }) => (isLight ? theme.main : theme.gray)};
       text-transform: uppercase;
       cursor: pointer;
       transition: all 0.2s ease-out;
@@ -52,7 +65,7 @@ export const LeftHead = styled.div`
         width: 32px;
         height: 32px;
         border-radius: 16px;
-        background-color: ${({ theme }) => theme.main};
+        background-color: ${({ theme }) => theme.theme};
       }
       .activeIcon {
         display: flex;
@@ -65,33 +78,11 @@ export const LeftHead = styled.div`
         height: 40px;
         svg {
           font-size: 1.2rem;
-          color: ${({ theme }) => theme.main};
+          color: ${({ theme }) => theme.theme};
         }
       }
     }
   }
-`;
-
-export const Logo = styled.h1`
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-export const ThemeToggle = styled.button`
-  display: block;
-  width: 40px;
-  height: 40px;
-  position: relative;
-  border-radius: 4px;
-  background-color: ${({ theme }) => theme.theme};
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: ${({ theme }) => theme.main};
-  text-align: center;
-  line-height: 40px;
-  transition: all 0.2s ease-out;
 `;
 
 export const RightHead = styled.div`
@@ -131,7 +122,7 @@ export const Avatar = styled.button`
   svg {
     font-size: 1.6rem;
     color: ${({ theme, isImageNone }) =>
-      !isImageNone ? theme.gray : theme.main};
+      !isImageNone ? theme.gray : theme.title};
   }
   img {
     width: 100%;
@@ -141,7 +132,7 @@ export const Avatar = styled.button`
   &:hover {
     background-color: ${({ theme }) => theme.theme};
     svg {
-      color: ${({ theme }) => theme.main};
+      color: ${({ theme }) => theme.title};
     }
   }
   ${({ theme, isActive }) =>
@@ -149,7 +140,7 @@ export const Avatar = styled.button`
     css`
       background-color: ${theme.theme};
       svg {
-        color: ${theme.main};
+        color: ${theme.title};
       }
     `};
 `;

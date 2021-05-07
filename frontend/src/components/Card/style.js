@@ -182,7 +182,7 @@ export const CardTabMenu = styled.div`
       &:nth-child(${({ activeIndex }) => activeIndex + 1}) {
         button {
           svg {
-            color: ${({ theme }) => theme.main};
+            color: ${({ theme }) => theme.title};
           }
         }
       }

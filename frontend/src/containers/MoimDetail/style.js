@@ -135,7 +135,7 @@ export const MoimDetailCostWrap = styled.div`
         background-color: ${({ theme }) => theme.theme};
         svg {
           font-size: 1rem;
-          color: ${({ theme }) => theme.main};
+          color: ${({ theme }) => theme.title};
           opacity: 0.6;
           transition: all 0.2s ease-out;
         }
@@ -229,7 +229,7 @@ export const MoimDetailUrlWrap = styled.div`
         background-color: ${({ theme }) => theme.theme};
         svg {
           font-size: 1rem;
-          color: ${({ theme }) => theme.main};
+          color: ${({ theme }) => theme.title};
           opacity: 0.6;
           transition: all 0.2s ease-out;
         }
@@ -293,7 +293,7 @@ export const MoimDetailTagWrap = styled.div`
         background-color: ${({ theme }) => theme.theme};
         svg {
           font-size: 1rem;
-          color: ${({ theme }) => theme.main};
+          color: ${({ theme }) => theme.title};
           opacity: 0.6;
           transition: all 0.2s ease-out;
         }
@@ -411,13 +411,12 @@ export const MoimDetailTabItem = styled.li`
     border-radius: 4px;
     svg {
       font-size: 2rem;
-      color: ${({ isActive, theme }) => (!isActive ? theme.gray : theme.main)};
+      color: ${({ isActive, theme }) => (!isActive ? theme.gray : theme.title)};
       transition: all 0.2s ease-out;
     }
     &:hover {
       svg {
-        color: ${({ isActive, theme }) =>
-          !isActive ? theme.title : theme.main};
+        color: ${({ theme }) => theme.title};
       }
     }
   }
@@ -521,7 +520,7 @@ export const MoimDetailScheduleWrap = styled.div`
           background-color: ${({ theme }) => theme.theme};
           svg {
             font-size: 1rem;
-            color: ${({ theme }) => theme.main};
+            color: ${({ theme }) => theme.title};
             opacity: 0.6;
             transition: all 0.2s ease-out;
           }
@@ -582,7 +581,7 @@ export const MoimDetailMapWrap = styled.div`
         background-color: ${({ theme }) => theme.theme};
         font-size: 0.875rem;
         font-weight: bold;
-        color: ${({ theme }) => theme.main};
+        color: ${({ theme }) => theme.title};
         line-height: 1rem;
       }
       &:after {
@@ -618,6 +617,7 @@ export const MoimDetailMapWrap = styled.div`
       min-height: 60px;
       max-height: 100%;
       border-radius: 4px;
+      box-shadow: 2px 2px 2px ${color.gray};
       background-color: ${({ theme }) => theme.main};
     }
     .locationBox {
@@ -649,7 +649,7 @@ export const MoimDetailMapWrap = styled.div`
           background-color: ${({ theme }) => theme.theme};
           svg {
             font-size: 1rem;
-            color: ${({ theme }) => theme.main};
+            color: ${({ theme }) => theme.title};
             opacity: 0.6;
             transition: all 0.2s ease-out;
           }
@@ -686,7 +686,7 @@ export const MoimDetailMapWrap = styled.div`
             font-family: 'Rubik';
             font-size: 1rem;
             font-weight: 600;
-            color: ${({ theme }) => theme.main};
+            color: ${({ theme }) => theme.title};
             text-align: center;
             line-height: 24px;
           }
@@ -758,7 +758,7 @@ export const MoimDetailMapWrap = styled.div`
           &.on {
             border-radius: 4px;
             background-color: ${color.green};
-            color: ${({ theme }) => theme.main};
+            color: ${({ theme }) => theme.title};
           }
         }
       }

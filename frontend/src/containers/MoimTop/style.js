@@ -50,13 +50,12 @@ export const TabButton = styled.li`
     border-radius: 4px;
     svg {
       font-size: 2rem;
-      color: ${({ isActive, theme }) => (!isActive ? theme.gray : theme.main)};
+      color: ${({ isActive, theme }) => (!isActive ? theme.gray : theme.title)};
       transition: all 0.2s ease-out;
     }
     &:hover {
       svg {
-        color: ${({ isActive, theme }) =>
-          !isActive ? theme.title : theme.main};
+        color: ${({ theme }) => theme.title};
       }
     }
   }
