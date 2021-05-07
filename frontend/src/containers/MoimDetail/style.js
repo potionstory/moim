@@ -571,47 +571,36 @@ export const MoimDetailMapWrap = styled.div`
     .customoverlay {
       position: relative;
       bottom: 55px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      border-bottom: 2px solid #ddd;
-      float: left;
-      .overlayInner {
-        display: block;
-        text-decoration: none;
-        color: #000;
-        text-align: center;
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: bold;
+      border-radius: 4px;
+      box-shadow: 2px 2px 2px ${color.gray};
+      .address {
         overflow: hidden;
-        background: #d95050;
-      }
-      .title {
-        display: block;
-        text-align: center;
-        background: #fff;
-        margin-right: 35px;
-        padding: 10px 15px;
-        font-size: 14px;
+        position: relative;
+        z-index: 10;
+        padding: 12px;
+        border-radius: 4px;
+        background-color: ${({ theme }) => theme.theme};
+        font-size: 0.875rem;
         font-weight: bold;
+        color: ${({ theme }) => theme.main};
+        line-height: 1rem;
       }
       &:after {
-        content: '';
         position: absolute;
-        margin-left: -12px;
+        bottom: -6px;
         left: 50%;
-        bottom: -12px;
-        width: 22px;
+        margin-left: -6px;
+        width: 12px;
         height: 12px;
-        background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png');
-      }
-      &:nth-of-type(n) {
-        border: 0;
-        box-shadow: 0px 1px 2px #888;
+        box-shadow: 2px 0 2px ${color.gray};
+        background-color: ${({ theme }) => theme.theme};
+        transform: rotate(45deg);
+        content: '';
       }
     }
   }
   .locationWrap {
+    display: flex;
     position: absolute;
     top: 0;
     left: 0;
