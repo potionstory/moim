@@ -567,21 +567,20 @@ export const MoimDetailMapWrap = styled.div`
   height: 100%;
   .mapArea {
     height: 100%;
-    .customoverlay {
+    .overlay {
       position: relative;
-      bottom: 55px;
       border-radius: 4px;
       box-shadow: 2px 2px 2px ${color.gray};
-      .address {
+      .title {
         overflow: hidden;
         position: relative;
         z-index: 10;
         padding: 12px;
         border-radius: 4px;
-        background-color: ${({ theme }) => theme.theme};
+        background-color: ${color.pink};
         font-size: 0.875rem;
         font-weight: bold;
-        color: ${({ theme }) => theme.title};
+        color: ${color.white};
         line-height: 1rem;
       }
       &:after {
@@ -592,7 +591,36 @@ export const MoimDetailMapWrap = styled.div`
         width: 12px;
         height: 12px;
         box-shadow: 2px 0 2px ${color.gray};
-        background-color: ${({ theme }) => theme.theme};
+        background-color: ${color.pink};
+        transform: rotate(45deg);
+        content: '';
+      }
+    }
+    .selectedOverlay {
+      position: relative;
+      border-radius: 4px;
+      box-shadow: 2px 2px 2px ${color.gray};
+      .address {
+        overflow: hidden;
+        position: relative;
+        z-index: 10;
+        padding: 12px;
+        border-radius: 4px;
+        background-color: ${color.blue};
+        font-size: 0.875rem;
+        font-weight: bold;
+        color: ${color.white};
+        line-height: 1rem;
+      }
+      &:after {
+        position: absolute;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -6px;
+        width: 12px;
+        height: 12px;
+        box-shadow: 2px 0 2px ${color.gray};
+        background-color: ${color.blue};
         transform: rotate(45deg);
         content: '';
       }
@@ -605,15 +633,11 @@ export const MoimDetailMapWrap = styled.div`
     left: 0;
     z-index: 10;
     max-height: 100%;
-    ${({ isSearch }) =>
-      css`
-        padding: ${isSearch ? '10px' : '10px 10px 30px'};
-      `};
+    padding: 10px 10px 30px;
     box-sizing: border-box;
     .locationInner {
       display: flex;
       flex-direction: column;
-      width: 300px;
       min-height: 60px;
       max-height: 100%;
       border-radius: 4px;
@@ -622,44 +646,6 @@ export const MoimDetailMapWrap = styled.div`
     }
     .locationBox {
       width: 100%;
-      span {
-        display: flex;
-        overflow: hidden;
-        margin: 10px;
-        border-radius: 4px;
-        input {
-          flex: 1;
-          padding: 8px;
-          height: 40px;
-          background-color: ${({ theme }) => theme.title};
-          font-size: 1rem;
-          font-weight: 600;
-          color: ${({ theme }) => theme.main};
-          &:-webkit-autofill {
-            -webkit-text-fill-color: ${({ theme }) => theme.main};
-            -webkit-box-shadow: 0 0 0 1000px ${({ theme }) => theme.title} inset;
-          }
-        }
-        button {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 40px;
-          height: 40px;
-          background-color: ${({ theme }) => theme.theme};
-          svg {
-            font-size: 1rem;
-            color: ${({ theme }) => theme.title};
-            opacity: 0.6;
-            transition: all 0.2s ease-out;
-          }
-          &:hover {
-            svg {
-              opacity: 1;
-            }
-          }
-        }
-      }
     }
     .searchList {
       display: flex;
@@ -671,6 +657,8 @@ export const MoimDetailMapWrap = styled.div`
       ul {
         flex: 1;
         overflow-y: auto;
+        border-top: 1px dashed ${color.gray};
+        border-bottom: 1px dashed ${color.gray};
         li {
           display: flex;
           position: relative;
@@ -741,7 +729,6 @@ export const MoimDetailMapWrap = styled.div`
         display: flex;
         justify-content: center;
         padding-top: 10px;
-        border-top: 1px dashed ${color.gray};
         button {
           width: 24px;
           height: 24px;
@@ -760,6 +747,53 @@ export const MoimDetailMapWrap = styled.div`
             background-color: ${color.green};
             color: ${({ theme }) => theme.title};
           }
+        }
+      }
+    }
+  }
+`;
+
+export const MoimDetailMapForm = styled.form`
+  width: 100%;
+  span {
+    display: flex;
+    overflow: hidden;
+    margin: 10px;
+    border-radius: 4px;
+    input {
+      flex: 1;
+      padding: 8px;
+      width: 240px;
+      height: 40px;
+      background-color: ${({ theme }) => theme.title};
+      font-size: 1rem;
+      font-weight: 600;
+      color: ${({ theme }) => theme.main};
+      &:-webkit-autofill {
+        -webkit-text-fill-color: ${({ theme }) => theme.main};
+        box-shadow: 0 0 0 1000px ${({ theme }) => theme.title} inset;
+      }
+      &.locationName {
+        color: ${({ theme }) => theme.theme};
+      }
+    }
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: ${({ isActive, theme }) =>
+        !isActive ? color.gray : theme.theme};
+      svg {
+        font-size: 1rem;
+        color: ${({ theme }) => theme.title};
+        opacity: 0.6;
+        transition: all 0.2s ease-out;
+      }
+      &:hover {
+        svg {
+          opacity: ${({ isActive }) => (isActive ? 1 : 0.6)};
         }
       }
     }

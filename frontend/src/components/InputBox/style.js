@@ -54,7 +54,7 @@ export const InputWrap = styled.div`
     color: ${({ theme }) => theme.title};
     &:-webkit-autofill {
       -webkit-text-fill-color: ${({ theme }) => theme.title};
-      -webkit-box-shadow: 0 0 0 1000px ${({ theme }) => theme.main} inset;
+      box-shadow: 0 0 0 1000px ${({ theme }) => theme.main} inset;
     }
   }
   .inputCheck + input {

@@ -285,6 +285,7 @@ const MoimDetail = ({ category, id }) => {
 
         return (
           <MoimDetailMap
+            isEdit={isEdit}
             location={location}
             onHandleLocation={onHandleLocation}
           />
@@ -327,8 +328,6 @@ const MoimDetail = ({ category, id }) => {
     url,
     tags,
   } = detail;
-
-  console.log('detail.location: ', detail.location);
 
   return (
     <>

@@ -51,7 +51,7 @@ export const LeftHead = styled.div`
       padding: 4px;
       border-radius: 24px;
       box-sizing: border-box;
-      background-color: ${({ theme }) => theme.title};
+      background-color: ${({ theme }) => theme.theme};
       font-weight: 600;
       text-transform: uppercase;
       cursor: pointer;
@@ -65,7 +65,7 @@ export const LeftHead = styled.div`
         width: 32px;
         height: 32px;
         border-radius: 16px;
-        background-color: ${({ theme }) => theme.theme};
+        background-color: ${({ theme }) => theme.title};
       }
       .activeIcon {
         display: flex;
@@ -78,7 +78,7 @@ export const LeftHead = styled.div`
         height: 40px;
         svg {
           font-size: 1.2rem;
-          color: ${({ theme }) => theme.theme};
+          color: ${({ theme }) => theme.title};
         }
       }
     }
