@@ -432,7 +432,11 @@ const MoimDetailMap = ({ isEdit, location, onHandleLocation }) => {
       <div className="locationWrap">
         <div className="locationInner">
           <div className="locationBox">
-            <MoimDetailMapForm onSubmit={onLocationChange} isActive={isChanged}>
+            <MoimDetailMapForm
+              onSubmit={onLocationChange}
+              isEdit={isEdit}
+              isActive={isChanged}
+            >
               <span>
                 <input
                   type="text"

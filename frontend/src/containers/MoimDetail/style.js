@@ -774,7 +774,9 @@ export const MoimDetailMapForm = styled.form`
         box-shadow: 0 0 0 1000px ${({ theme }) => theme.title} inset;
       }
       &.locationName {
-        color: ${({ theme }) => theme.theme};
+        background-color: ${({ isEdit, theme }) =>
+          !isEdit ? theme.theme : theme.title};
+        color: ${({ isEdit, theme }) => (!isEdit ? theme.title : theme.theme)};
       }
     }
     button {
