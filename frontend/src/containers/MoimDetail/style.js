@@ -801,3 +801,25 @@ export const MoimDetailMapForm = styled.form`
     }
   }
 `;
+
+export const MoimDetailMemberWrap = styled.div`
+  height: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+  .memberInner {
+    height: 100%;
+    overflow-y: auto;
+    .memberTop {
+      display: flex;
+      flex: 1;
+      .left {
+        flex: 1;
+        background-color: orange;
+      }
+      .right {
+        flex: 1;
+        background-color: blue;
+      }
+    }
+  }
+`;

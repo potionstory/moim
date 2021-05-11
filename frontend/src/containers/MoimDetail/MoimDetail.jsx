@@ -37,6 +37,7 @@ import MoimDetailDescription from './MoimDetailDescription';
 import MoimDetailContent from './MoimDetailContent';
 import MoimDetailSchedule from './MoimDetailSchedule';
 import MoimDetailMap from './MoimDetailMap';
+import MoimDetailMemeber from './MoimDetailMemeber';
 import UserInfo from '../../components/UserInfo';
 import IconButton from '../../components/Button/IconButton';
 import {
@@ -291,7 +292,9 @@ const MoimDetail = ({ category, id }) => {
           />
         );
       case 3:
-        return '멤버';
+        return (
+          <MoimDetailMemeber isEdit={isEdit} />
+        );
       default:
         return false;
     }
