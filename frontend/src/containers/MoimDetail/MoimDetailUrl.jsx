@@ -1,12 +1,13 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLink, faEraser } from '@fortawesome/free-solid-svg-icons';
+import { faLink, faCopy, faEraser } from '@fortawesome/free-solid-svg-icons';
 import { MoimDetailUrlWrap } from './style';
 
 const MoimDetailUrl = ({
   url,
   isEdit,
   urlInputRef,
+  onUrlCopy,
   onUrlInputChange,
   onUrlInputReset,
 }) => {
@@ -17,23 +18,21 @@ const MoimDetailUrl = ({
       </span>
       <div className="urlContent">
         {!isEdit ? (
-          <a href={url} target="_black">
-            {url}
-          </a>
+            <a href={url} target="_black">
+              {url}
+            </a>
         ) : (
-          <div className="urlInput">
-            <input
-              type="text"
-              placeholder="URL을 입력해주세요"
-              value={url}
-              ref={urlInputRef}
-              onChange={onUrlInputChange}
-            />
-            <button type="button" onClick={onUrlInputReset}>
-              <FontAwesomeIcon icon={faEraser} />
-            </button>
-          </div>
+          <input
+            type="text"
+            placeholder="URL을 입력해주세요"
+            value={url}
+            ref={urlInputRef}
+            onChange={onUrlInputChange}
+          />
         )}
+        <button type="button" onClick={!isEdit ? onUrlCopy : onUrlInputReset}>
+          <FontAwesomeIcon icon={!isEdit ? faCopy : faEraser} />
+        </button>
       </div>
     </MoimDetailUrlWrap>
   );

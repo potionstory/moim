@@ -1,16 +1,18 @@
 import React from 'react';
-import DropButton from '../DropButton';
-import { linkIcon } from '../../lib/const';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { CardUrlBoxWrap } from './style';
 
-const CardUrlBox = ({ url, onNewTab, onUrlCopy }) => {
+const CardUrlBox = ({ url, onUrlCopy }) => {
   return (
     <CardUrlBoxWrap>
       <div className="linkBox">
         <a className="url" href={url} target="_blank">
           {url}
         </a>
-        <DropButton menu={linkIcon} onHandle={[onNewTab, onUrlCopy]} />
+        <button type="button" onClick={onUrlCopy}>
+          <FontAwesomeIcon className="icon" icon={faCopy} />
+        </button>
       </div>
     </CardUrlBoxWrap>
   );

@@ -8,10 +8,6 @@ import { CardTabBoxWrap } from './style';
 const CardCommunity = ({ item, activeIndex }) => {
   const { communityId, mainImage, description, url, tags } = item;
 
-  const onNewTab = useCallback(() => {
-    window.open(url);
-  }, [url]);
-
   const onUrlCopy = useCallback(() => {
     navigator.clipboard.writeText(url);
   }, [url]);
@@ -34,7 +30,7 @@ const CardCommunity = ({ item, activeIndex }) => {
         );
       case 2:
         return (
-          <CardUrlBox url={url} onNewTab={onNewTab} onUrlCopy={onUrlCopy} />
+          <CardUrlBox url={url} onUrlCopy={onUrlCopy} />
         );
       case 3:
         return <CardAddInfoBox tags={tags} />;

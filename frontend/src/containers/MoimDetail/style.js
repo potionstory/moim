@@ -192,11 +192,16 @@ export const MoimDetailUrlWrap = styled.div`
     flex: 1;
     overflow: hidden;
     margin-left: 12px;
+    background-color: ${({ theme }) => theme.sub};
+    border-radius: 20px;
     a {
+      flex: 1;
+      height: 24px;
+      padding: 8px 20px;
       font-size: 0.875rem;
       font-weight: 600;
       color: ${color.blue};
-      line-height: 40px;
+      line-height: 24px;
       ${ellipsis};
       opacity: 0.6;
       transition: all 0.2s ease-out;
@@ -204,39 +209,34 @@ export const MoimDetailUrlWrap = styled.div`
         opacity: 1;
       }
     }
-    .urlInput {
-      display: inline-flex;
-      overflow: hidden;
-      background-color: ${({ theme }) => theme.sub};
+    input {
+      flex: 1;
+      height: 40px;
+      padding: 8px 20px;
+      box-sizing: border-box;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: ${color.blue};
+      line-height: 24px;
+      ${ellipsis};
+    }
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
       border-radius: 20px;
-      input {
-        width: 180px;
-        height: 40px;
-        padding: 8px 20px;
-        box-sizing: border-box;
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: ${color.blue};
-        ${ellipsis};
+      background-color: ${({ theme }) => theme.theme};
+      svg {
+        font-size: 1rem;
+        color: ${({ theme }) => theme.title};
+        opacity: 0.6;
+        transition: all 0.2s ease-out;
       }
-      button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 20px;
-        background-color: ${({ theme }) => theme.theme};
+      &:hover {
         svg {
-          font-size: 1rem;
-          color: ${({ theme }) => theme.title};
-          opacity: 0.6;
-          transition: all 0.2s ease-out;
-        }
-        &:hover {
-          svg {
-            opacity: 1;
-          }
+          opacity: 1;
         }
       }
     }
@@ -266,12 +266,12 @@ export const MoimDetailTagWrap = styled.div`
     ${({ isEdit }) =>
       !isEdit &&
       css`
-        padding-top: 10px;
+        padding-top: 4px;
       `};
     .tagInput {
       display: inline-flex;
       overflow: hidden;
-      margin-bottom: 12px;
+      margin-bottom: 6px;
       background-color: ${({ theme }) => theme.sub};
       border-radius: 20px;
       input {

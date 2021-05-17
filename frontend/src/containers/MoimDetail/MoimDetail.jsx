@@ -150,6 +150,12 @@ const MoimDetail = ({ category, id }) => {
     costInputRef.current.focus();
   }, []);
 
+  const onUrlCopy = useCallback(() => {
+    const { url } = detail;
+
+    navigator.clipboard.writeText(url);
+  }, [detail]);
+
   const onUrlInputChange = useCallback((e) => {
     const value = e.target.value;
 
@@ -380,6 +386,7 @@ const MoimDetail = ({ category, id }) => {
                   url={url}
                   isEdit={isEdit}
                   urlInputRef={urlInputRef}
+                  onUrlCopy={onUrlCopy}
                   onUrlInputChange={onUrlInputChange}
                   onUrlInputReset={onUrlInputReset}
                 />

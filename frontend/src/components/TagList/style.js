@@ -6,7 +6,7 @@ export const TagListWrap = styled.ul`
   flex-wrap: wrap;
   li {
     height: 20px;
-    margin: 0 6px 6px 0;
+    margin: 6px 6px 0 0;
     button {
       position: relative;
       height: 20px;

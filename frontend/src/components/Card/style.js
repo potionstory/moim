@@ -302,6 +302,25 @@ export const CardUrlBoxWrap = styled.div`
         opacity: 1;
       }
     }
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      background-color: ${({ theme }) => theme.theme};
+      svg {
+        color: ${({ theme }) => theme.title};
+        opacity: 0.6;
+        transition: all 0.2s ease-out;
+      }
+      &:hover {
+        svg {
+          opacity: 1;
+        }
+      }
+    }
   }
 `;
 
@@ -501,7 +520,6 @@ export const CardAddInfoBoxWrap = styled.div`
       }
     }
     .contentBody {
-      margin-top: 6px;
       .memberCount {
         font-family: 'Rubik';
         font-weight: 600;
