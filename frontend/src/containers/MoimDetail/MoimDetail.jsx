@@ -9,8 +9,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import findIndex from 'lodash/findIndex';
 import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
+import isNan from 'lodash/isNan';
 import trim from 'lodash/trim';
 import filter from 'lodash/filter';
+import parseInt from 'lodash/parseInt';
 import map from 'lodash/map';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
@@ -129,12 +131,12 @@ const MoimDetail = ({ category, id }) => {
   );
 
   const onCostInputChange = useCallback((e) => {
-    const value = Number(e.target.value);
+    const value = parseInt(e.target.value);
 
     setDetail((detail) => {
       return {
         ...detail,
-        cost: value,
+        cost: value ? value : 0,
       };
     });
   }, []);
@@ -263,6 +265,60 @@ const MoimDetail = ({ category, id }) => {
     });
   }, []);
 
+  const onChangeMemberCount = useCallback(
+    (e) => {
+      const { count } = detail.member;
+
+      switch (e) {
+        case 'decrement':
+          if (count !== 0) {
+            setDetail((detail) => {
+              return {
+                ...detail,
+                member: {
+                  ...detail.member,
+                  count: count - 1,
+                },
+              };
+            });
+          }
+
+          return false;
+        case 'increment':
+          if (count !== 9999) {
+            setDetail((detail) => {
+              return {
+                ...detail,
+                member: {
+                  ...detail.member,
+                  count: count + 1,
+                },
+              };
+            });
+          }
+
+          return false;
+        default:
+          const value = parseInt(!isEmpty(e.target.value) ? e.target.value : 0);
+
+          if (value >= 0 && value <= 9999) {
+            setDetail((detail) => {
+              return {
+                ...detail,
+                member: {
+                  ...detail.member,
+                  count: value,
+                },
+              };
+            });
+          }
+
+          return false;
+      }
+    },
+    [detail],
+  );
+
   const DetailComminityTabBoxSwitch = useMemo(() => {
     switch (tabIndex) {
       case 0:
@@ -298,8 +354,14 @@ const MoimDetail = ({ category, id }) => {
           />
         );
       case 3:
+        const { member } = detail;
+
         return (
-          <MoimDetailMemeber isEdit={isEdit} />
+          <MoimDetailMemeber
+            isEdit={isEdit}
+            member={member}
+            onChangeMemberCount={onChangeMemberCount}
+          />
         );
       default:
         return false;

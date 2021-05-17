@@ -8,8 +8,7 @@ export const CardWrap = styled.li`
   flex-grow: 0;
   flex-direction: column;
   justify-content: space-between;
-  min-width: 296px;
-  margin: 0 1rem 2rem;
+  min-width: 302px;
   .cardBlock {
     display: block;
     position: relative;
@@ -330,7 +329,8 @@ export const CardScheduleBoxWrap = styled.div`
   justify-content: center;
   position: relative;
   height: 100%;
-  padding: 6px;
+  padding: 12px;
+  gap: 0 12px;
   font-family: 'Rubik';
   .dateBox {
     display: flex;
@@ -339,7 +339,6 @@ export const CardScheduleBoxWrap = styled.div`
     align-items: center;
     justify-content: center;
     max-width: 144px;
-    padding: 0 6px;
     text-align: center;
     .dayBox {
       display: flex;
@@ -348,7 +347,7 @@ export const CardScheduleBoxWrap = styled.div`
       justify-content: center;
       position: relative;
       width: 100%;
-      height: 132px;
+      height: 144px;
       border-radius: 4px;
       background-color: ${({ theme }) => theme.main};
       .weekDot {
@@ -426,24 +425,35 @@ export const CardScheduleBoxWrap = styled.div`
   }
   .dateBox.to {
     .dayBox {
-      height: 92px;
-      .weekDot {
-        svg {
-          display: none;
-        }
-        span {
-          background-color: ${color.none};
-          color: ${color.gray};
-          &:nth-child(1) {
-            color: ${color.red};
+      padding-top: 100%;
+      height: 0;
+      .dayBoxInner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        .weekDot {
+          svg {
+            display: none;
           }
-          &:nth-child(7) {
-            color: ${color.blue};
+          span {
+            background-color: ${color.none};
+            color: ${color.gray};
+            &:nth-child(1) {
+              color: ${color.red};
+            }
+            &:nth-child(7) {
+              color: ${color.blue};
+            }
           }
         }
-      }
-      .day {
-        font-size: 2rem;
+        .day {
+          font-size: 2rem;
+        }
       }
     }
   }

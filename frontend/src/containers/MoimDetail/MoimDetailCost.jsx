@@ -19,13 +19,14 @@ const MoimDetailCost = ({
       </span>
       <div className="costContent">
         {!isEdit ? (
-          <span>{isFree ? 'free' : cost.toLocaleString()}</span>
+          <span>{isFree ? 'free' : cost}</span>
         ) : (
           <div className="costInput">
             <input
-              type="number"
+              type="text"
               placeholder="금액을 입력해주세요"
-              value={!isFree && cost}
+              inputMode="numeric"
+              value={cost !== 0 ? cost : ''}
               ref={costInputRef}
               onChange={onCostInputChange}
             />

@@ -11,10 +11,10 @@ export const MoimDetailWrap = styled.section`
 `;
 
 export const MoimDetailSummary = styled.div`
-  width: 220px;
+  width: 226px;
   .thumb {
     overflow: hidden;
-    height: 220px;
+    height: 226px;
     border-radius: 4px;
     background-color: ${({ theme }) => theme.sub};
     img {
@@ -812,13 +812,99 @@ export const MoimDetailMemberWrap = styled.div`
     .memberTop {
       display: flex;
       flex: 1;
-      .left {
+      gap: 24px;
+      .memberCount {
+        display: flex;
         flex: 1;
-        background-color: orange;
+        flex-direction: column;
+        align-items: center;
+        .countWrap {
+          display: flex;
+          width: 100%;
+          font-size: 3.6rem;
+          font-family: 'Rubik';
+          font-weight: bold;
+          .now {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+          }
+          .max {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            .count {
+              display: flex;
+              flex: 1;
+              padding: 12px 24px;
+              height: 80px;
+              border-radius: 40px;
+              box-sizing: border-box;
+              background-color: ${({ theme }) => theme.title};
+              div {
+                flex: 1;
+                input {
+                  min-width: 80px;
+                  max-width: 172px;
+                  height: 56px;
+                  font-size: 3.6rem;
+                  font-weight: bold;
+                  color: ${color.green};
+                  vertical-align: top;
+                  text-align: center;
+                }
+              }
+            }
+            button {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 40px;
+              height: 40px;
+              border-radius: 20px;
+              svg {
+                font-size: 1rem;
+                color: ${({ theme }) => theme.title};
+                opacity: 0.6;
+                transition: all 0.2s ease-out;
+              }
+              &.plus {
+                background-color: ${color.blue};
+              }
+              &.minus {
+                background-color: ${color.red};
+              }
+              &:hover {
+                svg {
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
+        .progress {
+          position: relative;
+          width: 100%;
+          height: 12px;
+          margin-top: 12px;
+          border-radius: 6px;
+          background-color: ${({ theme }) => theme.main};
+          .bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 12px;
+            border-radius: 6px;
+            background-color: ${({ theme }) => theme.theme};
+          }
+        }
       }
-      .right {
+      .memberClien {
         flex: 1;
-        background-color: blue;
+        padding: 12px;
+        border-radius: 4px;
+        background-color: ${({ theme }) => theme.main};
       }
     }
   }

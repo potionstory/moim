@@ -58,32 +58,36 @@ const CardScheduleBox = ({
           <div className="dateBox to">
             <span className="month">{`${eventStartDate[0]}.${eventStartDate[1]}`}</span>
             <div className="dayBox">
-              <span className="weekDot">
-                {map(weeks, (week, index) => {
-                  if (week !== eventStartWeek) {
-                    return <FontAwesomeIcon key={index} icon={faCircle} />;
-                  } else {
-                    return <span key={index}>{eventStartWeek}</span>;
-                  }
-                })}
-              </span>
-              <span className="day">{eventStartDate[2]}</span>
+              <div className="dayBoxInner">
+                <span className="weekDot">
+                  {map(weeks, (week, index) => {
+                    if (week !== eventStartWeek) {
+                      return <FontAwesomeIcon key={index} icon={faCircle} />;
+                    } else {
+                      return <span key={index}>{eventStartWeek}</span>;
+                    }
+                  })}
+                </span>
+                <span className="day">{eventStartDate[2]}</span>
+              </div>
             </div>
             <span className="time">{`${eventStartDate[3]}:${eventStartDate[4]}`}</span>
           </div>
           <div className="dateBox to">
             <span className="month">{`${eventEndDate[0]}.${eventEndDate[1]}`}</span>
             <div className="dayBox">
-              <span className="weekDot">
-                {map(weeks, (week, index) => {
-                  if (week !== eventEndWeek) {
-                    return <FontAwesomeIcon key={index} icon={faCircle} />;
-                  } else {
-                    return <span key={index}>{eventEndWeek}</span>;
-                  }
-                })}
-              </span>
-              <span className="day">{eventEndDate[2]}</span>
+              <div className="dayBoxInner">
+                <span className="weekDot">
+                  {map(weeks, (week, index) => {
+                    if (week !== eventEndWeek) {
+                      return <FontAwesomeIcon key={index} icon={faCircle} />;
+                    } else {
+                      return <span key={index}>{eventEndWeek}</span>;
+                    }
+                  })}
+                </span>
+                <span className="day">{eventEndDate[2]}</span>
+              </div>
             </div>
             <span className="time">{`${eventEndDate[3]}:${eventEndDate[4]}`}</span>
           </div>
