@@ -262,3 +262,103 @@ export const detailTabMenu = {
   community: [faSearchPlus],
   meeting: [faSearchPlus, faClock, faMapMarkerAlt, faUser],
 };
+
+// bank list
+export const bankList = [
+  {
+    id: '090',
+    name: '카카오뱅크',
+  },
+  {
+    id: '011',
+    name: '농협',
+  },
+  {
+    id: '004',
+    name: 'KB국민',
+  },
+  {
+    id: '088',
+    name: '신한',
+  },
+  {
+    id: '020',
+    name: '우리',
+  },
+  {
+    id: '081',
+    name: '하나',
+  },
+  {
+    id: '003',
+    name: 'IBK기업',
+  },
+  {
+    id: '023',
+    name: 'SC제일',
+  },
+  {
+    id: '027',
+    name: '씨티',
+  },
+  {
+    id: '002',
+    name: 'KDB산업',
+  },
+  {
+    id: '103',
+    name: 'SBI저축은행',
+  },
+  {
+    id: '045',
+    name: '새마을',
+  },
+  {
+    id: '031',
+    name: '대구',
+  },
+  {
+    id: '034',
+    name: '광주',
+  },
+  {
+    id: '071',
+    name: '우체국',
+  },
+  {
+    id: '048',
+    name: '신협',
+  },
+  {
+    id: '037',
+    name: '전북',
+  },
+  {
+    id: '039',
+    name: '경남',
+  },
+  {
+    id: '032',
+    name: '부산',
+  },
+  {
+    id: '007',
+    name: '수협',
+  },
+  {
+    id: '035',
+    name: '제주',
+  },
+  {
+    id: '050',
+    name: '저축은행',
+  },
+  {
+    id: '064',
+    name: '산림조합',
+  },
+  {
+    id: '089',
+    name: '케이뱅크',
+  }
+];

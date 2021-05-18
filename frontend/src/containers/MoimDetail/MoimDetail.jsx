@@ -31,7 +31,7 @@ import {
 } from '../../lib/const';
 import MoimDetailType from './MoimDetailType';
 import MoimDetailTitle from './MoimDetailTitle';
-import MoimDetailCost from './MoimDetailCost';
+import MoimDetailPayInfo from './MoimDetailPayInfo';
 import MoimDetailStatus from './MoimDetailStatus';
 import MoimDetailUrl from './MoimDetailUrl';
 import MoimDetailTag from './MoimDetailTag';
@@ -136,7 +136,10 @@ const MoimDetail = ({ category, id }) => {
     setDetail((detail) => {
       return {
         ...detail,
-        cost: value ? value : 0,
+        payInfo: {
+          ...detail.payInfo,
+          cost: value ? value : 0,
+        }
       };
     });
   }, []);
@@ -145,11 +148,26 @@ const MoimDetail = ({ category, id }) => {
     setDetail((detail) => {
       return {
         ...detail,
-        cost: 0,
+        payInfo: {
+          ...detail.payInfo,
+          cost: 0,
+        }
       };
     });
 
     costInputRef.current.focus();
+  }, []);
+
+  const onBankChange = useCallback((bank) => {
+    setDetail((detail) => {
+      return {
+        ...detail,
+        payInfo: {
+          ...detail.payInfo,
+          bank,
+        }
+      };
+    });
   }, []);
 
   const onUrlCopy = useCallback(() => {
@@ -393,7 +411,7 @@ const MoimDetail = ({ category, id }) => {
     userName,
     likeCount,
     title,
-    cost,
+    payInfo,
     status,
     description,
     url,
@@ -434,13 +452,14 @@ const MoimDetail = ({ category, id }) => {
                 isEdit={isEdit}
                 onStatusChange={onStatusChange}
               />
-              {!isUndefined(cost) && (
-                <MoimDetailCost
-                  cost={cost}
+              {!isUndefined(payInfo.cost) && (
+                <MoimDetailPayInfo
+                  payInfo={payInfo}
                   isEdit={isEdit}
                   costInputRef={costInputRef}
                   onCostInputChange={onCostInputChange}
                   onCostInputReset={onCostInputReset}
+                  onBankChange={onBankChange}
                 />
               )}
               {!isUndefined(url) && (

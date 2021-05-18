@@ -79,7 +79,7 @@ export const MoimDetailTitleWrap = styled.div`
   }
 `;
 
-export const MoimDetailCostWrap = styled.div`
+export const MoimDetailPayInfoWrap = styled.div`
   display: flex;
   margin-top: 12px;
   .icon {

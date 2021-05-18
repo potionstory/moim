@@ -1,19 +1,24 @@
 import React from 'react';
+import find from 'lodash/find';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWonSign, faEraser } from '@fortawesome/free-solid-svg-icons';
-import { MoimDetailCostWrap } from './style';
+import SelectBox from '../../components/SelectBox';
+import { bankList } from '../../lib/const.js';
+import { MoimDetailPayInfoWrap } from './style';
 
-const MoimDetailCost = ({
-  cost,
+const MoimDetailPayInfo = ({
+  payInfo,
   isEdit,
   costInputRef,
   onCostInputChange,
   onCostInputReset,
+  onBankChange,
 }) => {
+  const { cost, bank, account } = payInfo;
   const isFree = cost === 0;
 
   return (
-    <MoimDetailCostWrap isFree={isFree}>
+    <MoimDetailPayInfoWrap isFree={isFree}>
       <span className="icon">
         <FontAwesomeIcon icon={faWonSign} />
       </span>
@@ -36,8 +41,10 @@ const MoimDetailCost = ({
           </div>
         )}
       </div>
-    </MoimDetailCostWrap>
+      <SelectBox value={find(bankList, { 'id': bank }).name} list={bankList} onSelectChange={onBankChange} />
+      <input type="text" value={account} />
+    </MoimDetailPayInfoWrap>
   );
 };
 
-export default MoimDetailCost;
+export default MoimDetailPayInfo;
