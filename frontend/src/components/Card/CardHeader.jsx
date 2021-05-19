@@ -6,11 +6,14 @@ import { CardHeaderWrap } from './style';
 import { getCommunityIcon, getMeetingIcon } from '../../utils/commonUtil';
 
 const CardHeader = ({ item, category }) => {
-  const { type, title, cost, status } = item;
+  const { type, title, payInfo, status } = item;
   const id = item[`${category}Id`];
 
   return (
-    <CardHeaderWrap status={status} isFree={!cost}>
+    <CardHeaderWrap
+      status={status}
+      isFree={category === 'meeting' && !payInfo.cost}
+    >
       <span className="icon" type={type}>
         {category === 'community' ? (
           <img src={getCommunityIcon(type)} />
