@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag, faPlus } from '@fortawesome/free-solid-svg-icons';
+import InputBox from '../../components/InputBox';
 import TagList from '../../components/TagList';
 import { MoimDetailTagWrap } from './style';
 
@@ -22,17 +23,17 @@ const MoimDetailTag = ({
       <div className="tagContent">
         {isEdit && (
           <div className="tagInput">
-            <input
-              type="text"
+            <InputBox
               placeholder="태그를 입력해주세요"
+              isNumber={false}
               value={tagInput}
-              ref={tagInputRef}
-              onChange={onTagInputChange}
-              onKeyPress={onKeyTagEnter}
+              max={40}
+              inputRef={tagInputRef}
+              icon={faPlus}
+              onInputChange={onTagInputChange}
+              onInputKeyPress={onKeyTagEnter}
+              onButtonClick={onTagAdd}
             />
-            <button type="button" onClick={onTagAdd}>
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
           </div>
         )}
         <TagList list={tags} isEdit={isEdit} onRemove={onTagRemove} />

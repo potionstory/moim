@@ -9,7 +9,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import findIndex from 'lodash/findIndex';
 import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
-import isNan from 'lodash/isNan';
 import trim from 'lodash/trim';
 import filter from 'lodash/filter';
 import parseInt from 'lodash/parseInt';
@@ -65,6 +64,7 @@ const MoimDetail = ({ category, id }) => {
   const [tabIndex, setTabIndex] = useState(0);
 
   const costInputRef = useRef();
+  const accountInputRef = useRef();
   const urlInputRef = useRef();
   const tagInputRef = useRef();
 
@@ -131,17 +131,19 @@ const MoimDetail = ({ category, id }) => {
   );
 
   const onCostInputChange = useCallback((e) => {
-    const value = parseInt(e.target.value);
+    const value = parseInt(!isEmpty(e.target.value) ? e.target.value : 0);
 
-    setDetail((detail) => {
-      return {
-        ...detail,
-        payInfo: {
-          ...detail.payInfo,
-          cost: value ? value : 0,
-        }
-      };
-    });
+    if (value >= 0 && value <= 99999999) {
+      setDetail((detail) => {
+        return {
+          ...detail,
+          payInfo: {
+            ...detail.payInfo,
+            cost: value ? value : 0,
+          },
+        };
+      });
+    }
   }, []);
 
   const onCostInputReset = useCallback(() => {
@@ -151,7 +153,7 @@ const MoimDetail = ({ category, id }) => {
         payInfo: {
           ...detail.payInfo,
           cost: 0,
-        }
+        },
       };
     });
 
@@ -165,9 +167,37 @@ const MoimDetail = ({ category, id }) => {
         payInfo: {
           ...detail.payInfo,
           bank,
-        }
+        },
       };
     });
+  }, []);
+
+  const onAccountInputChange = useCallback((e) => {
+    const { value } = e.target;
+
+    setDetail((detail) => {
+      return {
+        ...detail,
+        payInfo: {
+          ...detail.payInfo,
+          account: value ? value : '',
+        },
+      };
+    });
+  }, []);
+
+  const onAccountInputReset = useCallback(() => {
+    setDetail((detail) => {
+      return {
+        ...detail,
+        payInfo: {
+          ...detail.payInfo,
+          account: '',
+        },
+      };
+    });
+
+    accountInputRef.current.focus();
   }, []);
 
   const onUrlCopy = useCallback(() => {
@@ -457,9 +487,12 @@ const MoimDetail = ({ category, id }) => {
                   payInfo={payInfo}
                   isEdit={isEdit}
                   costInputRef={costInputRef}
+                  accountInputRef={accountInputRef}
                   onCostInputChange={onCostInputChange}
                   onCostInputReset={onCostInputReset}
                   onBankChange={onBankChange}
+                  onAccountInputChange={onAccountInputChange}
+                  onAccountInputReset={onAccountInputReset}
                 />
               )}
               {!isUndefined(url) && (

@@ -96,9 +96,13 @@ export const MoimDetailPayInfoWrap = styled.div`
       transition: all 0.2s ease-out;
     }
   }
-  .costContent {
+  .payContent {
+    display: flex;
+    flex: 1;
     margin-left: 12px;
-    span {
+    .payInfo {
+      padding: 0 12px;
+      border-left: 1px dashed ${color.gray};
       ${({ isFree }) =>
         !isFree &&
         css`
@@ -106,43 +110,42 @@ export const MoimDetailPayInfoWrap = styled.div`
         `};
       font-size: 1rem;
       font-weight: 600;
-      color: ${({ isFree }) => (isFree ? color.gray : color.orange)};
+      color: ${({ isFree, theme }) => (isFree ? color.gray : theme.text)};
       text-transform: uppercase;
       line-height: 40px;
-    }
-    .costInput {
-      display: inline-flex;
-      overflow: hidden;
-      background-color: ${({ theme }) => theme.sub};
-      border-radius: 20px;
-      input {
-        width: 180px;
-        height: 40px;
-        padding: 8px 20px;
-        box-sizing: border-box;
-        font-family: 'Rubik';
-        font-size: 1rem;
-        font-weight: 600;
-        color: ${({ isFree }) => (isFree ? color.gray : color.orange)};
+      &.cost {
+        color: ${color.orange};
       }
-      button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 20px;
-        background-color: ${({ theme }) => theme.theme};
+      &:first-child {
+        padding-left: 0;
+        border-left: 0 none;
+      }
+    }
+    .payInput {
+      width: 226px;
+      margin-right: 12px;
+      &.flex {
+        flex: 1;
+        margin-right: 0;
+      }
+    }
+    .btnCopy {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      background-color: ${({ theme }) => theme.theme};
+      svg {
+        font-size: 1rem;
+        color: ${({ theme }) => theme.title};
+        opacity: 0.6;
+        transition: all 0.2s ease-out;
+      }
+      &:hover {
         svg {
-          font-size: 1rem;
-          color: ${({ theme }) => theme.title};
-          opacity: 0.6;
-          transition: all 0.2s ease-out;
-        }
-        &:hover {
-          svg {
-            opacity: 1;
-          }
+          opacity: 1;
         }
       }
     }
@@ -269,39 +272,9 @@ export const MoimDetailTagWrap = styled.div`
         padding-top: 4px;
       `};
     .tagInput {
-      display: inline-flex;
-      overflow: hidden;
-      margin-bottom: 6px;
-      background-color: ${({ theme }) => theme.sub};
-      border-radius: 20px;
-      input {
-        width: 180px;
-        height: 40px;
-        padding: 8px 20px;
-        box-sizing: border-box;
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: ${({ theme }) => theme.title};
-      }
-      button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 20px;
-        background-color: ${({ theme }) => theme.theme};
-        svg {
-          font-size: 1rem;
-          color: ${({ theme }) => theme.title};
-          opacity: 0.6;
-          transition: all 0.2s ease-out;
-        }
-        &:hover {
-          svg {
-            opacity: 1;
-          }
-        }
+      width: 226px;
+      + ul {
+        margin-top: 6px;
       }
     }
   }
@@ -334,7 +307,7 @@ export const MoimDetailDescriptionWrap = styled.div`
         css`
           padding: ${!isEdit ? '6px 0 0' : '6px 12px'};
           background-color: ${!isEdit ? color.none : theme.sub};
-          color: ${!isEdit ? color.gray : theme.text};
+          color: ${theme.text};
         `};
       box-sizing: border-box;
       border-radius: 4px;
@@ -839,7 +812,7 @@ export const MoimDetailMemberWrap = styled.div`
               flex: 1;
               padding: 12px 24px;
               height: 80px;
-              border-radius: 40px;
+              border-radius: 4px;
               box-sizing: border-box;
               background-color: ${({ theme }) => theme.title};
               div {

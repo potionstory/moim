@@ -7,11 +7,6 @@ import { MoimDetailMemberWrap } from './style';
 
 const MoimDetailMember = ({ isEdit, member, onChangeMemberCount }) => {
   const { count, list } = member;
-  console.log(
-    '%c 🍬 member: ',
-    'font-size:20px;background-color: #E41A6A;color:#fff;',
-    member,
-  );
 
   return (
     <MoimDetailMemberWrap>
