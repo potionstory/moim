@@ -360,5 +360,5 @@ export const bankList = [
   {
     id: '089',
     name: '케이뱅크',
-  }
+  },
 ];

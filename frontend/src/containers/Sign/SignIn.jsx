@@ -5,7 +5,7 @@ import { produce } from 'immer';
 import { signInForm } from '../../utils/formData';
 import { emailCheck, passwordCheck } from '../../utils/regexUtil';
 import { socialSignInAction, signInAction } from '../../store/module/auth';
-import InputBox from '../../components/InputBox';
+import InputForm from '../../components/InputForm';
 import SocialList from '../../components/SocialList';
 import { SignWrap, SignInner, SignBody, SocialArea } from './style';
 
@@ -56,7 +56,7 @@ const SignIn = () => {
       <SignInner>
         <h4>sign in</h4>
         <SignBody>
-          <InputBox
+          <InputForm
             formData={formData}
             focusInput={focusInput}
             onInputFocus={onInputFocus}

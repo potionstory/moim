@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import InputBox from '../../components/InputBox';
+import InputForm from '../../components/InputForm';
 import { UserImage, InputAvatar } from './style';
 
 const UserInfoBox = ({
@@ -30,7 +30,7 @@ const UserInfoBox = ({
           </label>
         </span>
       </UserImage>
-      <InputBox
+      <InputForm
         formData={formData}
         focusInput={focusInput}
         onInputFocus={onInputFocus}

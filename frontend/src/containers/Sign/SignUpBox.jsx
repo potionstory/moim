@@ -1,5 +1,5 @@
 import React from 'react';
-import InputBox from '../../components/InputBox';
+import InputForm from '../../components/InputForm';
 import SocialList from '../../components/SocialList';
 import { SocialArea } from './style';
 
@@ -15,7 +15,7 @@ const SignUpBox = ({
 }) => {
   return (
     <>
-      <InputBox
+      <InputForm
         formData={formData}
         focusInput={focusInput}
         onInputFocus={onInputFocus}
