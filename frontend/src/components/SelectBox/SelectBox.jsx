@@ -5,24 +5,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { SelectBoxWrap } from './style';
 
-const SelectBox = ({ value, list, onSelectChange }) => {
+const SelectBox = ({ defaultValue, value, list, onSelectChange }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const onOpenHandle = useCallback(() => {
-    setIsOpen(isOpen => !isOpen);
+    setIsOpen((isOpen) => !isOpen);
   }, []);
 
   const onHandleClick = useCallback((id) => {
-    setIsOpen(isOpen => !isOpen);
+    setIsOpen((isOpen) => !isOpen);
     onSelectChange(id);
   }, []);
 
-  const isScroll = list.length * 41 - 1 > 4 * 41 - 1
+  const isScroll = list.length * 41 - 1 > 4 * 41 - 1;
 
   return (
-    <SelectBoxWrap isScroll={isScroll}>
+    <SelectBoxWrap isScroll={isScroll} isValue={value}>
       <div className="selected">
-        <span className="item">{value}</span>
+        <span className="item">{value || defaultValue}</span>
         <button type="button" onClick={onOpenHandle}>
           <motion.span
             animate={{ rotate: isOpen ? 180 : 0 }}
@@ -35,17 +35,21 @@ const SelectBox = ({ value, list, onSelectChange }) => {
         </button>
       </div>
       <motion.ul
-        animate={{ height: isOpen ? isScroll ? 4 * 41 - 1 : list.length * 41 - 1 : 0 }}
+        animate={{
+          height: isOpen ? (isScroll ? 4 * 41 - 1 : list.length * 41 - 1) : 0,
+        }}
         transition={{
           ease: 'backInOut',
         }}
       >
-        {map(list, item => {
+        {map(list, (item) => {
           const { id, name } = item;
 
           return (
             <li key={id}>
-              <button type="button" onClick={() => onHandleClick(id)}>{name}</button>
+              <button type="button" onClick={() => onHandleClick(id)}>
+                {name}
+              </button>
             </li>
           );
         })}

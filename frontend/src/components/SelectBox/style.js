@@ -1,11 +1,9 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { color } from '../../lib/styles/palette';
 import { ellipsis } from '../../lib/styles/util';
 
 export const SelectBoxWrap = styled.div`
   position: relative;
-  width: 220px;
-  margin-left: 12px;
   .selected {
     display: flex;
     overflow: hidden;
@@ -17,8 +15,8 @@ export const SelectBoxWrap = styled.div`
     .item {
       flex: 1;
       padding: 8px 20px;
-      font-size: 0.625rem;
-      color: ${({ theme }) => theme.title};
+      font-size: 0.875rem;
+      color: ${({ isValue, theme }) => (isValue ? theme.title : color.gray)};
       font-weight: 600;
       line-height: 1.5rem;
       ${ellipsis};
@@ -51,7 +49,8 @@ export const SelectBoxWrap = styled.div`
     }
   }
   ul {
-    ${({ isScroll }) => !isScroll ? 'overflow: hidden;' : 'overflow-y: auto;'};
+    ${({ isScroll }) =>
+      !isScroll ? 'overflow: hidden;' : 'overflow-y: auto;'};
     position: absolute;
     top: 52px;
     left: 0;
@@ -67,7 +66,7 @@ export const SelectBoxWrap = styled.div`
         flex: 1;
         padding: 8px 20px;
         box-sizing: border-box;
-        font-size: 0.625rem;
+        font-size: 0.875rem;
         color: ${({ theme }) => theme.main};
         font-weight: 600;
         line-height: 1.5rem;
