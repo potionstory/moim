@@ -11,7 +11,6 @@ const dateTimePicker = css`
     .MuiTypography-body1,
     .MuiTypography-body2 {
       font-family: 'Rubik';
-      font-weight: 600;
     }
   }
 `;

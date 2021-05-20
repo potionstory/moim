@@ -14,16 +14,11 @@ const MoimDetailMember = ({ isEdit, member, onChangeMemberCount }) => {
         <div className="memberTop">
           <div className="memberCount">
             <div className="countWrap">
-              <span className="now">30</span>
-              <span className="max">
-                <button
-                  type="button"
-                  className="minus"
-                  onClick={() => onChangeMemberCount('decrement')}
-                >
-                  <FontAwesomeIcon icon={faMinus} />
-                </button>
-                <span className="count">
+              <span className="count">
+                {list.length} / {count}
+              </span>
+              <span className="countEdit">
+                <span className="countInput">
                   <AutosizeInput
                     type="text"
                     placeholder="0"
@@ -32,13 +27,22 @@ const MoimDetailMember = ({ isEdit, member, onChangeMemberCount }) => {
                     onChange={onChangeMemberCount}
                   />
                 </span>
-                <button
-                  type="button"
-                  className="plus"
-                  onClick={() => onChangeMemberCount('increment')}
-                >
-                  <FontAwesomeIcon icon={faPlus} />
-                </button>
+                <span className="btnWrap">
+                  <button
+                    type="button"
+                    className="plus"
+                    onClick={() => onChangeMemberCount('increment')}
+                  >
+                    <FontAwesomeIcon icon={faPlus} />
+                  </button>
+                  <button
+                    type="button"
+                    className="minus"
+                    onClick={() => onChangeMemberCount('decrement')}
+                  >
+                    <FontAwesomeIcon icon={faMinus} />
+                  </button>
+                </span>
               </span>
             </div>
             <span className="progress">

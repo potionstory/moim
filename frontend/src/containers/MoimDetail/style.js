@@ -794,25 +794,26 @@ export const MoimDetailMemberWrap = styled.div`
         .countWrap {
           display: flex;
           width: 100%;
+          height: 80px;
           font-size: 3.6rem;
           font-family: 'Rubik';
           font-weight: bold;
-          .now {
+          .count {
             display: flex;
             flex: 1;
             align-items: center;
             justify-content: center;
           }
-          .max {
+          .countEdit {
             display: flex;
             align-items: center;
-            gap: 12px;
-            .count {
+            overflow: hidden;
+            border-radius: 4px;
+            .countInput {
               display: flex;
               flex: 1;
+              height: 100%;
               padding: 12px 24px;
-              height: 80px;
-              border-radius: 4px;
               box-sizing: border-box;
               background-color: ${({ theme }) => theme.title};
               div {
@@ -829,28 +830,29 @@ export const MoimDetailMemberWrap = styled.div`
                 }
               }
             }
-            button {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              width: 40px;
-              height: 40px;
-              border-radius: 20px;
-              svg {
-                font-size: 1rem;
-                color: ${({ theme }) => theme.title};
-                opacity: 0.6;
-                transition: all 0.2s ease-out;
-              }
-              &.plus {
-                background-color: ${color.blue};
-              }
-              &.minus {
-                background-color: ${color.red};
-              }
-              &:hover {
+            .btnWrap {
+              button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
                 svg {
-                  opacity: 1;
+                  font-size: 1rem;
+                  color: ${({ theme }) => theme.title};
+                  opacity: 0.6;
+                  transition: all 0.2s ease-out;
+                }
+                &.plus {
+                  background-color: ${color.blue};
+                }
+                &.minus {
+                  background-color: ${color.red};
+                }
+                &:hover {
+                  svg {
+                    opacity: 1;
+                  }
                 }
               }
             }
