@@ -115,7 +115,7 @@ export const Avatar = styled.button`
   width: 40px;
   height: 40px;
   box-sizing: border-box;
-  border-radius: 24px;
+  border-radius: 20px;
   background-color: ${({ theme, isImageNone }) =>
     !isImageNone ? theme.sub : theme.theme};
   transition: all 0.2s ease-out;

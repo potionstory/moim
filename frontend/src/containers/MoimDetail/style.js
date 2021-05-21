@@ -785,7 +785,7 @@ export const MoimDetailMemberWrap = styled.div`
     .memberTop {
       display: flex;
       flex: 1;
-      gap: 24px;
+      gap: 0 24px;
       .memberCount {
         display: flex;
         flex: 1;
@@ -793,16 +793,19 @@ export const MoimDetailMemberWrap = styled.div`
         align-items: center;
         .countWrap {
           display: flex;
+          gap: 12px;
+          justify-content: center;
           width: 100%;
           height: 80px;
-          font-size: 3.6rem;
           font-family: 'Rubik';
+          font-size: 3.6rem;
           font-weight: bold;
-          .count {
-            display: flex;
-            flex: 1;
-            align-items: center;
-            justify-content: center;
+          color: ${color.gray};
+          .now {
+            color: ${({ theme }) => theme.title};
+          }
+          .max {
+            color: ${color.green};
           }
           .countEdit {
             display: flex;
@@ -813,14 +816,13 @@ export const MoimDetailMemberWrap = styled.div`
               display: flex;
               flex: 1;
               height: 100%;
-              padding: 12px 24px;
+              padding: 12px;
               box-sizing: border-box;
-              background-color: ${({ theme }) => theme.title};
+              background-color: ${({ theme }) => theme.main};
               div {
                 flex: 1;
                 input {
-                  min-width: 80px;
-                  max-width: 172px;
+                  min-width: 56px;
                   height: 56px;
                   font-size: 3.6rem;
                   font-weight: bold;
@@ -875,11 +877,145 @@ export const MoimDetailMemberWrap = styled.div`
           }
         }
       }
-      .memberClien {
+      .memberClient {
         flex: 1;
         padding: 12px;
         border-radius: 4px;
         background-color: ${({ theme }) => theme.main};
+      }
+    }
+    .memberList {
+      margin-top: 24px;
+      .listHead {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 1rem;
+        .left {
+          display: flex;
+          align-items: center;
+          gap: 0 12px;
+          .iconBox {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            background-color: ${({ theme }) => theme.title};
+            svg {
+              color: ${({ theme }) => theme.theme};
+            }
+          }
+          .title {
+            font-weight: 600;
+            text-transform: uppercase;
+          }
+        }
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 4px;
+          background-color: ${({ theme }) => theme.theme};
+          span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            svg {
+              font-size: 1.5rem;
+              color: ${({ theme }) => theme.title};
+              opacity: 0.6;
+              transition: all 0.2s ease-out;
+            }
+            &:hover {
+              svg {
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
+      .listBody {
+        margin-top: 12px;
+        ul {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          padding-top: 12px;
+          border-top: 1px dashed ${color.gray};
+          li {
+            position: relative;
+            width: calc((100% - 108px) / 10);
+            .listBox {
+              padding-top: 100%;
+              .listInner {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 4px;
+                background-color: ${({ theme }) => theme.theme};
+                .index {
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  padding: 6px;
+                  font-family: 'Rubik';
+                  font-size: 1.25rem;
+                  font-style: italic;
+                  font-weight: 600;
+                  color: ${({ theme }) => theme.sub};
+                  line-height: 20px;
+                }
+                .avatar {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  overflow: hidden;
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 20px;
+                  background-color: ${({ theme }) => theme.sub};
+                  svg {
+                    font-size: 1.6rem;
+                    color: ${({ theme }) => theme.gray};
+                  }              
+                }
+                .name {
+                  position: absolute;
+                  bottom: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 20px;
+                  padding: 0 6px;
+                  box-sizing: border-box;
+                  font-size: 0.75rem;
+                  font-weight: bold;
+                  line-height: 20px;
+                  text-align: center;
+                  ${ellipsis}
+                }
+                &.empty {
+                  background-color: ${({ theme }) => theme.main};
+                  svg {
+                    font-size: 2rem;
+                    color: ${color.gray};
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

@@ -533,9 +533,9 @@ export const CardAddInfoBoxWrap = styled.div`
       .memberCount {
         font-family: 'Rubik';
         font-weight: 600;
-        color: ${({ theme }) => theme.title};
+        color: ${color.gray};
         .now {
-          color: ${color.gray};
+          color: ${({ theme }) => theme.title};
         }
         .max {
           color: ${color.green};

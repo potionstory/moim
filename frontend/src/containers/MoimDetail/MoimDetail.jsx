@@ -315,25 +315,11 @@ const MoimDetail = ({ category, id }) => {
 
   const onChangeMemberCount = useCallback(
     (e) => {
-      const { count } = detail.member;
+      const { count, list } = detail.member;
 
       switch (e) {
-        case 'decrement':
-          if (count !== 0) {
-            setDetail((detail) => {
-              return {
-                ...detail,
-                member: {
-                  ...detail.member,
-                  count: count - 1,
-                },
-              };
-            });
-          }
-
-          return false;
         case 'increment':
-          if (count !== 9999) {
+          if (count !== 999) {
             setDetail((detail) => {
               return {
                 ...detail,
@@ -346,10 +332,38 @@ const MoimDetail = ({ category, id }) => {
           }
 
           return false;
+
+        case 'decrement':
+          if (count === list.length) {
+            alert('참석 인원은 현재 인원보다 작을 수 없습니다.');
+          } else if (count !== 0) {
+            setDetail((detail) => {
+              return {
+                ...detail,
+                member: {
+                  ...detail.member,
+                  count: count - 1,
+                },
+              };
+            });
+          }
+
+          return false;
         default:
           const value = parseInt(!isEmpty(e.target.value) ? e.target.value : 0);
 
-          if (value >= 0 && value <= 9999) {
+          if (value < list.length) {
+            alert('참석 인원은 현재 인원보다 작을 수 없습니다.');
+            setDetail((detail) => {
+              return {
+                ...detail,
+                member: {
+                  ...detail.member,
+                  count: list.length,
+                },
+              };
+            });
+          } else if (value >= 0 && value <= 999) {
             setDetail((detail) => {
               return {
                 ...detail,
