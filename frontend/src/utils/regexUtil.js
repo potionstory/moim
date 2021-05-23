@@ -12,3 +12,8 @@ export const nameCheck = (value) => {
   const regExp = /^[가-힣a-zA-Z0-9]{4,12}$/;
   return regExp.test(value);
 };
+
+export const mobileCheck = (value) => {
+  const regExp = /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g;
+  return regExp.test(value);
+};

@@ -3,6 +3,7 @@ import {
   faLock,
   faRedoAlt,
   faUser,
+  faPhoneAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const signInForm = [
@@ -67,5 +68,24 @@ export const userInfoForm = [
     value: '',
     isCheck: false,
     icon: faUser,
+  },
+];
+
+export const moimJoinForm = [
+  {
+    type: 'text',
+    name: 'userName',
+    placeholder: 'name',
+    value: '',
+    isCheck: false,
+    icon: faUser,
+  },
+  {
+    type: 'number',
+    name: 'mobile',
+    placeholder: 'mobile number',
+    value: '',
+    isCheck: false,
+    icon: faPhoneAlt,
   },
 ];
