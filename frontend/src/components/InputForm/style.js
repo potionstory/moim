@@ -30,7 +30,7 @@ export const InputWrap = styled.div`
     }};
     color: ${({ isActive, isCheck, theme }) => {
       if (isActive || isCheck) {
-        return theme.main;
+        return theme.title;
       } else {
         return theme.main;
       }
@@ -70,11 +70,11 @@ export const InputSubmit = styled.div`
     height: 40px;
     box-sizing: content-box;
     border-radius: 4px;
-    background-color: ${({ theme, isActive }) =>
+    background-color: ${({ isActive, theme }) =>
       !isActive ? theme.title : color.green};
     font-size: 0.875rem;
     font-weight: 600;
-    color: ${({ theme }) => theme.main};
+    color: ${({ isActive, theme }) => (!isActive ? theme.main : theme.title)};
     text-transform: uppercase;
     text-align: center;
     transition: all 0.2s ease-out;
