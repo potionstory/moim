@@ -23,6 +23,7 @@ exports.getAllMeetings = (req, res) => {
           endDate: doc.data().endDate,
           location: doc.data().location,
           member: doc.data().member,
+          waiter: doc.data().waiter,
           tags: doc.data().tags,
           userImage: doc.data().userImage,
           userName: doc.data().userName,
@@ -102,6 +103,7 @@ exports.postMeeting = (req, res) => {
       endDate: req.body.endDate,
       location: req.body.location,
       member: req.body.member,
+      waiter: req.body.waiter,
       tags: req.body.tags,
       userImage: req.user.userImage,
       userName: req.user.userName,
@@ -216,6 +218,7 @@ exports.putMeeting = (req, res) => {
       endDate,
       location,
       member,
+      waiter,
       tags,
     } = req.body;
 
@@ -238,6 +241,7 @@ exports.putMeeting = (req, res) => {
             endDate,
             location,
             member,
+            waiter,
             tags,
           })
           .then(() => {
