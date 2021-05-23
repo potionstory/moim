@@ -14,7 +14,7 @@ export const firebaseToken = (user) => {
 };
 
 // 소셜 회원 가입
-export const socialSignUp = (bodyParams) => {
+export const postSocialSignUp = (bodyParams) => {
   const formData = new FormData();
 
   formData.set('email', bodyParams.email);
@@ -36,10 +36,10 @@ export const socialSignUp = (bodyParams) => {
 };
 
 // 소셜 회원 로그인
-export const socialSignIn = (token) => setAuthorizationHeader(token);
+export const postSocialSignIn = (token) => setAuthorizationHeader(token);
 
 // 회원 가입
-export const signUp = (bodyParams) => {
+export const postSignUp = (bodyParams) => {
   const formData = new FormData();
 
   formData.set('email', bodyParams.email);
@@ -60,7 +60,7 @@ export const signUp = (bodyParams) => {
 };
 
 // 회원 로그인
-export const signIn = (bodyParams) =>
+export const postSignIn = (bodyParams) =>
   api
     .post('/signin', bodyParams)
     .then((res) => {

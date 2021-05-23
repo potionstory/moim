@@ -5,6 +5,7 @@ import { createType, createAction } from './helper';
 export const GET_COMMUNITY = createType('GET_COMMUNITY');
 export const GET_MEETING = createType('GET_MEETING');
 export const RESET_DETAIL = 'RESET_DETAIL';
+export const POST_MOIM_JOIN = createType('POST_MOIM_JOIN');
 
 // action 생성자 함수
 export const getCommunityAction = createAction(GET_COMMUNITY);
@@ -12,6 +13,7 @@ export const getMeetingAction = createAction(GET_MEETING);
 export const resetDetailAction = () => ({
   type: RESET_DETAIL,
 });
+export const postMoimJoinAction = createAction(POST_MOIM_JOIN);
 
 // initialState
 const initialState = {
@@ -47,7 +49,19 @@ export default (state = initialState, action) => {
         break;
       }
       case RESET_DETAIL: {
-        draft.moim = {}
+        draft.moim = {};
+      }
+      case POST_MOIM_JOIN.REQUEST: {
+        draft.loading = true;
+        break;
+      }
+      case POST_MOIM_JOIN.SUCCESS: {
+        draft.moim = action.payload;
+        break;
+      }
+      case POST_MOIM_JOIN.FAILURE: {
+        draft.loading = false;
+        break;
       }
       default:
     }

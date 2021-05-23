@@ -27,10 +27,10 @@ import { modalCloseAction } from '../module/global';
 import { auth } from '../../server/firebase.util';
 import { getSocialSign } from '../../utils/commonUtil';
 import {
-  socialSignUp,
-  socialSignIn,
-  signUp,
-  signIn,
+  postSocialSignUp,
+  postSocialSignIn,
+  postSignUp,
+  postSignIn,
   signOut,
   getUser,
 } from '../api/auth';
@@ -62,7 +62,7 @@ function* workSocialSignUp(action) {
     bodyParams.token = yield user.getIdToken();
   }
 
-  const response = yield call(socialSignUp, bodyParams);
+  const response = yield call(postSocialSignUp, bodyParams);
 
   if (response.status === 201) {
     yield put(socialSignUpAction.SUCCESS());
@@ -78,7 +78,7 @@ function* workSocialSignIn(action) {
 
   const token = yield auth.currentUser.getIdToken();
 
-  yield call(socialSignIn, token);
+  yield call(postSocialSignIn, token);
   yield put(socialSignInAction.SUCCESS());
   yield put(getUserAction.REQUEST());
   yield put(modalCloseAction());
@@ -108,7 +108,7 @@ function* workSignUp(action) {
 
   const bodyParams = { ...signInfo, ...userInfo };
 
-  const response = yield call(signUp, bodyParams);
+  const response = yield call(postSignUp, bodyParams);
 
   if (response.status === 201) {
     yield put(signUpAction.SUCCESS());
@@ -126,7 +126,7 @@ function* workSignIn(action) {
     bodyParams[item.name] = item.value;
   });
 
-  const response = yield call(signIn, bodyParams);
+  const response = yield call(postSignIn, bodyParams);
 
   if (response.status === 200) {
     yield put(signInAction.SUCCESS());

@@ -4,6 +4,7 @@ import produce from 'immer';
 export const THEME_TOGGLE = 'THEME_TOGGLE';
 export const SIGNIN_MODAL_OPEN = 'SIGNIN_MODAL_OPEN';
 export const SIGNUP_MODAL_OPEN = 'SIGNUP_MODAL_OPEN';
+export const JOIN_MODAL_OPEN = 'JOIN_MODAL_OPEN';
 export const MODAL_CLOSE = 'MODAL_CLOSE';
 
 // action 생성자 함수
@@ -15,6 +16,9 @@ export const signInModalOpenAction = () => ({
 });
 export const signUpModalOpenAction = () => ({
   type: SIGNUP_MODAL_OPEN,
+});
+export const joinModalOpenAction = () => ({
+  type: JOIN_MODAL_OPEN,
 });
 export const modalCloseAction = () => ({
   type: MODAL_CLOSE,
@@ -45,6 +49,11 @@ export default (state = initialState, action) => {
       case SIGNUP_MODAL_OPEN: {
         draft.modal.isVisible = true;
         draft.modal.name = 'SIGN_UP';
+        break;
+      }
+      case JOIN_MODAL_OPEN: {
+        draft.modal.isVisible = true;
+        draft.modal.name = 'MOIM_JOIN';
         break;
       }
       case MODAL_CLOSE: {
