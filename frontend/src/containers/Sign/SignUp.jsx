@@ -15,7 +15,7 @@ import {
 } from '../../store/module/auth';
 import SignUpBox from './SignUpBox';
 import UserInfoBox from './UserInfoBox';
-import { SignWrap, SignInner, SignBody } from './style';
+import { SignWrap } from './style';
 
 const formValidators = [
   [emailCheck, passwordCheck, passwordCheck],
@@ -128,9 +128,9 @@ const SignUp = () => {
 
   return (
     <SignWrap>
-      <SignInner>
+      <div className="signInner">
         <h4>sign up</h4>
-        <SignBody>
+        <div className="signBody">
           {!isSignInfo ? (
             <SignUpBox
               formData={formData}
@@ -155,8 +155,8 @@ const SignUp = () => {
               onConfirm={isSocial ? onSocialSignUp : onSignUp}
             />
           )}
-        </SignBody>
-      </SignInner>
+        </div>
+      </div>
     </SignWrap>
   );
 };

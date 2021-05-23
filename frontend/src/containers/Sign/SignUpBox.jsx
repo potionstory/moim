@@ -25,12 +25,12 @@ const SignUpBox = ({
         onConfirm={onSign}
         confirmText="sign info"
       />
-      <SocialArea>
+      <div className="socialWrap">
         <span className="subTitle">social login</span>
         <div className="socialList">
           <SocialList onSocialSign={onSocialSign} />
         </div>
-      </SocialArea>
+      </div>
     </>
   );
 };

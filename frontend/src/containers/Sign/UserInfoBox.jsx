@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import InputForm from '../../components/InputForm';
-import { UserImage, InputAvatar } from './style';
+import { UserImage } from './style';
 
 const UserInfoBox = ({
   userImage,
@@ -22,7 +22,7 @@ const UserInfoBox = ({
           {userImage && <img src={userImage} />}
           <label>
             <FontAwesomeIcon icon={faPlus} />
-            <InputAvatar
+            <input
               type="file"
               accept="image/jpg,image/png,image/jpeg"
               onChange={onImageChange}

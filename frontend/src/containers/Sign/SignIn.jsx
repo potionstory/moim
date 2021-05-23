@@ -7,7 +7,7 @@ import { emailCheck, passwordCheck } from '../../utils/regexUtil';
 import { socialSignInAction, signInAction } from '../../store/module/auth';
 import InputForm from '../../components/InputForm';
 import SocialList from '../../components/SocialList';
-import { SignWrap, SignInner, SignBody, SocialArea } from './style';
+import { SignWrap } from './style';
 
 const validator = [emailCheck, passwordCheck];
 
@@ -53,9 +53,9 @@ const SignIn = () => {
 
   return (
     <SignWrap>
-      <SignInner>
+      <div className="signInner">
         <h4>sign in</h4>
-        <SignBody>
+        <div className="signBody">
           <InputForm
             formData={formData}
             focusInput={focusInput}
@@ -66,14 +66,14 @@ const SignIn = () => {
             onConfirm={onSignIn}
             confirmText="sign in"
           />
-          <SocialArea>
+          <div className="socialWrap">
             <span className="subTitle">social login</span>
             <div className="socialList">
               <SocialList onSocialSign={onSocialSignIn} />
             </div>
-          </SocialArea>
-        </SignBody>
-      </SignInner>
+          </div>
+        </div>
+      </div>
     </SignWrap>
   );
 };

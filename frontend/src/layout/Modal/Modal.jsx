@@ -5,6 +5,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { modalCloseAction } from '../../store/module/global';
 import SignIn from '../../containers/Sign/SignIn';
 import SignUp from '../../containers/Sign/SignUp';
+import MoimDetailJoin from '../../containers/MoimDetail/MoimDetailJoin';
 import { ModalWrap, ModalInner, CloseButton } from './style';
 
 const Modal = () => {
@@ -37,6 +38,8 @@ const Modal = () => {
         return <SignIn />;
       case 'SIGN_UP':
         return <SignUp />;
+      case 'MOIM_JOIN':
+        return <MoimDetailJoin />;
       default:
         return;
     }
