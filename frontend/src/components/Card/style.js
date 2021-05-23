@@ -78,7 +78,7 @@ export const CardHeaderWrap = styled.div`
       flex-grow: 0;
       align-items: flex-start;
       margin-top: 4px;
-      .cost {
+      .pay {
         display: flex;
         align-items: center;
         justify-content: center;

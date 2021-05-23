@@ -27,7 +27,7 @@ const CardHeader = ({ item, category }) => {
         </Link>
         <div className="subInfo">
           {category === 'meeting' && (
-            <span className="cost">
+            <span className="pay">
               <FontAwesomeIcon icon={faWonSign} />
             </span>
           )}
