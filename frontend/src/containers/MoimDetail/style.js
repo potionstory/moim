@@ -23,6 +23,23 @@ export const MoimDetailSummary = styled.div`
       object-fit: cover;
     }
   }
+  .btnWrap {
+    display: flex;
+    margin-top: 24px;
+    button {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      border-radius: 4px;
+      background-color: ${({ theme }) => theme.theme};
+      font-size: 1rem;
+      font-weight: 600;
+      color: ${({ theme }) => theme.title};
+      text-transform: uppercase;
+    }
+  }
 `;
 
 export const MoimDetailInfo = styled.div`
@@ -885,11 +902,13 @@ export const MoimDetailMemberWrap = styled.div`
       }
     }
     .memberList {
-      margin-top: 24px;
+      margin-top: 48px;
       .listHead {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        padding-bottom: 12px;
+        border-bottom: 1px dashed ${color.gray};
         font-size: 1rem;
         .left {
           display: flex;
@@ -904,12 +923,69 @@ export const MoimDetailMemberWrap = styled.div`
             border-radius: 4px;
             background-color: ${({ theme }) => theme.title};
             svg {
-              color: ${({ theme }) => theme.theme};
+              color: ${color.blue};
+            }
+            &.waiter {
+              svg {
+                color: ${color.red};
+              }
             }
           }
           .title {
             font-weight: 600;
             text-transform: uppercase;
+          }
+          .counts {
+            display: flex;
+            align-items: center;
+            gap: 0 6px;
+            font-weight: 600;
+            color: ${color.gray};
+            .count {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 0 6px;
+              font-family: 'Rubik';
+              font-weight: 600;
+              color: ${({ theme }) => theme.title};
+              .icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 20px;
+                height: 20px;
+                svg {
+                  font-size: 0.625rem;
+                }
+              }
+            }
+            .pay {
+              .icon {
+                border-radius: 10px;
+                background-color: ${color.orange};
+                svg {
+                  color: ${color.black};
+                }
+              }
+            }
+            .notPay {
+              .icon {
+                border-radius: 10px;
+                background-color: ${color.gray};
+                svg {
+                  color: ${color.black};
+                }
+              }
+            }
+            .empty {
+              .icon {
+                svg {
+                  font-size: 1rem;
+                  color: ${color.gray};
+                }
+              }
+            }
           }
         }
         button {
@@ -941,16 +1017,20 @@ export const MoimDetailMemberWrap = styled.div`
         }
       }
       .listBody {
-        margin-top: 12px;
+        overflow: hidden;
         ul {
           display: flex;
           flex-wrap: wrap;
           gap: 12px;
           padding-top: 12px;
-          border-top: 1px dashed ${color.gray};
           li {
             position: relative;
             width: calc((100% - 108px) / 10);
+            ${({ isEdit }) =>
+              isEdit &&
+              css`
+                cursor: pointer;
+              `};
             .listBox {
               padding-top: 100%;
               .listInner {
@@ -964,20 +1044,40 @@ export const MoimDetailMemberWrap = styled.div`
                 width: 100%;
                 height: 100%;
                 border-radius: 4px;
-                background-color: ${({ theme }) => theme.theme};
+                background-color: ${({ theme }) => theme.title};
                 .index {
                   position: absolute;
                   top: 0;
                   left: 0;
-                  padding: 6px;
+                  padding: 3px;
                   font-family: 'Rubik';
                   font-size: 1.25rem;
                   font-style: italic;
                   font-weight: 600;
-                  color: ${({ theme }) => theme.sub};
+                  color: ${({ theme }) => theme.main};
                   line-height: 20px;
                 }
-                .avatar {
+                .deposit {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  position: absolute;
+                  top: 3px;
+                  right: 3px;
+                  width: 20px;
+                  height: 20px;
+                  border-radius: 10px;
+                  background-color: ${color.gray};
+                  svg {
+                    font-size: 0.625rem;
+                    color: ${color.black};
+                  }
+                  &.pay {
+                    background-color: ${color.orange};
+                  }
+                }
+                .avatar,
+                .payCheck {
                   display: flex;
                   align-items: center;
                   justify-content: center;
@@ -989,7 +1089,10 @@ export const MoimDetailMemberWrap = styled.div`
                   svg {
                     font-size: 1.6rem;
                     color: ${({ theme }) => theme.gray};
-                  }              
+                    &.isCheck {
+                      color: ${color.green};
+                    }
+                  }
                 }
                 .name {
                   position: absolute;
@@ -1001,6 +1104,7 @@ export const MoimDetailMemberWrap = styled.div`
                   box-sizing: border-box;
                   font-size: 0.75rem;
                   font-weight: bold;
+                  color: ${({ theme }) => theme.main};
                   line-height: 20px;
                   text-align: center;
                   ${ellipsis}
@@ -1017,6 +1121,24 @@ export const MoimDetailMemberWrap = styled.div`
           }
         }
       }
+    }
+  }
+`;
+
+export const MoimDetailJoinWrap = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  .joinInner {
+    h4 {
+      font-size: 2rem;
+      color: ${({ theme }) => theme.main};
+      text-transform: uppercase;
+      line-height: 40px;
+    }
+    .joinBody {
+      display: flex;
+      flex-direction: column;
     }
   }
 `;

@@ -22,6 +22,7 @@ import {
   getMeetingAction,
   resetDetailAction,
 } from '../../store/module/detail';
+import { joinModalOpenAction } from '../../store/module/global';
 import {
   communityType,
   meetingType,
@@ -86,6 +87,10 @@ const MoimDetail = ({ category, id }) => {
     () => dispatch(getMeetingAction.REQUEST(id)),
     [dispatch],
   );
+
+  const onJoinModalOpen = useCallback(() => {
+    dispatch(joinModalOpenAction());
+  }, []);
 
   const onResetDetail = useCallback(() => dispatch(resetDetailAction()), [
     dispatch,
@@ -381,6 +386,30 @@ const MoimDetail = ({ category, id }) => {
     [detail],
   );
 
+  const onMemberDepositChange = useCallback(
+    (userId) => {
+      const index = findIndex(detail.member.list, { userId });
+
+      setDetail((detail) => {
+        return {
+          ...detail,
+          member: {
+            ...detail.member,
+            list: [
+              ...detail.member.list.slice(0, index),
+              {
+                ...detail.member.list[index],
+                isDeposit: !detail.member.list[index].isDeposit,
+              },
+              ...detail.member.list.slice(index + 1),
+            ],
+          },
+        };
+      });
+    },
+    [detail],
+  );
+
   const DetailComminityTabBoxSwitch = useMemo(() => {
     switch (tabIndex) {
       case 0:
@@ -416,13 +445,15 @@ const MoimDetail = ({ category, id }) => {
           />
         );
       case 3:
-        const { member } = detail;
+        const { member, waiter } = detail;
 
         return (
           <MoimDetailMemeber
             isEdit={isEdit}
             member={member}
+            waiter={waiter}
             onChangeMemberCount={onChangeMemberCount}
+            onMemberDepositChange={onMemberDepositChange}
           />
         );
       default:
@@ -471,6 +502,11 @@ const MoimDetail = ({ category, id }) => {
               <img src={mainImage} />
             </div>
             <UserInfo image={userImage} name={userName} count={likeCount} />
+            <div className="btnWrap">
+              <button type="button" onClick={onJoinModalOpen}>
+                join
+              </button>
+            </div>
           </MoimDetailSummary>
           <MoimDetailInfo>
             <MoimDetailBase>
