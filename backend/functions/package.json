@@ -9,7 +9,7 @@
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "10"
+    "node": "14"
   },
   "dependencies": {
     "busboy": "^0.3.1",
@@ -18,7 +18,7 @@
     "firebase": "^8.3.1",
     "firebase-admin": "^9.5.0",
     "firebase-functions": "^3.13.2",
-    "uuidv4": "^6.0.8"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "firebase-functions-test": "^0.1.6"
