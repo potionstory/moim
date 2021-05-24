@@ -74,11 +74,19 @@ export const userInfoForm = [
 export const moimJoinForm = [
   {
     type: 'text',
-    name: 'userName',
+    name: 'name',
     placeholder: 'name',
     value: '',
     isCheck: false,
     icon: faUser,
+  },
+  {
+    type: 'email',
+    name: 'email',
+    placeholder: 'email',
+    value: '',
+    isCheck: false,
+    icon: faAt,
   },
   {
     type: 'number',

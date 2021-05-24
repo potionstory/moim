@@ -8,10 +8,8 @@ export const getMeetingAPI = (meetingId) => api.get(`/meeting/${meetingId}`);
 
 // post meeting join
 export const postMeetingJoinAPI = (meetingId, bodyParams) => {
-  const formData = new FormData();
+  api.put(`/meeting/join/${meetingId}`, bodyParams);
 
-  formData.set('userName', bodyParams.userName);
-  formData.set('mobile', bodyParams.mobile);
 
   // return api
   //   .post('social-signup', formData)

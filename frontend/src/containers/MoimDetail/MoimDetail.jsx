@@ -320,18 +320,15 @@ const MoimDetail = ({ category, id }) => {
 
   const onChangeMemberCount = useCallback(
     (e) => {
-      const { count, list } = detail.member;
+      const { memberCount } = detail;
 
       switch (e) {
         case 'increment':
-          if (count !== 999) {
+          if (memberCount !== 999) {
             setDetail((detail) => {
               return {
                 ...detail,
-                member: {
-                  ...detail.member,
-                  count: count + 1,
-                },
+                memberCount: memberCount + 1,
               };
             });
           }
@@ -339,16 +336,11 @@ const MoimDetail = ({ category, id }) => {
           return false;
 
         case 'decrement':
-          if (count === list.length) {
-            alert('참석 인원은 현재 인원보다 작을 수 없습니다.');
-          } else if (count !== 0) {
+          if (memberCount !== 0) {
             setDetail((detail) => {
               return {
                 ...detail,
-                member: {
-                  ...detail.member,
-                  count: count - 1,
-                },
+                memberCount: memberCount - 1,
               };
             });
           }
@@ -356,26 +348,12 @@ const MoimDetail = ({ category, id }) => {
           return false;
         default:
           const value = parseInt(!isEmpty(e.target.value) ? e.target.value : 0);
-
-          if (value < list.length) {
-            alert('참석 인원은 현재 인원보다 작을 수 없습니다.');
+          console.log('value: ',value);
+          if (value > -1) {
             setDetail((detail) => {
               return {
                 ...detail,
-                member: {
-                  ...detail.member,
-                  count: list.length,
-                },
-              };
-            });
-          } else if (value >= 0 && value <= 999) {
-            setDetail((detail) => {
-              return {
-                ...detail,
-                member: {
-                  ...detail.member,
-                  count: value,
-                },
+                memberCount: value,
               };
             });
           }
@@ -388,22 +366,19 @@ const MoimDetail = ({ category, id }) => {
 
   const onMemberDepositChange = useCallback(
     (userId) => {
-      const index = findIndex(detail.member.list, { userId });
+      const index = findIndex(detail.memberList, { userId });
 
       setDetail((detail) => {
         return {
           ...detail,
-          member: {
-            ...detail.member,
-            list: [
-              ...detail.member.list.slice(0, index),
-              {
-                ...detail.member.list[index],
-                isDeposit: !detail.member.list[index].isDeposit,
-              },
-              ...detail.member.list.slice(index + 1),
-            ],
-          },
+          memberList: [
+            ...detail.memberList.slice(0, index),
+            {
+              ...detail.memberList[index],
+              isDeposit: !detail.memberList[index].isDeposit,
+            },
+            ...detail.memberList.slice(index + 1),
+          ],
         };
       });
     },
@@ -445,13 +420,14 @@ const MoimDetail = ({ category, id }) => {
           />
         );
       case 3:
-        const { member, waiter } = detail;
+        const { memberSetting, memberCount, memberList } = detail;
 
         return (
           <MoimDetailMemeber
             isEdit={isEdit}
-            member={member}
-            waiter={waiter}
+            memberSetting={memberSetting}
+            memberCount={memberCount}
+            memberList={memberList}
             onChangeMemberCount={onChangeMemberCount}
             onMemberDepositChange={onMemberDepositChange}
           />
@@ -459,7 +435,7 @@ const MoimDetail = ({ category, id }) => {
       default:
         return false;
     }
-  }, [detail, isEdit, tabIndex]);
+  }, [moim, detail, isEdit, tabIndex]);
 
   useEffect(() => {
     if (category === 'community') {

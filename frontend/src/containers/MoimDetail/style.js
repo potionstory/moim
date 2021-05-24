@@ -798,6 +798,7 @@ export const MoimDetailMemberWrap = styled.div`
   box-sizing: border-box;
   .memberInner {
     height: 100%;
+    overflow-x: hidden;
     overflow-y: auto;
     .memberTop {
       display: flex;

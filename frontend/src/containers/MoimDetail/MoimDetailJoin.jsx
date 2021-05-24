@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import every from 'lodash/every';
+import map from 'lodash/map';
+import findIndex from 'lodash/findIndex';
 import { produce } from 'immer';
 import InputForm from '../../components/InputForm';
 import { nameCheck, mobileCheck } from '../../utils/regexUtil';
@@ -43,14 +45,18 @@ const MoimDetailJoin = () => {
 
   const onJoin = useCallback(
     (formData) => {
-      const { meetingId } = moim;
+      const { meetingId, memberList } = moim;
 
-      dispatch(
-        postMoimJoinAction.REQUEST({
-          meetingId,
-          formData,
-        }),
-      );
+      if (every(map(formData, form => findIndex(memberList, { [form.name]: form.value })), (item) => item === -1)) {
+        dispatch(
+          postMoimJoinAction.REQUEST({
+            meetingId,
+            formData,
+          }),
+        );
+      } else {
+        alert("이름 / 전화번호 / 이메일에서 이미 존재하는 항목이 있습니다.")
+      }
     },
     [dispatch, moim],
   );
