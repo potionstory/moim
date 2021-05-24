@@ -1,4 +1,4 @@
-const { uuid } = require("uuidv4");
+const { v4 } = require("uuid");
 const { admin, BusBoy, db } = require("../util/admin");
 const config = require("../util/config");
 
@@ -22,7 +22,9 @@ exports.getAllMeetings = (req, res) => {
           startDate: doc.data().startDate,
           endDate: doc.data().endDate,
           location: doc.data().location,
-          member: doc.data().member,
+          memberSetting: doc.data().memberSetting,
+          memberCount: doc.data().memberCount,
+          memberList: doc.data().memberList,
           waiter: doc.data().waiter,
           tags: doc.data().tags,
           userImage: doc.data().userImage,
@@ -49,7 +51,7 @@ exports.postMeeting = (req, res) => {
   let busboy = new BusBoy({ headers: req.headers });
 
   let bucket = admin.storage().bucket();
-  let generatedToken = uuid();
+  let generatedToken = v4();
 
   let storageFilepath;
   let storageFile;
@@ -102,7 +104,9 @@ exports.postMeeting = (req, res) => {
       startDate: req.body.startDate,
       endDate: req.body.endDate,
       location: req.body.location,
-      member: req.body.member,
+      memberSetting: req.body.memberSetting,
+      memberCount: req.body.memberCount,
+      memberList: req.body.memberList,
       waiter: req.body.waiter,
       tags: req.body.tags,
       userImage: req.user.userImage,
@@ -142,7 +146,6 @@ exports.getMeeting = (req, res) => {
       return db
         .collection("comments")
         .where("meetingId", "==", req.params.meetingId)
-        .orderBy("createdAt", "desc")
         .get();
     })
     .then((data) => {
@@ -167,7 +170,7 @@ exports.putMeeting = (req, res) => {
   let busboy = new BusBoy({ headers: req.headers });
 
   let bucket = admin.storage().bucket();
-  let generatedToken = uuid();
+  let generatedToken = v4();
 
   let storageFilepath;
   let storageFile;
@@ -217,7 +220,9 @@ exports.putMeeting = (req, res) => {
       startDate,
       endDate,
       location,
-      member,
+      memberSetting,
+      memberCount,
+      memberList,
       waiter,
       tags,
     } = req.body;
@@ -240,7 +245,9 @@ exports.putMeeting = (req, res) => {
             startDate,
             endDate,
             location,
-            member,
+            memberSetting,
+            memberCount,
+            memberList,
             waiter,
             tags,
           })
@@ -280,6 +287,31 @@ exports.deleteMeeting = (req, res) => {
       return res.status(500).json({ error: err.code });
     });
 };
+
+// meeting join
+exports.postMeetingJoin = (req, res) => {
+  const { name, email, mobile } = req.body;
+
+  const newMember = {
+    userId: v4(),
+    name,
+    email,
+    mobile,
+    isDeposit: false,
+    joindAt: new Date().toISOString(),
+  };
+
+  db.doc(`/meetings/${req.params.meetingId}`)
+    .update({ memberList: admin.firestore.FieldValue.arrayUnion(newMember) })
+    .then((data) => {
+      console.log('111111: ', data);
+      res.json({ message: "Meeting Join successfully" });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: "Something went wrong" });
+    });
+}
 
 // like one meeting
 exports.likeMeeting = (req, res) => {

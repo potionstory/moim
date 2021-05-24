@@ -1,4 +1,4 @@
-const { uuid } = require("uuidv4");
+const { v4 } = require("uuid");
 const { admin, BusBoy, db } = require("../util/admin");
 const config = require("../util/config");
 
@@ -43,7 +43,7 @@ exports.postCommunity = (req, res) => {
   let busboy = new BusBoy({ headers: req.headers });
 
   let bucket = admin.storage().bucket();
-  let generatedToken = uuid();
+  let generatedToken = v4;
 
   let storageFilepath;
   let storageFile;
@@ -130,7 +130,6 @@ exports.getCommunity = (req, res) => {
       return db
         .collection("comments")
         .where("communityId", "==", req.params.communityId)
-        .orderBy("createdAt", "desc")
         .get();
     })
     .then((data) => {
@@ -155,7 +154,7 @@ exports.putCommunity = (req, res) => {
   let busboy = new BusBoy({ headers: req.headers });
 
   let bucket = admin.storage().bucket();
-  let generatedToken = uuid();
+  let generatedToken = v4;
 
   let storageFilepath;
   let storageFile;

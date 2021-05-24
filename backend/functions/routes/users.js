@@ -1,5 +1,5 @@
 const firebase = require("firebase");
-const { uuid } = require("uuidv4");
+const { v4 } = require("uuid");
 const { admin, BusBoy, db } = require("../util/admin");
 const config = require("../util/config");
 const {
@@ -79,7 +79,7 @@ exports.socialSignUp = (req, res) => {
   let busboy = new BusBoy({ headers: req.headers });
 
   let bucket = admin.storage().bucket();
-  let generatedToken = uuid();
+  let generatedToken = v4;
 
   let storageFilepath;
   let storageFile;
@@ -194,7 +194,7 @@ exports.signUp = (req, res) => {
   let busboy = new BusBoy({ headers: req.headers });
 
   let bucket = admin.storage().bucket();
-  let generatedToken = uuid();
+  let generatedToken = v4;
 
   let storageFilepath;
   let storageFile;
@@ -398,7 +398,6 @@ exports.getUserDetails = (req, res) => {
         return db
           .collection("communitys")
           .where("userName", "==", req.params.userName)
-          .orderBy("createdAt", "desc")
           .get();
       } else {
         return res.status(404).json({ error: "User not found" });
@@ -421,7 +420,6 @@ exports.getUserDetails = (req, res) => {
       return db
         .collection("meetings")
         .where("userName", "==", req.params.userName)
-        .orderBy("createdAt", "desc")
         .get();
     })
     .then((data) => {
@@ -455,7 +453,7 @@ exports.uploadImage = async (req, res) => {
   let busboy = new BusBoy({ headers: req.headers }); // add {limits: {files: 1}} to limit to only a single file upload
 
   let bucket = admin.storage().bucket();
-  let generatedToken = uuid();
+  let generatedToken = v4;
 
   let storageFilepath;
   let storageFile;
