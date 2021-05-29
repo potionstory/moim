@@ -15,7 +15,6 @@ exports.getAllMeetings = (req, res) => {
           type: doc.data().type,
           title: doc.data().title,
           status: doc.data().status,
-          cost: doc.data().cost,
           payInfo: doc.data().payInfo,
           mainImage: doc.data().mainImage,
           description: doc.data().description,
@@ -23,7 +22,6 @@ exports.getAllMeetings = (req, res) => {
           endDate: doc.data().endDate,
           location: doc.data().location,
           memberSetting: doc.data().memberSetting,
-          memberCount: doc.data().memberCount,
           memberList: doc.data().memberList,
           waiter: doc.data().waiter,
           tags: doc.data().tags,
@@ -96,7 +94,6 @@ exports.postMeeting = (req, res) => {
       type: req.body.type,
       title: req.body.title,
       status: req.body.status,
-      cost: req.body.cost,
       payInfo: req.body.payInfo,
       imagePath: `${req.user.userName}/`,
       mainImage,
@@ -105,7 +102,6 @@ exports.postMeeting = (req, res) => {
       endDate: req.body.endDate,
       location: req.body.location,
       memberSetting: req.body.memberSetting,
-      memberCount: req.body.memberCount,
       memberList: req.body.memberList,
       waiter: req.body.waiter,
       tags: req.body.tags,
@@ -214,14 +210,12 @@ exports.putMeeting = (req, res) => {
       type,
       title,
       status,
-      cost,
       payInfo,
       description,
       startDate,
       endDate,
       location,
       memberSetting,
-      memberCount,
       memberList,
       waiter,
       tags,
@@ -237,7 +231,6 @@ exports.putMeeting = (req, res) => {
             type,
             title,
             status,
-            cost,
             payInfo,
             imagePath: storageFilepath,
             mainImage,
@@ -246,7 +239,6 @@ exports.putMeeting = (req, res) => {
             endDate,
             location,
             memberSetting,
-            memberCount,
             memberList,
             waiter,
             tags,
@@ -298,20 +290,21 @@ exports.postMeetingJoin = (req, res) => {
     email,
     mobile,
     isDeposit: false,
+    isClient: false,
+    isStaff: false,
     joindAt: new Date().toISOString(),
   };
 
   db.doc(`/meetings/${req.params.meetingId}`)
     .update({ memberList: admin.firestore.FieldValue.arrayUnion(newMember) })
     .then((data) => {
-      console.log('111111: ', data);
       res.json({ message: "Meeting Join successfully" });
     })
     .catch((err) => {
       console.error(err);
       res.status(500).json({ error: "Something went wrong" });
     });
-}
+};
 
 // like one meeting
 exports.likeMeeting = (req, res) => {
