@@ -318,17 +318,49 @@ const MoimDetail = ({ category, id }) => {
     });
   }, []);
 
+  const onIsSelfCheck = useCallback((name) => {
+    setDetail((detail) => {
+      return {
+        ...detail,
+        memberSetting: {
+          ...detail.memberSetting,
+          isSelf: !detail.memberSetting.isSelf,
+        },
+      };
+    });
+  }, []);
+
+  const onJoinFormCheck = useCallback((name) => {
+    setDetail((detail) => {
+      return {
+        ...detail,
+        memberSetting: {
+          ...detail.memberSetting,
+          formData: {
+            ...detail.memberSetting.formData,
+            [name]: !detail.memberSetting.formData[name],
+          },
+        },
+      };
+    });
+  }, []);
+
   const onChangeMemberCount = useCallback(
     (e) => {
-      const { memberCount } = detail;
+      const {
+        memberSetting: { count },
+      } = detail;
 
       switch (e) {
         case 'increment':
-          if (memberCount !== 999) {
+          if (count !== 999) {
             setDetail((detail) => {
               return {
                 ...detail,
-                memberCount: memberCount + 1,
+                memberSetting: {
+                  ...detail.memberSetting,
+                  count: count + 1,
+                },
               };
             });
           }
@@ -336,11 +368,14 @@ const MoimDetail = ({ category, id }) => {
           return false;
 
         case 'decrement':
-          if (memberCount !== 0) {
+          if (count !== 0) {
             setDetail((detail) => {
               return {
                 ...detail,
-                memberCount: memberCount - 1,
+                memberSetting: {
+                  ...detail.memberSetting,
+                  count: count - 1,
+                },
               };
             });
           }
@@ -348,12 +383,15 @@ const MoimDetail = ({ category, id }) => {
           return false;
         default:
           const value = parseInt(!isEmpty(e.target.value) ? e.target.value : 0);
-          console.log('value: ',value);
+
           if (value > -1) {
             setDetail((detail) => {
               return {
                 ...detail,
-                memberCount: value,
+                memberSetting: {
+                  ...detail.memberSetting,
+                  count: value,
+                },
               };
             });
           }
@@ -376,6 +414,27 @@ const MoimDetail = ({ category, id }) => {
             {
               ...detail.memberList[index],
               isDeposit: !detail.memberList[index].isDeposit,
+            },
+            ...detail.memberList.slice(index + 1),
+          ],
+        };
+      });
+    },
+    [detail],
+  );
+
+  const onMemberStaffChange = useCallback(
+    (userId) => {
+      const index = findIndex(detail.memberList, { userId });
+
+      setDetail((detail) => {
+        return {
+          ...detail,
+          memberList: [
+            ...detail.memberList.slice(0, index),
+            {
+              ...detail.memberList[index],
+              isStaff: !detail.memberList[index].isStaff,
             },
             ...detail.memberList.slice(index + 1),
           ],
@@ -420,16 +479,20 @@ const MoimDetail = ({ category, id }) => {
           />
         );
       case 3:
-        const { memberSetting, memberCount, memberList } = detail;
+        const { userImage, userName, memberSetting, memberList } = detail;
 
         return (
           <MoimDetailMemeber
             isEdit={isEdit}
+            userImage={userImage}
+            userName={userName}
             memberSetting={memberSetting}
-            memberCount={memberCount}
             memberList={memberList}
+            onIsSelfCheck={onIsSelfCheck}
+            onJoinFormCheck={onJoinFormCheck}
             onChangeMemberCount={onChangeMemberCount}
             onMemberDepositChange={onMemberDepositChange}
+            onMemberStaffChange={onMemberStaffChange}
           />
         );
       default:
@@ -474,14 +537,16 @@ const MoimDetail = ({ category, id }) => {
       {!isEmpty(detail) && (
         <MoimDetailWrap>
           <MoimDetailSummary>
-            <div className="thumb">
-              <img src={mainImage} />
-            </div>
-            <UserInfo image={userImage} name={userName} count={likeCount} />
-            <div className="btnWrap">
-              <button type="button" onClick={onJoinModalOpen}>
-                join
-              </button>
+            <div className="summaryInner">
+              <div className="thumb">
+                <img src={mainImage} />
+              </div>
+              <UserInfo image={userImage} name={userName} count={likeCount} />
+              <div className="btnWrap">
+                <button type="button" onClick={onJoinModalOpen}>
+                  join
+                </button>
+              </div>
             </div>
           </MoimDetailSummary>
           <MoimDetailInfo>
@@ -508,7 +573,7 @@ const MoimDetail = ({ category, id }) => {
                 isEdit={isEdit}
                 onStatusChange={onStatusChange}
               />
-              {!isUndefined(payInfo.cost) && (
+              {!isUndefined(payInfo) && (
                 <MoimDetailPayInfo
                   payInfo={payInfo}
                   isEdit={isEdit}

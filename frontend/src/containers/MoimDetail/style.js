@@ -12,32 +12,36 @@ export const MoimDetailWrap = styled.section`
 
 export const MoimDetailSummary = styled.div`
   width: 226px;
-  .thumb {
-    overflow: hidden;
-    height: 226px;
-    border-radius: 4px;
-    background-color: ${({ theme }) => theme.sub};
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-  .btnWrap {
-    display: flex;
-    margin-top: 24px;
-    button {
-      display: flex;
-      flex: 1;
-      align-items: center;
-      justify-content: center;
-      height: 40px;
+  .summaryInner {
+    position: sticky;
+    top: 104px;
+    .thumb {
+      overflow: hidden;
+      height: 226px;
       border-radius: 4px;
-      background-color: ${({ theme }) => theme.theme};
-      font-size: 1rem;
-      font-weight: 600;
-      color: ${({ theme }) => theme.title};
-      text-transform: uppercase;
+      background-color: ${({ theme }) => theme.sub};
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .btnWrap {
+      display: flex;
+      margin-top: 12px;
+      button {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        border-radius: 4px;
+        background-color: ${({ theme }) => theme.theme};
+        font-size: 1rem;
+        font-weight: 600;
+        color: ${({ theme }) => theme.title};
+        text-transform: uppercase;
+      }
     }
   }
 `;
@@ -72,7 +76,7 @@ export const MoimDetailTitleWrap = styled.div`
   align-items: center;
   margin-top: 12px;
   padding: 12px 0;
-  min-height: 92px;
+  min-height: 98px;
   ${({ isEdit }) =>
     isEdit &&
     css`
@@ -84,7 +88,7 @@ export const MoimDetailTitleWrap = styled.div`
     font-size: 3.6rem;
     font-weight: 600;
     color: ${({ theme }) => theme.title};
-    line-height: 72px;
+    line-height: 75px;
   }
   textarea {
     width: 100%;
@@ -900,6 +904,95 @@ export const MoimDetailMemberWrap = styled.div`
         padding: 12px;
         border-radius: 4px;
         background-color: ${({ theme }) => theme.main};
+        .clientHead {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 28px;
+          padding-bottom: 12px;
+          border-bottom: 1px solid ${color.gray};
+          .title {
+            height: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: ${({ theme }) => theme.title};
+            text-transform: uppercase;
+            line-height: 15px;
+          }
+          .setting {
+            position: relative;
+            .btn {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 15px;
+              height: 15px;
+              svg {
+                font-size: 0.8rem;
+                color: ${({ theme }) => theme.title};
+                opacity: ${({ isSettingBox }) => (!isSettingBox ? 0.6 : 1)};
+                transition: all 0.2s ease-out;
+              }
+              &:hover {
+                svg {
+                  opacity: 1;
+                }
+              }
+            }
+            .box {
+              display: flex;
+              flex-direction: column;
+              position: absolute;
+              top: 0;
+              z-index: 1;
+              right: 27px;
+              padding: 4px 12px;
+              border-radius: 4px;
+              background-color: ${({ theme }) => theme.title};
+              opacity: 0;
+            }
+          }
+        }
+        .clientBody {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-top: 12px;
+          .clientInfo {
+            display: flex;
+            overflow: hidden;
+            height: 40px;
+            margin-right: 12px;
+            img {
+              width: 40px;
+              height: 40px;
+              border: 3px solid ${color.gray};
+              border-radius: 20px;
+              background-color: ${({ theme }) => theme.main};
+              object-fit: cover;
+              transition: all 0.2s ease-out;
+            }
+            .name {
+              flex: 1;
+              height: 40px;
+              margin-left: 12px;
+              font-size: 0.75rem;
+              font-weight: 600;
+              color: ${({ theme }) => theme.title};
+              line-height: 40px;
+              ${ellipsis};
+              transition: all 0.2s ease-out;
+            }
+            &:hover {
+              img {
+                border-color: ${({ theme }) => theme.theme};
+              }
+              .name {
+                color: ${({ theme }) => theme.theme};
+              }
+            }
+          }
+        }
       }
     }
     .memberList {
@@ -1027,11 +1120,6 @@ export const MoimDetailMemberWrap = styled.div`
           li {
             position: relative;
             width: calc((100% - 108px) / 10);
-            ${({ isEdit }) =>
-              isEdit &&
-              css`
-                cursor: pointer;
-              `};
             .listBox {
               padding-top: 100%;
               .listInner {
@@ -1069,6 +1157,11 @@ export const MoimDetailMemberWrap = styled.div`
                   height: 20px;
                   border-radius: 10px;
                   background-color: ${color.gray};
+                  ${({ isEdit }) =>
+                    isEdit &&
+                    css`
+                      cursor: pointer;
+                    `};
                   svg {
                     font-size: 0.625rem;
                     color: ${color.black};
@@ -1078,7 +1171,7 @@ export const MoimDetailMemberWrap = styled.div`
                   }
                 }
                 .avatar,
-                .payCheck {
+                .staffCheck {
                   display: flex;
                   align-items: center;
                   justify-content: center;
@@ -1092,6 +1185,22 @@ export const MoimDetailMemberWrap = styled.div`
                     color: ${({ theme }) => theme.gray};
                     &.isCheck {
                       color: ${color.green};
+                    }
+                  }
+                  &.isClient,
+                  &.isStaff {
+                    svg {
+                      font-size: 1.2rem;
+                    }
+                  }
+                  &.isClient {
+                    svg {
+                      color: ${color.blue};
+                    }
+                  }
+                  &.isStaff {
+                    svg {
+                      color: ${color.pink};
                     }
                   }
                 }

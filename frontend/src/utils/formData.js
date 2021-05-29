@@ -78,6 +78,7 @@ export const moimJoinForm = [
     placeholder: 'name',
     value: '',
     isCheck: false,
+    isRequire: true,
     icon: faUser,
   },
   {
@@ -86,6 +87,7 @@ export const moimJoinForm = [
     placeholder: 'email',
     value: '',
     isCheck: false,
+    isRequire: false,
     icon: faAt,
   },
   {
@@ -94,6 +96,7 @@ export const moimJoinForm = [
     placeholder: 'mobile number',
     value: '',
     isCheck: false,
+    isRequire: false,
     icon: faPhoneAlt,
   },
 ];

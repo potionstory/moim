@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import AutosizeInput from 'react-input-autosize';
 import filter from 'lodash/filter';
 import map from 'lodash/map';
@@ -12,33 +12,62 @@ import {
   faUser,
   faUserSlash,
   faWonSign,
+  faCrown,
   faGhost,
   faDiceD6,
   faCheck,
+  faCog,
 } from '@fortawesome/free-solid-svg-icons';
+import CheckBox from '../../components/CheckBox';
 import { moimJoinForm } from '../../utils/formData';
 import { MoimDetailMemberWrap } from './style';
 
+const settingBoxVariants = {
+  open: { opacity: 1, x: 0 },
+  closed: { opacity: 0, x: '-100%' },
+};
+
 const MoimDetailMember = ({
   isEdit,
+  userImage,
+  userName,
   memberSetting,
-  memberCount,
   memberList,
+  onIsSelfCheck,
+  onJoinFormCheck,
   onChangeMemberCount,
   onMemberDepositChange,
+  onMemberStaffChange,
 }) => {
+  const [isSettingBox, setIsSettingBox] = useState(false);
   const [isMemberOpen, setIsMemberOpen] = useState(true);
   const [isWaiterOpen, setIsWaiterOpen] = useState(true);
 
   const members = useMemo(() => {
-    if (memberList.length <= memberCount) {
-      return [[...memberList, ...new Array(memberCount - memberList.length)], []];
-    } else {
-      return [memberList.slice(0, memberCount), memberList.slice(memberCount, memberList.length)];
-    }
-  }, [memberCount, memberList]);
+    const { isSelf, count } = memberSetting;
+    const member = isSelf
+      ? [
+          {
+            userId: userName,
+            name: userName,
+            isDeposit: true,
+            isClient: true,
+            isStaff: false,
+          },
+          ...memberList,
+        ]
+      : memberList;
 
-  console.log(members);
+    if (member.length <= count) {
+      return [[...member, ...new Array(count - member.length)], []];
+    } else {
+      return [member.slice(0, count), member.slice(count, member.length)];
+    }
+  }, [memberSetting, memberList]);
+
+  const onSettingBox = useCallback(() => {
+    setIsSettingBox((isSettingBox) => !isSettingBox);
+  }, []);
 
   const onMemberToggle = useCallback(() => {
     setIsMemberOpen((isMemberOpen) => !isMemberOpen);
@@ -48,18 +77,22 @@ const MoimDetailMember = ({
     setIsWaiterOpen((isWaiterOpen) => !isWaiterOpen);
   }, []);
 
-  const { formList } = memberSetting;
+  const { count, isSelf, formData } = memberSetting;
 
   return (
-    <MoimDetailMemberWrap isEdit={isEdit}>
+    <MoimDetailMemberWrap isEdit={isEdit} isSettingBox={isSettingBox}>
       <div className="memberInner">
         <div className="memberTop">
           <div className="memberCount">
             <div className="countWrap">
-              <span className="now">{memberList.length < memberCount ? memberList.length : memberCount}</span>
+              <span className="now">
+                {memberList.length + Number(isSelf) < count
+                  ? memberList.length + Number(isSelf)
+                  : count}
+              </span>
               {`/`}
               {!isEdit ? (
-                <span className="max">{memberCount}</span>
+                <span className="max">{count}</span>
               ) : (
                 <span className="countEdit">
                   <span className="countInput">
@@ -67,7 +100,7 @@ const MoimDetailMember = ({
                       type="text"
                       placeholder="0"
                       inputMode="numeric"
-                      value={memberCount !== 0 ? memberCount : ''}
+                      value={count !== 0 ? count : ''}
                       onChange={onChangeMemberCount}
                     />
                   </span>
@@ -93,7 +126,15 @@ const MoimDetailMember = ({
             <span className="progress">
               <motion.span
                 className="bar"
-                animate={{ width: `${((memberList.length < memberCount ? memberList.length : memberCount) / memberCount) * 100}%` }}
+                animate={{
+                  width: `${
+                    ((memberList.length + Number(isSelf) < count
+                      ? memberList.length + Number(isSelf)
+                      : count) /
+                      count) *
+                    100
+                  }%`,
+                }}
                 transition={{
                   ease: 'backInOut',
                 }}
@@ -101,21 +142,56 @@ const MoimDetailMember = ({
             </span>
           </div>
           <div className="memberClient">
-            <ul>
-              {map(moimJoinForm, (item) => {
-                const { name } = item;
+            <div className="clientHead">
+              <span className="title">client</span>
+              {isEdit && (
+                <span className="setting">
+                  <button type="button" className="btn" onClick={onSettingBox}>
+                    <FontAwesomeIcon icon={faCog} />
+                  </button>
+                  <motion.div
+                    animate={isSettingBox ? 'open' : 'closed'}
+                    variants={settingBoxVariants}
+                    transition={{
+                      ease: 'backInOut',
+                    }}
+                    className="box"
+                  >
+                    <ul>
+                      {map(moimJoinForm, (item) => {
+                        const { name, isRequire } = item;
 
-                return (
-                  <li key={name}>
-                    <label>
-                      <input type="checkbox" />
-                      {name}      
-                    </label>
-                  </li>
-                );
-              })}
-            </ul>
-            
+                        return (
+                          <li key={name}>
+                            <CheckBox
+                              name={name}
+                              isChecked={formData[name]}
+                              isRequire={isRequire}
+                              isInverse={true}
+                              onCheck={() => isRequire || onJoinFormCheck(name)}
+                            />
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </motion.div>
+                </span>
+              )}
+            </div>
+            <div className="clientBody">
+              <a href="#" className="clientInfo">
+                <img src={userImage} />
+                <span className="name">{userName}</span>
+              </a>
+              {isEdit && (
+                <CheckBox
+                  name="IN MEMBER"
+                  isChecked={isSelf}
+                  isInverse={false}
+                  onCheck={onIsSelfCheck}
+                />
+              )}
+            </div>
           </div>
         </div>
         {!isEmpty(members[0]) && (
@@ -172,28 +248,46 @@ const MoimDetailMember = ({
               <ul>
                 {map(members[0], (item, index) => {
                   if (item !== undefined) {
-                    const { userId, name, isDeposit } = item;
+                    const { userId, name, isDeposit, isClient, isStaff } = item;
 
                     return (
-                      <li
-                        key={index}
-                        onClick={() => isEdit && onMemberDepositChange(userId)}
-                      >
+                      <li key={index}>
                         <div className="listBox">
                           <div className="listInner">
                             <span className="index">{index + 1}</span>
-                            <span className={`deposit ${isDeposit && 'pay'}`}>
-                              <FontAwesomeIcon icon={faWonSign} />
+                            <span
+                              className={`deposit ${isDeposit && 'pay'}`}
+                              onClick={() =>
+                                isEdit &&
+                                !isClient &&
+                                onMemberDepositChange(userId)
+                              }
+                            >
+                              <FontAwesomeIcon
+                                icon={!isEdit ? faWonSign : faCheck}
+                              />
                             </span>
                             {!isEdit ? (
-                              <span className="avatar">
-                                <FontAwesomeIcon icon={faGhost} />
+                              <span
+                                className={`avatar ${isClient && 'isClient'} ${
+                                  isStaff && 'isStaff'
+                                }`}
+                              >
+                                <FontAwesomeIcon
+                                  icon={isClient || isStaff ? faCrown : faGhost}
+                                />
                               </span>
                             ) : (
-                              <span className="payCheck">
+                              <span
+                                className={`avatar ${isClient && 'isClient'} ${
+                                  isStaff && 'isStaff'
+                                }`}
+                                onClick={() =>
+                                  isClient || onMemberStaffChange(userId)
+                                }
+                              >
                                 <FontAwesomeIcon
-                                  icon={faCheck}
-                                  className={`${isDeposit && 'isCheck'}`}
+                                  icon={isClient || isStaff ? faCrown : faGhost}
                                 />
                               </span>
                             )}

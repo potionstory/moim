@@ -56,6 +56,7 @@ const MoimTopUtilBody = ({
                           <CheckBox
                             name={name}
                             isChecked={isChecked}
+                            isInverse={true}
                             onCheck={() => onItemCheck(utilIndex, itemIndex)}
                           />
                         )}

@@ -1,4 +1,5 @@
 import React from 'react';
+import isEmpty from 'lodash/isEmpty';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag, faPlus } from '@fortawesome/free-solid-svg-icons';
 import InputBox from '../../components/InputBox';
@@ -36,7 +37,9 @@ const MoimDetailTag = ({
             />
           </div>
         )}
-        <TagList list={tags} isEdit={isEdit} onRemove={onTagRemove} />
+        {!isEmpty(tags) && (
+          <TagList list={tags} isEdit={isEdit} onRemove={onTagRemove} />
+        )}
       </div>
     </MoimDetailTagWrap>
   );
