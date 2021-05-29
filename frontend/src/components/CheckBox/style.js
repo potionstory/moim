@@ -10,7 +10,8 @@ export const CheckBoxWrap = styled.div`
     position: relative;
     font-size: 0.75rem;
     font-weight: 600;
-    color: ${({ isChecked, theme }) => (isChecked ? theme.main : theme.gray)};
+    color: ${({ isChecked, isInverse, theme }) =>
+      isChecked ? (isInverse ? theme.main : theme.title) : theme.gray};
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.2s ease-out;
@@ -18,6 +19,15 @@ export const CheckBoxWrap = styled.div`
       display: none;
       width: initial;
       height: initial;
+    }
+    .required {
+      display: flex;
+      align-items: flex-start;
+      height: 24px;
+      svg {
+        font-size: 0.5rem;
+        color: ${color.red};
+      }
     }
     &:before {
       -webkit-appearance: none;
@@ -34,7 +44,8 @@ export const CheckBoxWrap = styled.div`
       transition: all 0.2s ease-out;
     }
     &:hover {
-      color: ${({ theme }) => theme.main};
+      color: ${({ isInverse, theme }) =>
+        isInverse ? theme.main : theme.title};
     }
   }
 `;
