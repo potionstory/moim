@@ -16,13 +16,16 @@ import map from 'lodash/map';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 import {
   getCommunityAction,
   getMeetingAction,
   resetDetailAction,
 } from '../../store/module/detail';
-import { joinModalOpenAction } from '../../store/module/global';
+import {
+  joinModalOpenAction,
+  exitModalOpenAction,
+} from '../../store/module/global';
 import {
   communityType,
   meetingType,
@@ -90,6 +93,10 @@ const MoimDetail = ({ category, id }) => {
 
   const onJoinModalOpen = useCallback(() => {
     dispatch(joinModalOpenAction());
+  }, []);
+
+  const onExitModalOpen = useCallback(() => {
+    dispatch(exitModalOpenAction());
   }, []);
 
   const onResetDetail = useCallback(() => dispatch(resetDetailAction()), [
@@ -444,6 +451,23 @@ const MoimDetail = ({ category, id }) => {
     [detail],
   );
 
+  const onMemberRemove = useCallback(
+    (userId) => {
+      const index = findIndex(detail.memberList, { userId });
+
+      setDetail((detail) => {
+        return {
+          ...detail,
+          memberList: [
+            ...detail.memberList.slice(0, index),
+            ...detail.memberList.slice(index + 1),
+          ],
+        };
+      });
+    },
+    [detail],
+  );
+
   const DetailComminityTabBoxSwitch = useMemo(() => {
     switch (tabIndex) {
       case 0:
@@ -493,6 +517,7 @@ const MoimDetail = ({ category, id }) => {
             onChangeMemberCount={onChangeMemberCount}
             onMemberDepositChange={onMemberDepositChange}
             onMemberStaffChange={onMemberStaffChange}
+            onMemberRemove={onMemberRemove}
           />
         );
       default:
@@ -543,8 +568,19 @@ const MoimDetail = ({ category, id }) => {
               </div>
               <UserInfo image={userImage} name={userName} count={likeCount} />
               <div className="btnWrap">
-                <button type="button" onClick={onJoinModalOpen}>
+                <button
+                  type="button"
+                  className="join"
+                  onClick={onJoinModalOpen}
+                >
                   join
+                </button>
+                <button
+                  type="button"
+                  className="exit"
+                  onClick={onExitModalOpen}
+                >
+                  <FontAwesomeIcon icon={faDoorOpen} />
                 </button>
               </div>
             </div>

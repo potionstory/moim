@@ -6,6 +6,7 @@ import { modalCloseAction } from '../../store/module/global';
 import SignIn from '../../containers/Sign/SignIn';
 import SignUp from '../../containers/Sign/SignUp';
 import MoimDetailJoin from '../../containers/MoimDetail/MoimDetailJoin';
+import MoimDetailExit from '../../containers/MoimDetail/MoimDetailExit';
 import { ModalWrap, ModalInner, CloseButton } from './style';
 
 const Modal = () => {
@@ -40,6 +41,8 @@ const Modal = () => {
         return <SignUp />;
       case 'MOIM_JOIN':
         return <MoimDetailJoin />;
+      case 'MOIM_EXIT':
+        return <MoimDetailExit />;
       default:
         return;
     }

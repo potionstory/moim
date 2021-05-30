@@ -8,7 +8,7 @@ import { produce } from 'immer';
 import InputForm from '../../components/InputForm';
 import { nameCheck, emailCheck, mobileCheck } from '../../utils/regexUtil';
 import { moimMemberForm } from '../../utils/formData';
-import { postMoimJoinAction } from '../../store/module/detail';
+import { postMoimExitAction } from '../../store/module/detail';
 import { MoimDetailModalWrap } from './style';
 
 const validator = {
@@ -17,7 +17,7 @@ const validator = {
   mobile: mobileCheck,
 };
 
-const MoimDetailJoin = () => {
+const MoimDetailExit = () => {
   const { moim } = useSelector(({ detail }) => detail);
   const dispatch = useDispatch();
 
@@ -55,27 +55,16 @@ const MoimDetailJoin = () => {
     );
   }, []);
 
-  const onJoin = useCallback(
+  const onExit = useCallback(
     (formData) => {
-      const { meetingId, memberList } = moim;
+      const { meetingId } = moim;
 
-      if (
-        every(
-          map(formData, (form) =>
-            findIndex(memberList, { [form.name]: form.value }),
-          ),
-          (item) => item === -1,
-        )
-      ) {
-        dispatch(
-          postMoimJoinAction.REQUEST({
-            meetingId,
-            formData,
-          }),
-        );
-      } else {
-        alert('이름 / 전화번호 / 이메일에서 이미 존재하는 항목이 있습니다.');
-      }
+      dispatch(
+        postMoimExitAction.REQUEST({
+          meetingId,
+          formData,
+        }),
+      );
     },
     [dispatch, moim],
   );
@@ -83,7 +72,7 @@ const MoimDetailJoin = () => {
   return (
     <MoimDetailModalWrap>
       <div className="modalInner">
-        <h4>JOIN</h4>
+        <h4>EXIT</h4>
         <div className="modalBody">
           <InputForm
             formData={formData}
@@ -92,7 +81,7 @@ const MoimDetailJoin = () => {
             onInputChange={onInputChange}
             onInputBlur={onInputBlur}
             isActive={isActive}
-            onConfirm={onJoin}
+            onConfirm={onExit}
             confirmText="ok"
           />
         </div>
@@ -101,4 +90,4 @@ const MoimDetailJoin = () => {
   );
 };
 
-export default MoimDetailJoin;
+export default MoimDetailExit;

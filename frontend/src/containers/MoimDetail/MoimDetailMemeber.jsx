@@ -17,9 +17,10 @@ import {
   faDiceD6,
   faCheck,
   faCog,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import CheckBox from '../../components/CheckBox';
-import { moimJoinForm } from '../../utils/formData';
+import { moimMemberForm } from '../../utils/formData';
 import { MoimDetailMemberWrap } from './style';
 
 const settingBoxVariants = {
@@ -38,6 +39,7 @@ const MoimDetailMember = ({
   onChangeMemberCount,
   onMemberDepositChange,
   onMemberStaffChange,
+  onMemberRemove,
 }) => {
   const [isSettingBox, setIsSettingBox] = useState(false);
   const [isMemberOpen, setIsMemberOpen] = useState(true);
@@ -158,7 +160,7 @@ const MoimDetailMember = ({
                     className="box"
                   >
                     <ul>
-                      {map(moimJoinForm, (item) => {
+                      {map(moimMemberForm, (item) => {
                         const { name, isRequire } = item;
 
                         return (
@@ -254,7 +256,19 @@ const MoimDetailMember = ({
                       <li key={index}>
                         <div className="listBox">
                           <div className="listInner">
-                            <span className="index">{index + 1}</span>
+                            {!isEdit ? (
+                              <span className="index">{index + 1}</span>
+                            ) : (
+                              <button
+                                type="button"
+                                className="btnRemove"
+                                onClick={() =>
+                                  isClient || onMemberRemove(userId)
+                                }
+                              >
+                                <FontAwesomeIcon icon={faTimes} />
+                              </button>
+                            )}
                             <span
                               className={`deposit ${isDeposit && 'pay'}`}
                               onClick={() =>

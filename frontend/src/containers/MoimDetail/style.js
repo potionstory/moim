@@ -29,18 +29,25 @@ export const MoimDetailSummary = styled.div`
     .btnWrap {
       display: flex;
       margin-top: 12px;
+      gap: 0 12px;
       button {
         display: flex;
-        flex: 1;
         align-items: center;
         justify-content: center;
         height: 40px;
         border-radius: 4px;
-        background-color: ${({ theme }) => theme.theme};
         font-size: 1rem;
         font-weight: 600;
         color: ${({ theme }) => theme.title};
         text-transform: uppercase;
+      }
+      .join {
+        flex: 1;
+        background-color: ${({ theme }) => theme.theme};
+      }
+      .exit {
+        width: 40px;
+        background-color: ${color.red};
       }
     }
   }
@@ -1180,6 +1187,11 @@ export const MoimDetailMemberWrap = styled.div`
                   height: 40px;
                   border-radius: 20px;
                   background-color: ${({ theme }) => theme.sub};
+                  ${({ isEdit }) =>
+                    isEdit &&
+                    css`
+                      cursor: pointer;
+                    `};
                   svg {
                     font-size: 1.6rem;
                     color: ${({ theme }) => theme.gray};
@@ -1226,6 +1238,22 @@ export const MoimDetailMemberWrap = styled.div`
                     color: ${color.gray};
                   }
                 }
+                .btnRemove {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  position: absolute;
+                  top: 3px;
+                  left: 3px;
+                  width: 20px;
+                  height: 20px;
+                  border-radius: 10px;
+                  background-color: ${color.red};
+                  svg {
+                    font-size: 0.625rem;
+                    color: ${({ theme }) => theme.title};
+                  }
+                }
               }
             }
           }
@@ -1235,18 +1263,18 @@ export const MoimDetailMemberWrap = styled.div`
   }
 `;
 
-export const MoimDetailJoinWrap = styled.div`
+export const MoimDetailModalWrap = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  .joinInner {
+  .modalInner {
     h4 {
       font-size: 2rem;
       color: ${({ theme }) => theme.main};
       text-transform: uppercase;
       line-height: 40px;
     }
-    .joinBody {
+    .modalBody {
       display: flex;
       flex-direction: column;
     }
