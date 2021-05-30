@@ -4,6 +4,7 @@ import {
   faRedoAlt,
   faUser,
   faPhoneAlt,
+  faKey,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const signInForm = [
@@ -71,7 +72,7 @@ export const userInfoForm = [
   },
 ];
 
-export const moimJoinForm = [
+export const moimMemberForm = [
   {
     type: 'text',
     name: 'name',
@@ -98,5 +99,14 @@ export const moimJoinForm = [
     isCheck: false,
     isRequire: false,
     icon: faPhoneAlt,
+  },
+  {
+    type: 'number',
+    name: 'passNumber',
+    placeholder: '',
+    value: '',
+    isCheck: false,
+    isRequire: true,
+    icon: faKey,
   },
 ];

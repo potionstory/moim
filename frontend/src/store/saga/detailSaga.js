@@ -1,13 +1,23 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import forEach from 'lodash/forEach';
-import { GET_COMMUNITY, GET_MEETING, POST_MOIM_JOIN } from '../module/detail';
+import {
+  GET_COMMUNITY,
+  GET_MEETING,
+  POST_MOIM_JOIN,
+  POST_MOIM_EXIT,
+} from '../module/detail';
 import {
   getCommunityAction,
   getMeetingAction,
   postMoimJoinAction,
+  postMoimExitAction,
 } from '../module/detail';
 import { getCommunityAPI } from '../api/community';
-import { getMeetingAPI, postMeetingJoinAPI } from '../api/meeting';
+import {
+  getMeetingAPI,
+  postMeetingJoinAPI,
+  postMeetingExitAPI,
+} from '../api/meeting';
 
 function* workGetCommunity(action) {
   const res = yield call(getCommunityAPI, action.payload);
@@ -36,6 +46,17 @@ function* workPostMoimJoin(action) {
   const res = yield call(postMeetingJoinAPI, meetingId, bodyParams);
 }
 
+function* workPostMoimExit(action) {
+  const bodyParams = {};
+  const { meetingId, formData } = action.payload;
+
+  forEach(formData, (item) => {
+    bodyParams[item.name] = item.value;
+  });
+
+  const res = yield call(postMeetingExitAPI, meetingId, bodyParams);
+}
+
 function* watchGetCommunity() {
   yield takeEvery(GET_COMMUNITY.REQUEST, workGetCommunity);
 }
@@ -48,4 +69,13 @@ function* watchPostMoimJoin() {
   yield takeEvery(POST_MOIM_JOIN.REQUEST, workPostMoimJoin);
 }
 
-export default [watchGetCommunity, watchGetMeeting, watchPostMoimJoin];
+function* watchPostMoimExit() {
+  yield takeEvery(POST_MOIM_EXIT.REQUEST, workPostMoimExit);
+}
+
+export default [
+  watchGetCommunity,
+  watchGetMeeting,
+  watchPostMoimJoin,
+  watchPostMoimExit,
+];

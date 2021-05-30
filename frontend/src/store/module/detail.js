@@ -6,6 +6,7 @@ export const GET_COMMUNITY = createType('GET_COMMUNITY');
 export const GET_MEETING = createType('GET_MEETING');
 export const RESET_DETAIL = 'RESET_DETAIL';
 export const POST_MOIM_JOIN = createType('POST_MOIM_JOIN');
+export const POST_MOIM_EXIT = createType('POST_MOIN_EXIT');
 
 // action 생성자 함수
 export const getCommunityAction = createAction(GET_COMMUNITY);
@@ -14,6 +15,7 @@ export const resetDetailAction = () => ({
   type: RESET_DETAIL,
 });
 export const postMoimJoinAction = createAction(POST_MOIM_JOIN);
+export const postMoimExitAction = createAction(POST_MOIM_EXIT);
 
 // initialState
 const initialState = {
@@ -60,6 +62,18 @@ export default (state = initialState, action) => {
         break;
       }
       case POST_MOIM_JOIN.FAILURE: {
+        draft.loading = false;
+        break;
+      }
+      case POST_MOIM_EXIT.REQUEST: {
+        draft.loading = true;
+        break;
+      }
+      case POST_MOIM_EXIT.SUCCESS: {
+        draft.moim = action.payload;
+        break;
+      }
+      case POST_MOIM_EXIT.FAILURE: {
         draft.loading = false;
         break;
       }

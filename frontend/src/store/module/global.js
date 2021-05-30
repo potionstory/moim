@@ -5,6 +5,7 @@ export const THEME_TOGGLE = 'THEME_TOGGLE';
 export const SIGNIN_MODAL_OPEN = 'SIGNIN_MODAL_OPEN';
 export const SIGNUP_MODAL_OPEN = 'SIGNUP_MODAL_OPEN';
 export const JOIN_MODAL_OPEN = 'JOIN_MODAL_OPEN';
+export const EXIT_MODAL_OPEN = 'EXIT_MODAL_OPEN';
 export const MODAL_CLOSE = 'MODAL_CLOSE';
 
 // action 생성자 함수
@@ -19,6 +20,9 @@ export const signUpModalOpenAction = () => ({
 });
 export const joinModalOpenAction = () => ({
   type: JOIN_MODAL_OPEN,
+});
+export const exitModalOpenAction = () => ({
+  type: EXIT_MODAL_OPEN,
 });
 export const modalCloseAction = () => ({
   type: MODAL_CLOSE,
@@ -54,6 +58,11 @@ export default (state = initialState, action) => {
       case JOIN_MODAL_OPEN: {
         draft.modal.isVisible = true;
         draft.modal.name = 'MOIM_JOIN';
+        break;
+      }
+      case EXIT_MODAL_OPEN: {
+        draft.modal.isVisible = true;
+        draft.modal.name = 'MOIM_EXIT';
         break;
       }
       case MODAL_CLOSE: {
