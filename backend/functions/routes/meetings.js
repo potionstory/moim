@@ -306,6 +306,28 @@ exports.postMeetingJoin = (req, res) => {
     });
 };
 
+exports.postMeetingExit = (req, res) => {
+  const { name, email, mobile } = req.body;
+
+  db.doc(`/meetings/${req.params.meetingId}`)
+    .get()
+    .then((doc) => {
+      const memberList = doc.data().memberList;
+
+      db.doc(`/meetings/${req.params.meetingId}`)
+        .update({
+          memberList: memberList.filter((member) => member.name !== name),
+        })
+        .then((data) => {
+          res.json({ message: "Meeting Join successfully" });
+        })
+        .catch((err) => {
+          console.error(err);
+          res.status(500).json({ error: "Something went wrong" });
+        });
+    });
+};
+
 // like one meeting
 exports.likeMeeting = (req, res) => {
   const likeDocument = db
