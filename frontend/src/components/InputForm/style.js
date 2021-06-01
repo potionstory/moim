@@ -7,6 +7,7 @@ export const InputFormWrap = styled.div`
 
 export const InputWrap = styled.div`
   display: flex;
+  gap: 0 6px;
   flex-direction: row;
   margin-top: 12px;
   transition: all 0.2s ease-out;
@@ -57,8 +58,14 @@ export const InputWrap = styled.div`
       box-shadow: 0 0 0 1000px ${({ theme }) => theme.main} inset;
     }
   }
-  .inputCheck + input {
-    margin-left: 6px;
+  .numberList {
+    display: flex;
+    flex: 1;
+    gap: 0 6px;
+    input {
+      padding: 0;
+      text-align: center;
+    }
   }
 `;
 

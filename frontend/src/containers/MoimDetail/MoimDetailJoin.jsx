@@ -6,7 +6,7 @@ import map from 'lodash/map';
 import findIndex from 'lodash/findIndex';
 import { produce } from 'immer';
 import InputForm from '../../components/InputForm';
-import { nameCheck, emailCheck, mobileCheck } from '../../utils/regexUtil';
+import { nameCheck, emailCheck, mobileCheck, passNumberCheck } from '../../utils/regexUtil';
 import { moimMemberForm } from '../../utils/formData';
 import { postMoimJoinAction } from '../../store/module/detail';
 import { MoimDetailModalWrap } from './style';
@@ -15,6 +15,7 @@ const validator = {
   name: nameCheck,
   email: emailCheck,
   mobile: mobileCheck,
+  passNumber: passNumberCheck,
 };
 
 const MoimDetailJoin = () => {
@@ -48,11 +49,23 @@ const MoimDetailJoin = () => {
 
     setFormData(
       produce((draft) => {
-        draft[i].name = name;
         draft[i].value = value;
         draft[i].isCheck = validator[name](value);
       }),
     );
+  }, []);
+
+  const onInputPassNumberChange = useCallback((e, i, j) => {
+    const { name, value } = e.target;
+
+    if (value <= 9) {
+      setFormData(
+        produce((draft) => {
+          draft[i].value[j] = value;
+          draft[i].isCheck = validator[name](value);
+        }),
+      );
+    }
   }, []);
 
   const onJoin = useCallback(
@@ -80,6 +93,8 @@ const MoimDetailJoin = () => {
     [dispatch, moim],
   );
 
+  console.log('formData: ', formData);
+
   return (
     <MoimDetailModalWrap>
       <div className="modalInner">
@@ -90,6 +105,7 @@ const MoimDetailJoin = () => {
             focusInput={focusInput}
             onInputFocus={onInputFocus}
             onInputChange={onInputChange}
+            onInputPassNumberChange={onInputPassNumberChange}
             onInputBlur={onInputBlur}
             isActive={isActive}
             onConfirm={onJoin}

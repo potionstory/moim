@@ -9,6 +9,7 @@ const InputForm = ({
   focusInput,
   onInputFocus,
   onInputChange,
+  onInputPassNumberChange,
   onInputBlur,
   isActive,
   onConfirm,
@@ -39,7 +40,7 @@ const InputForm = ({
               index={index}
               form={form}
               onInputFocus={onInputFocus}
-              onInputChange={onInputChange}
+              onInputPassNumberChange={onInputPassNumberChange}
               onInputBlur={onInputBlur}
             />
           );

@@ -104,7 +104,7 @@ export const moimMemberForm = [
     type: 'number',
     name: 'passNumber',
     placeholder: '',
-    value: '',
+    value: new Array(6),
     isCheck: false,
     isRequire: true,
     icon: faKey,

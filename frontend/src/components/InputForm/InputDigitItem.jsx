@@ -1,4 +1,5 @@
 import React from 'react';
+import map from 'lodash/map';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { InputWrap } from './style';
@@ -8,9 +9,11 @@ const InputDigitItem = ({
   isActive,
   form,
   onInputFocus,
-  onInputChange,
+  onInputPassNumberChange,
   onInputBlur,
 }) => {
+
+  console.log('form: ', form);
   return (
     <InputWrap
       isActive={isActive}
@@ -25,16 +28,25 @@ const InputDigitItem = ({
           <FontAwesomeIcon icon={form.icon} />
         )}
       </span>
-      <input
-        type={form.type}
-        name={form.name}
-        placeholder={form.placeholder}
-        value={form.value}
-        disabled={form.isDisable}
-        onFocus={onInputFocus}
-        onBlur={onInputBlur}
-        onChange={(e) => onInputChange(e, index)}
-      />
+      <ul className="numberList">
+        {map(form.value, (value, i) => {
+          return (
+            <li key={i}>
+              <input
+                type={form.type}
+                name={form.name}
+                placeholder={form.placeholder}
+                value={value}
+                disabled={form.isDisable}
+                onFocus={onInputFocus}
+                onBlur={onInputBlur}
+                onChange={(e) => onInputPassNumberChange(e, index, i)}
+              />
+            </li>
+          )
+        })}
+      </ul>
+
     </InputWrap>
   );
 };

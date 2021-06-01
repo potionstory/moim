@@ -9,7 +9,7 @@ export const ModalWrap = styled.section`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 100;
-  width: 360px;
+  width: 364px;
   max-width: calc(100% - 1.5rem);
   max-height: calc(100% - 1.5rem);
   backdrop-filter: blur(32px);
@@ -53,5 +53,5 @@ export const CloseButton = styled.button`
 
 export const ModalInner = styled.div`
   position: relative;
-  padding: 1.5rem;
+  padding: 24px;
 `;
