@@ -1,4 +1,5 @@
 import React from 'react';
+import isEmpty from 'lodash/isEmpty';
 import map from 'lodash/map';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -12,12 +13,10 @@ const InputDigitItem = ({
   onInputPassNumberChange,
   onInputBlur,
 }) => {
-
-  console.log('form: ', form);
   return (
     <InputWrap
       isActive={isActive}
-      isValue={form.value}
+      isValue={map(form.value, (v) => !isEmpty(v)).some((v) => v === true)}
       isCheck={form.isCheck}
       isDisable={form.isDisable}
     >
@@ -43,10 +42,9 @@ const InputDigitItem = ({
                 onChange={(e) => onInputPassNumberChange(e, index, i)}
               />
             </li>
-          )
+          );
         })}
       </ul>
-
     </InputWrap>
   );
 };

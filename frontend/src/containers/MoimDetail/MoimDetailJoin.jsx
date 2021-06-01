@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import filter from 'lodash/filter';
 import every from 'lodash/every';
@@ -6,7 +6,12 @@ import map from 'lodash/map';
 import findIndex from 'lodash/findIndex';
 import { produce } from 'immer';
 import InputForm from '../../components/InputForm';
-import { nameCheck, emailCheck, mobileCheck, passNumberCheck } from '../../utils/regexUtil';
+import {
+  nameCheck,
+  emailCheck,
+  mobileCheck,
+  passNumberCheck,
+} from '../../utils/regexUtil';
 import { moimMemberForm } from '../../utils/formData';
 import { postMoimJoinAction } from '../../store/module/detail';
 import { MoimDetailModalWrap } from './style';
@@ -62,7 +67,6 @@ const MoimDetailJoin = () => {
       setFormData(
         produce((draft) => {
           draft[i].value[j] = value;
-          draft[i].isCheck = validator[name](value);
         }),
       );
     }
@@ -93,7 +97,16 @@ const MoimDetailJoin = () => {
     [dispatch, moim],
   );
 
-  console.log('formData: ', formData);
+  useEffect(() => {
+    const name = 'passNumber';
+    const index = findIndex(formData, { name });
+
+    setFormData(
+      produce((draft) => {
+        draft[index].isCheck = validator[name](formData[index].value);
+      }),
+    );
+  }, [formData]);
 
   return (
     <MoimDetailModalWrap>
