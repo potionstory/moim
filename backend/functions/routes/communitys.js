@@ -43,7 +43,7 @@ exports.postCommunity = (req, res) => {
   let busboy = new BusBoy({ headers: req.headers });
 
   let bucket = admin.storage().bucket();
-  let generatedToken = v4;
+  let generatedToken = v4();
 
   let storageFilepath;
   let storageFile;
@@ -154,7 +154,7 @@ exports.putCommunity = (req, res) => {
   let busboy = new BusBoy({ headers: req.headers });
 
   let bucket = admin.storage().bucket();
-  let generatedToken = v4;
+  let generatedToken = v4();
 
   let storageFilepath;
   let storageFile;

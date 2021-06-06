@@ -79,7 +79,7 @@ exports.socialSignUp = (req, res) => {
   let busboy = new BusBoy({ headers: req.headers });
 
   let bucket = admin.storage().bucket();
-  let generatedToken = v4;
+  let generatedToken = v4();
 
   let storageFilepath;
   let storageFile;
@@ -194,7 +194,7 @@ exports.signUp = (req, res) => {
   let busboy = new BusBoy({ headers: req.headers });
 
   let bucket = admin.storage().bucket();
-  let generatedToken = v4;
+  let generatedToken = v4();
 
   let storageFilepath;
   let storageFile;
@@ -263,6 +263,7 @@ exports.signUp = (req, res) => {
       })
       .then((data) => {
         userId = data.user.uid;
+
         return data.user.getIdToken();
       })
       .then((idToken) => {
@@ -275,6 +276,7 @@ exports.signUp = (req, res) => {
           userImage: req.body.userImageFile !== "undefined" ? userImage : null,
           createdAt: new Date().toISOString(),
         };
+
         return db.doc(`/users/${newUser.userName}`).set(userCredentials);
       })
       .then(() => {
@@ -453,7 +455,7 @@ exports.uploadImage = async (req, res) => {
   let busboy = new BusBoy({ headers: req.headers }); // add {limits: {files: 1}} to limit to only a single file upload
 
   let bucket = admin.storage().bucket();
-  let generatedToken = v4;
+  let generatedToken = v4();
 
   let storageFilepath;
   let storageFile;

@@ -22,7 +22,11 @@ exports.getAllMeetings = (req, res) => {
           endDate: doc.data().endDate,
           location: doc.data().location,
           memberSetting: doc.data().memberSetting,
-          memberList: doc.data().memberList,
+          memberList: doc
+            .data()
+            .memberList.map(
+              ({ email, mobile, passNumber, ...member }) => member
+            ),
           waiter: doc.data().waiter,
           tags: doc.data().tags,
           userImage: doc.data().userImage,
@@ -116,8 +120,9 @@ exports.postMeeting = (req, res) => {
       .add(newMeeting)
       .then((doc) => {
         const resMeeting = newMeeting;
+
         resMeeting.meetingId = doc.id;
-        res.json(resMeeting);
+        return res.json(resMeeting);
       })
       .catch((err) => {
         res.status(500).json({ error: "something went wrong" });
@@ -137,8 +142,13 @@ exports.getMeeting = (req, res) => {
       if (!doc.exists) {
         return res.status(404).json({ error: "Meeting not found" });
       }
+
       meetingData = doc.data();
       meetingData.meetingId = doc.id;
+      meetingData.memberList = meetingData.memberList.map(
+        ({ email, mobile, passNumber, ...member }) => member
+      );
+
       return db
         .collection("comments")
         .where("meetingId", "==", req.params.meetingId)
@@ -149,6 +159,7 @@ exports.getMeeting = (req, res) => {
       data.forEach((doc) => {
         meetingData.comments.push(doc.data());
       });
+
       return res.json(meetingData);
     })
     .catch((err) => {
@@ -282,13 +293,14 @@ exports.deleteMeeting = (req, res) => {
 
 // meeting join
 exports.postMeetingJoin = (req, res) => {
-  const { name, email, mobile } = req.body;
+  const { name, email, mobile, passNumber } = req.body;
 
   const newMember = {
     userId: v4(),
     name,
     email,
     mobile,
+    passNumber: passNumber.join(""),
     isDeposit: false,
     isClient: false,
     isStaff: false,
@@ -298,7 +310,17 @@ exports.postMeetingJoin = (req, res) => {
   db.doc(`/meetings/${req.params.meetingId}`)
     .update({ memberList: admin.firestore.FieldValue.arrayUnion(newMember) })
     .then((data) => {
-      res.json({ message: "Meeting Join successfully" });
+      db.doc(`/meetings/${req.params.meetingId}`)
+        .get()
+        .then((doc) => {
+          const memberList = doc
+            .data()
+            .memberList.map(
+              ({ email, mobile, passNumber, ...member }) => member
+            );
+
+          return res.json(memberList);
+        });
     })
     .catch((err) => {
       console.error(err);
@@ -307,19 +329,50 @@ exports.postMeetingJoin = (req, res) => {
 };
 
 exports.postMeetingExit = (req, res) => {
-  const { name, email, mobile } = req.body;
+  const { name, email, mobile, passNumber } = req.body;
 
   db.doc(`/meetings/${req.params.meetingId}`)
     .get()
     .then((doc) => {
+      const memberValid = {
+        name: true,
+        email: true,
+        mobile: true,
+        passNumber: true,
+      };
       const memberList = doc.data().memberList;
+      const memberIndex = memberList.findIndex(
+        (member) => name === member.name
+      );
+
+      if (memberIndex === -1) {
+        memberValid.name = false;
+
+        return res.status(403).json(memberValid);
+      }
 
       db.doc(`/meetings/${req.params.meetingId}`)
         .update({
-          memberList: memberList.filter((member) => member.name !== name),
+          memberList: memberList.filter(
+            (member) =>
+              !(
+                member.name === name &&
+                member.passNumber === passNumber.join("")
+              )
+          ),
         })
         .then((data) => {
-          res.json({ message: "Meeting Join successfully" });
+          db.doc(`/meetings/${req.params.meetingId}`)
+            .get()
+            .then((doc) => {
+              const memberList = doc
+                .data()
+                .memberList.map(
+                  ({ email, mobile, passNumber, ...member }) => member
+                );
+
+              return res.json(memberList);
+            });
         })
         .catch((err) => {
           console.error(err);
@@ -415,7 +468,7 @@ exports.unlikeMeeting = (req, res) => {
             });
           })
           .then(() => {
-            res.json(meetingData);
+            return res.json(meetingData);
           });
       }
     })
@@ -450,7 +503,7 @@ exports.commentOnMeeting = (req, res) => {
       return db.collection("comments").add(newComment);
     })
     .then(() => {
-      res.json(newComment);
+      return res.json(newComment);
     })
     .catch((err) => {
       console.error(err);
