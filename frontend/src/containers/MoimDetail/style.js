@@ -28,8 +28,9 @@ export const MoimDetailSummary = styled.div`
     }
     .btnWrap {
       display: flex;
-      margin-top: 12px;
+      justify-content: flex-end;
       gap: 0 12px;
+      margin-top: 12px;
       button {
         display: flex;
         align-items: center;
@@ -41,11 +42,11 @@ export const MoimDetailSummary = styled.div`
         color: ${({ theme }) => theme.title};
         text-transform: uppercase;
       }
-      .join {
+      .btnMain {
         flex: 1;
         background-color: ${({ theme }) => theme.theme};
       }
-      .exit {
+      .btnSub {
         width: 40px;
         background-color: ${color.red};
       }

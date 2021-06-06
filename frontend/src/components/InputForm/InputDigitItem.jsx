@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import map from 'lodash/map';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,6 +13,33 @@ const InputDigitItem = ({
   onInputPassNumberChange,
   onInputBlur,
 }) => {
+  const [isBackSpace, setIsBackSpace] = useState(false);
+  const digitRef = useRef([]);
+
+  const onDigitChange = useCallback(
+    (e, index, i) => {
+      onInputPassNumberChange(e, index, i);
+
+      // focus 이동
+      if (
+        !isBackSpace
+          ? i + 1 < form.value.length && isEmpty(form.value[i + 1])
+          : i !== 0 && isEmpty(form.value[i + 1])
+      ) {
+        digitRef.current[!isBackSpace ? i + 1 : i - 1].focus();
+      }
+    },
+    [form, isBackSpace],
+  );
+
+  const onDigitKeyDown = useCallback((e) => {
+    if (e.key === 'Backspace') {
+      setIsBackSpace(true);
+    } else if (e.keyCode >= 48 && e.keyCode <= 57) {
+      setIsBackSpace(false);
+    }
+  }, []);
+
   return (
     <InputWrap
       isActive={isActive}
@@ -35,11 +62,13 @@ const InputDigitItem = ({
                 type={form.type}
                 name={form.name}
                 placeholder={form.placeholder}
+                ref={(ref) => digitRef.current.push(ref)}
                 value={value}
                 disabled={form.isDisable}
                 onFocus={onInputFocus}
                 onBlur={onInputBlur}
-                onChange={(e) => onInputPassNumberChange(e, index, i)}
+                onChange={(e) => onDigitChange(e, index, i)}
+                onKeyDown={onDigitKeyDown}
               />
             </li>
           );

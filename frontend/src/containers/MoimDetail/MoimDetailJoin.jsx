@@ -61,7 +61,7 @@ const MoimDetailJoin = () => {
   }, []);
 
   const onInputPassNumberChange = useCallback((e, i, j) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
 
     if (value <= 9) {
       setFormData(
@@ -74,24 +74,25 @@ const MoimDetailJoin = () => {
 
   const onJoin = useCallback(
     (formData) => {
-      const { meetingId, memberList } = moim;
+      const { userName, memberList, meetingId } = moim;
+      const formName =
+        formData[findIndex(formData, (form) => form.name === 'name')].value;
 
       if (
-        every(
-          map(formData, (form) =>
-            findIndex(memberList, { [form.name]: form.value }),
-          ),
-          (item) => item === -1,
-        )
+        findIndex(memberList, {
+          name: formName,
+        }) !== -1
       ) {
+        alert('참여명이 이미 존재합니다.');
+      } else if (userName === formName) {
+        alert('참여명은 클라이언트의 이름으로 할 수 없습니다.');
+      } else {
         dispatch(
           postMoimJoinAction.REQUEST({
             meetingId,
             formData,
           }),
         );
-      } else {
-        alert('이름 / 전화번호 / 이메일에서 이미 존재하는 항목이 있습니다.');
       }
     },
     [dispatch, moim],

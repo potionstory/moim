@@ -12,6 +12,7 @@ import {
   postMoimJoinAction,
   postMoimExitAction,
 } from '../module/detail';
+import { modalCloseAction } from '../module/global';
 import { getCommunityAPI } from '../api/community';
 import {
   getMeetingAPI,
@@ -44,6 +45,11 @@ function* workPostMoimJoin(action) {
   });
 
   const res = yield call(postMeetingJoinAPI, meetingId, bodyParams);
+
+  if (res.status === 200) {
+    yield put(postMoimJoinAction.SUCCESS(res.data));
+    yield put(modalCloseAction());
+  }
 }
 
 function* workPostMoimExit(action) {
@@ -55,6 +61,13 @@ function* workPostMoimExit(action) {
   });
 
   const res = yield call(postMeetingExitAPI, meetingId, bodyParams);
+
+  if (res.status === 200) {
+    yield put(postMoimExitAction.SUCCESS(res.data));
+    yield put(modalCloseAction());
+  } else {
+    yield put(postMoimExitAction.FAILURE(res));
+  }
 }
 
 function* watchGetCommunity() {

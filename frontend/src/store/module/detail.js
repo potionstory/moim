@@ -58,7 +58,7 @@ export default (state = initialState, action) => {
         break;
       }
       case POST_MOIM_JOIN.SUCCESS: {
-        draft.moim = action.payload;
+        draft.moim.memberList = action.payload;
         break;
       }
       case POST_MOIM_JOIN.FAILURE: {
@@ -70,7 +70,7 @@ export default (state = initialState, action) => {
         break;
       }
       case POST_MOIM_EXIT.SUCCESS: {
-        draft.moim = action.payload;
+        draft.moim.memberList = action.payload;
         break;
       }
       case POST_MOIM_EXIT.FAILURE: {

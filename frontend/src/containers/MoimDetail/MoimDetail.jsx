@@ -6,6 +6,7 @@ import React, {
   useEffect,
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import isNull from 'lodash/isNull';
 import findIndex from 'lodash/findIndex';
 import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
@@ -16,7 +17,7 @@ import map from 'lodash/map';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faDoorOpen } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 import {
   getCommunityAction,
   getMeetingAction,
@@ -44,7 +45,7 @@ import MoimDetailSchedule from './MoimDetailSchedule';
 import MoimDetailMap from './MoimDetailMap';
 import MoimDetailMemeber from './MoimDetailMemeber';
 import UserInfo from '../../components/UserInfo';
-import IconButton from '../../components/Button/IconButton';
+import { detailTabMenu } from '../../lib/const';
 import {
   MoimDetailWrap,
   MoimDetailSummary,
@@ -53,12 +54,13 @@ import {
   MoimDetailAdditional,
   MoimDetailTabItem,
 } from './style';
-import { detailTabMenu } from '../../lib/const';
 
 const DESCRIPTION_MAX_LENGTH = 150;
 
 const MoimDetail = ({ category, id }) => {
   const { moim } = useSelector(({ detail }) => detail);
+  const { userInfo } = useSelector(({ auth }) => auth);
+
   const dispatch = useDispatch();
 
   const [detail, setDetail] = useState({});
@@ -71,6 +73,11 @@ const MoimDetail = ({ category, id }) => {
   const accountInputRef = useRef();
   const urlInputRef = useRef();
   const tagInputRef = useRef();
+
+  const isClient = useMemo(
+    () => !isNull(userInfo) && userInfo.userId === moim.userId,
+    [moim, userInfo],
+  );
 
   const moimType = useMemo(
     () => (category === 'community' ? communityType : meetingType),
@@ -568,20 +575,47 @@ const MoimDetail = ({ category, id }) => {
               </div>
               <UserInfo image={userImage} name={userName} count={likeCount} />
               <div className="btnWrap">
-                <button
-                  type="button"
-                  className="join"
-                  onClick={onJoinModalOpen}
-                >
-                  join
-                </button>
-                <button
-                  type="button"
-                  className="exit"
-                  onClick={onExitModalOpen}
-                >
-                  <FontAwesomeIcon icon={faDoorOpen} />
-                </button>
+                {!isClient ? (
+                  <>
+                    <button
+                      type="button"
+                      className="btnMain"
+                      onClick={onJoinModalOpen}
+                    >
+                      join
+                    </button>
+                    <button
+                      type="button"
+                      className="btnSub"
+                      onClick={onExitModalOpen}
+                    >
+                      <FontAwesomeIcon icon={faDoorOpen} />
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    {isEdit && (
+                      <button
+                        type="button"
+                        className="btnMain"
+                        onClick={onJoinModalOpen}
+                      >
+                        save
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      className="btnSub"
+                      onClick={onEditToggle}
+                    >
+                      {!isEdit ? (
+                        <FontAwesomeIcon icon={faCog} />
+                      ) : (
+                        <FontAwesomeIcon icon={faDoorOpen} />
+                      )}
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </MoimDetailSummary>
@@ -684,7 +718,6 @@ const MoimDetail = ({ category, id }) => {
           </MoimDetailInfo>
         </MoimDetailWrap>
       )}
-      <IconButton onClickEvent={onEditToggle} icon={faEdit} />
     </>
   );
 };

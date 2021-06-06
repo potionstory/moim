@@ -1,12 +1,16 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import filter from 'lodash/filter';
 import every from 'lodash/every';
-import map from 'lodash/map';
 import findIndex from 'lodash/findIndex';
 import { produce } from 'immer';
 import InputForm from '../../components/InputForm';
-import { nameCheck, emailCheck, mobileCheck } from '../../utils/regexUtil';
+import {
+  nameCheck,
+  emailCheck,
+  mobileCheck,
+  passNumberCheck,
+} from '../../utils/regexUtil';
 import { moimMemberForm } from '../../utils/formData';
 import { postMoimExitAction } from '../../store/module/detail';
 import { MoimDetailModalWrap } from './style';
@@ -15,6 +19,7 @@ const validator = {
   name: nameCheck,
   email: emailCheck,
   mobile: mobileCheck,
+  passNumber: passNumberCheck,
 };
 
 const MoimDetailExit = () => {
@@ -55,6 +60,18 @@ const MoimDetailExit = () => {
     );
   }, []);
 
+  const onInputPassNumberChange = useCallback((e, i, j) => {
+    const { value } = e.target;
+
+    if (value <= 9) {
+      setFormData(
+        produce((draft) => {
+          draft[i].value[j] = value;
+        }),
+      );
+    }
+  }, []);
+
   const onExit = useCallback(
     (formData) => {
       const { meetingId } = moim;
@@ -69,6 +86,17 @@ const MoimDetailExit = () => {
     [dispatch, moim],
   );
 
+  useEffect(() => {
+    const name = 'passNumber';
+    const index = findIndex(formData, { name });
+
+    setFormData(
+      produce((draft) => {
+        draft[index].isCheck = validator[name](formData[index].value);
+      }),
+    );
+  }, [formData]);
+
   return (
     <MoimDetailModalWrap>
       <div className="modalInner">
@@ -79,6 +107,7 @@ const MoimDetailExit = () => {
             focusInput={focusInput}
             onInputFocus={onInputFocus}
             onInputChange={onInputChange}
+            onInputPassNumberChange={onInputPassNumberChange}
             onInputBlur={onInputBlur}
             isActive={isActive}
             onConfirm={onExit}
