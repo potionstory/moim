@@ -6,14 +6,8 @@ import React, {
   useEffect,
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import isNull from 'lodash/isNull';
-import findIndex from 'lodash/findIndex';
-import isEmpty from 'lodash/isEmpty';
-import isUndefined from 'lodash/isUndefined';
-import trim from 'lodash/trim';
-import filter from 'lodash/filter';
-import parseInt from 'lodash/parseInt';
-import map from 'lodash/map';
+import { isNull, findIndex, isEmpty, isUndefined, trim, filter, parseInt, map } from 'lodash';
+import { produce } from 'immer';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -110,18 +104,16 @@ const MoimDetail = ({ category, id }) => {
     dispatch,
   ]);
 
-  const onEditToggle = useCallback(() => {
+  const onEditCancel = useCallback(() => {
     setIsEdit((isEdit) => !isEdit);
-  }, []);
+    setDetail(moim);
+  }, [moim]);
 
   const onTypeChange = useCallback(
     (index) => {
-      setDetail((detail) => {
-        return {
-          ...detail,
-          type: moimType[index].name,
-        };
-      });
+      setDetail(produce((draft) => {
+        draft.type = moimType[index].name;
+      }));
     },
     [moimType],
   );
@@ -129,12 +121,9 @@ const MoimDetail = ({ category, id }) => {
   const onTitleChange = useCallback((e) => {
     const { value } = e.target;
 
-    setDetail((detail) => {
-      return {
-        ...detail,
-        title: value,
-      };
-    });
+    setDetail(produce((draft) => {
+      draft.title = value;
+    }));
   }, []);
 
   const onStatusChange = useCallback(
@@ -606,7 +595,7 @@ const MoimDetail = ({ category, id }) => {
                     <button
                       type="button"
                       className="btnSub"
-                      onClick={onEditToggle}
+                      onClick={onEditCancel}
                     >
                       {!isEdit ? (
                         <FontAwesomeIcon icon={faCog} />
