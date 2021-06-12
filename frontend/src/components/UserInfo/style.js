@@ -31,7 +31,7 @@ export const UserInfoWrap = styled.div`
       line-height: 40px;
       ${ellipsis};
       b {
-        font-weight: 600;
+        font-weight: 800;
         color: ${({ theme }) => theme.title};
         transition: all 0.2s ease-out;
       }
@@ -55,7 +55,7 @@ export const UserInfoWrap = styled.div`
       height: 36px;
       margin-left: 6px;
       font-size: 0.75rem;
-      font-weight: 600;
+      font-weight: 800;
       line-height: 36px;
     }
   }

@@ -17,7 +17,7 @@ export const SelectBoxWrap = styled.div`
       padding: 8px 20px;
       font-size: 0.875rem;
       color: ${({ isValue, theme }) => (isValue ? theme.title : color.gray)};
-      font-weight: 600;
+      font-weight: 800;
       line-height: 1.5rem;
       ${ellipsis};
     }
@@ -68,7 +68,7 @@ export const SelectBoxWrap = styled.div`
         box-sizing: border-box;
         font-size: 0.875rem;
         color: ${({ theme }) => theme.main};
-        font-weight: 600;
+        font-weight: 800;
         line-height: 1.5rem;
         text-align: left;
         opacity: 0.6;

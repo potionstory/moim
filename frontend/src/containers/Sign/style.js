@@ -28,7 +28,7 @@ export const SignWrap = styled.div`
           border-radius: 20px;
           background-color: ${({ theme }) => theme.theme};
           font-size: 0.875rem;
-          font-weight: 600;
+          font-weight: 800;
           color: ${({ theme }) => theme.title};
           text-transform: uppercase;
         }
@@ -91,7 +91,7 @@ export const UserImage = styled.div`
     flex: 1;
     margin-top: 1.5rem;
     font-size: 2rem;
-    font-weight: 600;
+    font-weight: 800;
     color: ${({ theme }) => theme.title};
   }
 `;

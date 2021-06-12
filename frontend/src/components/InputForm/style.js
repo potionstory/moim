@@ -51,7 +51,7 @@ export const InputWrap = styled.div`
         opacity: 0.6;
       `};
     font-size: 0.875rem;
-    font-weight: 600;
+    font-weight: 800;
     color: ${({ theme }) => theme.title};
     &:-webkit-autofill {
       -webkit-text-fill-color: ${({ theme }) => theme.title};
@@ -80,7 +80,7 @@ export const InputSubmit = styled.div`
     background-color: ${({ isActive, theme }) =>
       !isActive ? theme.title : color.green};
     font-size: 0.875rem;
-    font-weight: 600;
+    font-weight: 800;
     color: ${({ isActive, theme }) => (!isActive ? theme.main : theme.title)};
     text-transform: uppercase;
     text-align: center;

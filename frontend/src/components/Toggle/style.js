@@ -6,7 +6,7 @@ export const ToggleWrap = styled.div`
   label {
     display: block;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 800;
     color: ${({ isChecked, theme }) => (isChecked ? theme.main : theme.gray)};
     text-transform: uppercase;
     cursor: pointer;

@@ -28,7 +28,7 @@ export const ButtonWrap = styled.div`
     .text {
       padding-left: 12px;
       font-size: 0.875rem;
-      font-weight: 600;
+      font-weight: 800;
       color: ${({ theme }) => theme.gray};
       text-transform: uppercase;
       transition: all 0.2s ease-out;

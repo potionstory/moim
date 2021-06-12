@@ -16,7 +16,7 @@ export const MoimTopWrap = styled.div`
     height: 4rem;
     margin-top: 2rem;
     font-size: 4rem;
-    font-weight: 600;
+    font-weight: 800;
     color: ${({ theme }) => theme.title};
     text-transform: uppercase;
     line-height: 4rem;
@@ -136,7 +136,7 @@ export const UtilHeader = styled.div`
     h3 {
       display: block;
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 800;
       color: ${({ theme }) => theme.main};
       line-height: 1rem;
       text-transform: uppercase;

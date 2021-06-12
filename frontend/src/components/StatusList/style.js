@@ -49,7 +49,7 @@ export const StatusItem = styled.span`
     }
   }};
   font-size: 0.625rem;
-  font-weight: 600;
+  font-weight: 800;
   color: ${color.white};
   line-height: 20px;
   text-transform: uppercase;
@@ -106,7 +106,7 @@ export const StatusItemButton = styled.button`
     }
   }};
   font-size: 0.625rem;
-  font-weight: 600;
+  font-weight: 800;
   color: ${color.white};
   line-height: 20px;
   text-transform: uppercase;
