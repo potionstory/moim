@@ -83,12 +83,12 @@ export const MoimDetailTitleWrap = styled.div`
   display: flex;
   align-items: center;
   margin-top: 12px;
-  padding: 12px 0;
-  min-height: 98px;
+  padding: 15px 0;
+  min-height: 92px;
   ${({ isEdit }) =>
     isEdit &&
     css`
-      padding: 12px 24px;
+      padding: 15px 24px;
       border-radius: 4px;
       background-color: ${({ theme }) => theme.sub};
     `};
