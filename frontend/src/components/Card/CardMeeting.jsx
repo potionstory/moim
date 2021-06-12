@@ -50,7 +50,7 @@ const CardMeeting = ({ item, activeIndex }) => {
     [startDate, endDate],
   );
 
-  const CardTabBoxSwitch = useMemo(() => {
+  const cardTabBoxSwitch = useMemo(() => {
     switch (activeIndex) {
       case 0:
         return (
@@ -106,7 +106,7 @@ const CardMeeting = ({ item, activeIndex }) => {
 
   return (
     <CardTabBoxWrap>
-      <div className="cardTabBox">{CardTabBoxSwitch}</div>
+      <div className="cardTabBox">{cardTabBoxSwitch}</div>
     </CardTabBoxWrap>
   );
 };

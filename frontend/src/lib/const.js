@@ -25,6 +25,8 @@ import {
 import icon from './icons';
 import { color, iconBg } from './styles/palette';
 
+export const DESCRIPTION_MAX_LENGTH = 150;
+
 export const weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export const categoryTabMenu = [

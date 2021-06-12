@@ -6,21 +6,9 @@ import React, {
   useEffect,
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  isNull,
-  findIndex,
-  isEmpty,
-  isUndefined,
-  trim,
-  filter,
-  parseInt,
-  map,
-} from 'lodash';
+import { isNull, findIndex, isEmpty, trim, filter, parseInt } from 'lodash';
 import { produce } from 'immer';
 import dayjs from 'dayjs';
-import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog, faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 import {
   getCommunityAction,
   getMeetingAction,
@@ -36,29 +24,15 @@ import {
   communityStatus,
   meetingStatus,
 } from '../../lib/const';
-import MoimDetailType from './MoimDetailType';
-import MoimDetailTitle from './MoimDetailTitle';
-import MoimDetailPayInfo from './MoimDetailPayInfo';
-import MoimDetailStatus from './MoimDetailStatus';
-import MoimDetailUrl from './MoimDetailUrl';
-import MoimDetailTag from './MoimDetailTag';
-import MoimDetailDescription from './MoimDetailDescription';
+import MoimDetailSummary from './MoimDetailSummary';
+import MoimDetailBase from './MoimDetailBase';
+import MoimDetailAdditional from './MoimDetailAdditional';
 import MoimDetailContent from './MoimDetailContent';
 import MoimDetailSchedule from './MoimDetailSchedule';
 import MoimDetailMap from './MoimDetailMap';
 import MoimDetailMemeber from './MoimDetailMemeber';
-import UserInfo from '../../components/UserInfo';
-import { detailTabMenu } from '../../lib/const';
-import {
-  MoimDetailWrap,
-  MoimDetailSummary,
-  MoimDetailInfo,
-  MoimDetailBase,
-  MoimDetailAdditional,
-  MoimDetailTabItem,
-} from './style';
-
-const DESCRIPTION_MAX_LENGTH = 150;
+import { DESCRIPTION_MAX_LENGTH } from '../../lib/const';
+import { MoimDetailWrap, MoimDetailInfo } from './style';
 
 const MoimDetail = ({ category, id }) => {
   const { moim } = useSelector(({ detail }) => detail);
@@ -411,7 +385,7 @@ const MoimDetail = ({ category, id }) => {
     [detail],
   );
 
-  const DetailComminityTabBoxSwitch = useMemo(() => {
+  const detailComminityTabBoxSwitch = useMemo(() => {
     switch (tabIndex) {
       case 0:
         return <MoimDetailContent />;
@@ -420,7 +394,7 @@ const MoimDetail = ({ category, id }) => {
     }
   }, [detail, isEdit, tabIndex]);
 
-  const DetailMeetingTabBoxSwitch = useMemo(() => {
+  const detailMeetingTabBoxSwitch = useMemo(() => {
     switch (tabIndex) {
       case 0:
         return <MoimDetailContent />;
@@ -504,153 +478,60 @@ const MoimDetail = ({ category, id }) => {
     <>
       {!isEmpty(detail) && (
         <MoimDetailWrap>
-          <MoimDetailSummary>
-            <div className="summaryInner">
-              <div className="thumb">
-                <img src={mainImage} />
-              </div>
-              <UserInfo image={userImage} name={userName} count={likeCount} />
-              <div className="btnWrap">
-                {!isClient ? (
-                  <>
-                    <button
-                      type="button"
-                      className="btnMain"
-                      onClick={onJoinModalOpen}
-                    >
-                      join
-                    </button>
-                    <button
-                      type="button"
-                      className="btnSub"
-                      onClick={onExitModalOpen}
-                    >
-                      <FontAwesomeIcon icon={faDoorOpen} />
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    {isEdit && (
-                      <button
-                        type="button"
-                        className="btnMain"
-                        onClick={onJoinModalOpen}
-                      >
-                        save
-                      </button>
-                    )}
-                    <button
-                      type="button"
-                      className="btnSub"
-                      onClick={onEditCancel}
-                    >
-                      {!isEdit ? (
-                        <FontAwesomeIcon icon={faCog} />
-                      ) : (
-                        <FontAwesomeIcon icon={faDoorOpen} />
-                      )}
-                    </button>
-                  </>
-                )}
-              </div>
-            </div>
-          </MoimDetailSummary>
+          <MoimDetailSummary
+            mainImage={mainImage}
+            userImage={userImage}
+            userName={userName}
+            likeCount={likeCount}
+            isClient={isClient}
+            isEdit={isEdit}
+            onJoinModalOpen={onJoinModalOpen}
+            onExitModalOpen={onExitModalOpen}
+            onJoinModalOpen={onJoinModalOpen}
+            onEditCancel={onEditCancel}
+          />
           <MoimDetailInfo>
-            <MoimDetailBase>
-              {typeIndex !== -1 && (
-                <MoimDetailType
-                  list={moimType}
-                  checkIndex={typeIndex}
-                  isEdit={isEdit}
-                  isIcon={category === 'community' ? false : true}
-                  name={moimType[typeIndex].name}
-                  onCheckChange={onTypeChange}
-                />
-              )}
-              <MoimDetailTitle
-                isEdit={isEdit}
-                title={title}
-                onTitleChange={onTitleChange}
-              />
-              <MoimDetailStatus
-                category={category}
-                list={moimStatus}
-                status={status}
-                isEdit={isEdit}
-                onStatusChange={onStatusChange}
-              />
-              {!isUndefined(payInfo) && (
-                <MoimDetailPayInfo
-                  payInfo={payInfo}
-                  isEdit={isEdit}
-                  costInputRef={costInputRef}
-                  accountInputRef={accountInputRef}
-                  onCostInputChange={onCostInputChange}
-                  onCostInputReset={onCostInputReset}
-                  onBankChange={onBankChange}
-                  onAccountInputChange={onAccountInputChange}
-                  onAccountInputReset={onAccountInputReset}
-                />
-              )}
-              {!isUndefined(url) && (
-                <MoimDetailUrl
-                  url={url}
-                  isEdit={isEdit}
-                  urlInputRef={urlInputRef}
-                  onUrlCopy={onUrlCopy}
-                  onUrlInputChange={onUrlInputChange}
-                  onUrlInputReset={onUrlInputReset}
-                />
-              )}
-              <MoimDetailTag
-                tags={tags}
-                isEdit={isEdit}
-                tagInput={tagInput}
-                tagInputRef={tagInputRef}
-                onTagInputChange={onTagInputChange}
-                onKeyTagEnter={onKeyTagEnter}
-                onTagAdd={onTagAdd}
-                onTagRemove={onTagRemove}
-              />
-              <MoimDetailDescription
-                description={description}
-                isEdit={isEdit}
-                max={DESCRIPTION_MAX_LENGTH}
-                onDescriptionChange={onDescriptionChange}
-              />
-            </MoimDetailBase>
-            <MoimDetailAdditional activeIndex={tabIndex}>
-              <div className="tabMenu">
-                <motion.div
-                  className="activeBar"
-                  animate={{ x: tabIndex * 80 }}
-                  transition={{
-                    ease: 'backInOut',
-                  }}
-                />
-                <ul className="tabList">
-                  {map(detailTabMenu[category], (item, index) => (
-                    <MoimDetailTabItem
-                      key={index}
-                      isActive={index === tabIndex}
-                    >
-                      <button type="button" onClick={() => onTabClick(index)}>
-                        <FontAwesomeIcon icon={item} />
-                      </button>
-                    </MoimDetailTabItem>
-                  ))}
-                </ul>
-              </div>
-              <div className="tabContent">
-                <div className="tabContentInner">
-                  <div className="tabContentBox">
-                    {category === 'community'
-                      ? DetailComminityTabBoxSwitch
-                      : DetailMeetingTabBoxSwitch}
-                  </div>
-                </div>
-              </div>
-            </MoimDetailAdditional>
+            <MoimDetailBase
+              typeIndex={typeIndex}
+              moimType={moimType}
+              category={category}
+              isEdit={isEdit}
+              title={title}
+              moimStatus={moimStatus}
+              status={status}
+              payInfo={payInfo}
+              url={url}
+              tags={tags}
+              tagInput={tagInput}
+              description={description}
+              costInputRef={costInputRef}
+              accountInputRef={accountInputRef}
+              urlInputRef={urlInputRef}
+              tagInputRef={tagInputRef}
+              onTypeChange={onTypeChange}
+              onTitleChange={onTitleChange}
+              onStatusChange={onStatusChange}
+              onCostInputChange={onCostInputChange}
+              onCostInputReset={onCostInputReset}
+              onBankChange={onBankChange}
+              onAccountInputChange={onAccountInputChange}
+              onAccountInputReset={onAccountInputReset}
+              onUrlCopy={onUrlCopy}
+              onUrlInputChange={onUrlInputChange}
+              onUrlInputReset={onUrlInputReset}
+              onTagInputChange={onTagInputChange}
+              onKeyTagEnter={onKeyTagEnter}
+              onTagAdd={onTagAdd}
+              onTagRemove={onTagRemove}
+              onDescriptionChange={onDescriptionChange}
+            />
+            <MoimDetailAdditional
+              tabIndex={tabIndex}
+              category={category}
+              detailComminityTabBoxSwitch={detailComminityTabBoxSwitch}
+              detailMeetingTabBoxSwitch={detailMeetingTabBoxSwitch}
+              onTabClick={onTabClick}
+            />
           </MoimDetailInfo>
         </MoimDetailWrap>
       )}

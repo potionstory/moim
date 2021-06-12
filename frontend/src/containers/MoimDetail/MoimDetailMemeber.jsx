@@ -15,7 +15,6 @@ import {
   faCrown,
   faGhost,
   faDiceD6,
-  faCheck,
   faCog,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
@@ -278,7 +277,7 @@ const MoimDetailMember = ({
                               }
                             >
                               <FontAwesomeIcon
-                                icon={!isEdit ? faWonSign : faCheck}
+                                icon={!isEdit ? faWonSign : faWonSign}
                               />
                             </span>
                             {!isEdit ? (
@@ -365,7 +364,7 @@ const MoimDetailMember = ({
             >
               <ul>
                 {map(members[1], (item, index) => {
-                  const { userId, name } = item;
+                  const { userId, name, isClient, isStaff } = item;
 
                   return (
                     <li key={index}>
@@ -382,8 +381,14 @@ const MoimDetailMember = ({
                               <FontAwesomeIcon icon={faTimes} />
                             </button>
                           )}
-                          <span className="avatar">
-                            <FontAwesomeIcon icon={faGhost} />
+                          <span
+                            className={`avatar ${isClient && 'isClient'} ${
+                              isStaff && 'isStaff'
+                            }`}
+                          >
+                            <FontAwesomeIcon
+                              icon={isClient || isStaff ? faCrown : faGhost}
+                            />
                           </span>
                           <span className="name">{name}</span>
                         </div>

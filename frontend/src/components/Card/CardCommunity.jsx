@@ -12,7 +12,7 @@ const CardCommunity = ({ item, activeIndex }) => {
     navigator.clipboard.writeText(url);
   }, [url]);
 
-  const CardTabBoxSwitch = useMemo(() => {
+  const cardTabBoxSwitch = useMemo(() => {
     switch (activeIndex) {
       case 0:
         return (
@@ -29,9 +29,7 @@ const CardCommunity = ({ item, activeIndex }) => {
           />
         );
       case 2:
-        return (
-          <CardUrlBox url={url} onUrlCopy={onUrlCopy} />
-        );
+        return <CardUrlBox url={url} onUrlCopy={onUrlCopy} />;
       case 3:
         return <CardAddInfoBox tags={tags} />;
       default:
@@ -41,7 +39,7 @@ const CardCommunity = ({ item, activeIndex }) => {
 
   return (
     <CardTabBoxWrap>
-      <div className="cardTabBox">{CardTabBoxSwitch}</div>
+      <div className="cardTabBox">{cardTabBoxSwitch}</div>
     </CardTabBoxWrap>
   );
 };

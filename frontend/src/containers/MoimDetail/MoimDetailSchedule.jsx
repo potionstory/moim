@@ -11,7 +11,7 @@ import map from 'lodash/map';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCircle,
-  faCog,
+  faCalendarDay,
   faAngleRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { weeks } from '../../lib/const';
@@ -165,7 +165,7 @@ const MoimDetailSchedule = ({
                   setIsStartOpen(true);
                 }}
               >
-                <FontAwesomeIcon icon={faCog} />
+                <FontAwesomeIcon icon={faCalendarDay} />
               </button>
             </span>
           )}
@@ -193,7 +193,7 @@ const MoimDetailSchedule = ({
                   setIsEndOpen(true);
                 }}
               >
-                <FontAwesomeIcon icon={faCog} />
+                <FontAwesomeIcon icon={faCalendarDay} />
               </button>
             </span>
           )}

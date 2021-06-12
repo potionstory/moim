@@ -84,7 +84,7 @@ const MoimDetailPayInfo = ({
                   <div className="payInput flex">
                     <InputBox
                       placeholder="계좌번호를 입력해주세요"
-                      isNumber={false}
+                      isNumber={true}
                       value={account}
                       max={20}
                       inputRef={accountInputRef}
