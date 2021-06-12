@@ -30,9 +30,20 @@ const MoimDetailMap = ({ isEdit, location, onHandleLocation }) => {
     paginationRef.current.className = '';
   }, []);
 
-  const onLocateNameChange = useCallback((e) => {
-    setLocateName(e.target.value);
-  }, []);
+  const onLocateNameChange = useCallback(
+    (e) => {
+      const { value } = e.target;
+
+      setLocateName(value);
+
+      if (location.name !== value) {
+        setIsChanged(true);
+      } else {
+        setIsChanged(false);
+      }
+    },
+    [location],
+  );
 
   const onLocationChange = useCallback(
     (e) => {
@@ -374,7 +385,7 @@ const MoimDetailMap = ({ isEdit, location, onHandleLocation }) => {
               } = location;
 
               if (
-                !isEqual(_latitude, latLng.getLat()) &&
+                !isEqual(_latitude, latLng.getLat()) ||
                 !isEqual(_longitude, latLng.getLng())
               ) {
                 setIsChanged(true);

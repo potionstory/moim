@@ -259,15 +259,15 @@ const MoimDetailMember = ({
                             {!isEdit ? (
                               <span className="index">{index + 1}</span>
                             ) : (
-                              <button
-                                type="button"
-                                className="btnRemove"
-                                onClick={() =>
-                                  isClient || onMemberRemove(userId)
-                                }
-                              >
-                                <FontAwesomeIcon icon={faTimes} />
-                              </button>
+                              !isClient && (
+                                <button
+                                  type="button"
+                                  className="btnRemove"
+                                  onClick={() => onMemberRemove(userId)}
+                                >
+                                  <FontAwesomeIcon icon={faTimes} />
+                                </button>
+                              )
                             )}
                             <span
                               className={`deposit ${isDeposit && 'pay'}`}
@@ -365,13 +365,23 @@ const MoimDetailMember = ({
             >
               <ul>
                 {map(members[1], (item, index) => {
-                  const { name } = item;
+                  const { userId, name } = item;
 
                   return (
                     <li key={index}>
                       <div className="listBox">
                         <div className="listInner">
-                          <span className="index">{index + 1}</span>
+                          {!isEdit ? (
+                            <span className="index">{index + 1}</span>
+                          ) : (
+                            <button
+                              type="button"
+                              className="btnRemove"
+                              onClick={() => onMemberRemove(userId)}
+                            >
+                              <FontAwesomeIcon icon={faTimes} />
+                            </button>
+                          )}
                           <span className="avatar">
                             <FontAwesomeIcon icon={faGhost} />
                           </span>

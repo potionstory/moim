@@ -6,7 +6,16 @@ import React, {
   useEffect,
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { isNull, findIndex, isEmpty, isUndefined, trim, filter, parseInt, map } from 'lodash';
+import {
+  isNull,
+  findIndex,
+  isEmpty,
+  isUndefined,
+  trim,
+  filter,
+  parseInt,
+  map,
+} from 'lodash';
 import { produce } from 'immer';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
@@ -111,9 +120,11 @@ const MoimDetail = ({ category, id }) => {
 
   const onTypeChange = useCallback(
     (index) => {
-      setDetail(produce((draft) => {
-        draft.type = moimType[index].name;
-      }));
+      setDetail(
+        produce((draft) => {
+          draft.type = moimType[index].name;
+        }),
+      );
     },
     [moimType],
   );
@@ -121,19 +132,20 @@ const MoimDetail = ({ category, id }) => {
   const onTitleChange = useCallback((e) => {
     const { value } = e.target;
 
-    setDetail(produce((draft) => {
-      draft.title = value;
-    }));
+    setDetail(
+      produce((draft) => {
+        draft.title = value;
+      }),
+    );
   }, []);
 
   const onStatusChange = useCallback(
     (index) => {
-      setDetail((detail) => {
-        return {
-          ...detail,
-          status: moimStatus[index].name,
-        };
-      });
+      setDetail(
+        produce((draft) => {
+          draft.status = moimStatus[index].name;
+        }),
+      );
     },
     [moimStatus],
   );
@@ -142,68 +154,48 @@ const MoimDetail = ({ category, id }) => {
     const value = parseInt(!isEmpty(e.target.value) ? e.target.value : 0);
 
     if (value >= 0 && value <= 99999999) {
-      setDetail((detail) => {
-        return {
-          ...detail,
-          payInfo: {
-            ...detail.payInfo,
-            cost: value ? value : 0,
-          },
-        };
-      });
+      setDetail(
+        produce((draft) => {
+          draft.payInfo.cost = value ? value : 0;
+        }),
+      );
     }
   }, []);
 
   const onCostInputReset = useCallback(() => {
-    setDetail((detail) => {
-      return {
-        ...detail,
-        payInfo: {
-          ...detail.payInfo,
-          cost: 0,
-        },
-      };
-    });
+    setDetail(
+      produce((draft) => {
+        draft.payInfo.cost = 0;
+      }),
+    );
 
     costInputRef.current.focus();
   }, []);
 
   const onBankChange = useCallback((bank) => {
-    setDetail((detail) => {
-      return {
-        ...detail,
-        payInfo: {
-          ...detail.payInfo,
-          bank,
-        },
-      };
-    });
+    setDetail(
+      produce((draft) => {
+        draft.payInfo.bank = bank;
+      }),
+    );
   }, []);
 
   const onAccountInputChange = useCallback((e) => {
     const { value } = e.target;
 
-    setDetail((detail) => {
-      return {
-        ...detail,
-        payInfo: {
-          ...detail.payInfo,
-          account: value ? value : '',
-        },
-      };
-    });
+    setDetail(
+      produce((draft) => {
+        draft.payInfo.account = value ? value : '';
+      }),
+    );
   }, []);
 
   const onAccountInputReset = useCallback(() => {
-    setDetail((detail) => {
-      return {
-        ...detail,
-        payInfo: {
-          ...detail.payInfo,
-          account: '',
-        },
-      };
-    });
+    setDetail(
+      produce((draft) => {
+        draft.payInfo.account = '';
+      }),
+    );
 
     accountInputRef.current.focus();
   }, []);
@@ -217,21 +209,19 @@ const MoimDetail = ({ category, id }) => {
   const onUrlInputChange = useCallback((e) => {
     const value = e.target.value;
 
-    setDetail((detail) => {
-      return {
-        ...detail,
-        url: value,
-      };
-    });
+    setDetail(
+      produce((draft) => {
+        draft.url = value;
+      }),
+    );
   }, []);
 
   const onUrlInputReset = useCallback(() => {
-    setDetail((detail) => {
-      return {
-        ...detail,
-        url: '',
-      };
-    });
+    setDetail(
+      produce((draft) => {
+        draft.url = '';
+      }),
+    );
 
     urlInputRef.current.focus();
   }, []);
@@ -247,12 +237,11 @@ const MoimDetail = ({ category, id }) => {
       findIndex(detail.tags, (item) => item === trimValue) === -1 &&
       trimValue !== ''
     ) {
-      setDetail((detail) => {
-        return {
-          ...detail,
-          tags: [...detail.tags, trimValue],
-        };
-      });
+      setDetail(
+        produce((draft) => {
+          draft.tags.push(trimValue);
+        }),
+      );
     }
 
     setTagInput('');
@@ -263,7 +252,11 @@ const MoimDetail = ({ category, id }) => {
     (tag) => {
       const tags = filter(detail.tags, (item) => item !== tag);
 
-      setDetail({ ...detail, tags });
+      setDetail(
+        produce((draft) => {
+          draft.tags = tags;
+        }),
+      );
     },
     [detail],
   );
@@ -281,12 +274,11 @@ const MoimDetail = ({ category, id }) => {
     const value = e.target.value;
 
     if (value.length <= DESCRIPTION_MAX_LENGTH) {
-      setDetail((detail) => {
-        return {
-          ...detail,
-          description: value,
-        };
-      });
+      setDetail(
+        produce((draft) => {
+          draft.description = value;
+        }),
+      );
     }
   }, []);
 
@@ -295,57 +287,43 @@ const MoimDetail = ({ category, id }) => {
   }, []);
 
   const onScheduleChange = useCallback((name, date) => {
-    setDetail((detail) => {
-      return {
-        ...detail,
-        [name]: {
-          ...detail[name],
-          _seconds: dayjs(date).unix(),
-        },
-      };
-    });
+    setDetail(
+      produce((draft) => {
+        draft[name]._seconds = dayjs(date).unix();
+      }),
+    );
   }, []);
 
   const onHandleLocation = useCallback((name, coord) => {
-    setDetail((detail) => {
-      return {
-        ...detail,
-        location: {
+    setDetail(
+      produce((draft) => {
+        draft.location = {
           name,
           coordinate: {
             _latitude: coord[0],
             _longitude: coord[1],
           },
-        },
-      };
-    });
+        };
+      }),
+    );
   }, []);
 
-  const onIsSelfCheck = useCallback((name) => {
-    setDetail((detail) => {
-      return {
-        ...detail,
-        memberSetting: {
-          ...detail.memberSetting,
-          isSelf: !detail.memberSetting.isSelf,
-        },
-      };
-    });
+  const onIsSelfCheck = useCallback(() => {
+    setDetail(
+      produce((draft) => {
+        draft.memberSetting.isSelf = !draft.memberSetting.isSelf;
+      }),
+    );
   }, []);
 
   const onJoinFormCheck = useCallback((name) => {
-    setDetail((detail) => {
-      return {
-        ...detail,
-        memberSetting: {
-          ...detail.memberSetting,
-          formData: {
-            ...detail.memberSetting.formData,
-            [name]: !detail.memberSetting.formData[name],
-          },
-        },
-      };
-    });
+    setDetail(
+      produce((draft) => {
+        draft.memberSetting.formData[name] = !draft.memberSetting.formData[
+          name
+        ];
+      }),
+    );
   }, []);
 
   const onChangeMemberCount = useCallback(
@@ -357,30 +335,22 @@ const MoimDetail = ({ category, id }) => {
       switch (e) {
         case 'increment':
           if (count !== 999) {
-            setDetail((detail) => {
-              return {
-                ...detail,
-                memberSetting: {
-                  ...detail.memberSetting,
-                  count: count + 1,
-                },
-              };
-            });
+            setDetail(
+              produce((draft) => {
+                draft.memberSetting.count = count + 1;
+              }),
+            );
           }
 
           return false;
 
         case 'decrement':
           if (count !== 0) {
-            setDetail((detail) => {
-              return {
-                ...detail,
-                memberSetting: {
-                  ...detail.memberSetting,
-                  count: count - 1,
-                },
-              };
-            });
+            setDetail(
+              produce((draft) => {
+                draft.memberSetting.count = count - 1;
+              }),
+            );
           }
 
           return false;
@@ -388,15 +358,11 @@ const MoimDetail = ({ category, id }) => {
           const value = parseInt(!isEmpty(e.target.value) ? e.target.value : 0);
 
           if (value > -1) {
-            setDetail((detail) => {
-              return {
-                ...detail,
-                memberSetting: {
-                  ...detail.memberSetting,
-                  count: value,
-                },
-              };
-            });
+            setDetail(
+              produce((draft) => {
+                draft.memberSetting.count = value;
+              }),
+            );
           }
 
           return false;
@@ -409,19 +375,12 @@ const MoimDetail = ({ category, id }) => {
     (userId) => {
       const index = findIndex(detail.memberList, { userId });
 
-      setDetail((detail) => {
-        return {
-          ...detail,
-          memberList: [
-            ...detail.memberList.slice(0, index),
-            {
-              ...detail.memberList[index],
-              isDeposit: !detail.memberList[index].isDeposit,
-            },
-            ...detail.memberList.slice(index + 1),
-          ],
-        };
-      });
+      setDetail(
+        produce((draft) => {
+          draft.memberList[index].isDeposit = !draft.memberList[index]
+            .isDeposit;
+        }),
+      );
     },
     [detail],
   );
@@ -430,19 +389,11 @@ const MoimDetail = ({ category, id }) => {
     (userId) => {
       const index = findIndex(detail.memberList, { userId });
 
-      setDetail((detail) => {
-        return {
-          ...detail,
-          memberList: [
-            ...detail.memberList.slice(0, index),
-            {
-              ...detail.memberList[index],
-              isStaff: !detail.memberList[index].isStaff,
-            },
-            ...detail.memberList.slice(index + 1),
-          ],
-        };
-      });
+      setDetail(
+        produce((draft) => {
+          draft.memberList[index].isStaff = !draft.memberList[index].isStaff;
+        }),
+      );
     },
     [detail],
   );
@@ -451,15 +402,11 @@ const MoimDetail = ({ category, id }) => {
     (userId) => {
       const index = findIndex(detail.memberList, { userId });
 
-      setDetail((detail) => {
-        return {
-          ...detail,
-          memberList: [
-            ...detail.memberList.slice(0, index),
-            ...detail.memberList.slice(index + 1),
-          ],
-        };
-      });
+      setDetail(
+        produce((draft) => {
+          draft.memberList.splice(index, 1);
+        }),
+      );
     },
     [detail],
   );
