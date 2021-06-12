@@ -367,7 +367,7 @@ export const MoimDetailDescriptionWrap = styled.div`
 export const MoimDetailAdditionalWrap = styled.div`
   margin-top: 12px;
   padding-top: 12px;
-  border-top: 1px solid ${color.gray};
+  border-top: 1px dashed ${color.gray};
   .tabMenu {
     position: relative;
     .activeBar {
