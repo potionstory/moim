@@ -174,97 +174,52 @@ exports.putMeeting = (req, res) => {
     return res.status(400).json({ error: "Method not defined" });
   }
 
-  let busboy = new BusBoy({ headers: req.headers });
+  if (req.method !== "PUT") {
+    return res.status(400).json({ error: "Method not defined" });
+  }
 
-  let bucket = admin.storage().bucket();
-  let generatedToken = v4();
+  const document = db.doc(`/meetings/${req.params.meetingId}`);
+  const {
+    type,
+    title,
+    status,
+    payInfo,
+    description,
+    startDate,
+    endDate,
+    location,
+    memberSetting,
+    memberList,
+    waiter,
+    tags,
+  } = req.body;
 
-  let storageFilepath;
-  let storageFile;
-
-  let files = {};
-  req.body = {};
-
-  busboy.on("file", (fieldname, file, filename, encoding, mimetype) => {
-    if (mimetype !== "image/jpeg" && mimetype !== "image/png") {
-      return res.status(400).json({ error: "Wrong file type submitted" });
-    }
-    const metadata = {
-      contentType: mimetype,
-      metadata: {
-        firebaseStorageDownloadTokens: generatedToken,
-      },
-    };
-    let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
-    let uniqueName = admin.database().ref().push().key;
-
-    storageFilepath = `${req.user.userName}/${uniqueName + fileext}`;
-    storageFile = bucket.file(storageFilepath);
-
-    file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
-  });
-
-  busboy.on("field", (fieldname, value) => {
-    req.body[fieldname] = value;
-  });
-
-  busboy.on("finish", () => {
-    req.files = files;
-
-    const mainImage = `https://firebasestorage.googleapis.com/v0/b/${
-      config.storageBucket
-    }/o/${encodeURIComponent(
-      storageFilepath
-    )}?alt=media&token=${generatedToken}`;
-
-    const {
-      type,
-      title,
-      status,
-      payInfo,
-      description,
-      startDate,
-      endDate,
-      location,
-      memberSetting,
-      memberList,
-      waiter,
-      tags,
-    } = req.body;
-
-    db.doc(`/meetings/${req.params.meetingId}`)
-      .get()
+  document.get().then((doc) => {
+    document
+      .update({
+        type,
+        title,
+        status,
+        payInfo,
+        description,
+        startDate,
+        endDate,
+        location,
+        memberSetting,
+        memberList,
+        waiter,
+        tags,
+      })
       .then((doc) => {
-        const deleteFilePath = doc.data().imagePath;
-        bucket.file(deleteFilePath).delete();
-        db.doc(`/meetings/${req.params.meetingId}`)
-          .update({
-            type,
-            title,
-            status,
-            payInfo,
-            imagePath: storageFilepath,
-            mainImage,
-            description,
-            startDate,
-            endDate,
-            location,
-            memberSetting,
-            memberList,
-            waiter,
-            tags,
-          })
-          .then(() => {
-            res.status(201).json({ message: "meeting update successfully" }); // 201 CREATED
-          })
-          .catch((err) => {
-            console.error(err);
-            return res.status(500).json({ error: err.code }); // 500 INTERNAL_SERVER_ERROR
-          });
+        document.get().then((doc) => {
+          return res.status(200).json(doc.data()); // 201 CREATED
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        return res.status(500).json({ error: err.code }); // 500 INTERNAL_SERVER_ERROR
       });
   });
-
-  busboy.end(req.rawBody);
 };
 
 // delete one meeting
