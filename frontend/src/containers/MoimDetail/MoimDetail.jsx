@@ -12,6 +12,9 @@ import dayjs from 'dayjs';
 import {
   getCommunityAction,
   getMeetingAction,
+  putCommunityAction,
+  putMeetingAction,
+  setIsEditAction,
   resetDetailAction,
 } from '../../store/module/detail';
 import {
@@ -35,13 +38,12 @@ import { DESCRIPTION_MAX_LENGTH } from '../../lib/const';
 import { MoimDetailWrap, MoimDetailInfo } from './style';
 
 const MoimDetail = ({ category, id }) => {
-  const { moim } = useSelector(({ detail }) => detail);
+  const { moim, isEdit } = useSelector(({ detail }) => detail);
   const { userInfo } = useSelector(({ auth }) => auth);
 
   const dispatch = useDispatch();
 
   const [detail, setDetail] = useState({});
-  const [isEdit, setIsEdit] = useState(false);
   const [typeIndex, setTypeIndex] = useState(-1);
   const [tagInput, setTagInput] = useState('');
   const [tabIndex, setTabIndex] = useState(0);
@@ -87,10 +89,20 @@ const MoimDetail = ({ category, id }) => {
     dispatch,
   ]);
 
-  const onEditCancel = useCallback(() => {
-    setIsEdit((isEdit) => !isEdit);
+  const onSave = useCallback(() => {
+    if (category === 'community') {
+      dispatch(
+        putCommunityAction.REQUEST({ communityId: id, formData: detail }),
+      );
+    } else {
+      dispatch(putMeetingAction.REQUEST({ meetingId: id, formData: detail }));
+    }
+  }, [dispatch, detail]);
+
+  const onEditToggle = useCallback(() => {
+    dispatch(setIsEditAction(!isEdit));
     setDetail(moim);
-  }, [moim]);
+  }, [dispatch, moim, isEdit]);
 
   const onTypeChange = useCallback(
     (index) => {
@@ -479,6 +491,7 @@ const MoimDetail = ({ category, id }) => {
       {!isEmpty(detail) && (
         <MoimDetailWrap>
           <MoimDetailSummary
+            category={category}
             mainImage={mainImage}
             userImage={userImage}
             userName={userName}
@@ -488,7 +501,8 @@ const MoimDetail = ({ category, id }) => {
             onJoinModalOpen={onJoinModalOpen}
             onExitModalOpen={onExitModalOpen}
             onJoinModalOpen={onJoinModalOpen}
-            onEditCancel={onEditCancel}
+            onSave={onSave}
+            onEditToggle={onEditToggle}
           />
           <MoimDetailInfo>
             <MoimDetailBase

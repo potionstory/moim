@@ -5,6 +5,7 @@ import UserInfo from '../../components/UserInfo';
 import { MoimDetailSummaryWrap } from './style';
 
 const MoimDetailSummary = ({
+  category,
   mainImage,
   userImage,
   userName,
@@ -13,7 +14,8 @@ const MoimDetailSummary = ({
   isEdit,
   onJoinModalOpen,
   onExitModalOpen,
-  onEditCancel,
+  onSave,
+  onEditToggle,
 }) => {
   return (
     <MoimDetailSummaryWrap>
@@ -23,7 +25,7 @@ const MoimDetailSummary = ({
         </div>
         <UserInfo image={userImage} name={userName} count={likeCount} />
         <div className="btnWrap">
-          {!isClient ? (
+          {category === 'meeting' && !isClient && (
             <>
               <button
                 type="button"
@@ -40,18 +42,15 @@ const MoimDetailSummary = ({
                 <FontAwesomeIcon icon={faDoorOpen} />
               </button>
             </>
-          ) : (
+          )}
+          {isClient && (
             <>
               {isEdit && (
-                <button
-                  type="button"
-                  className="btnMain"
-                  onClick={onJoinModalOpen}
-                >
+                <button type="button" className="btnMain" onClick={onSave}>
                   save
                 </button>
               )}
-              <button type="button" className="btnSub" onClick={onEditCancel}>
+              <button type="button" className="btnSub" onClick={onEditToggle}>
                 {!isEdit ? (
                   <FontAwesomeIcon icon={faCog} />
                 ) : (

@@ -6,6 +6,10 @@ export const getAllMeetingAPI = () => api.get('/meetings');
 // get one meeting
 export const getMeetingAPI = (meetingId) => api.get(`/meeting/${meetingId}`);
 
+// put one meeting
+export const putMeetingAPI = (meetingId, bodyParams) =>
+  api.put(`/meeting/${meetingId}`, bodyParams);
+
 // post meeting join
 export const postMeetingJoinAPI = (meetingId, bodyParams) =>
   api.put(`/meeting/join/${meetingId}`, bodyParams);
