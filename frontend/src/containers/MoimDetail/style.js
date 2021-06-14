@@ -38,7 +38,7 @@ export const MoimDetailSummaryWrap = styled.div`
         height: 40px;
         border-radius: 4px;
         font-size: 1rem;
-        font-weight: 800;
+        font-weight: 600;
         color: ${({ theme }) => theme.title};
         text-transform: uppercase;
       }
@@ -72,7 +72,7 @@ export const MoimDetailTypeWrap = styled.div`
   .name {
     margin-left: 12px;
     font-size: 1rem;
-    font-weight: 800;
+    font-weight: 600;
     color: ${({ theme }) => theme.theme};
     text-transform: uppercase;
     line-height: 40px;
@@ -94,14 +94,14 @@ export const MoimDetailTitleWrap = styled.div`
     `};
   h3 {
     font-size: 3.6rem;
-    font-weight: 800;
+    font-weight: 600;
     color: ${({ theme }) => theme.title};
     line-height: 75px;
   }
   textarea {
     width: 100%;
     font-size: 3.6rem;
-    font-weight: 800;
+    font-weight: 600;
     color: ${({ theme }) => theme.title};
     line-height: 72px;
     vertical-align: top;
@@ -138,7 +138,7 @@ export const MoimDetailPayInfoWrap = styled.div`
           font-family: 'Rubik';
         `};
       font-size: 1rem;
-      font-weight: 800;
+      font-weight: 600;
       color: ${({ isFree, theme }) => (isFree ? color.gray : theme.text)};
       text-transform: uppercase;
       line-height: 40px;
@@ -231,7 +231,7 @@ export const MoimDetailUrlWrap = styled.div`
       height: 24px;
       padding: 8px 20px;
       font-size: 0.875rem;
-      font-weight: 800;
+      font-weight: 600;
       color: ${color.blue};
       line-height: 24px;
       ${ellipsis};
@@ -247,7 +247,7 @@ export const MoimDetailUrlWrap = styled.div`
       padding: 8px 20px;
       box-sizing: border-box;
       font-size: 0.875rem;
-      font-weight: 800;
+      font-weight: 600;
       color: ${color.blue};
       line-height: 24px;
       ${ellipsis};
@@ -341,7 +341,7 @@ export const MoimDetailDescriptionWrap = styled.div`
       box-sizing: border-box;
       border-radius: 4px;
       font-size: 0.875rem;
-      font-weight: 800;
+      font-weight: 600;
       white-space: pre-wrap;
       line-height: 28px;
     }
@@ -350,7 +350,7 @@ export const MoimDetailDescriptionWrap = styled.div`
       height: 40px;
       font-family: 'Rubik';
       font-size: 0.875rem;
-      font-weight: 800;
+      font-weight: 600;
       color: ${({ theme }) => theme.title};
       text-align: right;
       line-height: 40px;
@@ -458,7 +458,7 @@ export const MoimDetailScheduleWrap = styled.div`
         border-radius: 8px;
         background-color: ${({ theme }) => theme.main};
         font-size: 0.625rem;
-        font-weight: 800;
+        font-weight: 600;
         text-transform: uppercase;
         line-height: 1rem;
         transform: translateX(-50%);
@@ -488,7 +488,7 @@ export const MoimDetailScheduleWrap = styled.div`
           border-radius: 20px;
           background-color: ${color.gray};
           font-size: 1rem;
-          font-weight: 800;
+          font-weight: 600;
           text-transform: uppercase;
           line-height: 32px;
           color: ${color.white};
@@ -502,7 +502,7 @@ export const MoimDetailScheduleWrap = styled.div`
       }
       .day {
         font-size: 8rem;
-        font-weight: 800;
+        font-weight: 600;
         color: ${({ theme }) => theme.title};
       }
       .btnCalendar {
@@ -536,7 +536,7 @@ export const MoimDetailScheduleWrap = styled.div`
     }
     .month {
       margin-bottom: 12px;
-      font-weight: 800;
+      font-weight: 600;
       color: ${({ theme }) => theme.title};
     }
     .time {
@@ -581,7 +581,7 @@ export const MoimDetailMapWrap = styled.div`
         border-radius: 4px;
         background-color: ${color.pink};
         font-size: 0.875rem;
-        font-weight: 800;
+        font-weight: 600;
         color: ${color.white};
         line-height: 1rem;
       }
@@ -610,7 +610,7 @@ export const MoimDetailMapWrap = styled.div`
         border-radius: 4px;
         background-color: ${color.blue};
         font-size: 0.875rem;
-        font-weight: 800;
+        font-weight: 600;
         color: ${color.white};
         line-height: 1rem;
       }
@@ -675,7 +675,7 @@ export const MoimDetailMapWrap = styled.div`
             background-color: ${({ theme }) => theme.theme};
             font-family: 'Rubik';
             font-size: 1rem;
-            font-weight: 800;
+            font-weight: 600;
             color: ${({ theme }) => theme.title};
             text-align: center;
             line-height: 24px;
@@ -684,7 +684,7 @@ export const MoimDetailMapWrap = styled.div`
             flex: 1;
             overflow: hidden;
             margin-left: 10px;
-            font-weight: 800;
+            font-weight: 600;
             span {
               display: block;
             }
@@ -736,7 +736,7 @@ export const MoimDetailMapWrap = styled.div`
           height: 24px;
           font-family: 'Rubik';
           font-size: 1rem;
-          font-weight: 800;
+          font-weight: 600;
           color: ${color.gray};
           text-align: center;
           line-height: 24px;
@@ -769,7 +769,7 @@ export const MoimDetailMapForm = styled.form`
       height: 40px;
       background-color: ${({ theme }) => theme.title};
       font-size: 1rem;
-      font-weight: 800;
+      font-weight: 600;
       color: ${({ theme }) => theme.main};
       &:-webkit-autofill {
         -webkit-text-fill-color: ${({ theme }) => theme.main};
@@ -829,7 +829,7 @@ export const MoimDetailMemberWrap = styled.div`
           height: 80px;
           font-family: 'Rubik';
           font-size: 3.6rem;
-          font-weight: 800;
+          font-weight: 600;
           color: ${color.gray};
           .now {
             color: ${({ theme }) => theme.title};
@@ -855,7 +855,7 @@ export const MoimDetailMemberWrap = styled.div`
                   min-width: 56px;
                   height: 56px;
                   font-size: 3.6rem;
-                  font-weight: 800;
+                  font-weight: 600;
                   color: ${color.green};
                   vertical-align: top;
                   text-align: center;
@@ -922,7 +922,7 @@ export const MoimDetailMemberWrap = styled.div`
           .title {
             height: 15px;
             font-size: 1rem;
-            font-weight: 800;
+            font-weight: 600;
             color: ${({ theme }) => theme.title};
             text-transform: uppercase;
             line-height: 15px;
@@ -985,7 +985,7 @@ export const MoimDetailMemberWrap = styled.div`
               height: 40px;
               margin-left: 12px;
               font-size: 0.75rem;
-              font-weight: 800;
+              font-weight: 600;
               color: ${({ theme }) => theme.title};
               line-height: 40px;
               ${ellipsis};
@@ -1034,14 +1034,14 @@ export const MoimDetailMemberWrap = styled.div`
             }
           }
           .title {
-            font-weight: 800;
+            font-weight: 600;
             text-transform: uppercase;
           }
           .counts {
             display: flex;
             align-items: center;
             gap: 0 6px;
-            font-weight: 800;
+            font-weight: 600;
             color: ${color.gray};
             .count {
               display: flex;
@@ -1049,7 +1049,7 @@ export const MoimDetailMemberWrap = styled.div`
               justify-content: center;
               gap: 0 6px;
               font-family: 'Rubik';
-              font-weight: 800;
+              font-weight: 600;
               color: ${({ theme }) => theme.title};
               .icon {
                 display: flex;
@@ -1150,7 +1150,7 @@ export const MoimDetailMemberWrap = styled.div`
                   font-family: 'Rubik';
                   font-size: 1.25rem;
                   font-style: italic;
-                  font-weight: 800;
+                  font-weight: 600;
                   color: ${({ theme }) => theme.main};
                   line-height: 20px;
                 }
@@ -1226,7 +1226,7 @@ export const MoimDetailMemberWrap = styled.div`
                   padding: 0 6px;
                   box-sizing: border-box;
                   font-size: 0.75rem;
-                  font-weight: 800;
+                  font-weight: 600;
                   color: ${({ theme }) => theme.main};
                   line-height: 20px;
                   text-align: center;

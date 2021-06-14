@@ -53,7 +53,7 @@ export const Member = styled.div`
         flex: 1;
         height: 48px;
         margin-left: 12px;
-        font-weight: 800;
+        font-weight: 600;
         color: ${({ theme }) => theme.title};
         line-height: 48px;
         ${ellipsis};
@@ -81,7 +81,7 @@ export const NonMember = styled.div`
     line-height: 1.6rem;
     text-align: center;
     b {
-      font-weight: 800;
+      font-weight: 600;
     }
   }
 `;

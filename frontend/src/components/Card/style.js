@@ -64,7 +64,7 @@ export const CardHeaderWrap = styled.div`
     .title {
       display: block;
       font-size: 1rem;
-      font-weight: 800;
+      font-weight: 600;
       color: ${color.gray};
       line-height: 1rem;
       ${ellipsis};
@@ -128,7 +128,7 @@ export const CardHeaderWrap = styled.div`
           }
         }};
         font-size: 0.625rem;
-        font-weight: 800;
+        font-weight: 600;
         color: ${color.white};
         line-height: 20px;
         text-transform: uppercase;
@@ -266,7 +266,7 @@ export const CardDescriptionBoxWrap = styled.div`
     height: 100%;
     padding: 12px;
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 600;
     color: ${color.gray};
     word-break: break-all;
     line-height: 1.5;
@@ -289,7 +289,7 @@ export const CardUrlBoxWrap = styled.div`
       flex: 1;
       padding: 8px 20px;
       font-size: 0.625rem;
-      font-weight: 800;
+      font-weight: 600;
       color: ${color.blue};
       line-height: 1.5rem;
       word-break: break-all;
@@ -374,7 +374,7 @@ export const CardScheduleBoxWrap = styled.div`
           border-radius: 10px;
           background-color: ${color.gray};
           font-size: 0.625rem;
-          font-weight: 800;
+          font-weight: 600;
           text-transform: uppercase;
           line-height: 20px;
           color: ${color.white};
@@ -388,13 +388,13 @@ export const CardScheduleBoxWrap = styled.div`
       }
       .day {
         font-size: 4rem;
-        font-weight: 800;
+        font-weight: 600;
         color: ${({ theme }) => theme.title};
       }
     }
     .month {
       margin-bottom: 6px;
-      font-weight: 800;
+      font-weight: 600;
       color: ${({ theme }) => theme.title};
     }
     .time {
@@ -493,7 +493,7 @@ export const CardMapBoxWrap = styled.div`
     }
     span {
       margin-top: 1rem;
-      font-weight: 800;
+      font-weight: 600;
       text-transform: uppercase;
     }
   }
@@ -522,7 +522,7 @@ export const CardAddInfoBoxWrap = styled.div`
         flex: 1;
         margin-left: 6px;
         font-size: 0.875rem;
-        font-weight: 800;
+        font-weight: 600;
         color: ${color.gray};
         line-height: 24px;
         text-transform: uppercase;
@@ -532,7 +532,7 @@ export const CardAddInfoBoxWrap = styled.div`
     .contentBody {
       .memberCount {
         font-family: 'Rubik';
-        font-weight: 800;
+        font-weight: 600;
         color: ${color.gray};
         .now {
           color: ${({ theme }) => theme.title};

@@ -37,7 +37,7 @@ export const LeftHead = styled.div`
       border-radius: 4px;
       background-color: ${({ theme }) => theme.theme};
       font-size: 1.6rem;
-      font-weight: 800;
+      font-weight: 600;
       color: ${({ theme }) => theme.title};
     }
   }
@@ -52,7 +52,7 @@ export const LeftHead = styled.div`
       border-radius: 24px;
       box-sizing: border-box;
       background-color: ${({ theme }) => theme.theme};
-      font-weight: 800;
+      font-weight: 600;
       text-transform: uppercase;
       cursor: pointer;
       transition: all 0.2s ease-out;

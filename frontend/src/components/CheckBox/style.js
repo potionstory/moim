@@ -9,7 +9,7 @@ export const CheckBoxWrap = styled.div`
     align-items: center;
     position: relative;
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 600;
     color: ${({ isChecked, isInverse, theme }) =>
       isChecked ? (isInverse ? theme.main : theme.title) : theme.gray};
     text-transform: uppercase;

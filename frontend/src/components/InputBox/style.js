@@ -17,7 +17,7 @@ export const InputBoxWrap = styled.div`
         font-family: 'Rubik';
       `};
     font-size: 1rem;
-    font-weight: 800;
+    font-weight: 600;
     color: ${({ color, theme }) => (color ? color : theme.title)};
   }
   button {
