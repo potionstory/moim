@@ -44,7 +44,7 @@ export const MoimDetailSummaryWrap = styled.div`
       }
       .btnMain {
         flex: 1;
-        background-color: ${({ theme }) => theme.theme};
+        background-color: ${({ isSave, theme }) => isSave ? theme.theme : color.gray};
       }
       .btnSub {
         width: 40px;

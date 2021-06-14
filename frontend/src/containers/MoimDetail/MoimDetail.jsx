@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { isNull, findIndex, isEmpty, trim, filter, parseInt } from 'lodash';
+import { isNull, findIndex, isEmpty, trim, filter, parseInt, isEqual } from 'lodash';
 import { produce } from 'immer';
 import dayjs from 'dayjs';
 import {
@@ -498,6 +498,7 @@ const MoimDetail = ({ category, id }) => {
             likeCount={likeCount}
             isClient={isClient}
             isEdit={isEdit}
+            isSave={!isEqual(moim, detail)}
             onJoinModalOpen={onJoinModalOpen}
             onExitModalOpen={onExitModalOpen}
             onJoinModalOpen={onJoinModalOpen}

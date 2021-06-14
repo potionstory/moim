@@ -1,4 +1,5 @@
 import React from 'react';
+import { isEqual } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 import UserInfo from '../../components/UserInfo';
@@ -12,13 +13,14 @@ const MoimDetailSummary = ({
   likeCount,
   isClient,
   isEdit,
+  isSave,
   onJoinModalOpen,
   onExitModalOpen,
   onSave,
   onEditToggle,
 }) => {
   return (
-    <MoimDetailSummaryWrap>
+    <MoimDetailSummaryWrap isSave={isSave}>
       <div className="summaryInner">
         <div className="thumb">
           <img src={mainImage} />
@@ -46,7 +48,7 @@ const MoimDetailSummary = ({
           {isClient && (
             <>
               {isEdit && (
-                <button type="button" className="btnMain" onClick={onSave}>
+                <button type="button" className="btnMain" onClick={() => isSave && onSave()}>
                   save
                 </button>
               )}
