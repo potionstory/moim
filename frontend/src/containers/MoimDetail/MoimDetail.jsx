@@ -6,7 +6,15 @@ import React, {
   useEffect,
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { isNull, findIndex, isEmpty, trim, filter, parseInt, isEqual } from 'lodash';
+import {
+  isNull,
+  findIndex,
+  isEmpty,
+  trim,
+  filter,
+  parseInt,
+  isEqual,
+} from 'lodash';
 import { produce } from 'immer';
 import dayjs from 'dayjs';
 import {
@@ -14,6 +22,8 @@ import {
   getMeetingAction,
   putCommunityAction,
   putMeetingAction,
+  putPaymentCheckAction,
+  putStaffCheckAction,
   setIsEditAction,
   resetDetailAction,
 } from '../../store/module/detail';
@@ -39,7 +49,7 @@ import { MoimDetailWrap, MoimDetailInfo } from './style';
 
 const MoimDetail = ({ category, id }) => {
   const { moim, isEdit } = useSelector(({ detail }) => detail);
-  const { userInfo } = useSelector(({ auth }) => auth);
+  const { isAuth, userInfo } = useSelector(({ auth }) => auth);
 
   const dispatch = useDispatch();
 
@@ -53,9 +63,9 @@ const MoimDetail = ({ category, id }) => {
   const urlInputRef = useRef();
   const tagInputRef = useRef();
 
-  const isClient = useMemo(
-    () => !isNull(userInfo) && userInfo.userId === moim.userId,
-    [moim, userInfo],
+  const isMoimClient = useMemo(
+    () => isAuth && !isNull(userInfo) && userInfo.userId === moim.userId,
+    [isAuth, userInfo, moim],
   );
 
   const moimType = useMemo(
@@ -357,16 +367,29 @@ const MoimDetail = ({ category, id }) => {
     [detail],
   );
 
-  const onMemberDepositChange = useCallback(
+  const onMemberPaymentChange = useCallback(
     (userId) => {
+      const { memberList } = detail;
       const index = findIndex(detail.memberList, { userId });
 
-      setDetail(
-        produce((draft) => {
-          draft.memberList[index].isDeposit = !draft.memberList[index]
-            .isDeposit;
+      console.log((memberList[index].isPayment = !memberList[index].isPayment));
+      dispatch(
+        putPaymentCheckAction.REQUEST({
+          meetingId: id,
+          memberList: map(memberList, (member) => {
+            if (member.userId === userId) {
+              member.isPayment = !member.isPayment;
+            }
+            return member;
+          }),
         }),
       );
+      // setDetail(
+      //   produce((draft) => {
+      //     draft.memberList[index].isPayment = !draft.memberList[index]
+      //       .isPayment;
+      //   }),
+      // );
     },
     [detail],
   );
@@ -375,11 +398,12 @@ const MoimDetail = ({ category, id }) => {
     (userId) => {
       const index = findIndex(detail.memberList, { userId });
 
-      setDetail(
-        produce((draft) => {
-          draft.memberList[index].isStaff = !draft.memberList[index].isStaff;
-        }),
-      );
+      dispatch(putStaffCheckAction.REQUEST({ meetingId: id }));
+      // setDetail(
+      //   produce((draft) => {
+      //     draft.memberList[index].isStaff = !draft.memberList[index].isStaff;
+      //   }),
+      // );
     },
     [detail],
   );
@@ -439,12 +463,13 @@ const MoimDetail = ({ category, id }) => {
             isEdit={isEdit}
             userImage={userImage}
             userName={userName}
+            isMoimClient={isMoimClient}
             memberSetting={memberSetting}
             memberList={memberList}
             onIsSelfCheck={onIsSelfCheck}
             onJoinFormCheck={onJoinFormCheck}
             onChangeMemberCount={onChangeMemberCount}
-            onMemberDepositChange={onMemberDepositChange}
+            onMemberPaymentChange={onMemberPaymentChange}
             onMemberStaffChange={onMemberStaffChange}
             onMemberRemove={onMemberRemove}
           />
@@ -452,7 +477,7 @@ const MoimDetail = ({ category, id }) => {
       default:
         return false;
     }
-  }, [moim, detail, isEdit, tabIndex]);
+  }, [moim, detail, isEdit, tabIndex, isMoimClient]);
 
   useEffect(() => {
     if (category === 'community') {
@@ -496,7 +521,7 @@ const MoimDetail = ({ category, id }) => {
             userImage={userImage}
             userName={userName}
             likeCount={likeCount}
-            isClient={isClient}
+            isMoimClient={isMoimClient}
             isEdit={isEdit}
             isSave={!isEqual(moim, detail)}
             onJoinModalOpen={onJoinModalOpen}

@@ -44,7 +44,8 @@ export const MoimDetailSummaryWrap = styled.div`
       }
       .btnMain {
         flex: 1;
-        background-color: ${({ isSave, theme }) => isSave ? theme.theme : color.gray};
+        background-color: ${({ isMainActive, theme }) =>
+          isMainActive ? theme.theme : color.gray};
       }
       .btnSub {
         width: 40px;
@@ -1154,7 +1155,7 @@ export const MoimDetailMemberWrap = styled.div`
                   color: ${({ theme }) => theme.main};
                   line-height: 20px;
                 }
-                .deposit {
+                .payment {
                   display: flex;
                   align-items: center;
                   justify-content: center;
@@ -1174,7 +1175,7 @@ export const MoimDetailMemberWrap = styled.div`
                     font-size: 0.625rem;
                     color: ${color.black};
                   }
-                  &.pay {
+                  &.active {
                     background-color: ${color.orange};
                   }
                 }

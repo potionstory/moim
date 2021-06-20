@@ -31,12 +31,13 @@ const MoimDetailMember = ({
   isEdit,
   userImage,
   userName,
+  isMoimClient,
   memberSetting,
   memberList,
   onIsSelfCheck,
   onJoinFormCheck,
   onChangeMemberCount,
-  onMemberDepositChange,
+  onMemberPaymentChange,
   onMemberStaffChange,
   onMemberRemove,
 }) => {
@@ -51,7 +52,7 @@ const MoimDetailMember = ({
           {
             userId: userName,
             name: userName,
-            isDeposit: true,
+            isPayment: true,
             isClient: true,
             isStaff: false,
           },
@@ -208,14 +209,14 @@ const MoimDetailMember = ({
                     <span className="icon">
                       <FontAwesomeIcon icon={faWonSign} />
                     </span>
-                    {filter(members[0], { isDeposit: true }).length}
+                    {filter(members[0], { isPayment: true }).length}
                   </span>
                   {` / `}
                   <span className="count notPay">
                     <span className="icon">
                       <FontAwesomeIcon icon={faWonSign} />
                     </span>
-                    {filter(members[0], { isDeposit: false }).length}
+                    {filter(members[0], { isPayment: false }).length}
                   </span>
                   {` / `}
                   <span className="count empty">
@@ -249,7 +250,7 @@ const MoimDetailMember = ({
               <ul>
                 {map(members[0], (item, index) => {
                   if (item !== undefined) {
-                    const { userId, name, isDeposit, isClient, isStaff } = item;
+                    const { userId, name, isPayment, isClient, isStaff } = item;
 
                     return (
                       <li key={index}>
@@ -268,42 +269,32 @@ const MoimDetailMember = ({
                                 </button>
                               )
                             )}
-                            <span
-                              className={`deposit ${isDeposit && 'pay'}`}
+                            <button
+                              className={`payment ${isPayment && 'active'}`}
                               onClick={() =>
-                                isEdit &&
+                                isMoimClient &&
                                 !isClient &&
-                                onMemberDepositChange(userId)
+                                onMemberPaymentChange(userId)
                               }
                             >
                               <FontAwesomeIcon
                                 icon={!isEdit ? faWonSign : faWonSign}
                               />
-                            </span>
-                            {!isEdit ? (
-                              <span
-                                className={`avatar ${isClient && 'isClient'} ${
-                                  isStaff && 'isStaff'
-                                }`}
-                              >
-                                <FontAwesomeIcon
-                                  icon={isClient || isStaff ? faCrown : faGhost}
-                                />
-                              </span>
-                            ) : (
-                              <span
-                                className={`avatar ${isClient && 'isClient'} ${
-                                  isStaff && 'isStaff'
-                                }`}
-                                onClick={() =>
-                                  isClient || onMemberStaffChange(userId)
-                                }
-                              >
-                                <FontAwesomeIcon
-                                  icon={isClient || isStaff ? faCrown : faGhost}
-                                />
-                              </span>
-                            )}
+                            </button>
+                            <button
+                              className={`avatar ${isClient && 'isClient'} ${
+                                isStaff && 'isStaff'
+                              }`}
+                              onClick={() =>
+                                isMoimClient &&
+                                !isClient &&
+                                onMemberStaffChange(userId)
+                              }
+                            >
+                              <FontAwesomeIcon
+                                icon={isClient || isStaff ? faCrown : faGhost}
+                              />
+                            </button>
                             <span className="name">{name}</span>
                           </div>
                         </div>

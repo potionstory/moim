@@ -25,3 +25,29 @@ export const postMeetingExitAPI = (meetingId, bodyParams) => {
       return error;
     });
 };
+
+// put payment check
+export const putPaymentCheckAPI = (meetingId, bodyParams) => {
+  console.log('putPaymentCheckAPI');
+  return api
+    .put(`/meeting/paymentCheck/${meetingId}`, bodyParams)
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
+
+//put staff cehck
+export const putStaffCheckAPI = (meetingId, bodyParams) => {
+  console.log('putStaffCheckAPI');
+  return api
+    .put(`/meeting/staffCheck/${meetingId}`, bodyParams)
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => {
+      return error;
+    });
+};

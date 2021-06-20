@@ -7,6 +7,8 @@ import {
   PUT_MEETING,
   POST_MOIM_JOIN,
   POST_MOIM_EXIT,
+  PUT_PAYMENT_CHECK,
+  PUT_STAFF_CHECK,
 } from '../module/detail';
 import {
   getCommunityAction,
@@ -15,6 +17,8 @@ import {
   putMeetingAction,
   postMoimJoinAction,
   postMoimExitAction,
+  putPaymentCheckAction,
+  putStaffCheckAction,
 } from '../module/detail';
 import { modalCloseAction } from '../module/global';
 import { getCommunityAPI, putCommunityAPI } from '../api/community';
@@ -23,6 +27,8 @@ import {
   putMeetingAPI,
   postMeetingJoinAPI,
   postMeetingExitAPI,
+  putPaymentCheckAPI,
+  putStaffCheckAPI,
 } from '../api/meeting';
 
 function* workGetCommunity(action) {
@@ -95,6 +101,29 @@ function* workPostMoimExit(action) {
   }
 }
 
+function* workPutPaymentCheck(action) {
+  const { meetingId, memberList } = action.payload;
+
+  // forEach(formData, (item) => {
+  //   bodyParams[item.name] = item.value;
+  // });
+
+  const res = yield call(putPaymentCheckAPI, meetingId, memberList);
+  console.log('workPutPaymentCheck: ', res);
+}
+
+function* workPutStaffCheck(action) {
+  const bodyParams = {};
+  const { meetingId, formData } = action.payload;
+
+  forEach(formData, (item) => {
+    bodyParams[item.name] = item.value;
+  });
+
+  const res = yield call(putStaffCheckAPI, meetingId, bodyParams);
+  console.log('workPutStaffCheck: ', res);
+}
+
 function* watchGetCommunity() {
   yield takeEvery(GET_COMMUNITY.REQUEST, workGetCommunity);
 }
@@ -119,6 +148,14 @@ function* watchPostMoimExit() {
   yield takeEvery(POST_MOIM_EXIT.REQUEST, workPostMoimExit);
 }
 
+function* watchPutPaymentCheck() {
+  yield takeEvery(PUT_PAYMENT_CHECK.REQUEST, workPutPaymentCheck);
+}
+
+function* watchPutStaffCheck() {
+  yield takeEvery(PUT_STAFF_CHECK.REQUEST, workPutStaffCheck);
+}
+
 export default [
   watchGetCommunity,
   watchGetMeeting,
@@ -126,4 +163,6 @@ export default [
   watchPutMeeting,
   watchPostMoimJoin,
   watchPostMoimExit,
+  watchPutPaymentCheck,
+  watchPutStaffCheck,
 ];

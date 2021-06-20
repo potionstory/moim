@@ -23,6 +23,7 @@ import {
   signOutAction,
   getUserAction,
 } from '../module/auth';
+import { setIsEditAction } from '../module/detail';
 import { modalCloseAction } from '../module/global';
 import { auth } from '../../server/firebase.util';
 import { getSocialSign } from '../../utils/commonUtil';
@@ -142,6 +143,7 @@ function* workSignOut() {
 
   if (response) {
     yield put(signOutAction.SUCCESS());
+    yield put(setIsEditAction(false));
   } else {
     yield put(signOutAction.FAILURE());
   }

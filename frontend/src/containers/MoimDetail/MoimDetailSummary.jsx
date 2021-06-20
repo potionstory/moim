@@ -1,5 +1,4 @@
 import React from 'react';
-import { isEqual } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 import UserInfo from '../../components/UserInfo';
@@ -11,7 +10,7 @@ const MoimDetailSummary = ({
   userImage,
   userName,
   likeCount,
-  isClient,
+  isMoimClient,
   isEdit,
   isSave,
   onJoinModalOpen,
@@ -20,14 +19,14 @@ const MoimDetailSummary = ({
   onEditToggle,
 }) => {
   return (
-    <MoimDetailSummaryWrap isSave={isSave}>
+    <MoimDetailSummaryWrap isMainActive={!isMoimClient || isSave}>
       <div className="summaryInner">
         <div className="thumb">
           <img src={mainImage} />
         </div>
         <UserInfo image={userImage} name={userName} count={likeCount} />
         <div className="btnWrap">
-          {category === 'meeting' && !isClient && (
+          {category === 'meeting' && !isMoimClient && (
             <>
               <button
                 type="button"
@@ -45,10 +44,14 @@ const MoimDetailSummary = ({
               </button>
             </>
           )}
-          {isClient && (
+          {isMoimClient && (
             <>
               {isEdit && (
-                <button type="button" className="btnMain" onClick={() => isSave && onSave()}>
+                <button
+                  type="button"
+                  className="btnMain"
+                  onClick={() => isSave && onSave()}
+                >
                   save
                 </button>
               )}
