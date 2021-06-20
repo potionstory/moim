@@ -29,6 +29,8 @@ const {
   deleteMeeting,
   postMeetingJoin,
   postMeetingExit,
+  putPaymentCheck,
+  putStaffCheck,
   likeMeeting,
   unlikeMeeting,
   commentOnMeeting,
@@ -71,6 +73,8 @@ app.put("/meeting/:meetingId", FBAuth, putMeeting);
 app.delete("/meeting/:meetingId", FBAuth, deleteMeeting);
 app.put("/meeting/join/:meetingId", postMeetingJoin);
 app.put("/meeting/exit/:meetingId", postMeetingExit);
+app.put("/meeting/paymentCheck/:meetingId", putPaymentCheck);
+app.put("/meeting/staffCheck/:meetingId", putStaffCheck);
 app.get("/meeting/:meetingId/like", FBAuth, likeMeeting);
 app.get("/meeting/:meetingId/unlike", FBAuth, unlikeMeeting);
 app.post("/meeting/:meetingId/comment", FBAuth, commentOnMeeting);

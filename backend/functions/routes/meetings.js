@@ -256,7 +256,7 @@ exports.postMeetingJoin = (req, res) => {
     email,
     mobile,
     passNumber: passNumber.join(""),
-    isDeposit: false,
+    isPayment: false,
     isClient: false,
     isStaff: false,
     joindAt: new Date().toISOString(),
@@ -334,6 +334,16 @@ exports.postMeetingExit = (req, res) => {
           res.status(500).json({ error: "Something went wrong" });
         });
     });
+};
+
+// payment check
+exports.putPaymentCheck = (req, res) => {
+  console.log("putPaymentCheck: ");
+};
+
+// staff check
+exports.putStaffCheck = (req, res) => {
+  console.log("putStaffCheck: ");
 };
 
 // like one meeting
