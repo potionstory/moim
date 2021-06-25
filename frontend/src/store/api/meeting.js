@@ -28,7 +28,6 @@ export const postMeetingExitAPI = (meetingId, bodyParams) => {
 
 // put payment check
 export const putPaymentCheckAPI = (meetingId, bodyParams) => {
-  console.log('putPaymentCheckAPI');
   return api
     .put(`/meeting/paymentCheck/${meetingId}`, bodyParams)
     .then((res) => {
@@ -41,7 +40,6 @@ export const putPaymentCheckAPI = (meetingId, bodyParams) => {
 
 //put staff cehck
 export const putStaffCheckAPI = (meetingId, bodyParams) => {
-  console.log('putStaffCheckAPI');
   return api
     .put(`/meeting/staffCheck/${meetingId}`, bodyParams)
     .then((res) => {

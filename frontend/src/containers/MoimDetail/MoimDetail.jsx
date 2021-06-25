@@ -7,12 +7,13 @@ import React, {
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  isNull,
+  map,
   findIndex,
-  isEmpty,
   trim,
   filter,
   parseInt,
+  isNull,
+  isEmpty,
   isEqual,
 } from 'lodash';
 import { produce } from 'immer';
@@ -369,43 +370,22 @@ const MoimDetail = ({ category, id }) => {
 
   const onMemberPaymentChange = useCallback(
     (userId) => {
-      const { memberList } = detail;
-      const index = findIndex(detail.memberList, { userId });
 
-      console.log((memberList[index].isPayment = !memberList[index].isPayment));
       dispatch(
         putPaymentCheckAction.REQUEST({
           meetingId: id,
-          memberList: map(memberList, (member) => {
-            if (member.userId === userId) {
-              member.isPayment = !member.isPayment;
-            }
-            return member;
-          }),
+          userId,
         }),
       );
-      // setDetail(
-      //   produce((draft) => {
-      //     draft.memberList[index].isPayment = !draft.memberList[index]
-      //       .isPayment;
-      //   }),
-      // );
     },
-    [detail],
+    [],
   );
 
   const onMemberStaffChange = useCallback(
     (userId) => {
-      const index = findIndex(detail.memberList, { userId });
-
-      dispatch(putStaffCheckAction.REQUEST({ meetingId: id }));
-      // setDetail(
-      //   produce((draft) => {
-      //     draft.memberList[index].isStaff = !draft.memberList[index].isStaff;
-      //   }),
-      // );
+      dispatch(putStaffCheckAction.REQUEST({ meetingId: id, userId }));
     },
-    [detail],
+    [],
   );
 
   const onMemberRemove = useCallback(
@@ -456,13 +436,14 @@ const MoimDetail = ({ category, id }) => {
           />
         );
       case 3:
-        const { userImage, userName, memberSetting, memberList } = detail;
+        const { userImage, userName, userAvatar, memberSetting, memberList } = detail;
 
         return (
           <MoimDetailMemeber
             isEdit={isEdit}
             userImage={userImage}
             userName={userName}
+            userAvatar={userAvatar}
             isMoimClient={isMoimClient}
             memberSetting={memberSetting}
             memberList={memberList}

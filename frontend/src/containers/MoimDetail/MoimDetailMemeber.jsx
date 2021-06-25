@@ -18,6 +18,7 @@ import {
   faCog,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
+import Avatar from 'boring-avatars';
 import CheckBox from '../../components/CheckBox';
 import { moimMemberForm } from '../../utils/formData';
 import { MoimDetailMemberWrap } from './style';
@@ -31,6 +32,7 @@ const MoimDetailMember = ({
   isEdit,
   userImage,
   userName,
+  userAvatar,
   isMoimClient,
   memberSetting,
   memberList,
@@ -55,6 +57,7 @@ const MoimDetailMember = ({
             isPayment: true,
             isClient: true,
             isStaff: false,
+            userAvatar,
           },
           ...memberList,
         ]
@@ -250,7 +253,7 @@ const MoimDetailMember = ({
               <ul>
                 {map(members[0], (item, index) => {
                   if (item !== undefined) {
-                    const { userId, name, isPayment, isClient, isStaff } = item;
+                    const { userId, userName, userAvatar, isPayment, isClient, isStaff } = item;
 
                     return (
                       <li key={index}>
@@ -291,11 +294,17 @@ const MoimDetailMember = ({
                                 onMemberStaffChange(userId)
                               }
                             >
-                              <FontAwesomeIcon
-                                icon={isClient || isStaff ? faCrown : faGhost}
+                              <Avatar
+                                size={40}
+                                name={userAvatar.name}
+                                variant="beam"
+                                colors={userAvatar.color}
                               />
+                              {/* <FontAwesomeIcon
+                                icon={isClient || isStaff ? faCrown : faGhost}
+                              /> */}
                             </button>
-                            <span className="name">{name}</span>
+                            <span className="name">{userName}</span>
                           </div>
                         </div>
                       </li>
@@ -355,7 +364,7 @@ const MoimDetailMember = ({
             >
               <ul>
                 {map(members[1], (item, index) => {
-                  const { userId, name, isClient, isStaff } = item;
+                  const { userId, userName, userAvatar, isClient, isStaff } = item;
 
                   return (
                     <li key={index}>
@@ -377,11 +386,17 @@ const MoimDetailMember = ({
                               isStaff && 'isStaff'
                             }`}
                           >
-                            <FontAwesomeIcon
-                              icon={isClient || isStaff ? faCrown : faGhost}
+                            <Avatar
+                              size={40}
+                              name={userAvatar.name}
+                              variant="beam"
+                              colors={userAvatar.color}
                             />
+                            {/* <FontAwesomeIcon
+                              icon={isClient || isStaff ? faCrown : faGhost}
+                            /> */}
                           </span>
-                          <span className="name">{name}</span>
+                          <span className="name">{userName}</span>
                         </div>
                       </div>
                     </li>

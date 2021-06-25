@@ -23,6 +23,7 @@
     "@material-ui/pickers": "^3.3.10",
     "@material-ui/styles": "^4.11.4",
     "axios": "^0.19.2",
+    "boring-avatars": "^1.5.8",
     "css-loader": "^3.5.3",
     "dayjs": "^1.10.4",
     "firebase": "^7.16.1",

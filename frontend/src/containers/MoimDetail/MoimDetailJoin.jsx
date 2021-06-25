@@ -2,7 +2,6 @@ import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import filter from 'lodash/filter';
 import every from 'lodash/every';
-import map from 'lodash/map';
 import findIndex from 'lodash/findIndex';
 import { produce } from 'immer';
 import InputForm from '../../components/InputForm';
@@ -12,6 +11,8 @@ import {
   mobileCheck,
   passNumberCheck,
 } from '../../utils/regexUtil';
+import { avatars } from '../../lib/const';
+import { color } from '../../lib/styles/palette';
 import { moimMemberForm } from '../../utils/formData';
 import { postMoimJoinAction } from '../../store/module/detail';
 import { MoimDetailModalWrap } from './style';
@@ -87,10 +88,16 @@ const MoimDetailJoin = () => {
       } else if (userName === formName) {
         alert('참여명은 클라이언트의 이름으로 할 수 없습니다.');
       } else {
+        const userAvatar = {
+          name: avatars[Math.floor(Math.random() * 99)],
+          colors: [color.red, color.orange, color.green, color.blue, color.pink].sort(() => Math.random() - 0.5),
+        };
+
         dispatch(
           postMoimJoinAction.REQUEST({
             meetingId,
             formData,
+            userAvatar,
           }),
         );
       }

@@ -69,11 +69,13 @@ function* workPutMeeting(action) {
 
 function* workPostMoimJoin(action) {
   const bodyParams = {};
-  const { meetingId, formData } = action.payload;
+  const { meetingId, formData, userAvatar } = action.payload;
 
   forEach(formData, (item) => {
     bodyParams[item.name] = item.value;
   });
+
+  bodyParams['userAvatar'] = userAvatar;
 
   const res = yield call(postMeetingJoinAPI, meetingId, bodyParams);
 
@@ -102,26 +104,27 @@ function* workPostMoimExit(action) {
 }
 
 function* workPutPaymentCheck(action) {
-  const { meetingId, memberList } = action.payload;
+  const { meetingId, userId } = action.payload;
 
-  // forEach(formData, (item) => {
-  //   bodyParams[item.name] = item.value;
-  // });
-
-  const res = yield call(putPaymentCheckAPI, meetingId, memberList);
-  console.log('workPutPaymentCheck: ', res);
+  const res = yield call(putPaymentCheckAPI, meetingId, { userId });
+  
+  if (res.status === 200) {
+    yield put(putPaymentCheckAction.SUCCESS(res.data));
+  } else {
+    yield put(putPaymentCheckAction.FAILURE(res));
+  }
 }
 
 function* workPutStaffCheck(action) {
-  const bodyParams = {};
-  const { meetingId, formData } = action.payload;
+  const { meetingId, userId } = action.payload;
 
-  forEach(formData, (item) => {
-    bodyParams[item.name] = item.value;
-  });
-
-  const res = yield call(putStaffCheckAPI, meetingId, bodyParams);
-  console.log('workPutStaffCheck: ', res);
+  const res = yield call(putStaffCheckAPI, meetingId, { userId });
+  
+  if (res.status === 200) {
+    yield put(putStaffCheckAction.SUCCESS(res.data));
+  } else {
+    yield put(putStaffCheckAction.FAILURE(res));
+  }
 }
 
 function* watchGetCommunity() {
