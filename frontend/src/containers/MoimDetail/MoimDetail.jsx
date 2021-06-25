@@ -436,11 +436,12 @@ const MoimDetail = ({ category, id }) => {
           />
         );
       case 3:
-        const { userImage, userName, userAvatar, memberSetting, memberList } = detail;
+        const { userId, userImage, userName, userAvatar, memberSetting, memberList } = detail;
 
         return (
           <MoimDetailMemeber
             isEdit={isEdit}
+            userId={userId}
             userImage={userImage}
             userName={userName}
             userAvatar={userAvatar}

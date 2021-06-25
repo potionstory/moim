@@ -30,6 +30,7 @@ const settingBoxVariants = {
 
 const MoimDetailMember = ({
   isEdit,
+  userId,
   userImage,
   userName,
   userAvatar,
@@ -52,12 +53,12 @@ const MoimDetailMember = ({
     const member = isSelf
       ? [
           {
-            userId: userName,
-            name: userName,
+            userId,
+            userName,
+            userAvatar,
             isPayment: true,
             isClient: true,
             isStaff: false,
-            userAvatar,
           },
           ...memberList,
         ]
