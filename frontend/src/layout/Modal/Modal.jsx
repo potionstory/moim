@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { modalCloseAction } from '../../store/module/global';
+import { signUserResetAction } from '../../store/module/auth';
 import SignIn from '../../containers/Sign/SignIn';
 import SignUp from '../../containers/Sign/SignUp';
 import MoimDetailJoin from '../../containers/MoimDetail/MoimDetailJoin';
@@ -12,9 +13,10 @@ import { ModalWrap, ModalInner, CloseButton } from './style';
 const Modal = () => {
   const dispatch = useDispatch();
 
-  const onModalClose = useCallback(() => dispatch(modalCloseAction()), [
-    dispatch,
-  ]);
+  const onModalClose = useCallback(() => {
+    dispatch(modalCloseAction());
+    dispatch(signUserResetAction());
+  }, [dispatch]);
 
   const { theme, modal } = useSelector(({ global }) => global);
   const { isVisible, name } = modal;

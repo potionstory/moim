@@ -46,6 +46,7 @@ export const postSignUp = (bodyParams) => {
   formData.set('password', bodyParams.password);
   formData.set('confirmPassword', bodyParams.confirmPassword);
   formData.set('userName', bodyParams.userName);
+  formData.set('userAvatar', JSON.stringify(bodyParams.userAvatar));
   formData.append('userImageFile', bodyParams.userImageFile);
 
   return api

@@ -368,25 +368,18 @@ const MoimDetail = ({ category, id }) => {
     [detail],
   );
 
-  const onMemberPaymentChange = useCallback(
-    (userId) => {
+  const onMemberPaymentChange = useCallback((userId) => {
+    dispatch(
+      putPaymentCheckAction.REQUEST({
+        meetingId: id,
+        userId,
+      }),
+    );
+  }, []);
 
-      dispatch(
-        putPaymentCheckAction.REQUEST({
-          meetingId: id,
-          userId,
-        }),
-      );
-    },
-    [],
-  );
-
-  const onMemberStaffChange = useCallback(
-    (userId) => {
-      dispatch(putStaffCheckAction.REQUEST({ meetingId: id, userId }));
-    },
-    [],
-  );
+  const onMemberStaffChange = useCallback((userId) => {
+    dispatch(putStaffCheckAction.REQUEST({ meetingId: id, userId }));
+  }, []);
 
   const onMemberRemove = useCallback(
     (userId) => {
@@ -436,7 +429,14 @@ const MoimDetail = ({ category, id }) => {
           />
         );
       case 3:
-        const { userId, userImage, userName, userAvatar, memberSetting, memberList } = detail;
+        const {
+          userId,
+          userImage,
+          userName,
+          userAvatar,
+          memberSetting,
+          memberList,
+        } = detail;
 
         return (
           <MoimDetailMemeber
@@ -483,6 +483,7 @@ const MoimDetail = ({ category, id }) => {
   const {
     mainImage,
     userImage,
+    userAvatar,
     userName,
     likeCount,
     title,
@@ -501,6 +502,7 @@ const MoimDetail = ({ category, id }) => {
             category={category}
             mainImage={mainImage}
             userImage={userImage}
+            userAvatar={userAvatar}
             userName={userName}
             likeCount={likeCount}
             isMoimClient={isMoimClient}

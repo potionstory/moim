@@ -35,8 +35,8 @@ export const Member = styled.div`
         width: 40px;
         height: 40px;
         border-radius: 24px;
-        background-color: ${({ theme, isImageNone }) =>
-          !isImageNone ? theme.sub : theme.theme};
+        background-color: ${({ theme, isImage }) =>
+          isImage ? theme.sub : theme.theme};
         transition: all 0.2s ease-out;
         img {
           width: 100%;
@@ -45,8 +45,8 @@ export const Member = styled.div`
         }
         svg {
           font-size: 1.6rem;
-          color: ${({ theme, isImageNone }) =>
-            !isImageNone ? theme.gray : theme.main};
+          color: ${({ theme, isImage }) =>
+            isImage ? theme.gray : theme.title};
         }
       }
       .name {

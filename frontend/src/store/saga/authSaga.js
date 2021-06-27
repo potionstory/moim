@@ -101,13 +101,15 @@ function* workSign(action) {
 
 function* workSignUp(action) {
   const { signInfo } = yield select(({ auth }) => auth);
+  const { formData, userAvatar } = action.payload;
+
   const userInfo = reduce(
-    action.payload,
+    formData,
     (acc, cur) => assign(acc, { [cur.name]: cur.value }),
     {},
   );
 
-  const bodyParams = { ...signInfo, ...userInfo };
+  const bodyParams = { ...signInfo, ...userInfo, userAvatar };
 
   const response = yield call(postSignUp, bodyParams);
 

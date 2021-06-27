@@ -109,20 +109,19 @@ export const MenuItem = styled.li`
   }
 `;
 
-export const Avatar = styled.button`
+export const AvatarBox = styled.button`
   overflow: hidden;
   margin-left: 24px;
   width: 40px;
   height: 40px;
   box-sizing: border-box;
   border-radius: 20px;
-  background-color: ${({ theme, isImageNone }) =>
-    !isImageNone ? theme.sub : theme.theme};
+  background-color: ${({ theme, isImage }) =>
+    isImage ? theme.sub : theme.theme};
   transition: all 0.2s ease-out;
   svg {
     font-size: 1.6rem;
-    color: ${({ theme, isImageNone }) =>
-      !isImageNone ? theme.gray : theme.title};
+    color: ${({ theme, isImage }) => (isImage ? theme.gray : theme.title)};
   }
   img {
     width: 100%;

@@ -7,32 +7,38 @@ import {
   faUserEdit,
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
+import Avatar from 'boring-avatars';
 import TextButton from '../../components/Button/TextButton';
 import IconButton from '../../components/Button/IconButton';
 import { AvatarToastWrap, Member, NonMember, Menus } from './style';
 
 const AvatarToast = ({
   isAuth,
-  isImageNone,
   userInfo,
   onSignOut,
   onSignInModalOpen,
   onSignUpModalOpen,
 }) => {
+  const { userAvatar, userImage, userName } = userInfo;
   return (
     <AvatarToastWrap>
       {isAuth ? (
-        <Member isImageNone={isImageNone}>
+        <Member isImage={userImage !== null}>
           <div className="profile">
             <span className="user">
               <span className="avatar">
-                {isAuth && !isImageNone ? (
-                  <img src={userInfo.userImage} />
+                {userImage === null ? (
+                  <Avatar
+                    size={40}
+                    name={userAvatar.name}
+                    variant="beam"
+                    colors={userAvatar.colors}
+                  />
                 ) : (
-                  <FontAwesomeIcon icon={faGhost} />
+                  <img src={userImage} />
                 )}
               </span>
-              <span className="name">{userInfo.userName}</span>
+              <span className="name">{userName}</span>
             </span>
             <IconButton onClickEvent={onSignInModalOpen} icon={faUserEdit} />
           </div>

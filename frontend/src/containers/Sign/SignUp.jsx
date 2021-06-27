@@ -4,6 +4,8 @@ import isEmpty from 'lodash/isEmpty';
 import every from 'lodash/every';
 import findIndex from 'lodash/findIndex';
 import { produce } from 'immer';
+import { avatars } from '../../lib/const';
+import { color } from '../../lib/styles/palette';
 import { signUpForm, userInfoForm } from '../../utils/formData';
 import { emailCheck, passwordCheck, nameCheck } from '../../utils/regexUtil';
 import {
@@ -41,7 +43,25 @@ const SignUp = () => {
   );
 
   const onSignUp = useCallback(
-    (payload) => dispatch(signUpAction.REQUEST(payload)),
+    (payload) => {
+      const userAvatar = {
+        name: avatars[Math.floor(Math.random() * 99)],
+        colors: [
+          color.red,
+          color.orange,
+          color.green,
+          color.blue,
+          color.pink,
+        ].sort(() => Math.random() - 0.5),
+      };
+
+      dispatch(
+        signUpAction.REQUEST({
+          formData: payload,
+          userAvatar,
+        }),
+      );
+    },
     [dispatch],
   );
 

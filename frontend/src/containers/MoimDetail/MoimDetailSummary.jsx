@@ -8,6 +8,7 @@ const MoimDetailSummary = ({
   category,
   mainImage,
   userImage,
+  userAvatar,
   userName,
   likeCount,
   isMoimClient,
@@ -24,7 +25,12 @@ const MoimDetailSummary = ({
         <div className="thumb">
           <img src={mainImage} />
         </div>
-        <UserInfo image={userImage} name={userName} count={likeCount} />
+        <UserInfo
+          image={userImage}
+          avatar={userAvatar}
+          name={userName}
+          count={likeCount}
+        />
         <div className="btnWrap">
           {category === 'meeting' && !isMoimClient && (
             <>

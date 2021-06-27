@@ -15,6 +15,7 @@ const Card = ({ item, category }) => {
       </div>
       <UserInfo
         image={item.userImage}
+        avatar={item.userAvatar}
         name={item.userName}
         count={item.likeCount}
       />

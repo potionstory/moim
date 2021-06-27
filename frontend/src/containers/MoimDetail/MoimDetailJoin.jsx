@@ -90,7 +90,13 @@ const MoimDetailJoin = () => {
       } else {
         const userAvatar = {
           name: avatars[Math.floor(Math.random() * 99)],
-          colors: [color.red, color.orange, color.green, color.blue, color.pink].sort(() => Math.random() - 0.5),
+          colors: [
+            color.red,
+            color.orange,
+            color.green,
+            color.blue,
+            color.pink,
+          ].sort(() => Math.random() - 0.5),
         };
 
         dispatch(

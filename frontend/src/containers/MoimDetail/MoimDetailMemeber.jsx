@@ -254,7 +254,14 @@ const MoimDetailMember = ({
               <ul>
                 {map(members[0], (item, index) => {
                   if (item !== undefined) {
-                    const { userId, userName, userAvatar, isPayment, isClient, isStaff } = item;
+                    const {
+                      userId,
+                      userName,
+                      userAvatar,
+                      isPayment,
+                      isClient,
+                      isStaff,
+                    } = item;
 
                     return (
                       <li key={index}>
@@ -295,15 +302,16 @@ const MoimDetailMember = ({
                                 onMemberStaffChange(userId)
                               }
                             >
-                              <Avatar
-                                size={40}
-                                name={userAvatar.name}
-                                variant="beam"
-                                colors={userAvatar.color}
-                              />
-                              {/* <FontAwesomeIcon
-                                icon={isClient || isStaff ? faCrown : faGhost}
-                              /> */}
+                              {!isClient && !isStaff ? (
+                                <Avatar
+                                  size={40}
+                                  name={userAvatar.name}
+                                  variant="beam"
+                                  colors={userAvatar.colors}
+                                />
+                              ) : (
+                                <FontAwesomeIcon icon={faCrown} />
+                              )}
                             </button>
                             <span className="name">{userName}</span>
                           </div>
@@ -365,7 +373,13 @@ const MoimDetailMember = ({
             >
               <ul>
                 {map(members[1], (item, index) => {
-                  const { userId, userName, userAvatar, isClient, isStaff } = item;
+                  const {
+                    userId,
+                    userName,
+                    userAvatar,
+                    isClient,
+                    isStaff,
+                  } = item;
 
                   return (
                     <li key={index}>
@@ -387,15 +401,16 @@ const MoimDetailMember = ({
                               isStaff && 'isStaff'
                             }`}
                           >
-                            <Avatar
-                              size={40}
-                              name={userAvatar.name}
-                              variant="beam"
-                              colors={userAvatar.color}
-                            />
-                            {/* <FontAwesomeIcon
-                              icon={isClient || isStaff ? faCrown : faGhost}
-                            /> */}
+                            {!isClient && !isStaff ? (
+                              <Avatar
+                                size={40}
+                                name={userAvatar.name}
+                                variant="beam"
+                                colors={userAvatar.colors}
+                              />
+                            ) : (
+                              <FontAwesomeIcon icon={faCrown} />
+                            )}
                           </span>
                           <span className="name">{userName}</span>
                         </div>

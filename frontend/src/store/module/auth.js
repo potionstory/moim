@@ -11,6 +11,7 @@ export const SIGN_IN = createType('SIGN_IN');
 export const SIGN_OUT = createType('SIGNOUT');
 export const GET_USER = createType('GET_USER');
 export const SIGN_USER_IMAGE = 'SIGN_USER_IMAGE';
+export const SIGN_USER_RESET = 'SIGN_USER_RESET';
 
 // action 생성자 함수
 export const socialSignAction = createAction(SOCIAL_SIGN);
@@ -24,6 +25,9 @@ export const getUserAction = createAction(GET_USER);
 export const signUserImageAction = (payload) => ({
   type: SIGN_USER_IMAGE,
   payload,
+});
+export const signUserResetAction = () => ({
+  type: SIGN_USER_RESET,
 });
 
 // initialState
@@ -145,6 +149,10 @@ export default (state = initialState, action) => {
       }
       case SIGN_USER_IMAGE: {
         draft.signInfo.userImageFile = action.payload;
+        break;
+      }
+      case SIGN_USER_RESET: {
+        draft.signInfo = null;
         break;
       }
       default:

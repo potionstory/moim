@@ -10,8 +10,8 @@ import {
   faUserPlus,
   faSignOutAlt,
   faPlus,
-  faGhost,
 } from '@fortawesome/free-solid-svg-icons';
+import Avatar from 'boring-avatars';
 import api from '../../store/api';
 import {
   themeToggleAction,
@@ -31,7 +31,7 @@ import {
   Menu,
   MenuList,
   MenuItem,
-  Avatar,
+  AvatarBox,
 } from './style';
 
 const token = localStorage.FBIdToken;
@@ -77,10 +77,6 @@ const Header = () => {
     setIsUserActive((prev) => !prev);
   }, []);
 
-  const isImageNone = useMemo(() => isAuth && userInfo.userImage === null, [
-    userInfo,
-  ]);
-
   useEffect(() => {
     if (token) {
       onGetUser();
@@ -92,6 +88,12 @@ const Header = () => {
       setIsUserActive(isAuth);
     }
   }, [isAuth]);
+
+  console.log(
+    '%c 🥟 userInfo: ',
+    'font-size:20px;background-color: #33A5FF;color:#fff;',
+    userInfo,
+  );
 
   return (
     <HeaderWrap>
@@ -152,36 +154,44 @@ const Header = () => {
                 <IconButton onClickEvent={onLinkToCreate} icon={faPlus} />
               </MenuItem>
             </MenuList>
-            <Avatar
-              onClick={onUserMenuToggle}
-              isActive={isUserActive}
-              isImageNone={isImageNone}
-            >
-              {isAuth && !isImageNone ? (
-                <img src={userInfo.userImage} />
-              ) : (
-                <FontAwesomeIcon icon={faGhost} />
-              )}
-            </Avatar>
+            {isAuth && (
+              <AvatarBox
+                onClick={onUserMenuToggle}
+                isActive={isUserActive}
+                isImage={userInfo.userImage !== null}
+              >
+                {userInfo.userImage === null ? (
+                  <Avatar
+                    size={40}
+                    name={userInfo.userAvatar.name}
+                    variant="beam"
+                    colors={userInfo.userAvatar.colors}
+                  />
+                ) : (
+                  <img src={userInfo.userImage} />
+                )}
+              </AvatarBox>
+            )}
           </Menu>
         </RightHead>
       </HeaderInnder>
-      <motion.div
-        className="avatarToast"
-        animate={{ x: isUserActive ? -360 : -40 }}
-        transition={{
-          ease: 'backInOut',
-        }}
-      >
-        <AvatarToast
-          isAuth={isAuth}
-          isImageNone={isImageNone}
-          userInfo={userInfo}
-          onSignOut={onSignOut}
-          onSignInModalOpen={onSignInModalOpen}
-          onSignUpModalOpen={onSignUpModalOpen}
-        />
-      </motion.div>
+      {isAuth && (
+        <motion.div
+          className="avatarToast"
+          animate={{ x: isUserActive ? -360 : -40 }}
+          transition={{
+            ease: 'backInOut',
+          }}
+        >
+          <AvatarToast
+            isAuth={isAuth}
+            userInfo={userInfo}
+            onSignOut={onSignOut}
+            onSignInModalOpen={onSignInModalOpen}
+            onSignUpModalOpen={onSignUpModalOpen}
+          />
+        </motion.div>
+      )}
     </HeaderWrap>
   );
 };
