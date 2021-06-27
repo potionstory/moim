@@ -298,7 +298,7 @@ exports.postMeetingExit = (req, res) => {
       };
       const memberList = doc.data().memberList;
       const memberIndex = memberList.findIndex(
-        (member) => name === member.name
+        (member) => name === member.userName
       );
 
       if (memberIndex === -1) {
@@ -312,7 +312,7 @@ exports.postMeetingExit = (req, res) => {
           memberList: memberList.filter(
             (member) =>
               !(
-                member.name === name &&
+                member.userName === name &&
                 member.passNumber === passNumber.join("")
               )
           ),
@@ -347,34 +347,33 @@ exports.putPaymentCheck = (req, res) => {
       const memberList = doc.data().memberList;
 
       db.doc(`/meetings/${req.params.meetingId}`)
-      .update({
-        memberList: memberList.map(
-          (member) => {
+        .update({
+          memberList: memberList.map((member) => {
             if (member.userId === userId) {
               member.isPayment = !member.isPayment;
             }
-  
+
             return member;
-          })
-      })
-      .then((data) => {
-        db.doc(`/meetings/${req.params.meetingId}`)
-          .get()
-          .then((doc) => {
-            const memberList = doc
-              .data()
-              .memberList.map(
-                ({ email, mobile, passNumber, ...member }) => member
-              );
-  
-            return res.json(memberList);
-          });
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).json({ error: "Something went wrong" });
-      });
-    })
+          }),
+        })
+        .then((data) => {
+          db.doc(`/meetings/${req.params.meetingId}`)
+            .get()
+            .then((doc) => {
+              const memberList = doc
+                .data()
+                .memberList.map(
+                  ({ email, mobile, passNumber, ...member }) => member
+                );
+
+              return res.json(memberList);
+            });
+        })
+        .catch((err) => {
+          console.error(err);
+          res.status(500).json({ error: "Something went wrong" });
+        });
+    });
 };
 
 // staff check
@@ -387,34 +386,33 @@ exports.putStaffCheck = (req, res) => {
       const memberList = doc.data().memberList;
 
       db.doc(`/meetings/${req.params.meetingId}`)
-      .update({
-        memberList: memberList.map(
-          (member) => {
+        .update({
+          memberList: memberList.map((member) => {
             if (member.userId === userId) {
               member.isStaff = !member.isStaff;
             }
-  
+
             return member;
-          })
-      })
-      .then((data) => {
-        db.doc(`/meetings/${req.params.meetingId}`)
-          .get()
-          .then((doc) => {
-            const memberList = doc
-              .data()
-              .memberList.map(
-                ({ email, mobile, passNumber, ...member }) => member
-              );
-  
-            return res.json(memberList);
-          });
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).json({ error: "Something went wrong" });
-      });
-    })
+          }),
+        })
+        .then((data) => {
+          db.doc(`/meetings/${req.params.meetingId}`)
+            .get()
+            .then((doc) => {
+              const memberList = doc
+                .data()
+                .memberList.map(
+                  ({ email, mobile, passNumber, ...member }) => member
+                );
+
+              return res.json(memberList);
+            });
+        })
+        .catch((err) => {
+          console.error(err);
+          res.status(500).json({ error: "Something went wrong" });
+        });
+    });
 };
 
 // like one meeting

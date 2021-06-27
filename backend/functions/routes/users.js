@@ -240,6 +240,7 @@ exports.signUp = (req, res) => {
       password: req.body.password,
       confirmPassword: req.body.confirmPassword,
       userName: req.body.userName,
+      userAvatar: JSON.parse(req.body.userAvatar),
     };
 
     const { valid, errors } = validateSignUpData(newUser);
@@ -274,6 +275,7 @@ exports.signUp = (req, res) => {
           userName: newUser.userName,
           imagePath: storageFilepath,
           userImage: req.body.userImageFile !== "undefined" ? userImage : null,
+          userAvatar: newUser.userAvatar,
           createdAt: new Date().toISOString(),
         };
 
