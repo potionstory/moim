@@ -42,49 +42,49 @@ export const SignWrap = styled.div`
 
 export const UserImage = styled.div`
   display: flex;
-  flex-direction: column;
+  gap: 0 6px;
   align-items: center;
+  justify-content: space-between;
   margin-top: 1.5rem;
+  .btnUpload, .btnReset {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: ${({ theme }) => theme.main};
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+    input {
+      ${hidden};
+    }
+    svg {
+      font-size: 1rem;
+      color: ${({ theme }) => theme.title};
+    }
+    &:hover {
+      background-color: ${({ theme }) => theme.theme};
+    }
+  }
   .userImage {
     display: flex;
+    flex: 1;
     overflow: hidden;
     position: relative;
-    width: 200px;
-    height: 200px;
-    border-radius: 100px;
+    border-radius: 50%;
     background-color: ${({ theme }) => theme.main};
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    &:before {
+      padding-top: 100%;
+      content: '';
     }
-    label {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    img {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      cursor: pointer;
-      svg {
-        font-size: 4rem;
-        color: ${({ theme }) => theme.gray};
-        opacity: 0.6;
-        transition: all 0.2s ease-out;
-      }
-      input {
-        ${hidden};
-      }
-    }
-    &:hover {
-      label {
-        svg {
-          color: ${({ theme }) => theme.theme};
-          opacity: 1;
-        }
-      }
+      object-fit: cover;
     }
   }
   .email {

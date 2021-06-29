@@ -89,12 +89,6 @@ const Header = () => {
     }
   }, [isAuth]);
 
-  console.log(
-    '%c 🥟 userInfo: ',
-    'font-size:20px;background-color: #33A5FF;color:#fff;',
-    userInfo,
-  );
-
   return (
     <HeaderWrap>
       <HeaderInnder>

@@ -127,6 +127,7 @@ exports.socialSignUp = (req, res) => {
         req.body.userImageFile !== "undefined"
           ? userImageUrl
           : req.body.userImageUrl,
+      userAvatar: JSON.parse(req.body.userAvatar),
       userId: req.body.userId,
       token: req.body.token,
     };
@@ -144,7 +145,8 @@ exports.socialSignUp = (req, res) => {
             email: newSocialUser.email,
             userName: newSocialUser.userName,
             imagePath: storageFilepath,
-            userImage: newSocialUser.userImage,
+            userImage: newSocialUser.userImage !== "undefined" ? newSocialUser.userImage : null,
+            userAvatar: newSocialUser.userAvatar,
             createdAt: new Date().toISOString(),
           };
           return db

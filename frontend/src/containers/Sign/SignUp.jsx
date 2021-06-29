@@ -14,6 +14,7 @@ import {
   signAction,
   signUpAction,
   signUserImageAction,
+  signAvatarResetAction,
 } from '../../store/module/auth';
 import SignUpBox from './SignUpBox';
 import UserInfoBox from './UserInfoBox';
@@ -28,21 +29,6 @@ const SignUp = () => {
   const dispatch = useDispatch();
 
   const onSocialSign = useCallback(
-    (payload) => dispatch(socialSignAction.REQUEST(payload)),
-    [dispatch],
-  );
-
-  const onSocialSignUp = useCallback(
-    (payload) => dispatch(socialSignUpAction.REQUEST(payload)),
-    [dispatch],
-  );
-
-  const onSign = useCallback(
-    (payload) => dispatch(signAction.REQUEST(payload)),
-    [dispatch],
-  );
-
-  const onSignUp = useCallback(
     (payload) => {
       const userAvatar = {
         name: avatars[Math.floor(Math.random() * 99)],
@@ -55,13 +41,42 @@ const SignUp = () => {
         ].sort(() => Math.random() - 0.5),
       };
 
-      dispatch(
-        signUpAction.REQUEST({
-          formData: payload,
-          userAvatar,
-        }),
-      );
+      return dispatch(socialSignAction.REQUEST({
+        service: payload,
+        userAvatar,
+      }));
     },
+    [dispatch],
+  );
+
+  const onSocialSignUp = useCallback(
+    (payload) => dispatch(socialSignUpAction.REQUEST(payload)),
+    [dispatch],
+  );
+
+  const onSign = useCallback(
+    (payload) => {
+      const userAvatar = {
+        name: avatars[Math.floor(Math.random() * 99)],
+        colors: [
+          color.red,
+          color.orange,
+          color.green,
+          color.blue,
+          color.pink,
+        ].sort(() => Math.random() - 0.5),
+      };
+
+      return dispatch(signAction.REQUEST({
+        formData: payload,
+        userAvatar,
+      }));
+    },
+    [dispatch],
+  );
+
+  const onSignUp = useCallback(
+    (payload) => dispatch(signUpAction.REQUEST(payload)),
     [dispatch],
   );
 
@@ -69,6 +84,21 @@ const SignUp = () => {
     (payload) => dispatch(signUserImageAction(payload)),
     [dispatch],
   );
+
+  const onSignAvatarReset = useCallback(() => {
+    const userAvatar = {
+      name: avatars[Math.floor(Math.random() * 99)],
+      colors: [
+        color.red,
+        color.orange,
+        color.green,
+        color.blue,
+        color.pink,
+      ].sort(() => Math.random() - 0.5),
+    };
+
+    dispatch(signAvatarResetAction(userAvatar));
+  }, [dispatch]);
 
   const { isSocial, signInfo } = useSelector(({ auth }) => auth);
 
@@ -165,10 +195,12 @@ const SignUp = () => {
           ) : (
             <UserInfoBox
               userImage={userImage}
+              userAvatar={signInfo.userAvatar}
               isActive={isActive}
               formData={formData}
               focusInput={focusInput}
               onImageChange={onImageChange}
+              onSignAvatarReset={onSignAvatarReset}
               onInputFocus={onInputFocus}
               onInputChange={onInputChange}
               onInputBlur={onInputBlur}

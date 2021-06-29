@@ -37,10 +37,12 @@ import {
 } from '../api/auth';
 
 function* workSocialSign(action) {
-  const bodyParams = yield call(getSocialSign, action.payload);
+  const { service, userAvatar } = action.payload;
+
+  const bodyParams = yield call(getSocialSign, service);
 
   if (!isEmpty(bodyParams)) {
-    yield put(socialSignAction.SUCCESS(bodyParams));
+    yield put(socialSignAction.SUCCESS({ ...bodyParams, userAvatar }));
   } else {
     yield put(socialSignAction.FAILURE());
   }
@@ -86,21 +88,6 @@ function* workSocialSignIn(action) {
 }
 
 function* workSign(action) {
-  const bodyParams = {};
-
-  forEach(action.payload, (item) => {
-    bodyParams[item.name] = item.value;
-  });
-
-  if (!isEmpty(bodyParams)) {
-    yield put(signAction.SUCCESS(bodyParams));
-  } else {
-    yield put(signAction.FAILURE());
-  }
-}
-
-function* workSignUp(action) {
-  const { signInfo } = yield select(({ auth }) => auth);
   const { formData, userAvatar } = action.payload;
 
   const userInfo = reduce(
@@ -109,7 +96,23 @@ function* workSignUp(action) {
     {},
   );
 
-  const bodyParams = { ...signInfo, ...userInfo, userAvatar };
+  if (!isEmpty(userInfo)) {
+    yield put(signAction.SUCCESS({ ...userInfo, userAvatar }));
+  } else {
+    yield put(signAction.FAILURE());
+  }
+}
+
+function* workSignUp(action) {
+  const { signInfo } = yield select(({ auth }) => auth);
+
+  const userInfo = reduce(
+    action.payload,
+    (acc, cur) => assign(acc, { [cur.name]: cur.value }),
+    {},
+  );
+
+  const bodyParams = { ...signInfo, ...userInfo };
 
   const response = yield call(postSignUp, bodyParams);
 

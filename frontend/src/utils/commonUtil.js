@@ -47,9 +47,11 @@ export const getMeetingStatus = (item) => {
 };
 
 export const getSocialSign = (service) => {
+  console.log("service: ", service);
   switch (service) {
     case 'google': {
       return signInWithGoogle().then((res) => {
+        console.log("res: ", res);
         const user = res.user;
         if (user !== null) {
           return {

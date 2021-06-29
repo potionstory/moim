@@ -20,6 +20,7 @@ export const postSocialSignUp = (bodyParams) => {
   formData.set('email', bodyParams.email);
   formData.set('userName', bodyParams.userName);
   formData.set('userImageUrl', bodyParams.userImageUrl);
+  formData.set('userAvatar', JSON.stringify(bodyParams.userAvatar));
   formData.set('userId', bodyParams.userId);
   formData.set('token', bodyParams.token);
   formData.append('userImageFile', bodyParams.userImageFile);
