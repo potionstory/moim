@@ -14,6 +14,7 @@ exports.getAllCommunitys = (req, res) => {
           communityId: doc.id,
           type: doc.data().type,
           title: doc.data().title,
+          isLock: doc.data().isLock,
           status: doc.data().status,
           mainImage: doc.data().mainImage,
           description: doc.data().description,
@@ -87,6 +88,7 @@ exports.postCommunity = (req, res) => {
     const newCommunity = {
       type: req.body.type,
       title: req.body.title,
+      isLock: req.body.isLock,
       status: req.body.status,
       imagePath: `${req.user.userName}/`,
       mainImage,
@@ -152,13 +154,15 @@ exports.putCommunity = (req, res) => {
   }
 
   const document = db.doc(`/communitys/${req.params.communityId}`);
-  const { type, title, status, mainImage, description, url, tags } = req.body;
+  const { type, title, isLock, status, mainImage, description, url, tags } =
+    req.body;
 
   document.get().then((doc) => {
     document
       .update({
         type,
         title,
+        isLock,
         status,
         mainImage,
         description,

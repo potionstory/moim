@@ -14,6 +14,7 @@ exports.getAllMeetings = (req, res) => {
           meetingId: doc.id,
           type: doc.data().type,
           title: doc.data().title,
+          isLock: doc.data().isLock,
           status: doc.data().status,
           payInfo: doc.data().payInfo,
           mainImage: doc.data().mainImage,
@@ -97,6 +98,7 @@ exports.postMeeting = (req, res) => {
     const newMeeting = {
       type: req.body.type,
       title: req.body.title,
+      isLock: req.body.isLock,
       status: req.body.status,
       payInfo: req.body.payInfo,
       imagePath: `${req.user.userName}/`,
@@ -182,6 +184,7 @@ exports.putMeeting = (req, res) => {
   const {
     type,
     title,
+    isLock,
     status,
     payInfo,
     description,
@@ -199,6 +202,7 @@ exports.putMeeting = (req, res) => {
       .update({
         type,
         title,
+        isLock,
         status,
         payInfo,
         description,
@@ -248,11 +252,12 @@ exports.deleteMeeting = (req, res) => {
 
 // meeting join
 exports.postMeetingJoin = (req, res) => {
-  const { name, email, mobile, passNumber, userAvatar } = req.body;
+  const { name, email, mobile, passNumber, userImage, userAvatar } = req.body;
 
   const newMember = {
     userId: v4(),
     userName: name,
+    userImage,
     userAvatar,
     email,
     mobile,
