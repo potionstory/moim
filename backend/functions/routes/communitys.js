@@ -127,8 +127,25 @@ exports.getCommunity = (req, res) => {
       if (!doc.exists) {
         return res.status(404).json({ error: "Community not found" });
       }
-      communityData = doc.data();
-      communityData.communityId = doc.id;
+
+      communityData = {
+        communityId: doc.id,
+        type: doc.data().type,
+        title: doc.data().title,
+        isLock: doc.data().isLock,
+        status: doc.data().status,
+        mainImage: doc.data().mainImage,
+        description: doc.data().description,
+        url: doc.data().url,
+        tags: doc.data().tags,
+        userId: doc.data().userId,
+        userImage: doc.data().userImage,
+        userName: doc.data().userName,
+        createdAt: doc.data().createdAt,
+        likeCount: doc.data().likeCount,
+        commentCount: doc.data().commentCount,
+      };
+
       return db
         .collection("comments")
         .where("communityId", "==", req.params.communityId)

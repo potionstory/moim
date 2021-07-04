@@ -145,11 +145,31 @@ exports.getMeeting = (req, res) => {
         return res.status(404).json({ error: "Meeting not found" });
       }
 
-      meetingData = doc.data();
-      meetingData.meetingId = doc.id;
-      meetingData.memberList = meetingData.memberList.map(
-        ({ email, mobile, passNumber, ...member }) => member
-      );
+      meetingData = {
+        meetingId: doc.id,
+        type: doc.data().type,
+        title: doc.data().title,
+        isLock: doc.data().isLock,
+        status: doc.data().status,
+        payInfo: doc.data().payInfo,
+        mainImage: doc.data().mainImage,
+        description: doc.data().description,
+        startDate: doc.data().startDate,
+        endDate: doc.data().endDate,
+        location: doc.data().location,
+        memberSetting: doc.data().memberSetting,
+        memberList: doc
+          .data()
+          .memberList.map(({ email, mobile, passNumber, ...member }) => member),
+        waiter: doc.data().waiter,
+        tags: doc.data().tags,
+        userId: doc.data().userId,
+        userImage: doc.data().userImage,
+        userName: doc.data().userName,
+        createdAt: doc.data().createdAt,
+        likeCount: doc.data().likeCount,
+        commentCount: doc.data().commentCount,
+      };
 
       return db
         .collection("comments")
