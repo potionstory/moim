@@ -109,6 +109,50 @@ export const MoimDetailTitleWrap = styled.div`
   }
 `;
 
+export const MoimDetailLockWrap = styled.div`
+  display: flex;
+  gap: 0 12px;
+  margin-top: 12px;
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: ${({ theme }) => theme.sub};
+    svg {
+      font-size: 1rem;
+      color: ${({ theme }) => theme.title};
+    }
+  }
+  .lockContent {
+    display: flex;
+    gap: 0 12px;
+    box-sizing: border-box;
+    .btnPassWord {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      background-color: ${({ theme }) => theme.theme};
+      svg {
+        font-size: 1rem;
+        color: ${({ theme }) => theme.title};
+        opacity: 0.6;
+        transition: all 0.2s ease-out;
+      }
+      &:hover {
+        svg {
+          opacity: 1;
+        }
+      }
+    }
+  }
+`;
+
 export const MoimDetailPayInfoWrap = styled.div`
   display: flex;
   margin-top: 12px;

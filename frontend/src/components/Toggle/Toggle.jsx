@@ -2,9 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ToggleWrap } from './style';
 
-const Toggle = ({ name, isChecked, onCheck }) => {
+const Toggle = ({ isTheme, name, isChecked, onCheck }) => {
   return (
-    <ToggleWrap isChecked={isChecked}>
+    <ToggleWrap isTheme={isTheme} isChecked={isChecked}>
       <label>
         <input type="checkbox" checked={isChecked} onChange={onCheck} />
         <div className="toggleBar">

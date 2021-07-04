@@ -2,6 +2,7 @@ import React from 'react';
 import { isUndefined } from 'lodash';
 import MoimDetailType from './MoimDetailType';
 import MoimDetailTitle from './MoimDetailTitle';
+import MoimDetailLock from './MoimDetailLock';
 import MoimDetailPayInfo from './MoimDetailPayInfo';
 import MoimDetailStatus from './MoimDetailStatus';
 import MoimDetailUrl from './MoimDetailUrl';
@@ -16,6 +17,7 @@ const MoimDetailBase = ({
   category,
   isEdit,
   title,
+  isLock,
   moimStatus,
   status,
   payInfo,
@@ -29,6 +31,7 @@ const MoimDetailBase = ({
   tagInputRef,
   onTypeChange,
   onTitleChange,
+  onLockChange,
   onStatusChange,
   onCostInputChange,
   onCostInputReset,
@@ -61,8 +64,12 @@ const MoimDetailBase = ({
         title={title}
         onTitleChange={onTitleChange}
       />
+      <MoimDetailLock
+        isEdit={isEdit}
+        isLock={isLock}
+        onLockChange={onLockChange}
+      />
       <MoimDetailStatus
-        category={category}
         list={moimStatus}
         status={status}
         isEdit={isEdit}

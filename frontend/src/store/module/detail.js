@@ -46,6 +46,7 @@ export default (state = initialState, action) => {
       }
       case GET_COMMUNITY.SUCCESS: {
         draft.moim = action.payload;
+        draft.isEdit = false;
         break;
       }
       case GET_COMMUNITY.FAILURE: {
@@ -58,6 +59,7 @@ export default (state = initialState, action) => {
       }
       case GET_MEETING.SUCCESS: {
         draft.moim = action.payload;
+        draft.isEdit = false;
         break;
       }
       case GET_MEETING.FAILURE: {

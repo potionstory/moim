@@ -4,7 +4,6 @@ import {
   faFilter,
   faSortAmountDown,
   faDiceD6,
-  faLock,
   faPowerOff,
   faSpinner,
   faSortAlphaUp,
@@ -54,7 +53,7 @@ export const utilMenu = [
 // moim header util menu icon
 export const utilTabMenu = {
   filter: [
-    [faDiceD6, faLock], // community
+    [faDiceD6, faSpinner], // community
     [faPowerOff, faSpinner], // meeting
   ],
   sort: [faSortAlphaUp, faCalendarDay],

@@ -62,6 +62,7 @@ const MoimTopUtilBody = ({
                         )}
                         {type === 'radio' && (
                           <Toggle
+                            isTheme={false}
                             index={itemIndex}
                             name={name}
                             isChecked={isChecked}

@@ -135,6 +135,14 @@ const MoimDetail = ({ category, id }) => {
     );
   }, []);
 
+  const onLockChange = useCallback(() => {
+    setDetail(
+      produce((draft) => {
+        draft.isLock = !draft.isLock;
+      }),
+    );
+  }, []);
+
   const onStatusChange = useCallback(
     (index) => {
       setDetail(
@@ -486,6 +494,7 @@ const MoimDetail = ({ category, id }) => {
     userName,
     likeCount,
     title,
+    isLock,
     payInfo,
     status,
     description,
@@ -520,6 +529,7 @@ const MoimDetail = ({ category, id }) => {
               category={category}
               isEdit={isEdit}
               title={title}
+              isLock={isLock}
               moimStatus={moimStatus}
               status={status}
               payInfo={payInfo}
@@ -533,6 +543,7 @@ const MoimDetail = ({ category, id }) => {
               tagInputRef={tagInputRef}
               onTypeChange={onTypeChange}
               onTitleChange={onTitleChange}
+              onLockChange={onLockChange}
               onStatusChange={onStatusChange}
               onCostInputChange={onCostInputChange}
               onCostInputReset={onCostInputReset}

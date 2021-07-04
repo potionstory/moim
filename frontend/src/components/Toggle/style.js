@@ -4,10 +4,12 @@ import { color } from '../../lib/styles/palette';
 export const ToggleWrap = styled.div`
   padding: 8px 0;
   label {
-    display: block;
+    display: flex;
+    align-items: center;
     font-size: 0.75rem;
     font-weight: 600;
-    color: ${({ isChecked, theme }) => (isChecked ? theme.main : theme.gray)};
+    color: ${({ isTheme, isChecked, theme }) =>
+      isChecked ? (isTheme ? theme.title : theme.main) : theme.gray};
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.2s ease-out;
@@ -32,16 +34,16 @@ export const ToggleWrap = styled.div`
         width: 16px;
         height: 16px;
         border-radius: 8px;
-        background-color: ${({ isChecked, theme }) =>
-          isChecked ? theme.title : theme.title};
+        background-color: ${({ isTheme, theme }) =>
+          isTheme ? theme.main : theme.title};
       }
     }
     &:hover {
       .toggleBar {
-        background-color: ${({ isChecked, theme }) =>
-          isChecked ? theme.theme : theme.main};
+        background-color: ${({ isTheme, isChecked, theme }) =>
+          isChecked ? theme.theme : isTheme ? theme.title : theme.main};
       }
-      color: ${({ theme }) => theme.main};
+      color: ${({ isTheme, theme }) => (isTheme ? theme.title : theme.main)};
       .toggleBar {
         border-color: ${({ theme }) => theme.theme};
       }
