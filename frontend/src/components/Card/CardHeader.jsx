@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWonSign } from '@fortawesome/free-solid-svg-icons';
-import { CardHeaderWrap } from './style';
+import { faLock, faWonSign } from '@fortawesome/free-solid-svg-icons';
 import { getCommunityIcon, getMeetingIcon } from '../../utils/commonUtil';
+import { CardHeaderWrap } from './style';
 
 const CardHeader = ({ item, category }) => {
-  const { type, title, payInfo, status } = item;
+  const { type, title, isLock, payInfo, status } = item;
   const id = item[`${category}Id`];
 
   return (
@@ -26,6 +26,11 @@ const CardHeader = ({ item, category }) => {
           {title}
         </Link>
         <div className="subInfo">
+          {isLock && (
+            <span className="lock">
+              <FontAwesomeIcon icon={faLock} />
+            </span>
+          )}
           {category === 'meeting' && (
             <span className="pay">
               <FontAwesomeIcon icon={faWonSign} />

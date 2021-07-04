@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { color } from '../../lib/styles/palette';
-import { ellipsis } from '../../lib/styles/util';
+import { ellipsis, hidden } from '../../lib/styles/util';
 
 export const MoimDetailWrap = styled.section`
   display: flex;
@@ -1201,6 +1201,11 @@ export const MoimDetailMemberWrap = styled.div`
                       color: ${color.green};
                     }
                   }
+                  img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                  }
                   &.isClient,
                   &.isStaff {
                     svg {
@@ -1279,6 +1284,63 @@ export const MoimDetailModalWrap = styled.div`
     .modalBody {
       display: flex;
       flex-direction: column;
+      .btnReset {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 4px;
+        background-color: ${({ theme }) => theme.main};
+        cursor: pointer;
+        transition: all 0.2s ease-out;
+        ${({ isAuth }) =>
+          isAuth &&
+          css`
+            opacity: 0.6;
+          `};
+        input {
+          ${hidden};
+        }
+        svg {
+          font-size: 1rem;
+          color: ${({ theme }) => theme.title};
+        }
+        &:hover {
+          ${({ isAuth }) =>
+            !isAuth &&
+            css`
+              background-color: ${({ theme }) => theme.theme};
+            `};
+        }
+      }
+      .userImage {
+        display: flex;
+        gap: 0 6px;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 1.5rem;
+        .imageBox {
+          display: flex;
+          flex: 1;
+          overflow: hidden;
+          position: relative;
+          border-radius: 50%;
+          background-color: ${({ theme }) => theme.main};
+          &:before {
+            padding-top: 100%;
+            content: '';
+          }
+          img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+      }
     }
   }
 `;

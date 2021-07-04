@@ -69,12 +69,13 @@ function* workPutMeeting(action) {
 
 function* workPostMoimJoin(action) {
   const bodyParams = {};
-  const { meetingId, formData, userAvatar } = action.payload;
+  const { meetingId, formData, userImage, userAvatar } = action.payload;
 
   forEach(formData, (item) => {
     bodyParams[item.name] = item.value;
   });
 
+  bodyParams['userImage'] = userImage;
   bodyParams['userAvatar'] = userAvatar;
 
   const res = yield call(postMeetingJoinAPI, meetingId, bodyParams);
@@ -107,7 +108,7 @@ function* workPutPaymentCheck(action) {
   const { meetingId, userId } = action.payload;
 
   const res = yield call(putPaymentCheckAPI, meetingId, { userId });
-  
+
   if (res.status === 200) {
     yield put(putPaymentCheckAction.SUCCESS(res.data));
   } else {
@@ -119,7 +120,7 @@ function* workPutStaffCheck(action) {
   const { meetingId, userId } = action.payload;
 
   const res = yield call(putStaffCheckAPI, meetingId, { userId });
-  
+
   if (res.status === 200) {
     yield put(putStaffCheckAction.SUCCESS(res.data));
   } else {

@@ -1,8 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import filter from 'lodash/filter';
-import every from 'lodash/every';
-import findIndex from 'lodash/findIndex';
+import { isNull, filter, every, findIndex } from 'lodash';
 import { produce } from 'immer';
 import InputForm from '../../components/InputForm';
 import {
@@ -23,6 +21,7 @@ const validator = {
 };
 
 const MoimDetailExit = () => {
+  const { userInfo } = useSelector(({ auth }) => auth);
   const { moim } = useSelector(({ detail }) => detail);
   const dispatch = useDispatch();
 
@@ -96,6 +95,29 @@ const MoimDetailExit = () => {
       }),
     );
   }, [formData]);
+
+  useEffect(() => {
+    if (!isNull(userInfo)) {
+      const { userName, email } = userInfo;
+
+      setFormData(
+        produce((draft) => {
+          const nameIndex = findIndex(formData, { name: 'name' });
+          const emailIndex = findIndex(formData, { name: 'email' });
+
+          if (nameIndex !== -1) {
+            draft[nameIndex].value = userName;
+            draft[nameIndex].isCheck = true;
+          }
+
+          if (emailIndex !== -1) {
+            draft[emailIndex].value = email;
+            draft[emailIndex].isCheck = true;
+          }
+        }),
+      );
+    }
+  }, [userInfo]);
 
   return (
     <MoimDetailModalWrap>

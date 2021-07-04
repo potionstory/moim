@@ -76,8 +76,22 @@ export const CardHeaderWrap = styled.div`
     .subInfo {
       display: flex;
       flex-grow: 0;
-      align-items: flex-start;
+      align-items: center;
       margin-top: 4px;
+      .lock {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        margin-right: 6px;
+        border-radius: 10px;
+        background-color: ${({ theme }) => theme.title};
+        svg {
+          font-size: 0.625rem;
+          color: ${({ theme }) => theme.main};
+        }
+      }
       .pay {
         display: flex;
         align-items: center;

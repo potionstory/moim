@@ -1,8 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import AutosizeInput from 'react-input-autosize';
-import filter from 'lodash/filter';
-import map from 'lodash/map';
-import isEmpty from 'lodash/isEmpty';
+import { isNull, isEmpty, filter, map } from 'lodash';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -257,6 +255,7 @@ const MoimDetailMember = ({
                     const {
                       userId,
                       userName,
+                      userImage,
                       userAvatar,
                       isPayment,
                       isClient,
@@ -303,12 +302,18 @@ const MoimDetailMember = ({
                               }
                             >
                               {!isClient && !isStaff ? (
-                                <Avatar
-                                  size={40}
-                                  name={userAvatar.name}
-                                  variant="beam"
-                                  colors={userAvatar.colors}
-                                />
+                                <>
+                                  {isNull(userImage) ? (
+                                    <Avatar
+                                      size={40}
+                                      name={userAvatar.name}
+                                      variant="beam"
+                                      colors={userAvatar.colors}
+                                    />
+                                  ) : (
+                                    <img src={userImage} />
+                                  )}
+                                </>
                               ) : (
                                 <FontAwesomeIcon icon={faCrown} />
                               )}
@@ -376,6 +381,7 @@ const MoimDetailMember = ({
                   const {
                     userId,
                     userName,
+                    userImage,
                     userAvatar,
                     isClient,
                     isStaff,
@@ -402,12 +408,18 @@ const MoimDetailMember = ({
                             }`}
                           >
                             {!isClient && !isStaff ? (
-                              <Avatar
-                                size={40}
-                                name={userAvatar.name}
-                                variant="beam"
-                                colors={userAvatar.colors}
-                              />
+                              <>
+                                {isNull(userImage) ? (
+                                  <Avatar
+                                    size={40}
+                                    name={userAvatar.name}
+                                    variant="beam"
+                                    colors={userAvatar.colors}
+                                  />
+                                ) : (
+                                  <img src={userImage} />
+                                )}
+                              </>
                             ) : (
                               <FontAwesomeIcon icon={faCrown} />
                             )}

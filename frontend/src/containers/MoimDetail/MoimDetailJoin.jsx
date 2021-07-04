@@ -1,9 +1,10 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import filter from 'lodash/filter';
-import every from 'lodash/every';
-import findIndex from 'lodash/findIndex';
+import { isNull, filter, every, findIndex, map } from 'lodash';
 import { produce } from 'immer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLaugh } from '@fortawesome/free-solid-svg-icons';
+import Avatar from 'boring-avatars';
 import InputForm from '../../components/InputForm';
 import {
   nameCheck,
@@ -25,22 +26,42 @@ const validator = {
 };
 
 const MoimDetailJoin = () => {
+  const { userInfo } = useSelector(({ auth }) => auth);
   const { moim } = useSelector(({ detail }) => detail);
   const dispatch = useDispatch();
 
   const { memberSetting } = moim;
 
+  const [userAvatar, setUserAvatar] = useState({
+    name: avatars[Math.floor(Math.random() * 99)],
+    colors: [color.red, color.orange, color.green, color.blue, color.pink].sort(
+      () => Math.random() - 0.5,
+    ),
+  });
   const [focusInput, setFocusInput] = useState(null);
   const [formData, setFormData] = useState(
     filter(
       moimMemberForm,
-      (item) => item.isReadOnly || memberSetting.formData[item.name],
+      (form) => form.isReadOnly || memberSetting.formData[form.name],
     ),
   );
 
   const isActive = useMemo(() => {
-    return every(formData, (item) => item.isCheck);
+    return every(formData, (form) => form.isCheck);
   }, [formData]);
+
+  const onAvatarReset = useCallback(() => {
+    setUserAvatar({
+      name: avatars[Math.floor(Math.random() * 99)],
+      colors: [
+        color.red,
+        color.orange,
+        color.green,
+        color.blue,
+        color.pink,
+      ].sort(() => Math.random() - 0.5),
+    });
+  }, []);
 
   const onInputFocus = useCallback((e) => {
     setFocusInput(e.target.name);
@@ -81,35 +102,42 @@ const MoimDetailJoin = () => {
 
       if (
         findIndex(memberList, {
-          name: formName,
+          userName: formName,
         }) !== -1
       ) {
         alert('참여명이 이미 존재합니다.');
       } else if (userName === formName) {
         alert('참여명은 클라이언트의 이름으로 할 수 없습니다.');
       } else {
-        const userAvatar = {
-          name: avatars[Math.floor(Math.random() * 99)],
-          colors: [
-            color.red,
-            color.orange,
-            color.green,
-            color.blue,
-            color.pink,
-          ].sort(() => Math.random() - 0.5),
-        };
-
         dispatch(
           postMoimJoinAction.REQUEST({
             meetingId,
             formData,
+            userImage: !isNull(userInfo) ? userInfo.userImage : null,
             userAvatar,
           }),
         );
       }
     },
-    [dispatch, moim],
+    [dispatch, moim, userInfo, userAvatar, formData],
   );
+
+  useEffect(() => {
+    if (!isNull(userInfo) && isNull(userInfo.userImage)) {
+      setUserAvatar(userInfo.userAvatar);
+    } else {
+      setUserAvatar({
+        name: avatars[Math.floor(Math.random() * 99)],
+        colors: [
+          color.red,
+          color.orange,
+          color.green,
+          color.blue,
+          color.pink,
+        ].sort(() => Math.random() - 0.5),
+      });
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     const name = 'passNumber';
@@ -122,11 +150,64 @@ const MoimDetailJoin = () => {
     );
   }, [formData]);
 
+  useEffect(() => {
+    if (!isNull(userInfo)) {
+      const { userName, email } = userInfo;
+
+      setFormData(
+        produce((draft) => {
+          const nameIndex = findIndex(formData, { name: 'name' });
+          const emailIndex = findIndex(formData, { name: 'email' });
+
+          if (nameIndex !== -1) {
+            draft[nameIndex].value = userName;
+            draft[nameIndex].isCheck = true;
+          }
+
+          if (emailIndex !== -1) {
+            draft[emailIndex].value = email;
+            draft[emailIndex].isCheck = true;
+          }
+        }),
+      );
+    }
+  }, [userInfo]);
+
+  const { name, colors } = userAvatar;
+
   return (
-    <MoimDetailModalWrap>
+    <MoimDetailModalWrap isAuth={!isNull(userInfo)}>
       <div className="modalInner">
         <h4>JOIN</h4>
         <div className="modalBody">
+          <div className="userImage">
+            <button
+              type="button"
+              className="btnReset"
+              onClick={() => isNull(userInfo) && onAvatarReset()}
+            >
+              <FontAwesomeIcon icon={faLaugh} />
+            </button>
+            <span className="imageBox">
+              {isNull(userInfo) || isNull(userInfo.userImage) ? (
+                <Avatar
+                  size="100%"
+                  name={name}
+                  variant="beam"
+                  colors={colors}
+                />
+              ) : (
+                <img src={userInfo.userImage} />
+              )}
+            </span>
+            <button
+              type="button"
+              className="btnReset"
+              onClick={() => isNull(userInfo) && onAvatarReset()}
+            >
+              <FontAwesomeIcon icon={faLaugh} />
+            </button>
+          </div>
           <InputForm
             formData={formData}
             focusInput={focusInput}
