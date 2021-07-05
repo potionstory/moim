@@ -362,6 +362,9 @@ exports.postMeetingExit = (req, res) => {
     });
 };
 
+exports.putMeetingPassnumber = (req, res) => {
+};
+
 // payment check
 exports.putPaymentCheck = (req, res) => {
   const { userId } = req.body;

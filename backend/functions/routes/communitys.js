@@ -222,6 +222,9 @@ exports.deleteCommunity = (req, res) => {
     });
 };
 
+exports.putCommunityPassnumber = (req, res) => {
+};
+
 // like one community
 exports.likeCommunity = (req, res) => {
   const likeDocument = db
