@@ -8,6 +8,7 @@ import SignIn from '../../containers/Sign/SignIn';
 import SignUp from '../../containers/Sign/SignUp';
 import MoimDetailJoin from '../../containers/MoimDetail/MoimDetailJoin';
 import MoimDetailExit from '../../containers/MoimDetail/MoimDetailExit';
+import MoimDetailPassNumber from '../../containers/MoimDetail/MoimDetailPassNumber';
 import { ModalWrap, ModalInner, CloseButton } from './style';
 
 const Modal = () => {
@@ -45,6 +46,8 @@ const Modal = () => {
         return <MoimDetailJoin />;
       case 'MOIM_EXIT':
         return <MoimDetailExit />;
+      case 'MOIM_PASSNUMBER':
+        return <MoimDetailPassNumber />
       default:
         return;
     }

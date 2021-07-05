@@ -97,7 +97,7 @@ export const MoimDetailTitleWrap = styled.div`
     font-size: 3.6rem;
     font-weight: 600;
     color: ${({ theme }) => theme.title};
-    line-height: 75px;
+    line-height: 72px;
   }
   textarea {
     width: 100%;

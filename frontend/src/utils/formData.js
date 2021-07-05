@@ -53,6 +53,25 @@ export const signUpForm = [
   },
 ];
 
+export const moimPassNumberForm = [
+  {
+    type: 'number',
+    name: 'passNumber',
+    placeholder: '',
+    value: new Array(6).fill(''),
+    isCheck: false,
+    icon: faKey,
+  },
+  {
+    type: 'number',
+    name: 'confirmPassNumber',
+    placeholder: '',
+    value: new Array(6).fill(''),
+    isCheck: false,
+    icon: faRedoAlt,
+  },
+];
+
 export const userInfoForm = [
   {
     type: 'email',

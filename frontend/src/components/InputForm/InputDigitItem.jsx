@@ -10,7 +10,7 @@ const InputDigitItem = ({
   isActive,
   form,
   onInputFocus,
-  onInputPassNumberChange,
+  onInputPassDigitChange,
   onInputBlur,
 }) => {
   const [isBackSpace, setIsBackSpace] = useState(false);
@@ -18,7 +18,7 @@ const InputDigitItem = ({
 
   const onDigitChange = useCallback(
     (e, index, i) => {
-      onInputPassNumberChange(e, index, i);
+      onInputPassDigitChange(e, index, i);
 
       // focus 이동
       if (

@@ -82,7 +82,7 @@ const MoimDetailJoin = () => {
     );
   }, []);
 
-  const onInputPassNumberChange = useCallback((e, i, j) => {
+  const onInputPassDigitChange = useCallback((e, i, j) => {
     const { value } = e.target;
 
     if (value <= 9) {
@@ -178,7 +178,7 @@ const MoimDetailJoin = () => {
   return (
     <MoimDetailModalWrap isAuth={!isNull(userInfo)}>
       <div className="modalInner">
-        <h4>JOIN</h4>
+        <h4>join</h4>
         <div className="modalBody">
           <div className="userImage">
             <button
@@ -213,7 +213,7 @@ const MoimDetailJoin = () => {
             focusInput={focusInput}
             onInputFocus={onInputFocus}
             onInputChange={onInputChange}
-            onInputPassNumberChange={onInputPassNumberChange}
+            onInputPassDigitChange={onInputPassDigitChange}
             onInputBlur={onInputBlur}
             isActive={isActive}
             onConfirm={onJoin}

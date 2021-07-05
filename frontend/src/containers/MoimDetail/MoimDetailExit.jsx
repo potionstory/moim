@@ -59,7 +59,7 @@ const MoimDetailExit = () => {
     );
   }, []);
 
-  const onInputPassNumberChange = useCallback((e, i, j) => {
+  const onInputPassDigitChange = useCallback((e, i, j) => {
     const { value } = e.target;
 
     if (value <= 9) {
@@ -122,14 +122,14 @@ const MoimDetailExit = () => {
   return (
     <MoimDetailModalWrap>
       <div className="modalInner">
-        <h4>EXIT</h4>
+        <h4>exit</h4>
         <div className="modalBody">
           <InputForm
             formData={formData}
             focusInput={focusInput}
             onInputFocus={onInputFocus}
             onInputChange={onInputChange}
-            onInputPassNumberChange={onInputPassNumberChange}
+            onInputPassDigitChange={onInputPassDigitChange}
             onInputBlur={onInputBlur}
             isActive={isActive}
             onConfirm={onExit}

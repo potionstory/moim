@@ -30,6 +30,7 @@ import {
 import {
   joinModalOpenAction,
   exitModalOpenAction,
+  passNumberModalOpenAction,
 } from '../../store/module/global';
 import {
   communityType,
@@ -93,6 +94,10 @@ const MoimDetail = ({ category, id }) => {
 
   const onExitModalOpen = useCallback(() => {
     dispatch(exitModalOpenAction());
+  }, []);
+
+  const onPassWordModalOpen = useCallback(() => {
+    dispatch(passNumberModalOpenAction());
   }, []);
 
   const onResetDetail = useCallback(() => dispatch(resetDetailAction()), [
@@ -518,7 +523,6 @@ const MoimDetail = ({ category, id }) => {
             isSave={!isEqual(moim, detail)}
             onJoinModalOpen={onJoinModalOpen}
             onExitModalOpen={onExitModalOpen}
-            onJoinModalOpen={onJoinModalOpen}
             onSave={onSave}
             onEditToggle={onEditToggle}
           />
@@ -544,6 +548,7 @@ const MoimDetail = ({ category, id }) => {
               onTypeChange={onTypeChange}
               onTitleChange={onTitleChange}
               onLockChange={onLockChange}
+              onPassWordModalOpen={onPassWordModalOpen}
               onStatusChange={onStatusChange}
               onCostInputChange={onCostInputChange}
               onCostInputReset={onCostInputReset}

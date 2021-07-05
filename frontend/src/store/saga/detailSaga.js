@@ -7,6 +7,7 @@ import {
   PUT_MEETING,
   POST_MOIM_JOIN,
   POST_MOIM_EXIT,
+  PUT_MOIM_PASSNUMBER,
   PUT_PAYMENT_CHECK,
   PUT_STAFF_CHECK,
 } from '../module/detail';
@@ -17,6 +18,7 @@ import {
   putMeetingAction,
   postMoimJoinAction,
   postMoimExitAction,
+  putMoimPassnumberAction,
   putPaymentCheckAction,
   putStaffCheckAction,
 } from '../module/detail';
@@ -102,6 +104,16 @@ function* workPostMoimExit(action) {
   } else {
     yield put(postMoimExitAction.FAILURE(res));
   }
+}
+
+function* workPutMoimPassnumber(action) {
+  const bodyParams = {};
+
+  forEach(action.payload, (item) => {
+    bodyParams[item.name] = item.value;
+  });
+
+  const res = yield call(postMeetingExitAPI, meetingId, bodyParams);
 }
 
 function* workPutPaymentCheck(action) {

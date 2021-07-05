@@ -1,5 +1,5 @@
 import React from 'react';
-import map from 'lodash/map';
+import { map, isArray } from 'lodash';
 import InputItem from './InputItem';
 import InputDigitItem from './InputDigitItem';
 import { InputFormWrap, InputSubmit } from './style';
@@ -9,7 +9,7 @@ const InputForm = ({
   focusInput,
   onInputFocus,
   onInputChange,
-  onInputPassNumberChange,
+  onInputPassDigitChange,
   onInputBlur,
   isActive,
   onConfirm,
@@ -18,9 +18,9 @@ const InputForm = ({
   return (
     <InputFormWrap>
       {map(formData, (form, index) => {
-        const { name } = form;
+        const { value } = form;
 
-        if (name !== 'passNumber') {
+        if (!isArray(value)) {
           return (
             <InputItem
               key={index}
@@ -40,7 +40,7 @@ const InputForm = ({
               index={index}
               form={form}
               onInputFocus={onInputFocus}
-              onInputPassNumberChange={onInputPassNumberChange}
+              onInputPassDigitChange={onInputPassDigitChange}
               onInputBlur={onInputBlur}
             />
           );

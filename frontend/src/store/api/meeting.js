@@ -12,12 +12,12 @@ export const putMeetingAPI = (meetingId, bodyParams) =>
 
 // post meeting join
 export const postMeetingJoinAPI = (meetingId, bodyParams) =>
-  api.put(`/meeting/join/${meetingId}`, bodyParams);
+  api.put(`/meeting/${meetingId}/join`, bodyParams);
 
 // post meeting exit
 export const postMeetingExitAPI = (meetingId, bodyParams) => {
   return api
-    .put(`/meeting/exit/${meetingId}`, bodyParams)
+    .put(`/meeting/${meetingId}/exit`, bodyParams)
     .then((res) => {
       return res;
     })
@@ -25,6 +25,18 @@ export const postMeetingExitAPI = (meetingId, bodyParams) => {
       return error;
     });
 };
+
+// put meeting passnumber
+export const putMeetingPassnumberAPI = (meetingId, bodyParams) => {
+  return api
+    .put(`/meeting/passnumber/${meetingId}`, bodyParams)
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
 
 // put payment check
 export const putPaymentCheckAPI = (meetingId, bodyParams) => {
