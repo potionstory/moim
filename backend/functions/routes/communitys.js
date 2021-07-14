@@ -223,6 +223,17 @@ exports.deleteCommunity = (req, res) => {
 };
 
 exports.putCommunityPassnumber = (req, res) => {
+  const { passNumber } = req.body;
+
+  db.doc(`/communitys/${req.params.communityId}`)
+    .update({ passNumber: passNumber.join("") })
+    .then(() => {
+      res.json({ message: "pass number update successfully" });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: "Something went wrong" });
+    });
 };
 
 // like one community

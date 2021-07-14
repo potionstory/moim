@@ -363,6 +363,17 @@ exports.postMeetingExit = (req, res) => {
 };
 
 exports.putMeetingPassnumber = (req, res) => {
+  const { passNumber } = req.body;
+
+  db.doc(`/meetings/${req.params.meetingId}`)
+    .update({ passNumber: passNumber.join("") })
+    .then(() => {
+      res.json({ message: "pass number update successfully" });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: "Something went wrong" });
+    });
 };
 
 // payment check
