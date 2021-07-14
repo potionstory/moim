@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { map, filter, every, findIndex, fromPairs } from 'lodash';
+import { map, filter, every, isEqual, findIndex, fromPairs } from 'lodash';
 import { produce } from 'immer';
 import InputForm from '../../components/InputForm';
 import { passNumberCheck } from '../../utils/regexUtil';
@@ -9,6 +9,7 @@ import { putMoimPassnumberAction } from '../../store/module/detail';
 import { MoimDetailModalWrap } from './style';
 
 const MoimDetailPassWord = () => {
+  const { moim } = useSelector(({ detail }) => detail);
   const { category } = useSelector(({ global }) => global);
 
   const dispatch = useDispatch();
@@ -42,14 +43,19 @@ const MoimDetailPassWord = () => {
 
   const onPassWordConfirm = useCallback(
     (formData) => {
-      // dispatch(
-      //   putMoimPassnumberAction.REQUEST({
-      //     // ,
-      //     formData,
-      //   })
-      // );
+      if (isEqual(formData[0].value, formData[1].value)) {
+        dispatch(
+          putMoimPassnumberAction.REQUEST({
+            id: moim[`${category}Id`],
+            category,
+            formData,
+          })
+        );
+      } else {
+        console.log('passnumber not equal'); // toast
+      }
     },
-    [category, dispatch],
+    [moim, category, dispatch],
   );
 
   useEffect(() => {

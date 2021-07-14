@@ -23,12 +23,13 @@ import {
   putStaffCheckAction,
 } from '../module/detail';
 import { modalCloseAction } from '../module/global';
-import { getCommunityAPI, putCommunityAPI } from '../api/community';
+import { getCommunityAPI, putCommunityAPI, putCommunityPassnumberAPI } from '../api/community';
 import {
   getMeetingAPI,
   putMeetingAPI,
   postMeetingJoinAPI,
   postMeetingExitAPI,
+  putMeetingPassnumberAPI,
   putPaymentCheckAPI,
   putStaffCheckAPI,
 } from '../api/meeting';
@@ -102,18 +103,31 @@ function* workPostMoimExit(action) {
     yield put(postMoimExitAction.SUCCESS(res.data));
     yield put(modalCloseAction());
   } else {
-    yield put(postMoimExitAction.FAILURE(res));
+    yield put(postMoimExitAction.FAILURE());
   }
 }
 
 function* workPutMoimPassnumber(action) {
+  const { id, category, formData } = action.payload;
   const bodyParams = {};
+  let res = null;
 
-  forEach(action.payload, (item) => {
+  forEach(formData, (item) => {
     bodyParams[item.name] = item.value;
   });
 
-  const res = yield call(postMeetingExitAPI, meetingId, bodyParams);
+  if (category === 'community') {
+    res = yield call(putCommunityPassnumberAPI, id, bodyParams);
+  } else if (category === 'meeting') {
+    res = yield call(putMeetingPassnumberAPI, id, bodyParams);
+  }
+
+  if (res.status === 200) {
+    yield put(putMoimPassnumberAction.SUCCESS());
+    yield put(modalCloseAction());
+  } else {
+    yield put(putMoimPassnumberAction.FAILURE());
+  }
 }
 
 function* workPutPaymentCheck(action) {
@@ -124,7 +138,7 @@ function* workPutPaymentCheck(action) {
   if (res.status === 200) {
     yield put(putPaymentCheckAction.SUCCESS(res.data));
   } else {
-    yield put(putPaymentCheckAction.FAILURE(res));
+    yield put(putPaymentCheckAction.FAILURE());
   }
 }
 
@@ -136,7 +150,7 @@ function* workPutStaffCheck(action) {
   if (res.status === 200) {
     yield put(putStaffCheckAction.SUCCESS(res.data));
   } else {
-    yield put(putStaffCheckAction.FAILURE(res));
+    yield put(putStaffCheckAction.FAILURE());
   }
 }
 
@@ -164,6 +178,10 @@ function* watchPostMoimExit() {
   yield takeEvery(POST_MOIM_EXIT.REQUEST, workPostMoimExit);
 }
 
+function* watchPutMoimPassnumber() {
+  yield takeEvery(PUT_MOIM_PASSNUMBER.REQUEST, workPutMoimPassnumber);
+}
+
 function* watchPutPaymentCheck() {
   yield takeEvery(PUT_PAYMENT_CHECK.REQUEST, workPutPaymentCheck);
 }
@@ -179,6 +197,7 @@ export default [
   watchPutMeeting,
   watchPostMoimJoin,
   watchPostMoimExit,
+  watchPutMoimPassnumber,
   watchPutPaymentCheck,
   watchPutStaffCheck,
 ];

@@ -96,7 +96,7 @@ const MoimDetail = ({ category, id }) => {
     dispatch(exitModalOpenAction());
   }, []);
 
-  const onPassWordModalOpen = useCallback(() => {
+  const onPassNumberModalOpen = useCallback(() => {
     dispatch(passNumberModalOpenAction());
   }, []);
 
@@ -548,7 +548,7 @@ const MoimDetail = ({ category, id }) => {
               onTypeChange={onTypeChange}
               onTitleChange={onTitleChange}
               onLockChange={onLockChange}
-              onPassWordModalOpen={onPassWordModalOpen}
+              onPassNumberModalOpen={onPassNumberModalOpen}
               onStatusChange={onStatusChange}
               onCostInputChange={onCostInputChange}
               onCostInputReset={onCostInputReset}

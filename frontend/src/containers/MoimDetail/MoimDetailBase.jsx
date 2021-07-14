@@ -32,7 +32,7 @@ const MoimDetailBase = ({
   onTypeChange,
   onTitleChange,
   onLockChange,
-  onPassWordModalOpen,
+  onPassNumberModalOpen,
   onStatusChange,
   onCostInputChange,
   onCostInputReset,
@@ -69,7 +69,7 @@ const MoimDetailBase = ({
         isEdit={isEdit}
         isLock={isLock}
         onLockChange={onLockChange}
-        onPassWordModalOpen={onPassWordModalOpen}
+        onPassNumberModalOpen={onPassNumberModalOpen}
       />
       <MoimDetailStatus
         list={moimStatus}
