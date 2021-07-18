@@ -4,12 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { modalCloseAction } from '../../store/module/global';
 import { signUserResetAction } from '../../store/module/auth';
-import SignIn from '../../containers/Sign/SignIn';
-import SignUp from '../../containers/Sign/SignUp';
-import MoimDetailJoin from '../../containers/MoimDetail/MoimDetailJoin';
-import MoimDetailExit from '../../containers/MoimDetail/MoimDetailExit';
-import MoimDetailPassNumber from '../../containers/MoimDetail/MoimDetailPassNumber';
-import { ModalWrap, ModalInner, CloseButton } from './style';
+import SignIn from '../../Modals/SignIn';
+import SignUp from '../../Modals/SignUp';
+import MoimJoin from '../../Modals/MoimJoin';
+import MoimExit from '../../Modals/MoimExit';
+import MoimPassNumber from '../../Modals/MoimPassNumber';
+import MoimPassNumberSetting from '../../Modals/MoimPassNumberSetting';
+import { ModalWrap } from './style';
 
 const Modal = () => {
   const dispatch = useDispatch();
@@ -43,11 +44,13 @@ const Modal = () => {
       case 'SIGN_UP':
         return <SignUp />;
       case 'MOIM_JOIN':
-        return <MoimDetailJoin />;
+        return <MoimJoin />;
       case 'MOIM_EXIT':
-        return <MoimDetailExit />;
+        return <MoimExit />;
       case 'MOIM_PASSNUMBER':
-        return <MoimDetailPassNumber />
+        return <MoimPassNumber />;
+      case 'MOIM_PASSNUMBER_SETTING':
+        return <MoimPassNumberSetting />;
       default:
         return;
     }
@@ -64,10 +67,10 @@ const Modal = () => {
       modalVisible={modalVisible}
       onAnimationEnd={() => onModalAnimationEnd(modalVisible)}
     >
-      <CloseButton onClick={onButtonClose}>
+      <button type="button" className="btnModalClose" onClick={onButtonClose}>
         <FontAwesomeIcon icon={faTimes} />
-      </CloseButton>
-      <ModalInner>{getModalContent()}</ModalInner>
+      </button>
+      <div className="modalContent">{getModalContent()}</div>
     </ModalWrap>
   );
 };

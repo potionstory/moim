@@ -20,9 +20,9 @@ import {
 } from '../../store/module/global';
 import { getUserAction, signOutAction } from '../../store/module/auth';
 import { auth } from '../../server/firebase.util';
-import TextButton from '../../components/Button/TextButton';
-import IconButton from '../../components/Button/IconButton';
-import AvatarToast from '../../components/AvatarToast';
+import TextButton from '../../Components/Button/TextButton';
+import IconButton from '../../Components/Button/IconButton';
+import AvatarToast from '../../Components/AvatarToast';
 import {
   HeaderWrap,
   HeaderInnder,

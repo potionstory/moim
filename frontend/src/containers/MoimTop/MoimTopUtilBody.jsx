@@ -1,9 +1,9 @@
 import React from 'react';
-import map from 'lodash/map';
+import { map } from 'lodash';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import CheckBox from '../../components/CheckBox';
-import Toggle from '../../components/Toggle';
+import CheckBox from '../../Components/CheckBox';
+import Toggle from '../../Components/Toggle';
 import {
   MoimTopUtilBodyWrap,
   MoimTopUtilTabMenu,

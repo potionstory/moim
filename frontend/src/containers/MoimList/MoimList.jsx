@@ -1,18 +1,21 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import map from 'lodash/map';
+import { useHistory } from 'react-router-dom';
+import { map } from 'lodash';
 import { getAllCommunityAction } from '../../store/module/community';
 import { getAllMeetingAction } from '../../store/module/meeting';
-import Card from '../../components/Card';
+import { passNumberModalOpenAction } from '../../store/module/global';
+import Card from '../../Components/Card';
 import { MoimListWrap } from './style';
 
 const MoimList = ({ category }) => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const list = {
     community: useSelector(({ community }) => community.list),
     meeting: useSelector(({ meeting }) => meeting.list),
   };
-
-  const dispatch = useDispatch();
 
   const onGetAllCommunity = useCallback(
     () => dispatch(getAllCommunityAction.REQUEST()),
@@ -24,6 +27,17 @@ const MoimList = ({ category }) => {
     [dispatch],
   );
 
+  const onHandleDetail = useCallback(
+    (id, isLock) => {
+      if (isLock) {
+        dispatch(passNumberModalOpenAction(id));
+      } else {
+        history.push(`/detail/${category}/${id}`);
+      }
+    },
+    [list, category, dispatch],
+  );
+
   useEffect(() => {
     onGetAllCommunity();
     onGetAllMeeting();
@@ -33,7 +47,12 @@ const MoimList = ({ category }) => {
     <MoimListWrap>
       {map(list[category], (item) => {
         return (
-          <Card key={item[`${category}Id`]} item={item} category={category} />
+          <Card
+            key={item[`${category}Id`]}
+            item={item}
+            category={category}
+            onHandleDetail={onHandleDetail}
+          />
         );
       })}
     </MoimListWrap>

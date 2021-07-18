@@ -26,32 +26,30 @@ export const ModalWrap = styled.section`
         `}
   animation: ${({ modalVisible }) => (modalVisible ? fadeIn : fadeOut)} 0.2s
     ease-out forwards;
-`;
-
-export const CloseButton = styled.button`
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  z-index: 10;
-  width: 24px;
-  height: 24px;
-  padding: 8px;
-  box-sizing: content-box;
-  border-radius: 4px;
-  text-align: center;
-  line-height: 24px;
-  opacity: 0.6;
-  transition: all 0.2s ease-out;
-  svg {
-    font-size: 1.6rem;
-    color: ${({ theme }) => theme.main};
+  .btnModalClose {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 10;
+    width: 24px;
+    height: 24px;
+    padding: 8px;
+    box-sizing: content-box;
+    border-radius: 4px;
+    text-align: center;
+    line-height: 24px;
+    opacity: 0.6;
+    transition: all 0.2s ease-out;
+    svg {
+      font-size: 1.6rem;
+      color: ${({ theme }) => theme.main};
+    }
+    &:hover {
+      opacity: 1;
+    }
   }
-  &:hover {
-    opacity: 1;
+  .modalContent {
+    position: relative;
+    padding: 24px;
   }
-`;
-
-export const ModalInner = styled.div`
-  position: relative;
-  padding: 24px;
 `;
