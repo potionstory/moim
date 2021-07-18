@@ -1,6 +1,5 @@
 import React, { useState, useRef, useCallback } from 'react';
-import isEmpty from 'lodash/isEmpty';
-import map from 'lodash/map';
+import { isEmpty, map } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { InputWrap } from './style';

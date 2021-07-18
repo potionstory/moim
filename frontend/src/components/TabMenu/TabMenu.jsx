@@ -1,5 +1,5 @@
 import React from 'react';
-import map from 'lodash/map';
+import { map } from 'lodash';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TabMenuWrap, TabButton } from './style';

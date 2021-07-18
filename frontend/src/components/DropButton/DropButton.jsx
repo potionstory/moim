@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import map from 'lodash/map';
+import { map } from 'lodash';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -31,7 +31,8 @@ const DropButton = ({ menu, onHandle }) => {
             animate={{ y: isActive ? (index + 1) * 45 : 0 }}
             transition={{
               ease: 'backInOut',
-            }}>
+            }}
+          >
             <button type="button" onClick={onHandle[index]}>
               <FontAwesomeIcon className="icon" icon={icon} />
             </button>

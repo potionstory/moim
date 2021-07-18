@@ -8,8 +8,8 @@ import {
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import Avatar from 'boring-avatars';
-import TextButton from '../../components/Button/TextButton';
-import IconButton from '../../components/Button/IconButton';
+import TextButton from '../Button/TextButton';
+import IconButton from '../Button/IconButton';
 import { AvatarToastWrap, Member, NonMember, Menus } from './style';
 
 const AvatarToast = ({

@@ -1,5 +1,5 @@
 import React from 'react';
-import map from 'lodash/map';
+import { map } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { StatusListWrap, StatusItem, StatusItemButton } from './style';

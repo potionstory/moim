@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import AutosizeInput from 'react-input-autosize';
 import { isNull, isEmpty, filter, map } from 'lodash';
+import AutosizeInput from 'react-input-autosize';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -17,7 +17,7 @@ import {
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import Avatar from 'boring-avatars';
-import CheckBox from '../../components/CheckBox';
+import CheckBox from '../../Components/CheckBox';
 import { moimMemberForm } from '../../utils/formData';
 import { MoimDetailMemberWrap } from './style';
 

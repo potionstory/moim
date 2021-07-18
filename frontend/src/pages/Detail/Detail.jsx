@@ -1,16 +1,12 @@
 import React from 'react';
-import MoimDetail from '../../containers/MoimDetail';
+import MoimDetail from '../../Containers/MoimDetail';
 
 const Detail = ({ match }) => {
-
   const { category, id } = match.params;
 
   return (
     <>
-      <MoimDetail
-        category={category}
-        id={id}
-      />
+      <MoimDetail category={category} id={id} />
     </>
   );
 };

@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { findIndex } from 'lodash';
-import MoimList from '../../containers/MoimList';
-import MoimTop from '../../containers/MoimTop';
+import MoimList from '../../Containers/MoimList';
+import MoimTop from '../../Containers/MoimTop';
 import { categoryChangeAction } from '../../store/module/global';
 import { categoryTabMenu } from '../../lib/const';
 
@@ -12,10 +12,13 @@ const Home = () => {
 
   const [tabIndex, setTabIndex] = useState(0);
 
-  const onTabClick = useCallback((index) => {
-    dispatch(categoryChangeAction(categoryTabMenu[index].title));
-    setTabIndex(index);
-  }, [dispatch, categoryTabMenu]);
+  const onTabClick = useCallback(
+    (index) => {
+      dispatch(categoryChangeAction(categoryTabMenu[index].title));
+      setTabIndex(index);
+    },
+    [dispatch, categoryTabMenu],
+  );
 
   useEffect(() => {
     setTabIndex(findIndex(categoryTabMenu, (tab) => tab.title === category));

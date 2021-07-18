@@ -1,8 +1,8 @@
 import React from 'react';
-import findIndex from 'lodash/findIndex';
+import { findIndex } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import StatusList from '../../components/StatusList';
+import StatusList from '../../Components/StatusList';
 import { MoimDetailStatusWrap } from './style';
 
 const MoimDetailStatus = ({ list, status, isEdit, onStatusChange }) => {

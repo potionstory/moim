@@ -7,8 +7,20 @@ export const getAllCommunityAPI = () => api.get('/communitys');
 export const getCommunityAPI = (communityId) =>
   api.get(`/community/${communityId}`);
 
-// put meeting passnumber
-export const putCommunityPassnumberAPI = (communityId, bodyParams) => {
+// post community passnumber(check)
+export const postCommunityPassNumberAPI = (communityId, bodyParams) => {
+  return api
+    .post(`/community/passnumber/${communityId}`, bodyParams)
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
+
+// put community passnumber(setting)
+export const putCommunityPassNumberAPI = (communityId, bodyParams) => {
   return api
     .put(`/community/passnumber/${communityId}`, bodyParams)
     .then((res) => {
@@ -17,7 +29,8 @@ export const putCommunityPassnumberAPI = (communityId, bodyParams) => {
     .catch((error) => {
       return error;
     });
-}
+};
 
 // put one community
-export const putCommunityAPI = (communityId, bodyParams) => api.put(`/community/${communityId}`, bodyParams);
+export const putCommunityAPI = (communityId, bodyParams) =>
+  api.put(`/community/${communityId}`, bodyParams);

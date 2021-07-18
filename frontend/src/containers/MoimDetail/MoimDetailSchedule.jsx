@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
+import { map } from 'lodash';
 import dayjs from 'dayjs';
 import ko from 'dayjs/locale/ko';
 import DateFnsUtils from '@date-io/dayjs';
@@ -7,7 +8,6 @@ import { createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import { MuiPickersUtilsProvider, DateTimePicker } from '@material-ui/pickers';
 import { motion } from 'framer-motion';
-import map from 'lodash/map';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCircle,

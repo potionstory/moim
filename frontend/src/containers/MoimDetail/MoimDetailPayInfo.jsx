@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
-import find from 'lodash/find';
+import { find } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy, faWonSign, faEraser } from '@fortawesome/free-solid-svg-icons';
-import InputBox from '../../components/InputBox';
-import SelectBox from '../../components/SelectBox';
+import InputBox from '../../Components/InputBox';
+import SelectBox from '../../Components/SelectBox';
 import { color } from '../../lib/styles/palette';
 import { bankList } from '../../lib/const.js';
 import { MoimDetailPayInfoWrap } from './style';

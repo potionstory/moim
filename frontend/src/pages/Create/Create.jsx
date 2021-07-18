@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import MoimTop from '../../containers/MoimTop';
+import MoimTop from '../../Containers/MoimTop';
 import { categoryTabMenu } from '../../lib/const';
 
 const Create = () => {

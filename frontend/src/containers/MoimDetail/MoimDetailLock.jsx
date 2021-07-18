@@ -1,10 +1,15 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faKey } from '@fortawesome/free-solid-svg-icons';
-import Toggle from '../../components/Toggle';
+import Toggle from '../../Components/Toggle';
 import { MoimDetailLockWrap } from './style';
 
-const MoimDetailLock = ({ isEdit, isLock, onLockChange, onPassNumberModalOpen }) => {
+const MoimDetailLock = ({
+  isEdit,
+  isLock,
+  onLockChange,
+  onPassNumberSettingModalOpen,
+}) => {
   return (
     <MoimDetailLockWrap>
       <span className="icon">
@@ -17,8 +22,12 @@ const MoimDetailLock = ({ isEdit, isLock, onLockChange, onPassNumberModalOpen })
           isChecked={isLock}
           onCheck={isEdit ? onLockChange : () => {}}
         />
-        {(isEdit && isLock) && (
-          <button type="button" className="btnPassWord" onClick={onPassNumberModalOpen}>
+        {isEdit && isLock && (
+          <button
+            type="button"
+            className="btnPassWord"
+            onClick={onPassNumberSettingModalOpen}
+          >
             <FontAwesomeIcon icon={faKey} />
           </button>
         )}

@@ -1,5 +1,5 @@
 import React from 'react';
-import map from 'lodash/map';
+import { map } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus } from '@fortawesome/free-solid-svg-icons';
 import { TagListWrap } from './style';

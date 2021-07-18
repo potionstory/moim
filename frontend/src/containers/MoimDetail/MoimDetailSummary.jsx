@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faDoorOpen } from '@fortawesome/free-solid-svg-icons';
-import UserInfo from '../../components/UserInfo';
+import UserInfo from '../../Components/UserInfo';
 import { MoimDetailSummaryWrap } from './style';
 
 const MoimDetailSummary = ({

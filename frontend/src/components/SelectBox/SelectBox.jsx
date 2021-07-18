@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import map from 'lodash/map';
+import { map } from 'lodash';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';

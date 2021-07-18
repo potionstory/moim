@@ -1,5 +1,5 @@
 import React from 'react';
-import IconList from '../../components/IconList';
+import IconList from '../../Components/IconList';
 import { MoimDetailTypeWrap } from './style';
 
 const MoimDetailType = ({

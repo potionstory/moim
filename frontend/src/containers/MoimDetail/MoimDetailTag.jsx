@@ -1,9 +1,9 @@
 import React from 'react';
-import isEmpty from 'lodash/isEmpty';
+import { isEmpty } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag, faPlus } from '@fortawesome/free-solid-svg-icons';
-import InputBox from '../../components/InputBox';
-import TagList from '../../components/TagList';
+import InputBox from '../../Components/InputBox';
+import TagList from '../../Components/TagList';
 import { MoimDetailTagWrap } from './style';
 
 const MoimDetailTag = ({
