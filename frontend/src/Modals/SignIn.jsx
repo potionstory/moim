@@ -1,13 +1,13 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import every from 'lodash/every';
+import { every } from 'lodash';
 import { produce } from 'immer';
-import { signInForm } from '../../utils/formData';
-import { emailCheck, passwordCheck } from '../../utils/regexUtil';
-import { socialSignInAction, signInAction } from '../../store/module/auth';
-import InputForm from '../../components/InputForm';
-import SocialList from '../../components/SocialList';
-import { SignWrap } from './style';
+import { signInForm } from '../utils/formData';
+import { emailCheck, passwordCheck } from '../utils/regexUtil';
+import { socialSignInAction, signInAction } from '../store/module/auth';
+import InputForm from '../Components/InputForm';
+import SocialList from '../Components/SocialList';
+import { ModalContentWrap, SocialWrap } from './style';
 
 const validator = [emailCheck, passwordCheck];
 
@@ -52,10 +52,10 @@ const SignIn = () => {
   }, []);
 
   return (
-    <SignWrap>
-      <div className="signInner">
+    <ModalContentWrap>
+      <div className="modalInner">
         <h4>sign in</h4>
-        <div className="signBody">
+        <div className="modalBody">
           <InputForm
             formData={formData}
             focusInput={focusInput}
@@ -66,15 +66,15 @@ const SignIn = () => {
             onConfirm={onSignIn}
             confirmText="sign in"
           />
-          <div className="socialWrap">
+          <SocialWrap>
             <span className="subTitle">social login</span>
             <div className="socialList">
               <SocialList onSocialSign={onSocialSignIn} />
             </div>
-          </div>
+          </SocialWrap>
         </div>
       </div>
-    </SignWrap>
+    </ModalContentWrap>
   );
 };
 

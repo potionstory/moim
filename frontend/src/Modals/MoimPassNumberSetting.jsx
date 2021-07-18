@@ -1,21 +1,21 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { map, filter, every, isEqual, findIndex, fromPairs } from 'lodash';
+import { map, every, isEqual } from 'lodash';
 import { produce } from 'immer';
-import InputForm from '../../components/InputForm';
-import { passNumberCheck } from '../../utils/regexUtil';
-import { moimPassNumberForm } from '../../utils/formData';
-import { putMoimPassnumberAction } from '../../store/module/detail';
-import { MoimDetailModalWrap } from './style';
+import InputForm from '../Components/InputForm';
+import { passNumberCheck } from '../utils/regexUtil';
+import { moimPassNumberSettingForm } from '../utils/formData';
+import { putMoimPassNumberSettingAction } from '../store/module/detail';
+import { ModalContentWrap } from './style';
 
-const MoimDetailPassWord = () => {
+const MoimPassNumberSetting = () => {
   const { moim } = useSelector(({ detail }) => detail);
   const { category } = useSelector(({ global }) => global);
 
   const dispatch = useDispatch();
 
   const [focusInput, setFocusInput] = useState(null);
-  const [formData, setFormData] = useState(moimPassNumberForm);
+  const [formData, setFormData] = useState(moimPassNumberSettingForm);
 
   const isActive = useMemo(() => {
     return every(formData, (item) => item.isCheck);
@@ -45,11 +45,11 @@ const MoimDetailPassWord = () => {
     (formData) => {
       if (isEqual(formData[0].value, formData[1].value)) {
         dispatch(
-          putMoimPassnumberAction.REQUEST({
+          putMoimPassNumberSettingAction.REQUEST({
             id: moim[`${category}Id`],
             category,
             formData,
-          })
+          }),
         );
       } else {
         console.log('passnumber not equal'); // toast
@@ -61,7 +61,7 @@ const MoimDetailPassWord = () => {
   useEffect(() => {
     setFormData(
       produce((draft) => {
-        map(draft, form => {
+        map(draft, (form) => {
           form.isCheck = passNumberCheck(form.value);
 
           return form;
@@ -71,7 +71,7 @@ const MoimDetailPassWord = () => {
   }, [formData]);
 
   return (
-    <MoimDetailModalWrap>
+    <ModalContentWrap>
       <div className="modalInner">
         <h4>passnumber</h4>
         <div className="modalBody">
@@ -87,8 +87,8 @@ const MoimDetailPassWord = () => {
           />
         </div>
       </div>
-    </MoimDetailModalWrap>
+    </ModalContentWrap>
   );
 };
 
-export default MoimDetailPassWord;
+export default MoimPassNumberSetting;

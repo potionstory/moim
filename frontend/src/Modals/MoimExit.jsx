@@ -2,16 +2,16 @@ import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { isNull, filter, every, findIndex } from 'lodash';
 import { produce } from 'immer';
-import InputForm from '../../components/InputForm';
+import InputForm from '../Components/InputForm';
 import {
   nameCheck,
   emailCheck,
   mobileCheck,
   passNumberCheck,
-} from '../../utils/regexUtil';
-import { moimMemberForm } from '../../utils/formData';
-import { postMoimExitAction } from '../../store/module/detail';
-import { MoimDetailModalWrap } from './style';
+} from '../utils/regexUtil';
+import { moimMemberForm } from '../utils/formData';
+import { postMoimExitAction } from '../store/module/detail';
+import { ModalContentWrap } from './style';
 
 const validator = {
   name: nameCheck,
@@ -20,7 +20,7 @@ const validator = {
   passNumber: passNumberCheck,
 };
 
-const MoimDetailExit = () => {
+const MoimExit = () => {
   const { userInfo } = useSelector(({ auth }) => auth);
   const { moim } = useSelector(({ detail }) => detail);
   const dispatch = useDispatch();
@@ -120,7 +120,7 @@ const MoimDetailExit = () => {
   }, [userInfo]);
 
   return (
-    <MoimDetailModalWrap>
+    <ModalContentWrap>
       <div className="modalInner">
         <h4>exit</h4>
         <div className="modalBody">
@@ -137,8 +137,8 @@ const MoimDetailExit = () => {
           />
         </div>
       </div>
-    </MoimDetailModalWrap>
+    </ModalContentWrap>
   );
 };
 
-export default MoimDetailExit;
+export default MoimExit;

@@ -1,13 +1,11 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import isEmpty from 'lodash/isEmpty';
-import every from 'lodash/every';
-import findIndex from 'lodash/findIndex';
+import { isEmpty, every, findIndex } from 'lodash';
 import { produce } from 'immer';
-import { avatars } from '../../lib/const';
-import { color } from '../../lib/styles/palette';
-import { signUpForm, userInfoForm } from '../../utils/formData';
-import { emailCheck, passwordCheck, nameCheck } from '../../utils/regexUtil';
+import { avatars } from '../lib/const';
+import { color } from '../lib/styles/palette';
+import { signUpForm, userInfoForm } from '../utils/formData';
+import { emailCheck, passwordCheck, nameCheck } from '../utils/regexUtil';
 import {
   socialSignAction,
   socialSignUpAction,
@@ -15,10 +13,10 @@ import {
   signUpAction,
   signUserImageAction,
   signAvatarResetAction,
-} from '../../store/module/auth';
+} from '../store/module/auth';
 import SignUpBox from './SignUpBox';
 import UserInfoBox from './UserInfoBox';
-import { SignWrap } from './style';
+import { ModalContentWrap } from './style';
 
 const formValidators = [
   [emailCheck, passwordCheck, passwordCheck],
@@ -41,10 +39,12 @@ const SignUp = () => {
         ].sort(() => Math.random() - 0.5),
       };
 
-      return dispatch(socialSignAction.REQUEST({
-        service: payload,
-        userAvatar,
-      }));
+      return dispatch(
+        socialSignAction.REQUEST({
+          service: payload,
+          userAvatar,
+        }),
+      );
     },
     [dispatch],
   );
@@ -67,10 +67,12 @@ const SignUp = () => {
         ].sort(() => Math.random() - 0.5),
       };
 
-      return dispatch(signAction.REQUEST({
-        formData: payload,
-        userAvatar,
-      }));
+      return dispatch(
+        signAction.REQUEST({
+          formData: payload,
+          userAvatar,
+        }),
+      );
     },
     [dispatch],
   );
@@ -177,10 +179,10 @@ const SignUp = () => {
   }, [signInfo, isSignInfo]);
 
   return (
-    <SignWrap>
-      <div className="signInner">
+    <ModalContentWrap>
+      <div className="modalInner">
         <h4>sign up</h4>
-        <div className="signBody">
+        <div className="modalBody">
           {!isSignInfo ? (
             <SignUpBox
               formData={formData}
@@ -209,7 +211,7 @@ const SignUp = () => {
           )}
         </div>
       </div>
-    </SignWrap>
+    </ModalContentWrap>
   );
 };
 

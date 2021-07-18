@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faLaugh } from '@fortawesome/free-solid-svg-icons';
 import Avatar from 'boring-avatars';
-import InputForm from '../../components/InputForm';
+import InputForm from '../Components/InputForm';
 import { UserImage } from './style';
 
 const UserInfoBox = ({
@@ -31,18 +31,12 @@ const UserInfoBox = ({
             onChange={onImageChange}
           />
         </label>
-        <span className="userImage">
+        <span className="imageBox">
           {!userImage ? (
-              <Avatar
-                size="100%"
-                name={name}
-                variant="beam"
-                colors={colors}
-              />
-            ) : (
-              <img src={userImage} />
-            )
-          }
+            <Avatar size="100%" name={name} variant="beam" colors={colors} />
+          ) : (
+            <img src={userImage} />
+          )}
         </span>
         <button type="button" className="btnReset" onClick={onSignAvatarReset}>
           <FontAwesomeIcon icon={faLaugh} />

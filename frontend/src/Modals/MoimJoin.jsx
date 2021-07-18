@@ -1,22 +1,22 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { isNull, filter, every, findIndex, map } from 'lodash';
+import { isNull, filter, every, findIndex } from 'lodash';
 import { produce } from 'immer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLaugh } from '@fortawesome/free-solid-svg-icons';
 import Avatar from 'boring-avatars';
-import InputForm from '../../components/InputForm';
+import InputForm from '../Components/InputForm';
 import {
   nameCheck,
   emailCheck,
   mobileCheck,
   passNumberCheck,
-} from '../../utils/regexUtil';
-import { avatars } from '../../lib/const';
-import { color } from '../../lib/styles/palette';
-import { moimMemberForm } from '../../utils/formData';
-import { postMoimJoinAction } from '../../store/module/detail';
-import { MoimDetailModalWrap } from './style';
+} from '../utils/regexUtil';
+import { avatars } from '../lib/const';
+import { color } from '../lib/styles/palette';
+import { moimMemberForm } from '../utils/formData';
+import { postMoimJoinAction } from '../store/module/detail';
+import { ModalContentWrap, MemberImage } from './style';
 
 const validator = {
   name: nameCheck,
@@ -25,7 +25,7 @@ const validator = {
   passNumber: passNumberCheck,
 };
 
-const MoimDetailJoin = () => {
+const MoimJoin = () => {
   const { userInfo } = useSelector(({ auth }) => auth);
   const { moim } = useSelector(({ detail }) => detail);
   const dispatch = useDispatch();
@@ -176,11 +176,11 @@ const MoimDetailJoin = () => {
   const { name, colors } = userAvatar;
 
   return (
-    <MoimDetailModalWrap isAuth={!isNull(userInfo)}>
+    <ModalContentWrap>
       <div className="modalInner">
         <h4>join</h4>
         <div className="modalBody">
-          <div className="userImage">
+          <MemberImage isAuth={!isNull(userInfo)}>
             <button
               type="button"
               className="btnReset"
@@ -207,7 +207,7 @@ const MoimDetailJoin = () => {
             >
               <FontAwesomeIcon icon={faLaugh} />
             </button>
-          </div>
+          </MemberImage>
           <InputForm
             formData={formData}
             focusInput={focusInput}
@@ -221,8 +221,8 @@ const MoimDetailJoin = () => {
           />
         </div>
       </div>
-    </MoimDetailModalWrap>
+    </ModalContentWrap>
   );
 };
 
-export default MoimDetailJoin;
+export default MoimJoin;

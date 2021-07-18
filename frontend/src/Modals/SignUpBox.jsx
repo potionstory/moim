@@ -1,7 +1,7 @@
 import React from 'react';
-import InputForm from '../../components/InputForm';
-import SocialList from '../../components/SocialList';
-import { SocialArea } from './style';
+import InputForm from '../Components/InputForm';
+import SocialList from '../Components/SocialList';
+import { SocialWrap } from './style';
 
 const SignUpBox = ({
   formData,
@@ -25,12 +25,12 @@ const SignUpBox = ({
         onConfirm={onSign}
         confirmText="sign info"
       />
-      <div className="socialWrap">
+      <SocialWrap>
         <span className="subTitle">social login</span>
         <div className="socialList">
           <SocialList onSocialSign={onSocialSign} />
         </div>
-      </div>
+      </SocialWrap>
     </>
   );
 };
