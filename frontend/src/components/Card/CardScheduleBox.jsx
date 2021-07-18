@@ -1,6 +1,6 @@
 import React from 'react';
+import { map } from 'lodash';
 import { motion } from 'framer-motion';
-import map from 'lodash/map';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { weeks } from '../../lib/const';

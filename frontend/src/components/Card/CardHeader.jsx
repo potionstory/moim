@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faWonSign } from '@fortawesome/free-solid-svg-icons';
 import { getCommunityIcon, getMeetingIcon } from '../../utils/commonUtil';
 import { CardHeaderWrap } from './style';
 
-const CardHeader = ({ item, category }) => {
+const CardHeader = ({ item, category, onHandleDetail }) => {
   const { type, title, isLock, payInfo, status } = item;
   const id = item[`${category}Id`];
 
@@ -22,9 +21,13 @@ const CardHeader = ({ item, category }) => {
         )}
       </span>
       <div className="info">
-        <Link to={`/detail/${category}/${id}`} className="title">
+        <button
+          type="button"
+          className="title"
+          onClick={() => onHandleDetail(id, isLock)}
+        >
           {title}
-        </Link>
+        </button>
         <div className="subInfo">
           {isLock && (
             <span className="lock">

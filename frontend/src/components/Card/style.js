@@ -67,6 +67,7 @@ export const CardHeaderWrap = styled.div`
       font-weight: 600;
       color: ${color.gray};
       line-height: 1rem;
+      text-align: left;
       ${ellipsis};
       transition: all 0.2s ease-out;
       &:hover {
@@ -233,6 +234,7 @@ export const CardMainImageBoxWrap = styled.span`
   position: relative;
   height: 100%;
   .thumb {
+    height: 100%;
     img {
       width: 100%;
       height: 100%;
@@ -275,8 +277,8 @@ export const CardMainImageBoxWrap = styled.span`
 
 export const CardDescriptionBoxWrap = styled.div`
   height: 100%;
-  a {
-    display: block;
+  button {
+    display: flex;
     height: 100%;
     padding: 12px;
     font-size: 0.75rem;
@@ -284,6 +286,7 @@ export const CardDescriptionBoxWrap = styled.div`
     color: ${color.gray};
     word-break: break-all;
     line-height: 1.5;
+    text-align: left;
     white-space: pre-wrap;
     transition: all 0.2s ease-out;
     &:hover {

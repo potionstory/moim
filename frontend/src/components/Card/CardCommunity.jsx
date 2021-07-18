@@ -5,8 +5,8 @@ import CardUrlBox from './CardUrlBox';
 import CardAddInfoBox from './CardAddInfoBox';
 import { CardTabBoxWrap } from './style';
 
-const CardCommunity = ({ item, activeIndex }) => {
-  const { communityId, mainImage, description, url, tags } = item;
+const CardCommunity = ({ item, activeIndex, onHandleDetail }) => {
+  const { communityId, isLock, mainImage, description, url, tags } = item;
 
   const onUrlCopy = useCallback(() => {
     navigator.clipboard.writeText(url);
@@ -17,15 +17,19 @@ const CardCommunity = ({ item, activeIndex }) => {
       case 0:
         return (
           <CardMainImageBox
-            detailUrl={`/detail/community/${communityId}`}
+            id={communityId}
+            isLock={isLock}
             mainImage={mainImage}
+            onHandleDetail={onHandleDetail}
           />
         );
       case 1:
         return (
           <CardDescriptionBox
-            detailUrl={`/detail/community/${communityId}`}
+            id={communityId}
+            isLock={isLock}
             description={description}
+            onHandleDetail={onHandleDetail}
           />
         );
       case 2:

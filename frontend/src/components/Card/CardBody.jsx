@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import map from 'lodash/map';
+import { map } from 'lodash';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cardTabMenu } from '../../lib/const';
@@ -7,7 +7,7 @@ import CardCommunity from './CardCommunity';
 import CardMeeting from './CardMeeting';
 import { CardBodyWrap, CardTabMenu, CardTabContentWrap } from './style';
 
-const CardBody = ({ item, category }) => {
+const CardBody = ({ item, category, onHandleDetail }) => {
   const [tabIndex, setTabIndex] = useState(0);
 
   const onTabClick = useCallback((index) => {
@@ -39,9 +39,17 @@ const CardBody = ({ item, category }) => {
       <CardTabContentWrap>
         <div className="cardTabBlock">
           {category === 'community' ? (
-            <CardCommunity item={item} activeIndex={tabIndex} />
+            <CardCommunity
+              item={item}
+              activeIndex={tabIndex}
+              onHandleDetail={onHandleDetail}
+            />
           ) : (
-            <CardMeeting item={item} activeIndex={tabIndex} />
+            <CardMeeting
+              item={item}
+              activeIndex={tabIndex}
+              onHandleDetail={onHandleDetail}
+            />
           )}
         </div>
       </CardTabContentWrap>

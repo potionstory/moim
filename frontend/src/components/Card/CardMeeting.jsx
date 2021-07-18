@@ -10,9 +10,10 @@ import { CardTabBoxWrap } from './style';
 const { kakao } = window;
 const mapIndex = 3; //map menu index
 
-const CardMeeting = ({ item, activeIndex }) => {
+const CardMeeting = ({ item, activeIndex, onHandleDetail }) => {
   const {
     meetingId,
+    isLock,
     type,
     mainImage,
     description,
@@ -55,15 +56,19 @@ const CardMeeting = ({ item, activeIndex }) => {
       case 0:
         return (
           <CardMainImageBox
-            detailUrl={`/detail/meeting/${meetingId}`}
+            id={meetingId}
+            isLock={isLock}
             mainImage={mainImage}
+            onHandleDetail={onHandleDetail}
           />
         );
       case 1:
         return (
           <CardDescriptionBox
-            detailUrl={`/detail/meeting/${meetingId}`}
+            id={meetingId}
+            isLock={isLock}
             description={description}
+            onHandleDetail={onHandleDetail}
           />
         );
       case 2:

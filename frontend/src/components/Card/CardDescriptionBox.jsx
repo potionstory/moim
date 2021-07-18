@@ -1,11 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { CardDescriptionBoxWrap } from './style';
 
-const CardDescriptionBox = ({ detailUrl, description }) => {
+const CardDescriptionBox = ({ id, isLock, description, onHandleDetail }) => {
   return (
     <CardDescriptionBoxWrap>
-      <Link to={detailUrl}>{description}</Link>
+      <button type="button" onClick={() => onHandleDetail(id, isLock)}>
+        {description}
+      </button>
     </CardDescriptionBoxWrap>
   );
 };

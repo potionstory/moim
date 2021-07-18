@@ -1,5 +1,5 @@
 import React from 'react';
-import isUndefined from 'lodash/isUndefined';
+import { isUndefined } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faTag } from '@fortawesome/free-solid-svg-icons';
 import TagList from '../TagList';
