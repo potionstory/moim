@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import forEach from 'lodash/forEach';
+import { forEach } from 'lodash';
 import {
   GET_COMMUNITY,
   GET_MEETING,
@@ -7,7 +7,8 @@ import {
   PUT_MEETING,
   POST_MOIM_JOIN,
   POST_MOIM_EXIT,
-  PUT_MOIM_PASSNUMBER,
+  POST_MOIM_PASSNUMBER_CHECK,
+  PUT_MOIM_PASSNUMBER_SETTING,
   PUT_PAYMENT_CHECK,
   PUT_STAFF_CHECK,
 } from '../module/detail';
@@ -18,18 +19,25 @@ import {
   putMeetingAction,
   postMoimJoinAction,
   postMoimExitAction,
-  putMoimPassnumberAction,
+  postMoimPassNumberCheckAction,
+  putMoimPassNumberSettingAction,
   putPaymentCheckAction,
   putStaffCheckAction,
 } from '../module/detail';
 import { modalCloseAction } from '../module/global';
-import { getCommunityAPI, putCommunityAPI, putCommunityPassnumberAPI } from '../api/community';
+import {
+  getCommunityAPI,
+  putCommunityAPI,
+  postCommunityPassNumberAPI,
+  putCommunityPassNumberAPI,
+} from '../api/community';
 import {
   getMeetingAPI,
   putMeetingAPI,
   postMeetingJoinAPI,
   postMeetingExitAPI,
-  putMeetingPassnumberAPI,
+  postMeetingPassNumberAPI,
+  putMeetingPassNumberAPI,
   putPaymentCheckAPI,
   putStaffCheckAPI,
 } from '../api/meeting';
@@ -107,7 +115,7 @@ function* workPostMoimExit(action) {
   }
 }
 
-function* workPutMoimPassnumber(action) {
+function* workPostMoimPassNumberCheck(action) {
   const { id, category, formData } = action.payload;
   const bodyParams = {};
   let res = null;
@@ -117,16 +125,32 @@ function* workPutMoimPassnumber(action) {
   });
 
   if (category === 'community') {
-    res = yield call(putCommunityPassnumberAPI, id, bodyParams);
+    res = yield call(postCommunityPassNumberAPI, id, bodyParams);
   } else if (category === 'meeting') {
-    res = yield call(putMeetingPassnumberAPI, id, bodyParams);
+    res = yield call(postMeetingPassNumberAPI, id, bodyParams);
+  }
+}
+
+function* workPutMoimPassNumberSetting(action) {
+  const { id, category, formData } = action.payload;
+  const bodyParams = {};
+  let res = null;
+
+  forEach(formData, (item) => {
+    bodyParams[item.name] = item.value;
+  });
+
+  if (category === 'community') {
+    res = yield call(putCommunityPassNumberAPI, id, bodyParams);
+  } else if (category === 'meeting') {
+    res = yield call(putMeetingPassNumberAPI, id, bodyParams);
   }
 
   if (res.status === 200) {
-    yield put(putMoimPassnumberAction.SUCCESS());
+    yield put(putMoimPassNumberSettingAction.SUCCESS());
     yield put(modalCloseAction());
   } else {
-    yield put(putMoimPassnumberAction.FAILURE());
+    yield put(putMoimPassNumberSettingAction.FAILURE());
   }
 }
 
@@ -178,8 +202,18 @@ function* watchPostMoimExit() {
   yield takeEvery(POST_MOIM_EXIT.REQUEST, workPostMoimExit);
 }
 
-function* watchPutMoimPassnumber() {
-  yield takeEvery(PUT_MOIM_PASSNUMBER.REQUEST, workPutMoimPassnumber);
+function* watchPostMoimPassNumberCheck() {
+  yield takeEvery(
+    POST_MOIM_PASSNUMBER_CHECK.REQUEST,
+    workPostMoimPassNumberCheck,
+  );
+}
+
+function* watchPutMoimPassNumberSetting() {
+  yield takeEvery(
+    PUT_MOIM_PASSNUMBER_SETTING.REQUEST,
+    workPutMoimPassNumberSetting,
+  );
 }
 
 function* watchPutPaymentCheck() {
@@ -197,7 +231,8 @@ export default [
   watchPutMeeting,
   watchPostMoimJoin,
   watchPostMoimExit,
-  watchPutMoimPassnumber,
+  watchPostMoimPassNumberCheck,
+  watchPutMoimPassNumberSetting,
   watchPutPaymentCheck,
   watchPutStaffCheck,
 ];

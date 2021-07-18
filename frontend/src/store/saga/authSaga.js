@@ -1,8 +1,5 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
-import isEmpty from 'lodash/isEmpty';
-import forEach from 'lodash/forEach';
-import reduce from 'lodash/reduce';
-import assign from 'lodash/assign';
+import { isEmpty, forEach, reduce, assign } from 'lodash';
 import {
   SOCIAL_SIGN,
   SOCIAL_SIGN_UP,

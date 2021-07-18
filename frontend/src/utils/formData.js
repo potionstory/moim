@@ -62,6 +62,17 @@ export const moimPassNumberForm = [
     isCheck: false,
     icon: faKey,
   },
+];
+
+export const moimPassNumberSettingForm = [
+  {
+    type: 'number',
+    name: 'passNumber',
+    placeholder: '',
+    value: new Array(6).fill(''),
+    isCheck: false,
+    icon: faKey,
+  },
   {
     type: 'number',
     name: 'confirmPassNumber',

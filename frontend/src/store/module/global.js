@@ -8,6 +8,7 @@ export const SIGNUP_MODAL_OPEN = 'SIGNUP_MODAL_OPEN';
 export const JOIN_MODAL_OPEN = 'JOIN_MODAL_OPEN';
 export const EXIT_MODAL_OPEN = 'EXIT_MODAL_OPEN';
 export const PASSNUMBER_MODAL_OPEN = 'PASSNUMBER_MODAL_OPEN';
+export const PASSNUMBER_SETTING_MODAL_OPEN = 'PASSNUMBER_SETTING_MODAL_OPEN';
 export const MODAL_CLOSE = 'MODAL_CLOSE';
 
 // action 생성자 함수
@@ -30,8 +31,12 @@ export const joinModalOpenAction = () => ({
 export const exitModalOpenAction = () => ({
   type: EXIT_MODAL_OPEN,
 });
-export const passNumberModalOpenAction = () => ({
+export const passNumberModalOpenAction = (payload) => ({
   type: PASSNUMBER_MODAL_OPEN,
+  payload,
+});
+export const passNumberSettingModalOpenAction = () => ({
+  type: PASSNUMBER_SETTING_MODAL_OPEN,
 });
 export const modalCloseAction = () => ({
   type: MODAL_CLOSE,
@@ -41,6 +46,7 @@ export const modalCloseAction = () => ({
 const initialState = {
   loading: false,
   theme: false, // true: Light, false: Dark
+  id: null,
   category: 'community',
   modal: {
     isVisible: false,
@@ -80,8 +86,14 @@ export default (state = initialState, action) => {
         break;
       }
       case PASSNUMBER_MODAL_OPEN: {
+        draft.id = action.payload;
         draft.modal.isVisible = true;
         draft.modal.name = 'MOIM_PASSNUMBER';
+        break;
+      }
+      case PASSNUMBER_SETTING_MODAL_OPEN: {
+        draft.modal.isVisible = true;
+        draft.modal.name = 'MOIM_PASSNUMBER_SETTING';
         break;
       }
       case MODAL_CLOSE: {

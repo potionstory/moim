@@ -26,8 +26,20 @@ export const postMeetingExitAPI = (meetingId, bodyParams) => {
     });
 };
 
-// put meeting passnumber
-export const putMeetingPassnumberAPI = (meetingId, bodyParams) => {
+// post meeting passnumber(check)
+export const postMeetingPassNumberAPI = (meetingId, bodyParams) => {
+  return api
+    .post(`/meeting/passnumber/${meetingId}`, bodyParams)
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
+
+// put meeting passnumber(setting)
+export const putMeetingPassNumberAPI = (meetingId, bodyParams) => {
   return api
     .put(`/meeting/passnumber/${meetingId}`, bodyParams)
     .then((res) => {
@@ -36,7 +48,7 @@ export const putMeetingPassnumberAPI = (meetingId, bodyParams) => {
     .catch((error) => {
       return error;
     });
-}
+};
 
 // put payment check
 export const putPaymentCheckAPI = (meetingId, bodyParams) => {

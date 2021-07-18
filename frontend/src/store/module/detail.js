@@ -8,7 +8,12 @@ export const PUT_COMMUNITY = createType('PUT_COMMUNITY');
 export const PUT_MEETING = createType('PUT_MEETING');
 export const POST_MOIM_JOIN = createType('POST_MOIM_JOIN');
 export const POST_MOIM_EXIT = createType('POST_MOIN_EXIT');
-export const PUT_MOIM_PASSNUMBER = createType('PUT_MOIM_PASSNUMBER');
+export const POST_MOIM_PASSNUMBER_CHECK = createType(
+  'POST_MOIM_PASSNUMBER_CHECK',
+);
+export const PUT_MOIM_PASSNUMBER_SETTING = createType(
+  'PUT_MOIM_PASSNUMBER_SETTING',
+);
 export const PUT_PAYMENT_CHECK = createType('PUT_PAYMENT_CHECK');
 export const PUT_STAFF_CHECK = createType('PUT_STAFF_CHECK');
 export const SET_IS_EDIT = 'SET_IS_EDIT';
@@ -21,7 +26,12 @@ export const putCommunityAction = createAction(PUT_COMMUNITY);
 export const putMeetingAction = createAction(PUT_MEETING);
 export const postMoimJoinAction = createAction(POST_MOIM_JOIN);
 export const postMoimExitAction = createAction(POST_MOIM_EXIT);
-export const putMoimPassnumberAction = createAction(PUT_MOIM_PASSNUMBER);
+export const postMoimPassNumberCheckAction = createAction(
+  POST_MOIM_PASSNUMBER_CHECK,
+);
+export const putMoimPassNumberSettingAction = createAction(
+  PUT_MOIM_PASSNUMBER_SETTING,
+);
 export const putPaymentCheckAction = createAction(PUT_PAYMENT_CHECK);
 export const putStaffCheckAction = createAction(PUT_STAFF_CHECK);
 export const setIsEditAction = (payload) => ({
@@ -118,15 +128,27 @@ export default (state = initialState, action) => {
         draft.loading = false;
         break;
       }
-      case PUT_MOIM_PASSNUMBER.REQUEST: {
+      case POST_MOIM_PASSNUMBER_CHECK.REQUEST: {
         draft.loading = true;
         break;
       }
-      case PUT_MOIM_PASSNUMBER.SUCCESS: {
+      case POST_MOIM_PASSNUMBER_CHECK.SUCCESS: {
         draft.loading = false;
         break;
       }
-      case PUT_MOIM_PASSNUMBER.FAILURE: {
+      case POST_MOIM_PASSNUMBER_CHECK.FAILURE: {
+        draft.loading = false;
+        break;
+      }
+      case PUT_MOIM_PASSNUMBER_SETTING.REQUEST: {
+        draft.loading = true;
+        break;
+      }
+      case PUT_MOIM_PASSNUMBER_SETTING.SUCCESS: {
+        draft.loading = false;
+        break;
+      }
+      case PUT_MOIM_PASSNUMBER_SETTING.FAILURE: {
         draft.loading = false;
         break;
       }

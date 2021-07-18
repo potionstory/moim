@@ -1,4 +1,4 @@
-import reduce from 'lodash/reduce';
+import { reduce } from 'lodash';
 
 export const REQUEST = 'REQUEST';
 export const SUCCESS = 'SUCCESS';
