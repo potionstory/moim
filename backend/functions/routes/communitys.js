@@ -222,7 +222,11 @@ exports.deleteCommunity = (req, res) => {
     });
 };
 
-exports.putCommunityPassnumber = (req, res) => {
+exports.postCommunityPassNumber = (req, res) => {
+  console.log("postCommunityPassNumber: ", req.body);
+};
+
+exports.putCommunityPassNumber = (req, res) => {
   const { passNumber } = req.body;
 
   db.doc(`/communitys/${req.params.communityId}`)

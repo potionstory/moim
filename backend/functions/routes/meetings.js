@@ -362,7 +362,11 @@ exports.postMeetingExit = (req, res) => {
     });
 };
 
-exports.putMeetingPassnumber = (req, res) => {
+exports.postMeetingPassNumber = (req, res) => {
+  console.log("postMeetingPassNumber: ", req.body);
+};
+
+exports.putMeetingPassNumber = (req, res) => {
   const { passNumber } = req.body;
 
   db.doc(`/meetings/${req.params.meetingId}`)

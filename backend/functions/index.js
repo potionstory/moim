@@ -16,7 +16,8 @@ const {
   getCommunity,
   putCommunity,
   deleteCommunity,
-  putCommunityPassnumber,
+  postCommunityPassNumber,
+  putCommunityPassNumber,
   likeCommunity,
   unlikeCommunity,
   commentOnCommunity,
@@ -30,7 +31,8 @@ const {
   deleteMeeting,
   postMeetingJoin,
   postMeetingExit,
-  putMeetingPassnumber,
+  postMeetingPassNumber,
+  putMeetingPassNumber,
   putPaymentCheck,
   putStaffCheck,
   likeMeeting,
@@ -64,7 +66,8 @@ app.get("/community/:communityId", getCommunity);
 app.put("/community/:communityId", FBAuth, putCommunity);
 app.delete("/community/:communityId", FBAuth, deleteCommunity);
 app.delete("/community/:communityId", FBAuth, deleteCommunity);
-app.put("/community/passnumber/:communityId", FBAuth, putCommunityPassnumber);
+app.post("/community/passnumber/:communityId", postCommunityPassNumber);
+app.put("/community/passnumber/:communityId", FBAuth, putCommunityPassNumber);
 app.get("/community/:communityId/like", FBAuth, likeCommunity);
 app.get("/community/:communityId/unlike", FBAuth, unlikeCommunity);
 app.post("/community/:communityId/comment", FBAuth, commentOnCommunity);
@@ -77,7 +80,8 @@ app.put("/meeting/:meetingId", FBAuth, putMeeting);
 app.delete("/meeting/:meetingId", FBAuth, deleteMeeting);
 app.put("/meeting/:meetingId/join", postMeetingJoin);
 app.put("/meeting/:meetingId/exit", postMeetingExit);
-app.put("/meeting/passnumber/:meetingId", FBAuth, putMeetingPassnumber);
+app.post("/meeting/passnumber/:meetingId", postMeetingPassNumber);
+app.put("/meeting/passnumber/:meetingId", FBAuth, putMeetingPassNumber);
 app.put("/meeting/paymentCheck/:meetingId", putPaymentCheck);
 app.put("/meeting/staffCheck/:meetingId", putStaffCheck);
 app.get("/meeting/:meetingId/like", FBAuth, likeMeeting);
