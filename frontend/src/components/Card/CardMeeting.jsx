@@ -13,6 +13,7 @@ const mapIndex = 3; //map menu index
 const CardMeeting = ({ item, activeIndex, onHandleDetail }) => {
   const {
     meetingId,
+    userId,
     isLock,
     type,
     mainImage,
@@ -57,6 +58,7 @@ const CardMeeting = ({ item, activeIndex, onHandleDetail }) => {
         return (
           <CardMainImageBox
             id={meetingId}
+            userId={userId}
             isLock={isLock}
             mainImage={mainImage}
             onHandleDetail={onHandleDetail}
@@ -66,6 +68,7 @@ const CardMeeting = ({ item, activeIndex, onHandleDetail }) => {
         return (
           <CardDescriptionBox
             id={meetingId}
+            userId={userId}
             isLock={isLock}
             description={description}
             onHandleDetail={onHandleDetail}

@@ -5,7 +5,7 @@ import { getCommunityIcon, getMeetingIcon } from '../../utils/commonUtil';
 import { CardHeaderWrap } from './style';
 
 const CardHeader = ({ item, category, onHandleDetail }) => {
-  const { type, title, isLock, payInfo, status } = item;
+  const { userId, type, title, isLock, payInfo, status } = item;
   const id = item[`${category}Id`];
 
   return (
@@ -24,7 +24,7 @@ const CardHeader = ({ item, category, onHandleDetail }) => {
         <button
           type="button"
           className="title"
-          onClick={() => onHandleDetail(id, isLock)}
+          onClick={() => onHandleDetail(id, userId, isLock)}
         >
           {title}
         </button>

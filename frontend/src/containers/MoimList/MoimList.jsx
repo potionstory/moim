@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { map } from 'lodash';
+import { isNull, map } from 'lodash';
 import { getAllCommunityAction } from '../../store/module/community';
 import { getAllMeetingAction } from '../../store/module/meeting';
 import { passNumberModalOpenAction } from '../../store/module/global';
@@ -20,6 +20,7 @@ const MoimList = ({ category }) => {
 
   const { id } = useSelector(({ global }) => global);
   const { isPassNumberCheck } = useSelector(({ detail }) => detail);
+  const { userInfo } = useSelector(({ auth }) => auth);
 
   const onGetAllCommunity = useCallback(
     () => dispatch(getAllCommunityAction.REQUEST()),
@@ -32,14 +33,14 @@ const MoimList = ({ category }) => {
   );
 
   const onHandleDetail = useCallback(
-    (id, isLock) => {
-      if (isLock) {
+    (id, userId, isLock) => {
+      if (isLock && !isNull(userInfo) && userInfo.userId !== userId) {
         dispatch(passNumberModalOpenAction(id));
       } else {
         history.push(`/detail/${category}/${id}`);
       }
     },
-    [list, category, dispatch],
+    [category, list, userInfo, dispatch],
   );
 
   useEffect(() => {
