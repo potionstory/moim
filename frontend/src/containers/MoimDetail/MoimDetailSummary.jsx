@@ -12,6 +12,7 @@ const MoimDetailSummary = ({
   userName,
   likeCount,
   isMoimClient,
+  isMoimMember,
   isEdit,
   isSave,
   onJoinModalOpen,
@@ -34,20 +35,23 @@ const MoimDetailSummary = ({
         <div className="btnWrap">
           {category === 'meeting' && !isMoimClient && (
             <>
-              <button
-                type="button"
-                className="btnMain"
-                onClick={onJoinModalOpen}
-              >
-                join
-              </button>
-              <button
-                type="button"
-                className="btnSub"
-                onClick={onExitModalOpen}
-              >
-                <FontAwesomeIcon icon={faDoorOpen} />
-              </button>
+              {!isMoimMember ? (
+                <button
+                  type="button"
+                  className="btnMain"
+                  onClick={onJoinModalOpen}
+                >
+                  join
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="btnSub"
+                  onClick={onExitModalOpen}
+                >
+                  <FontAwesomeIcon icon={faDoorOpen} />
+                </button>
+              )}
             </>
           )}
           {isMoimClient && (

@@ -113,6 +113,7 @@ const MoimJoin = () => {
           postMoimJoinAction.REQUEST({
             meetingId,
             formData,
+            userId: !isNull(userInfo) ? userInfo.userId : null,
             userImage: !isNull(userInfo) ? userInfo.userImage : null,
             userAvatar,
           }),

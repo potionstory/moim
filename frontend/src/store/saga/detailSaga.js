@@ -80,12 +80,13 @@ function* workPutMeeting(action) {
 
 function* workPostMoimJoin(action) {
   const bodyParams = {};
-  const { meetingId, formData, userImage, userAvatar } = action.payload;
+  const { meetingId, formData, userId, userImage, userAvatar } = action.payload;
 
   forEach(formData, (item) => {
     bodyParams[item.name] = item.value;
   });
 
+  bodyParams['userId'] = userId;
   bodyParams['userImage'] = userImage;
   bodyParams['userAvatar'] = userAvatar;
 

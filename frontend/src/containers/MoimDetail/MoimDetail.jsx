@@ -69,6 +69,11 @@ const MoimDetail = ({ category, id }) => {
     [isAuth, userInfo, moim],
   );
 
+  const isMoimMember = useMemo(
+    () => !isNull(userInfo) && findIndex(detail.memberList, (member) => member.userId === userInfo.userId) !== -1,
+    [userInfo, detail]
+  );
+
   const moimType = useMemo(
     () => (category === 'community' ? communityType : meetingType),
     [category],
@@ -519,6 +524,7 @@ const MoimDetail = ({ category, id }) => {
             userName={userName}
             likeCount={likeCount}
             isMoimClient={isMoimClient}
+            isMoimMember={isMoimMember}
             isEdit={isEdit}
             isSave={!isEqual(moim, detail)}
             onJoinModalOpen={onJoinModalOpen}
