@@ -273,10 +273,10 @@ exports.deleteMeeting = (req, res) => {
 
 // meeting join
 exports.postMeetingJoin = (req, res) => {
-  const { name, email, mobile, passNumber, userImage, userAvatar } = req.body;
+  const { name, email, mobile, passNumber, userId, userImage, userAvatar } = req.body;
 
   const newMember = {
-    userId: v4(),
+    userId: userId || v4(),
     userName: name,
     userImage,
     userAvatar,
