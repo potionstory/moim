@@ -523,6 +523,7 @@ const MoimDetail = ({ category, id }) => {
             userAvatar={userAvatar}
             userName={userName}
             likeCount={likeCount}
+            isAuth={isAuth}
             isMoimClient={isMoimClient}
             isMoimMember={isMoimMember}
             isEdit={isEdit}

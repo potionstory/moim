@@ -11,6 +11,7 @@ const MoimDetailSummary = ({
   userAvatar,
   userName,
   likeCount,
+  isAuth,
   isMoimClient,
   isMoimMember,
   isEdit,
@@ -35,7 +36,7 @@ const MoimDetailSummary = ({
         <div className="btnWrap">
           {category === 'meeting' && !isMoimClient && (
             <>
-              {!isMoimMember ? (
+              {(!isAuth || !isMoimMember) && (
                 <button
                   type="button"
                   className="btnMain"
@@ -43,7 +44,8 @@ const MoimDetailSummary = ({
                 >
                   join
                 </button>
-              ) : (
+              )}
+              {(!isAuth || isMoimMember) && (
                 <button
                   type="button"
                   className="btnSub"
