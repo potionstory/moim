@@ -30,6 +30,7 @@ exports.getAllMeetings = (req, res) => {
             ),
           waiter: doc.data().waiter,
           tags: doc.data().tags,
+          userId: doc.data().userId,
           userImage: doc.data().userImage,
           userName: doc.data().userName,
           createdAt: doc.data().createdAt,

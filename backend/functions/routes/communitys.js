@@ -20,6 +20,7 @@ exports.getAllCommunitys = (req, res) => {
           description: doc.data().description,
           url: doc.data().url,
           tags: doc.data().tags,
+          userId: doc.data().userId,
           userImage: doc.data().userImage,
           userName: doc.data().userName,
           createdAt: doc.data().createdAt,
