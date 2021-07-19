@@ -41,7 +41,7 @@ const MoimPassNumberSetting = () => {
     }
   }, []);
 
-  const onPassWordConfirm = useCallback(
+  const onConfirm = useCallback(
     (formData) => {
       if (isEqual(formData[0].value, formData[1].value)) {
         dispatch(
@@ -82,7 +82,7 @@ const MoimPassNumberSetting = () => {
             onInputPassDigitChange={onInputPassDigitChange}
             onInputBlur={onInputBlur}
             isActive={isActive}
-            onConfirm={onPassWordConfirm}
+            onConfirm={onConfirm}
             confirmText="ok"
           />
         </div>

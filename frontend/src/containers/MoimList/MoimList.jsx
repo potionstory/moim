@@ -5,6 +5,7 @@ import { map } from 'lodash';
 import { getAllCommunityAction } from '../../store/module/community';
 import { getAllMeetingAction } from '../../store/module/meeting';
 import { passNumberModalOpenAction } from '../../store/module/global';
+import { setPassNumberSettingAction } from '../../store/module/detail';
 import Card from '../../Components/Card';
 import { MoimListWrap } from './style';
 
@@ -16,6 +17,9 @@ const MoimList = ({ category }) => {
     community: useSelector(({ community }) => community.list),
     meeting: useSelector(({ meeting }) => meeting.list),
   };
+
+  const { id } = useSelector(({ global }) => global);
+  const { isPassNumberCheck } = useSelector(({ detail }) => detail);
 
   const onGetAllCommunity = useCallback(
     () => dispatch(getAllCommunityAction.REQUEST()),
@@ -42,6 +46,13 @@ const MoimList = ({ category }) => {
     onGetAllCommunity();
     onGetAllMeeting();
   }, []);
+
+  useEffect(() => {
+    if (isPassNumberCheck) {
+      history.push(`/detail/${category}/${id}`);
+      dispatch(setPassNumberSettingAction(false));
+    }
+  }, [isPassNumberCheck, category, id, dispatch]);
 
   return (
     <MoimListWrap>

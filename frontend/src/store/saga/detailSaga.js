@@ -129,6 +129,13 @@ function* workPostMoimPassNumberCheck(action) {
   } else if (category === 'meeting') {
     res = yield call(postMeetingPassNumberAPI, id, bodyParams);
   }
+
+  if (res.status === 200) {
+    yield put(postMoimPassNumberCheckAction.SUCCESS());
+    yield put(modalCloseAction());
+  } else {
+    yield put(postMoimPassNumberCheckAction.FAILURE());
+  }
 }
 
 function* workPutMoimPassNumberSetting(action) {

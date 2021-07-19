@@ -14,6 +14,7 @@ export const POST_MOIM_PASSNUMBER_CHECK = createType(
 export const PUT_MOIM_PASSNUMBER_SETTING = createType(
   'PUT_MOIM_PASSNUMBER_SETTING',
 );
+export const SET_PASSNUMBER_CHECK_ = 'SET_PASSNUMBER_CHECK_';
 export const PUT_PAYMENT_CHECK = createType('PUT_PAYMENT_CHECK');
 export const PUT_STAFF_CHECK = createType('PUT_STAFF_CHECK');
 export const SET_IS_EDIT = 'SET_IS_EDIT';
@@ -32,6 +33,10 @@ export const postMoimPassNumberCheckAction = createAction(
 export const putMoimPassNumberSettingAction = createAction(
   PUT_MOIM_PASSNUMBER_SETTING,
 );
+export const setPassNumberSettingAction = (payload) => ({
+  type: SET_PASSNUMBER_CHECK_,
+  payload,
+});
 export const putPaymentCheckAction = createAction(PUT_PAYMENT_CHECK);
 export const putStaffCheckAction = createAction(PUT_STAFF_CHECK);
 export const setIsEditAction = (payload) => ({
@@ -46,6 +51,7 @@ export const resetDetailAction = () => ({
 const initialState = {
   loading: false,
   moim: {},
+  isPassNumberCheck: false,
   isEdit: false,
 };
 
@@ -134,6 +140,7 @@ export default (state = initialState, action) => {
       }
       case POST_MOIM_PASSNUMBER_CHECK.SUCCESS: {
         draft.loading = false;
+        draft.isPassNumberCheck = true;
         break;
       }
       case POST_MOIM_PASSNUMBER_CHECK.FAILURE: {
@@ -150,6 +157,10 @@ export default (state = initialState, action) => {
       }
       case PUT_MOIM_PASSNUMBER_SETTING.FAILURE: {
         draft.loading = false;
+        break;
+      }
+      case SET_PASSNUMBER_CHECK_: {
+        draft.isPassNumberCheck = action.payload;
         break;
       }
       case PUT_PAYMENT_CHECK.REQUEST: {

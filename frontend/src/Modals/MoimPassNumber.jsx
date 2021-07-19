@@ -9,7 +9,6 @@ import { postMoimPassNumberCheckAction } from '../store/module/detail';
 import { ModalContentWrap } from './style';
 
 const MoimPassNumber = () => {
-  const { moim } = useSelector(({ detail }) => detail);
   const { id, category } = useSelector(({ global }) => global);
 
   const dispatch = useDispatch();
@@ -41,7 +40,7 @@ const MoimPassNumber = () => {
     }
   }, []);
 
-  const onPassWordConfirm = useCallback(
+  const onConfirm = useCallback(
     (formData) => {
       dispatch(
         postMoimPassNumberCheckAction.REQUEST({
@@ -78,7 +77,7 @@ const MoimPassNumber = () => {
             onInputPassDigitChange={onInputPassDigitChange}
             onInputBlur={onInputBlur}
             isActive={isActive}
-            onConfirm={onPassWordConfirm}
+            onConfirm={onConfirm}
             confirmText="ok"
           />
         </div>
