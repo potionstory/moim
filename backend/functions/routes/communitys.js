@@ -223,7 +223,21 @@ exports.deleteCommunity = (req, res) => {
 };
 
 exports.postCommunityPassNumber = (req, res) => {
-  console.log("postCommunityPassNumber: ", req.body);
+  const { passNumber } = req.body;
+
+  db.doc(`/communitys/${req.params.communityId}`)
+    .get()
+    .then((doc) => {
+      if (doc.data().passNumber === passNumber.join("")) {
+        res.json({ message: "pass number update successfully" });
+      } else {
+        res.status(403).json({ error: "Passnumber do not match" });
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: "Something went wrong" });
+    });
 };
 
 exports.putCommunityPassNumber = (req, res) => {

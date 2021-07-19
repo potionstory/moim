@@ -363,7 +363,21 @@ exports.postMeetingExit = (req, res) => {
 };
 
 exports.postMeetingPassNumber = (req, res) => {
-  console.log("postMeetingPassNumber: ", req.body);
+  const { passNumber } = req.body;
+
+  db.doc(`/meetings/${req.params.meetingId}`)
+    .get()
+    .then((doc) => {
+      if (doc.data().passNumber === passNumber.join("")) {
+        res.json({ message: "pass number update successfully" });
+      } else {
+        res.status(403).json({ error: "Passnumber do not match" });
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: "Something went wrong" });
+    });
 };
 
 exports.putMeetingPassNumber = (req, res) => {
