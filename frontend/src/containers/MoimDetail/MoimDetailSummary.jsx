@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog, faDoorOpen } from '@fortawesome/free-solid-svg-icons';
+import { faImage, faCog, faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 import UserInfo from '../../Components/UserInfo';
 import { MoimDetailSummaryWrap } from './style';
 
@@ -16,6 +16,7 @@ const MoimDetailSummary = ({
   isMoimMember,
   isEdit,
   isSave,
+  onThumbImageChange,
   onJoinModalOpen,
   onExitModalOpen,
   onSave,
@@ -25,6 +26,16 @@ const MoimDetailSummary = ({
     <MoimDetailSummaryWrap isMainActive={!isMoimClient || isSave}>
       <div className="summaryInner">
         <div className="thumb">
+          {isEdit && (
+            <label className="btnUpload">
+              <FontAwesomeIcon icon={faCog} />
+              <input
+                type="file"
+                accept="image/jpg,image/png,image/jpeg"
+                onChange={onThumbImageChange}
+              />
+            </label>
+          )}
           <img src={mainImage} />
         </div>
         <UserInfo

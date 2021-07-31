@@ -22,6 +22,7 @@ import {
   getMeetingAction,
   putCommunityAction,
   putMeetingAction,
+  moimThumbImageAction,
   putPaymentCheckAction,
   putStaffCheckAction,
   setIsEditAction,
@@ -70,8 +71,13 @@ const MoimDetail = ({ category, id }) => {
   );
 
   const isMoimMember = useMemo(
-    () => !isNull(userInfo) && findIndex(detail.memberList, (member) => member.userId === userInfo.userId) !== -1,
-    [userInfo, detail]
+    () =>
+      !isNull(userInfo) &&
+      findIndex(
+        detail.memberList,
+        (member) => member.userId === userInfo.userId,
+      ) !== -1,
+    [userInfo, detail],
   );
 
   const moimType = useMemo(
@@ -90,6 +96,32 @@ const MoimDetail = ({ category, id }) => {
 
   const onGetMeeting = useCallback(
     () => dispatch(getMeetingAction.REQUEST(id)),
+    [dispatch],
+  );
+
+  const onThumbImageUpload = useCallback(
+    (payload) => dispatch(moimThumbImageAction(payload)),
+    [dispatch],
+  );
+
+  const onThumbImageChange = useCallback(
+    (e) => {
+      e.preventDefault();
+
+      let reader = new FileReader();
+      let file = e.target.files[0];
+
+      reader.onloadend = () => {
+        setDetail(
+          produce((draft) => {
+            draft.mainImage = reader.result;
+          }),
+        );
+      };
+
+      reader.readAsDataURL(file);
+      onThumbImageUpload(file);
+    },
     [dispatch],
   );
 
@@ -146,12 +178,18 @@ const MoimDetail = ({ category, id }) => {
   }, []);
 
   const onLockChange = useCallback(() => {
+    const { isLock } = detail;
+
     setDetail(
       produce((draft) => {
         draft.isLock = !draft.isLock;
       }),
     );
-  }, []);
+
+    if (!isLock) {
+      onPassNumberSettingModalOpen();
+    }
+  }, [dispatch, detail]);
 
   const onStatusChange = useCallback(
     (index) => {
@@ -528,6 +566,7 @@ const MoimDetail = ({ category, id }) => {
             isMoimMember={isMoimMember}
             isEdit={isEdit}
             isSave={!isEqual(moim, detail)}
+            onThumbImageChange={onThumbImageChange}
             onJoinModalOpen={onJoinModalOpen}
             onExitModalOpen={onExitModalOpen}
             onSave={onSave}

@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { color } from '../../lib/styles/palette';
-import { ellipsis } from '../../lib/styles/util';
+import { ellipsis, hidden } from '../../lib/styles/util';
 
 export const MoimDetailWrap = styled.section`
   display: flex;
@@ -17,9 +17,44 @@ export const MoimDetailSummaryWrap = styled.div`
     top: 104px;
     .thumb {
       overflow: hidden;
+      position: relative;
       height: 226px;
       border-radius: 4px;
       background-color: ${({ theme }) => theme.sub};
+      .btnUpload {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+        transition: all 0.2s ease-out;
+        &:before {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: ${({ theme }) => theme.title};
+          opacity: 0.6;
+          content: '';
+        }
+        &:hover {
+          opacity: 1;
+        }
+        svg {
+          position: relative;
+          font-size: 6rem;
+          color: ${({ theme }) => theme.main};
+        }
+        input {
+          ${hidden};
+        }
+      }
       img {
         width: 100%;
         height: 100%;

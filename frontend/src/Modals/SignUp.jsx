@@ -107,7 +107,7 @@ const SignUp = () => {
   const [focusInput, setFocusInput] = useState(null);
   const [formData, setFormData] = useState(signUpForm);
   const [validator, setValidator] = useState(formValidators[0]);
-  const [userImage, serUserImage] = useState(null);
+  const [userImage, setUserImage] = useState(null);
 
   const isSignInfo = useMemo(() => {
     return !isEmpty(signInfo);
@@ -125,7 +125,7 @@ const SignUp = () => {
       let file = e.target.files[0];
 
       reader.onloadend = () => {
-        serUserImage(reader.result);
+        setUserImage(reader.result);
       };
       reader.readAsDataURL(file);
 
@@ -171,7 +171,7 @@ const SignUp = () => {
         }),
       );
       setValidator(formValidators[1]);
-      serUserImage(signInfo.userImageUrl);
+      setUserImage(signInfo.userImageUrl);
     } else {
       setFormData(signUpForm);
       setValidator(formValidators[0]);

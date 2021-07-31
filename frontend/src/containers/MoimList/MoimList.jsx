@@ -34,7 +34,10 @@ const MoimList = ({ category }) => {
 
   const onHandleDetail = useCallback(
     (id, userId, isLock) => {
-      if ((isLock && isNull(userInfo)) || (!isNull(userInfo) && userInfo.userId !== userId)) {
+      if (
+        (isLock && isNull(userInfo)) ||
+        (!isNull(userInfo) && userInfo.userId !== userId)
+      ) {
         dispatch(passNumberModalOpenAction(id));
       } else {
         history.push(`/detail/${category}/${id}`);

@@ -7,8 +7,45 @@ export const getAllMeetingAPI = () => api.get('/meetings');
 export const getMeetingAPI = (meetingId) => api.get(`/meeting/${meetingId}`);
 
 // put one meeting
-export const putMeetingAPI = (meetingId, bodyParams) =>
-  api.put(`/meeting/${meetingId}`, bodyParams);
+export const putMeetingAPI = (meetingId, bodyParams) => {
+  const {
+    type,
+    title,
+    isLock,
+    status,
+    payInfo,
+    description,
+    startDate,
+    endDate,
+    location,
+    memberSetting,
+    memberList,
+    waiter,
+    tags,
+    userName,
+    thumbImageFile,
+  } = bodyParams;
+
+  const formData = new FormData();
+
+  formData.set('type', type);
+  formData.set('title', title);
+  formData.set('isLock', JSON.stringify(isLock));
+  formData.set('status', status);
+  formData.set('payInfo', JSON.stringify(payInfo));
+  formData.set('description', description);
+  formData.set('startDate', JSON.stringify(startDate));
+  formData.set('endDate', JSON.stringify(endDate));
+  formData.set('location', JSON.stringify(location));
+  formData.set('memberSetting', JSON.stringify(memberSetting));
+  formData.set('memberList', JSON.stringify(memberList));
+  formData.set('waiter', JSON.stringify(waiter));
+  formData.set('tags', JSON.stringify(tags));
+  formData.set('userName', userName);
+  formData.append('thumbImageFile', thumbImageFile);
+
+  return api.put(`/meeting/${meetingId}`, formData);
+};
 
 // post meeting join
 export const postMeetingJoinAPI = (meetingId, bodyParams) =>

@@ -6,6 +6,7 @@ export const GET_COMMUNITY = createType('GET_COMMUNITY');
 export const GET_MEETING = createType('GET_MEETING');
 export const PUT_COMMUNITY = createType('PUT_COMMUNITY');
 export const PUT_MEETING = createType('PUT_MEETING');
+export const MOIM_THUMB_IMAGE = 'MOIM_THUMB_IMAGE';
 export const POST_MOIM_JOIN = createType('POST_MOIM_JOIN');
 export const POST_MOIM_EXIT = createType('POST_MOIN_EXIT');
 export const POST_MOIM_PASSNUMBER_CHECK = createType(
@@ -25,6 +26,10 @@ export const getCommunityAction = createAction(GET_COMMUNITY);
 export const getMeetingAction = createAction(GET_MEETING);
 export const putCommunityAction = createAction(PUT_COMMUNITY);
 export const putMeetingAction = createAction(PUT_MEETING);
+export const moimThumbImageAction = (payload) => ({
+  type: MOIM_THUMB_IMAGE,
+  payload,
+});
 export const postMoimJoinAction = createAction(POST_MOIM_JOIN);
 export const postMoimExitAction = createAction(POST_MOIM_EXIT);
 export const postMoimPassNumberCheckAction = createAction(
@@ -108,6 +113,10 @@ export default (state = initialState, action) => {
       }
       case PUT_MEETING.FAILURE: {
         draft.loading = false;
+        break;
+      }
+      case MOIM_THUMB_IMAGE: {
+        draft.moim.thumbImageFile = action.payload;
         break;
       }
       case POST_MOIM_JOIN.REQUEST: {

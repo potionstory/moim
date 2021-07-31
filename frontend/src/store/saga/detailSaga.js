@@ -75,6 +75,8 @@ function* workPutMeeting(action) {
 
   if (res.status === 200) {
     yield put(putMeetingAction.SUCCESS(res.data));
+  } else {
+    yield put(putMeetingAction.FAILURE(res.data));
   }
 }
 
@@ -95,6 +97,8 @@ function* workPostMoimJoin(action) {
   if (res.status === 200) {
     yield put(postMoimJoinAction.SUCCESS(res.data));
     yield put(modalCloseAction());
+  } else {
+    yield put(postMoimJoinAction.FAILURE(res.data));
   }
 }
 
