@@ -145,7 +145,10 @@ exports.socialSignUp = (req, res) => {
             email: newSocialUser.email,
             userName: newSocialUser.userName,
             imagePath: storageFilepath,
-            userImage: newSocialUser.userImage !== "undefined" ? newSocialUser.userImage : null,
+            userImage:
+              newSocialUser.userImage !== "undefined"
+                ? newSocialUser.userImage
+                : null,
             userAvatar: newSocialUser.userAvatar,
             createdAt: new Date().toISOString(),
           };

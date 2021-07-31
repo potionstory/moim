@@ -197,54 +197,98 @@ exports.putMeeting = (req, res) => {
     return res.status(400).json({ error: "Method not defined" });
   }
 
-  if (req.method !== "PUT") {
-    return res.status(400).json({ error: "Method not defined" });
-  }
+  let busboy = new BusBoy({ headers: req.headers });
 
-  const document = db.doc(`/meetings/${req.params.meetingId}`);
-  const {
-    type,
-    title,
-    isLock,
-    status,
-    payInfo,
-    description,
-    startDate,
-    endDate,
-    location,
-    memberSetting,
-    memberList,
-    waiter,
-    tags,
-  } = req.body;
+  let bucket = admin.storage().bucket();
+  let generatedToken = v4();
 
-  document.get().then((doc) => {
-    document
+  let storageFilepath;
+  let storageFile;
+
+  let files = {};
+  req.body = {};
+
+  busboy.on("file", (fieldname, file, filename, encoding, mimetype) => {
+    if (mimetype !== "image/jpeg" && mimetype !== "image/png") {
+      return res.status(400).json({ error: "Wrong file type submitted" });
+    }
+
+    const metadata = {
+      contentType: mimetype,
+      metadata: {
+        firebaseStorageDownloadTokens: generatedToken,
+      },
+    };
+    let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
+    let uniqueName = admin.database().ref().push().key;
+
+    storageFilepath = `${req.body.userName}/${uniqueName + fileext}`;
+    storageFile = bucket.file(storageFilepath);
+
+    file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
+  });
+
+  busboy.on("field", (fieldname, value) => {
+    req.body[fieldname] = value;
+  });
+
+  busboy.on("finish", () => {
+    req.files = files;
+
+    const mainImage = `https://firebasestorage.googleapis.com/v0/b/${
+      config.storageBucket
+    }/o/${encodeURIComponent(
+      storageFilepath
+    )}?alt=media&token=${generatedToken}`;
+
+    const {
+      type,
+      title,
+      isLock,
+      status,
+      payInfo,
+      description,
+      startDate,
+      endDate,
+      location,
+      memberSetting,
+      memberList,
+      waiter,
+      tags,
+      thumbImageFile,
+    } = req.body;
+
+    db.doc(`/meetings/${req.params.meetingId}`)
       .update({
         type,
         title,
-        isLock,
+        isLock: JSON.parse(isLock),
         status,
-        payInfo,
+        payInfo: JSON.parse(payInfo),
+        mainImage: thumbImageFile !== "undefined" && mainImage,
         description,
-        startDate,
-        endDate,
-        location,
-        memberSetting,
-        memberList,
-        waiter,
-        tags,
+        startDate: JSON.parse(startDate),
+        endDate: JSON.parse(endDate),
+        location: JSON.parse(location),
+        memberSetting: JSON.parse(memberSetting),
+        memberList: JSON.parse(memberList),
+        waiter: JSON.parse(waiter),
+        tags: JSON.parse(tags),
       })
       .then((doc) => {
-        document.get().then((doc) => {
-          return res.status(200).json(doc.data()); // 201 CREATED
-        });
+        db.doc(`/meetings/${req.params.meetingId}`)
+          .get()
+          .then((doc) => {
+            return res.status(200).json(doc.data()); // 201 CREATED
+          });
       })
       .catch((err) => {
         console.error(err);
         return res.status(500).json({ error: err.code }); // 500 INTERNAL_SERVER_ERROR
       });
   });
+
+  busboy.end(req.rawBody);
 };
 
 // delete one meeting
@@ -273,7 +317,8 @@ exports.deleteMeeting = (req, res) => {
 
 // meeting join
 exports.postMeetingJoin = (req, res) => {
-  const { name, email, mobile, passNumber, userId, userImage, userAvatar } = req.body;
+  const { name, email, mobile, passNumber, userId, userImage, userAvatar } =
+    req.body;
 
   const newMember = {
     userId: userId || v4(),
