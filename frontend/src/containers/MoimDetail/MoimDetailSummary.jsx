@@ -1,11 +1,13 @@
 import React from 'react';
+import { isNull  } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage, faCog, faDoorOpen } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 import UserInfo from '../../Components/UserInfo';
 import { MoimDetailSummaryWrap } from './style';
 
 const MoimDetailSummary = ({
   category,
+  thumbImage,
   mainImage,
   userImage,
   userAvatar,
@@ -36,7 +38,7 @@ const MoimDetailSummary = ({
               />
             </label>
           )}
-          <img src={mainImage} />
+          <img src={isNull(thumbImage) ? mainImage : thumbImage} />
         </div>
         <UserInfo
           image={userImage}

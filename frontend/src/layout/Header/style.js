@@ -112,9 +112,9 @@ export const MenuItem = styled.li`
 export const AvatarBox = styled.button`
   overflow: hidden;
   margin-left: 24px;
-  width: 40px;
-  height: 40px;
-  box-sizing: border-box;
+  width: 34px;
+  height: 34px;
+  border: 3px solid ${color.gray};
   border-radius: 20px;
   background-color: ${({ theme, isImage }) =>
     isImage ? theme.sub : theme.theme};
@@ -129,6 +129,7 @@ export const AvatarBox = styled.button`
     object-fit: cover;
   }
   &:hover {
+    border-color: ${({ theme }) => theme.theme};
     background-color: ${({ theme }) => theme.theme};
     svg {
       color: ${({ theme }) => theme.title};
@@ -137,6 +138,7 @@ export const AvatarBox = styled.button`
   ${({ theme, isActive }) =>
     isActive &&
     css`
+      border-color: ${({ theme }) => theme.theme};
       background-color: ${theme.theme};
       svg {
         color: ${theme.title};

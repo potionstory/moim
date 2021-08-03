@@ -50,7 +50,7 @@ import { DESCRIPTION_MAX_LENGTH } from '../../lib/const';
 import { MoimDetailWrap, MoimDetailInfo } from './style';
 
 const MoimDetail = ({ category, id }) => {
-  const { moim, isEdit } = useSelector(({ detail }) => detail);
+  const { moim, thumbImage, thumbImageFile, isEdit } = useSelector(({ detail }) => detail);
   const { isAuth, userInfo } = useSelector(({ auth }) => auth);
 
   const dispatch = useDispatch();
@@ -99,11 +99,6 @@ const MoimDetail = ({ category, id }) => {
     [dispatch],
   );
 
-  const onThumbImageUpload = useCallback(
-    (payload) => dispatch(moimThumbImageAction(payload)),
-    [dispatch],
-  );
-
   const onThumbImageChange = useCallback(
     (e) => {
       e.preventDefault();
@@ -112,15 +107,10 @@ const MoimDetail = ({ category, id }) => {
       let file = e.target.files[0];
 
       reader.onloadend = () => {
-        setDetail(
-          produce((draft) => {
-            draft.mainImage = reader.result;
-          }),
-        );
+        dispatch(moimThumbImageAction({ image: reader.result, file }));
       };
 
       reader.readAsDataURL(file);
-      onThumbImageUpload(file);
     },
     [dispatch],
   );
@@ -144,15 +134,17 @@ const MoimDetail = ({ category, id }) => {
   const onSave = useCallback(() => {
     if (category === 'community') {
       dispatch(
-        putCommunityAction.REQUEST({ communityId: id, formData: detail }),
+        putCommunityAction.REQUEST({ communityId: id, formData: detail, thumbImageFile }),
       );
     } else {
-      dispatch(putMeetingAction.REQUEST({ meetingId: id, formData: detail }));
+      dispatch(putMeetingAction.REQUEST({ meetingId: id, formData: detail, thumbImageFile }));
     }
-  }, [dispatch, detail]);
+  }, [dispatch, detail, thumbImageFile]);
 
   const onEditToggle = useCallback(() => {
     dispatch(setIsEditAction(!isEdit));
+    dispatch(moimThumbImageAction({ image: null, file: null }));
+
     setDetail(moim);
   }, [dispatch, moim, isEdit]);
 
@@ -556,6 +548,7 @@ const MoimDetail = ({ category, id }) => {
         <MoimDetailWrap>
           <MoimDetailSummary
             category={category}
+            thumbImage={thumbImage}
             mainImage={mainImage}
             userImage={userImage}
             userAvatar={userAvatar}
@@ -565,7 +558,7 @@ const MoimDetail = ({ category, id }) => {
             isMoimClient={isMoimClient}
             isMoimMember={isMoimMember}
             isEdit={isEdit}
-            isSave={!isEqual(moim, detail)}
+            isSave={!(isEqual(moim, detail) && isNull(thumbImage))}
             onThumbImageChange={onThumbImageChange}
             onJoinModalOpen={onJoinModalOpen}
             onExitModalOpen={onExitModalOpen}
