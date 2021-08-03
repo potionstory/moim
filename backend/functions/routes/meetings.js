@@ -235,7 +235,7 @@ exports.putMeeting = (req, res) => {
   busboy.on("finish", () => {
     req.files = files;
 
-    const mainImage = `https://firebasestorage.googleapis.com/v0/b/${
+    const thumbImage = `https://firebasestorage.googleapis.com/v0/b/${
       config.storageBucket
     }/o/${encodeURIComponent(
       storageFilepath
@@ -256,6 +256,7 @@ exports.putMeeting = (req, res) => {
       waiter,
       tags,
       thumbImageFile,
+      mainImage,
     } = req.body;
 
     db.doc(`/meetings/${req.params.meetingId}`)
@@ -265,7 +266,7 @@ exports.putMeeting = (req, res) => {
         isLock: JSON.parse(isLock),
         status,
         payInfo: JSON.parse(payInfo),
-        mainImage: thumbImageFile !== "undefined" && mainImage,
+        mainImage: thumbImageFile !== "undefined" ? thumbImage : mainImage,
         description,
         startDate: JSON.parse(startDate),
         endDate: JSON.parse(endDate),
