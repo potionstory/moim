@@ -56,6 +56,8 @@ export const resetDetailAction = () => ({
 const initialState = {
   loading: false,
   moim: {},
+  thumbImage: null,
+  thumbImageFile: null,
   isPassNumberCheck: false,
   isEdit: false,
 };
@@ -107,6 +109,8 @@ export default (state = initialState, action) => {
         break;
       }
       case PUT_MEETING.SUCCESS: {
+        draft.thumbImage = null;
+        draft.thumbImageFile = null;
         draft.moim = action.payload;
         draft.isEdit = false;
         break;
@@ -116,7 +120,10 @@ export default (state = initialState, action) => {
         break;
       }
       case MOIM_THUMB_IMAGE: {
-        draft.moim.thumbImageFile = action.payload;
+        const { image, file } = action.payload;
+
+        draft.thumbImage = image;
+        draft.thumbImageFile = file;
         break;
       }
       case POST_MOIM_JOIN.REQUEST: {

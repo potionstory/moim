@@ -69,9 +69,9 @@ function* workPutCommunity(action) {
 }
 
 function* workPutMeeting(action) {
-  const { meetingId, formData } = action.payload;
+  const { meetingId, formData, thumbImageFile } = action.payload;
 
-  const res = yield call(putMeetingAPI, meetingId, formData);
+  const res = yield call(putMeetingAPI, meetingId, formData, thumbImageFile);
 
   if (res.status === 200) {
     yield put(putMeetingAction.SUCCESS(res.data));

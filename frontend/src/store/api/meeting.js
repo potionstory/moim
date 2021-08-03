@@ -7,7 +7,7 @@ export const getAllMeetingAPI = () => api.get('/meetings');
 export const getMeetingAPI = (meetingId) => api.get(`/meeting/${meetingId}`);
 
 // put one meeting
-export const putMeetingAPI = (meetingId, bodyParams) => {
+export const putMeetingAPI = (meetingId, bodyParams, thumbImageFile) => {
   const {
     type,
     title,
@@ -23,7 +23,7 @@ export const putMeetingAPI = (meetingId, bodyParams) => {
     waiter,
     tags,
     userName,
-    thumbImageFile,
+    mainImage,
   } = bodyParams;
 
   const formData = new FormData();
@@ -42,7 +42,12 @@ export const putMeetingAPI = (meetingId, bodyParams) => {
   formData.set('waiter', JSON.stringify(waiter));
   formData.set('tags', JSON.stringify(tags));
   formData.set('userName', userName);
-  formData.append('thumbImageFile', thumbImageFile);
+  
+  if (thumbImageFile !== null) {
+    formData.append('thumbImageFile', thumbImageFile);
+  } else {
+    formData.set('mainImage', mainImage);
+  }
 
   return api.put(`/meeting/${meetingId}`, formData);
 };
