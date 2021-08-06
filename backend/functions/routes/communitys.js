@@ -199,8 +199,6 @@ exports.putCommunity = (req, res) => {
     storageFilepath = `${req.body.userName}/${uniqueName + fileext}`;
     storageFile = bucket.file(storageFilepath);
 
-    console.log("storageFile: ", storageFile);
-
     file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
   });
 
