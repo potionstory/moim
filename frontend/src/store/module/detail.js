@@ -96,11 +96,15 @@ export default (state = initialState, action) => {
         break;
       }
       case PUT_COMMUNITY.SUCCESS: {
+        draft.thumbImage = null;
+        draft.thumbImageFile = null;
         draft.moim = action.payload;
         draft.isEdit = false;
         break;
       }
       case PUT_COMMUNITY.FAILURE: {
+        draft.thumbImage = null;
+        draft.thumbImageFile = null;
         draft.loading = false;
         break;
       }
@@ -116,6 +120,8 @@ export default (state = initialState, action) => {
         break;
       }
       case PUT_MEETING.FAILURE: {
+        draft.thumbImage = null;
+        draft.thumbImageFile = null;
         draft.loading = false;
         break;
       }

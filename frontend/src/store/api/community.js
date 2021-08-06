@@ -32,5 +32,36 @@ export const putCommunityPassNumberAPI = (communityId, bodyParams) => {
 };
 
 // put one community
-export const putCommunityAPI = (communityId, bodyParams) =>
-  api.put(`/community/${communityId}`, bodyParams);
+export const putCommunityAPI = (communityId, bodyParams, thumbImageFile) => {
+  const {
+    type,
+    title,
+    isLock,
+    status,
+    description,
+    url,
+    tags,
+    userName,
+    mainImage,
+  } = bodyParams;
+
+  const formData = new FormData();
+
+  formData.set('type', type);
+  formData.set('title', title);
+  formData.set('isLock', JSON.stringify(isLock));
+  formData.set('status', status);
+  formData.set('description', description);
+  formData.set('url', url);
+  formData.set('tags', JSON.stringify(tags));
+  formData.set('userName', userName);
+  
+  if (thumbImageFile !== null) {
+    formData.append('thumbImageFile', JSON.stringify(thumbImageFile));
+  } else {
+    formData.set('mainImage', mainImage);
+  }
+
+  return api.put(`/community/${communityId}`, formData);
+}
+  

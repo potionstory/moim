@@ -59,12 +59,14 @@ function* workGetMeeting(action) {
 }
 
 function* workPutCommunity(action) {
-  const { communityId, formData } = action.payload;
+  const { communityId, formData, thumbImageFile } = action.payload;
 
-  const res = yield call(putCommunityAPI, communityId, formData);
+  const res = yield call(putCommunityAPI, communityId, formData, thumbImageFile);
 
   if (res.status === 200) {
     yield put(putCommunityAction.SUCCESS(res.data));
+  } else {
+    yield put(putCommunityAction.FAILURE());
   }
 }
 
@@ -76,7 +78,7 @@ function* workPutMeeting(action) {
   if (res.status === 200) {
     yield put(putMeetingAction.SUCCESS(res.data));
   } else {
-    yield put(putMeetingAction.FAILURE(res.data));
+    yield put(putMeetingAction.FAILURE());
   }
 }
 
