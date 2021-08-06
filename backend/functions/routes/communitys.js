@@ -171,32 +171,89 @@ exports.putCommunity = (req, res) => {
     return res.status(400).json({ error: "Method not defined" });
   }
 
-  const document = db.doc(`/communitys/${req.params.communityId}`);
-  const { type, title, isLock, status, mainImage, description, url, tags } =
-    req.body;
+  let busboy = new BusBoy({ headers: req.headers });
 
-  document.get().then((doc) => {
-    document
+  let bucket = admin.storage().bucket();
+  let generatedToken = v4();
+
+  let storageFilepath;
+  let storageFile;
+
+  let files = {};
+  req.body = {};
+
+  busboy.on("file", (fieldname, file, filename, encoding, mimetype) => {
+    if (mimetype !== "image/jpeg" && mimetype !== "image/png") {
+      return res.status(400).json({ error: "Wrong file type submitted" });
+    }
+
+    const metadata = {
+      contentType: mimetype,
+      metadata: {
+        firebaseStorageDownloadTokens: generatedToken,
+      },
+    };
+    let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
+    let uniqueName = admin.database().ref().push().key;
+
+    storageFilepath = `${req.body.userName}/${uniqueName + fileext}`;
+    storageFile = bucket.file(storageFilepath);
+
+    console.log("storageFile: ", storageFile);
+
+    file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
+  });
+
+  busboy.on("field", (fieldname, value) => {
+    req.body[fieldname] = value;
+  });
+
+  busboy.on("finish", () => {
+    req.files = files;
+
+    const thumbImage = `https://firebasestorage.googleapis.com/v0/b/${
+      config.storageBucket
+    }/o/${encodeURIComponent(
+      storageFilepath
+    )}?alt=media&token=${generatedToken}`;
+
+    const {
+      type,
+      title,
+      isLock,
+      status,
+      description,
+      url,
+      tags,
+      thumbImageFile,
+      mainImage,
+    } = req.body;
+
+    db.doc(`/communitys/${req.params.communityId}`)
       .update({
         type,
         title,
-        isLock,
+        isLock: JSON.parse(isLock),
         status,
-        mainImage,
+        mainImage: thumbImageFile !== "undefined" ? thumbImage : mainImage,
         description,
         url,
-        tags,
+        tags: JSON.parse(tags),
       })
       .then((doc) => {
-        document.get().then((doc) => {
-          return res.status(200).json(doc.data()); // 201 CREATED
-        });
+        db.doc(`/communitys/${req.params.communityId}`)
+          .get()
+          .then((doc) => {
+            return res.status(200).json(doc.data()); // 201 CREATED
+          });
       })
       .catch((err) => {
         console.error(err);
         return res.status(500).json({ error: err.code }); // 500 INTERNAL_SERVER_ERROR
       });
   });
+
+  busboy.end(req.rawBody);
 };
 
 // delete one community
