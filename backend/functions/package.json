@@ -9,7 +9,7 @@
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "14"
+    "node": "12"
   },
   "dependencies": {
     "busboy": "^0.3.1",

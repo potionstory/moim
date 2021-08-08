@@ -67,7 +67,7 @@ exports.postCommunity = (req, res) => {
     let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
     let uniqueName = admin.database().ref().push().key;
 
-    storageFilepath = `${req.user.userName}/${uniqueName + fileext}`;
+    storageFilepath = `${req.body.userName}/${uniqueName + fileext}`;
     storageFile = bucket.file(storageFilepath);
 
     file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
@@ -91,7 +91,7 @@ exports.postCommunity = (req, res) => {
       title: req.body.title,
       isLock: req.body.isLock,
       status: req.body.status,
-      imagePath: `${req.user.userName}/`,
+      imagePath: storageFilepath,
       mainImage,
       description: req.body.description,
       url: req.body.url,
@@ -215,39 +215,38 @@ exports.putCommunity = (req, res) => {
       storageFilepath
     )}?alt=media&token=${generatedToken}`;
 
-    const {
-      type,
-      title,
-      isLock,
-      status,
-      description,
-      url,
-      tags,
-      thumbImageFile,
-      mainImage,
-    } = req.body;
+    const { type, title, isLock, status, description, url, tags, mainImage } =
+      req.body;
 
     db.doc(`/communitys/${req.params.communityId}`)
-      .update({
-        type,
-        title,
-        isLock: JSON.parse(isLock),
-        status,
-        mainImage: thumbImageFile !== "undefined" ? thumbImage : mainImage,
-        description,
-        url,
-        tags: JSON.parse(tags),
-      })
+      .get()
       .then((doc) => {
+        const deleteFilePath = doc.data().imagePath;
+        bucket.file(deleteFilePath).delete();
+
         db.doc(`/communitys/${req.params.communityId}`)
-          .get()
+          .update({
+            type,
+            title,
+            isLock: JSON.parse(isLock),
+            status,
+            imagePath: storageFilepath,
+            mainImage: mainImage === undefined ? thumbImage : mainImage,
+            description,
+            url,
+            tags: JSON.parse(tags),
+          })
           .then((doc) => {
-            return res.status(200).json(doc.data()); // 201 CREATED
+            db.doc(`/communitys/${req.params.communityId}`)
+              .get()
+              .then((doc) => {
+                return res.status(200).json(doc.data()); // 201 CREATED
+              });
+          })
+          .catch((err) => {
+            console.error(err);
+            return res.status(500).json({ error: err.code }); // 500 INTERNAL_SERVER_ERROR
           });
-      })
-      .catch((err) => {
-        console.error(err);
-        return res.status(500).json({ error: err.code }); // 500 INTERNAL_SERVER_ERROR
       });
   });
 

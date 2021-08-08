@@ -102,7 +102,7 @@ exports.postMeeting = (req, res) => {
       isLock: req.body.isLock,
       status: req.body.status,
       payInfo: req.body.payInfo,
-      imagePath: `${req.user.userName}/`,
+      imagePath: storageFilepath,
       mainImage,
       description: req.body.description,
       startDate: req.body.startDate,
@@ -255,37 +255,44 @@ exports.putMeeting = (req, res) => {
       memberList,
       waiter,
       tags,
-      thumbImageFile,
       mainImage,
     } = req.body;
 
     db.doc(`/meetings/${req.params.meetingId}`)
-      .update({
-        type,
-        title,
-        isLock: JSON.parse(isLock),
-        status,
-        payInfo: JSON.parse(payInfo),
-        mainImage: thumbImageFile !== "undefined" ? thumbImage : mainImage,
-        description,
-        startDate: JSON.parse(startDate),
-        endDate: JSON.parse(endDate),
-        location: JSON.parse(location),
-        memberSetting: JSON.parse(memberSetting),
-        memberList: JSON.parse(memberList),
-        waiter: JSON.parse(waiter),
-        tags: JSON.parse(tags),
-      })
+      .get()
       .then((doc) => {
+        const deleteFilePath = doc.data().imagePath;
+        bucket.file(deleteFilePath).delete();
+
         db.doc(`/meetings/${req.params.meetingId}`)
-          .get()
+          .update({
+            type,
+            title,
+            isLock: JSON.parse(isLock),
+            status,
+            payInfo: JSON.parse(payInfo),
+            imagePath: storageFilepath,
+            mainImage: mainImage === undefined ? thumbImage : mainImage,
+            description,
+            startDate: JSON.parse(startDate),
+            endDate: JSON.parse(endDate),
+            location: JSON.parse(location),
+            memberSetting: JSON.parse(memberSetting),
+            memberList: JSON.parse(memberList),
+            waiter: JSON.parse(waiter),
+            tags: JSON.parse(tags),
+          })
           .then((doc) => {
-            return res.status(200).json(doc.data()); // 201 CREATED
+            db.doc(`/meetings/${req.params.meetingId}`)
+              .get()
+              .then((doc) => {
+                return res.status(200).json(doc.data()); // 201 CREATED
+              });
+          })
+          .catch((err) => {
+            console.error(err);
+            return res.status(500).json({ error: err.code }); // 500 INTERNAL_SERVER_ERROR
           });
-      })
-      .catch((err) => {
-        console.error(err);
-        return res.status(500).json({ error: err.code }); // 500 INTERNAL_SERVER_ERROR
       });
   });
 
