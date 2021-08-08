@@ -55,13 +55,12 @@ export const putCommunityAPI = (communityId, bodyParams, thumbImageFile) => {
   formData.set('url', url);
   formData.set('tags', JSON.stringify(tags));
   formData.set('userName', userName);
-  
+
   if (thumbImageFile !== null) {
-    formData.append('thumbImageFile', JSON.stringify(thumbImageFile));
+    formData.append('thumbImageFile', thumbImageFile);
   } else {
     formData.set('mainImage', mainImage);
   }
 
   return api.put(`/community/${communityId}`, formData);
-}
-  
+};

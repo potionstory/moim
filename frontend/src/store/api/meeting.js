@@ -42,7 +42,7 @@ export const putMeetingAPI = (meetingId, bodyParams, thumbImageFile) => {
   formData.set('waiter', JSON.stringify(waiter));
   formData.set('tags', JSON.stringify(tags));
   formData.set('userName', userName);
-  
+
   if (thumbImageFile !== null) {
     formData.append('thumbImageFile', thumbImageFile);
   } else {
