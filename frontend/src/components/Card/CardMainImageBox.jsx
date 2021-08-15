@@ -3,7 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiceD6 } from '@fortawesome/free-solid-svg-icons';
 import { CardMainImageBoxWrap } from './style';
 
-const CardMainImageBox = ({ id, userId, isLock, mainImage, onHandleDetail }) => {
+const CardMainImageBox = ({
+  id,
+  userId,
+  isLock,
+  mainImage,
+  onHandleDetail,
+}) => {
   return (
     <CardMainImageBoxWrap>
       <button

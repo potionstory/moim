@@ -1,4 +1,10 @@
-import React, { useRef, useMemo, useEffect } from 'react';
+import React, {
+  useRef,
+  useState,
+  useMemo,
+  useCallback,
+  useEffect,
+} from 'react';
 import dayjs from 'dayjs';
 import CardMainImageBox from './CardMainImageBox';
 import CardDescriptionBox from './CardDescriptionBox';
@@ -24,6 +30,8 @@ const CardMeeting = ({ item, activeIndex, onHandleDetail }) => {
   } = item;
 
   const mapRef = useRef(meetingId);
+
+  const [address, setAddress] = useState('');
 
   // meeting date
   const eventStartDate = useMemo(
@@ -51,6 +59,12 @@ const CardMeeting = ({ item, activeIndex, onHandleDetail }) => {
       ),
     [startDate, endDate],
   );
+
+  const onAddressCopy = useCallback(() => {
+    const { name } = item.location;
+
+    navigator.clipboard.writeText(`[${name}] ${address}`);
+  }, [item, address]);
 
   const cardTabBoxSwitch = useMemo(() => {
     switch (activeIndex) {
@@ -85,32 +99,62 @@ const CardMeeting = ({ item, activeIndex, onHandleDetail }) => {
           />
         );
       case 3:
-        return <CardMapBox type={type} mapRef={mapRef} />;
+        const { name } = item.location;
+
+        return (
+          <CardMapBox
+            name={name}
+            address={address}
+            type={type}
+            mapRef={mapRef}
+            onAddressCopy={onAddressCopy}
+          />
+        );
       case 4:
-        return <CardAddInfoBox number={10} tags={tags} />;
+        const { memberSetting, memberList } = item;
+
+        return (
+          <CardAddInfoBox
+            now={memberList.length}
+            max={memberSetting.count}
+            tags={tags}
+          />
+        );
       default:
         return false;
     }
-  }, [item, activeIndex]);
+  }, [item, address, onAddressCopy, activeIndex]);
 
   useEffect(() => {
+    const { _latitude, _longitude } = item.location.coordinate;
+
     // meeting location
     if (mapIndex === activeIndex && type === 'offline') {
       mapRef.current.innerHTML = '';
 
       const options = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        center: new kakao.maps.LatLng(_latitude, _longitude),
         level: 3,
       };
       const map = new kakao.maps.Map(mapRef.current, options);
-      const markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+      const markerPosition = new kakao.maps.LatLng(_latitude, _longitude);
       const marker = new kakao.maps.Marker({
         position: markerPosition,
       });
+      const geocoder = new kakao.maps.services.Geocoder();
 
       marker.setMap(map);
+      geocoder.coord2Address(_longitude, _latitude, (result, status) => {
+        if (status === kakao.maps.services.Status.OK) {
+          let address = !!result[0].road_address
+            ? result[0].road_address.address_name
+            : result[0].address.address_name;
+
+          setAddress(address);
+        }
+      });
     }
-  }, [activeIndex, type]);
+  }, [item, activeIndex, type]);
 
   return (
     <CardTabBoxWrap>

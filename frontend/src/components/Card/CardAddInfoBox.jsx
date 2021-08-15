@@ -5,10 +5,10 @@ import { faUser, faTag } from '@fortawesome/free-solid-svg-icons';
 import TagList from '../TagList';
 import { CardAddInfoBoxWrap } from './style';
 
-const CardAddInfoBox = ({ number, tags }) => {
+const CardAddInfoBox = ({ now, max, tags }) => {
   return (
     <CardAddInfoBoxWrap>
-      {!isUndefined(number) && (
+      {!isUndefined(now) && (
         <div className="contentWrap">
           <div className="contentHead">
             <span className="iconBox">
@@ -18,9 +18,9 @@ const CardAddInfoBox = ({ number, tags }) => {
           </div>
           <div className="contentBody">
             <span className="memberCount">
-              <span className="now">10</span>
+              <span className="now">{now}</span>
               {` / `}
-              <span className="max">30</span>
+              <span className="max">{max}</span>
             </span>
           </div>
         </div>

@@ -494,6 +494,7 @@ export const CardScheduleBoxWrap = styled.div`
 `;
 
 export const CardMapBoxWrap = styled.div`
+  position: relative;
   height: 100%;
   .mapArea {
     height: 100%;
@@ -512,6 +513,66 @@ export const CardMapBoxWrap = styled.div`
       margin-top: 1rem;
       font-weight: 600;
       text-transform: uppercase;
+    }
+  }
+  .locationName {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    z-index: 10;
+    padding: 8px;
+    max-width: calc(100% - 12px);
+    height: 40px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: ${({ theme }) => theme.theme};
+    font-size: 0.875em;
+    font-weight: bold;
+    color: ${({ theme }) => theme.title};
+    line-height: 24px;
+    ${ellipsis};
+  }
+
+  .addressBox {
+    display: flex;
+    gap: 0 6px;
+    position: absolute;
+    bottom: 6px;
+    left: 6px;
+    z-index: 10;
+    max-width: calc(100% - 12px);
+    box-sizing: border-box;
+    .address {
+      flex: 1;
+      height: 40px;
+      padding: 8px;
+      border-radius: 4px;
+      background-color: ${({ theme }) => theme.theme};
+      font-size: 0.875em;
+      font-weight: bold;
+      color: ${({ theme }) => theme.title};
+      line-height: 24px;
+      ${ellipsis};
+    }
+    .btnCopy {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      background-color: ${({ theme }) => theme.theme};
+      svg {
+        font-size: 1rem;
+        color: ${({ theme }) => theme.title};
+        opacity: 0.6;
+        transition: all 0.2s ease-out;
+      }
+      &:hover {
+        svg {
+          opacity: 1;
+        }
+      }
     }
   }
 `;

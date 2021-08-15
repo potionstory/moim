@@ -6,7 +6,15 @@ import CardAddInfoBox from './CardAddInfoBox';
 import { CardTabBoxWrap } from './style';
 
 const CardCommunity = ({ item, activeIndex, onHandleDetail }) => {
-  const { communityId, userId, isLock, mainImage, description, url, tags } = item;
+  const {
+    communityId,
+    userId,
+    isLock,
+    mainImage,
+    description,
+    url,
+    tags,
+  } = item;
 
   const onUrlCopy = useCallback(() => {
     navigator.clipboard.writeText(url);
@@ -41,7 +49,7 @@ const CardCommunity = ({ item, activeIndex, onHandleDetail }) => {
       default:
         return false;
     }
-  }, [item, activeIndex]);
+  }, [item, activeIndex, onHandleDetail]);
 
   return (
     <CardTabBoxWrap>
