@@ -9,7 +9,6 @@ import SignUp from '../../Modals/SignUp';
 import MoimJoin from '../../Modals/MoimJoin';
 import MoimExit from '../../Modals/MoimExit';
 import MoimPassNumber from '../../Modals/MoimPassNumber';
-import MoimPassNumberSetting from '../../Modals/MoimPassNumberSetting';
 import { ModalWrap } from './style';
 
 const Modal = () => {
@@ -49,8 +48,6 @@ const Modal = () => {
         return <MoimExit />;
       case 'MOIM_PASSNUMBER':
         return <MoimPassNumber />;
-      case 'MOIM_PASSNUMBER_SETTING':
-        return <MoimPassNumberSetting />;
       default:
         return;
     }

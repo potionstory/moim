@@ -80,18 +80,6 @@ export const postMeetingPassNumberAPI = (meetingId, bodyParams) => {
     });
 };
 
-// put meeting passnumber(setting)
-export const putMeetingPassNumberAPI = (meetingId, bodyParams) => {
-  return api
-    .put(`/meeting/passnumber/${meetingId}`, bodyParams)
-    .then((res) => {
-      return res;
-    })
-    .catch((error) => {
-      return error;
-    });
-};
-
 // put payment check
 export const putPaymentCheckAPI = (meetingId, bodyParams) => {
   return api

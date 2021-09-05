@@ -1,8 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import MoimDetail from '../../Containers/MoimDetail';
 
 const Detail = ({ match }) => {
-  const { category, id } = match.params;
+  const { id } = match.params;
+
+  const { category } = useSelector(({ global }) => global);
 
   return (
     <>

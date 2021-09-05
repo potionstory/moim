@@ -19,18 +19,6 @@ export const postCommunityPassNumberAPI = (communityId, bodyParams) => {
     });
 };
 
-// put community passnumber(setting)
-export const putCommunityPassNumberAPI = (communityId, bodyParams) => {
-  return api
-    .put(`/community/passnumber/${communityId}`, bodyParams)
-    .then((res) => {
-      return res;
-    })
-    .catch((error) => {
-      return error;
-    });
-};
-
 // put one community
 export const putCommunityAPI = (communityId, bodyParams, thumbImageFile) => {
   const {

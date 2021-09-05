@@ -8,7 +8,6 @@ import {
   POST_MOIM_JOIN,
   POST_MOIM_EXIT,
   POST_MOIM_PASSNUMBER_CHECK,
-  PUT_MOIM_PASSNUMBER_SETTING,
   PUT_PAYMENT_CHECK,
   PUT_STAFF_CHECK,
 } from '../module/detail';
@@ -20,7 +19,6 @@ import {
   postMoimJoinAction,
   postMoimExitAction,
   postMoimPassNumberCheckAction,
-  putMoimPassNumberSettingAction,
   putPaymentCheckAction,
   putStaffCheckAction,
 } from '../module/detail';
@@ -29,7 +27,6 @@ import {
   getCommunityAPI,
   putCommunityAPI,
   postCommunityPassNumberAPI,
-  putCommunityPassNumberAPI,
 } from '../api/community';
 import {
   getMeetingAPI,
@@ -37,7 +34,6 @@ import {
   postMeetingJoinAPI,
   postMeetingExitAPI,
   postMeetingPassNumberAPI,
-  putMeetingPassNumberAPI,
   putPaymentCheckAPI,
   putStaffCheckAPI,
 } from '../api/meeting';
@@ -61,7 +57,12 @@ function* workGetMeeting(action) {
 function* workPutCommunity(action) {
   const { communityId, formData, thumbImageFile } = action.payload;
 
-  const res = yield call(putCommunityAPI, communityId, formData, thumbImageFile);
+  const res = yield call(
+    putCommunityAPI,
+    communityId,
+    formData,
+    thumbImageFile,
+  );
 
   if (res.status === 200) {
     yield put(putCommunityAction.SUCCESS(res.data));
@@ -145,29 +146,6 @@ function* workPostMoimPassNumberCheck(action) {
   }
 }
 
-function* workPutMoimPassNumberSetting(action) {
-  const { id, category, formData } = action.payload;
-  const bodyParams = {};
-  let res = null;
-
-  forEach(formData, (item) => {
-    bodyParams[item.name] = item.value;
-  });
-
-  if (category === 'community') {
-    res = yield call(putCommunityPassNumberAPI, id, bodyParams);
-  } else if (category === 'meeting') {
-    res = yield call(putMeetingPassNumberAPI, id, bodyParams);
-  }
-
-  if (res.status === 200) {
-    yield put(putMoimPassNumberSettingAction.SUCCESS());
-    yield put(modalCloseAction());
-  } else {
-    yield put(putMoimPassNumberSettingAction.FAILURE());
-  }
-}
-
 function* workPutPaymentCheck(action) {
   const { meetingId, userId } = action.payload;
 
@@ -223,13 +201,6 @@ function* watchPostMoimPassNumberCheck() {
   );
 }
 
-function* watchPutMoimPassNumberSetting() {
-  yield takeEvery(
-    PUT_MOIM_PASSNUMBER_SETTING.REQUEST,
-    workPutMoimPassNumberSetting,
-  );
-}
-
 function* watchPutPaymentCheck() {
   yield takeEvery(PUT_PAYMENT_CHECK.REQUEST, workPutPaymentCheck);
 }
@@ -246,7 +217,6 @@ export default [
   watchPostMoimJoin,
   watchPostMoimExit,
   watchPostMoimPassNumberCheck,
-  watchPutMoimPassNumberSetting,
   watchPutPaymentCheck,
   watchPutStaffCheck,
 ];

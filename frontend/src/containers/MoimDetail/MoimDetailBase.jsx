@@ -18,6 +18,7 @@ const MoimDetailBase = ({
   isEdit,
   title,
   isLock,
+  passNumber,
   moimStatus,
   status,
   payInfo,
@@ -25,6 +26,7 @@ const MoimDetailBase = ({
   tags,
   tagInput,
   description,
+  passNumberRef,
   costInputRef,
   accountInputRef,
   urlInputRef,
@@ -32,7 +34,7 @@ const MoimDetailBase = ({
   onTypeChange,
   onTitleChange,
   onLockChange,
-  onPassNumberSettingModalOpen,
+  onPassNumberChange,
   onStatusChange,
   onCostInputChange,
   onCostInputReset,
@@ -68,8 +70,9 @@ const MoimDetailBase = ({
       <MoimDetailLock
         isEdit={isEdit}
         isLock={isLock}
+        passNumber={passNumber}
         onLockChange={onLockChange}
-        onPassNumberSettingModalOpen={onPassNumberSettingModalOpen}
+        onPassNumberChange={onPassNumberChange}
       />
       <MoimDetailStatus
         list={moimStatus}

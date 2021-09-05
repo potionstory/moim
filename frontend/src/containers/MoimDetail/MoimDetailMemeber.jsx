@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { isNull, isEmpty, filter, map } from 'lodash';
 import AutosizeInput from 'react-input-autosize';
 import { motion } from 'framer-motion';

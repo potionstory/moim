@@ -5,7 +5,7 @@ import { isNull, map } from 'lodash';
 import { getAllCommunityAction } from '../../store/module/community';
 import { getAllMeetingAction } from '../../store/module/meeting';
 import { passNumberModalOpenAction } from '../../store/module/global';
-import { setPassNumberSettingAction } from '../../store/module/detail';
+import { setPassNumberCheckAction } from '../../store/module/detail';
 import Card from '../../Components/Card';
 import { MoimListWrap } from './style';
 
@@ -48,7 +48,7 @@ const MoimList = ({ category }) => {
   useEffect(() => {
     if (isPassNumberCheck) {
       history.push(`/detail/${category}/${id}`);
-      dispatch(setPassNumberSettingAction(false));
+      dispatch(setPassNumberCheckAction(false));
     }
   }, [isPassNumberCheck, category, id, dispatch]);
 

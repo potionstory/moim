@@ -31,7 +31,6 @@ import {
 import {
   joinModalOpenAction,
   exitModalOpenAction,
-  passNumberSettingModalOpenAction,
 } from '../../store/module/global';
 import {
   communityType,
@@ -50,10 +49,12 @@ import { DESCRIPTION_MAX_LENGTH } from '../../lib/const';
 import { MoimDetailWrap, MoimDetailInfo } from './style';
 
 const MoimDetail = ({ category, id }) => {
-  const { moim, thumbImage, thumbImageFile, isEdit } = useSelector(({ detail }) => detail);
-  const { isAuth, userInfo } = useSelector(({ auth }) => auth);
-
   const dispatch = useDispatch();
+
+  const { moim, thumbImage, thumbImageFile, isEdit } = useSelector(
+    ({ detail }) => detail,
+  );
+  const { isAuth, userInfo } = useSelector(({ auth }) => auth);
 
   const [detail, setDetail] = useState({});
   const [typeIndex, setTypeIndex] = useState(-1);
@@ -123,10 +124,6 @@ const MoimDetail = ({ category, id }) => {
     dispatch(exitModalOpenAction());
   }, []);
 
-  const onPassNumberSettingModalOpen = useCallback(() => {
-    dispatch(passNumberSettingModalOpenAction());
-  }, []);
-
   const onResetDetail = useCallback(() => dispatch(resetDetailAction()), [
     dispatch,
   ]);
@@ -134,19 +131,27 @@ const MoimDetail = ({ category, id }) => {
   const onSave = useCallback(() => {
     if (category === 'community') {
       dispatch(
-        putCommunityAction.REQUEST({ communityId: id, formData: detail, thumbImageFile }),
+        putCommunityAction.REQUEST({
+          communityId: id,
+          formData: detail,
+          thumbImageFile,
+        }),
       );
     } else {
-      dispatch(putMeetingAction.REQUEST({ meetingId: id, formData: detail, thumbImageFile }));
+      dispatch(
+        putMeetingAction.REQUEST({
+          meetingId: id,
+          formData: detail,
+          thumbImageFile,
+        }),
+      );
     }
   }, [dispatch, detail, thumbImageFile]);
 
   const onEditToggle = useCallback(() => {
     dispatch(setIsEditAction(!isEdit));
     dispatch(moimThumbImageAction({ image: null, file: null }));
-
-    setDetail(moim);
-  }, [dispatch, moim, isEdit]);
+  }, [dispatch, isEdit]);
 
   const onTypeChange = useCallback(
     (index) => {
@@ -170,18 +175,24 @@ const MoimDetail = ({ category, id }) => {
   }, []);
 
   const onLockChange = useCallback(() => {
-    const { isLock } = detail;
-
     setDetail(
       produce((draft) => {
         draft.isLock = !draft.isLock;
       }),
     );
-
-    if (!isLock) {
-      onPassNumberSettingModalOpen();
-    }
   }, [dispatch, detail]);
+
+  const onPassNumberChange = useCallback((e, i) => {
+    const { value } = e.target;
+
+    if (value <= 9) {
+      setDetail(
+        produce((draft) => {
+          draft.passNumber[i] = value;
+        }),
+      );
+    }
+  }, []);
 
   const onStatusChange = useCallback(
     (index) => {
@@ -511,7 +522,7 @@ const MoimDetail = ({ category, id }) => {
   useEffect(() => {
     if (category === 'community') {
       onGetCommunity(id);
-    } else {
+    } else if (category === 'meeting') {
       onGetMeeting(id);
     }
     return () => {
@@ -535,6 +546,7 @@ const MoimDetail = ({ category, id }) => {
     likeCount,
     title,
     isLock,
+    passNumber,
     payInfo,
     status,
     description,
@@ -573,6 +585,7 @@ const MoimDetail = ({ category, id }) => {
               isEdit={isEdit}
               title={title}
               isLock={isLock}
+              passNumber={passNumber}
               moimStatus={moimStatus}
               status={status}
               payInfo={payInfo}
@@ -587,7 +600,7 @@ const MoimDetail = ({ category, id }) => {
               onTypeChange={onTypeChange}
               onTitleChange={onTitleChange}
               onLockChange={onLockChange}
-              onPassNumberSettingModalOpen={onPassNumberSettingModalOpen}
+              onPassNumberChange={onPassNumberChange}
               onStatusChange={onStatusChange}
               onCostInputChange={onCostInputChange}
               onCostInputReset={onCostInputReset}
