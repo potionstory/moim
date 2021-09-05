@@ -151,6 +151,7 @@ exports.getMeeting = (req, res) => {
         type: doc.data().type,
         title: doc.data().title,
         isLock: doc.data().isLock,
+        passNumber: new Array(6).fill(""),
         status: doc.data().status,
         payInfo: doc.data().payInfo,
         mainImage: doc.data().mainImage,
@@ -427,20 +428,6 @@ exports.postMeetingPassNumber = (req, res) => {
       } else {
         res.status(403).json({ error: "Passnumber do not match" });
       }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).json({ error: "Something went wrong" });
-    });
-};
-
-exports.putMeetingPassNumber = (req, res) => {
-  const { passNumber } = req.body;
-
-  db.doc(`/meetings/${req.params.meetingId}`)
-    .update({ passNumber: passNumber.join("") })
-    .then(() => {
-      res.json({ message: "pass number update successfully" });
     })
     .catch((err) => {
       console.error(err);
