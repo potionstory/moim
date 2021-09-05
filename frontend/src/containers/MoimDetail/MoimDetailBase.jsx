@@ -26,7 +26,6 @@ const MoimDetailBase = ({
   tags,
   tagInput,
   description,
-  passNumberRef,
   costInputRef,
   accountInputRef,
   urlInputRef,

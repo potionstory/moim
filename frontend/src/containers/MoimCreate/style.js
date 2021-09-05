@@ -187,23 +187,29 @@ export const MoimCreateLockWrap = styled.div`
     display: flex;
     gap: 0 12px;
     box-sizing: border-box;
-    .btnPassWord {
+    .passNumber {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 4px;
-      background-color: ${({ theme }) => theme.theme};
-      svg {
-        font-size: 1rem;
-        color: ${({ theme }) => theme.title};
-        opacity: 0.6;
-        transition: all 0.2s ease-out;
-      }
-      &:hover {
-        svg {
-          opacity: 1;
+      flex: 1;
+      gap: 0 6px;
+      width: 270px;
+      li {
+        display: flex;
+        flex: 1;
+        input {
+          display: block;
+          width: 100%;
+          height: 40px;
+          padding: 0;
+          border-radius: 4px;
+          background-color: ${({ theme }) => theme.sub};
+          text-align: center;
+          font-size: 0.875rem;
+          font-weight: 600;
+          color: ${({ theme }) => theme.title};
+          &:-webkit-autofill {
+            -webkit-text-fill-color: ${({ theme }) => theme.title};
+            box-shadow: 0 0 0 1000px ${({ theme }) => theme.main} inset;
+          }
         }
       }
     }

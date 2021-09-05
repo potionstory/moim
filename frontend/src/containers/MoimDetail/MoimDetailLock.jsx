@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { isEmpty, map } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
@@ -58,7 +58,7 @@ const MoimDetailLock = ({
                 <li key={i}>
                   <input
                     type="number"
-                    ref={(ref) => passNumberRef.current.push(ref)}
+                    ref={(ref) => (passNumberRef.current[i] = ref)}
                     value={value}
                     onChange={(e) => onChange(e, i)}
                     onKeyDown={onKeyDown}

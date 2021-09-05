@@ -178,6 +178,9 @@ const MoimDetail = ({ category, id }) => {
     setDetail(
       produce((draft) => {
         draft.isLock = !draft.isLock;
+        if (draft.isLock) {
+          draft.passNumber = new Array(6).fill('');
+        }
       }),
     );
   }, [dispatch, detail]);

@@ -34,6 +34,7 @@ const moimCommonData = {
   mainImage: null,
   mainImageFile: '',
   title: '',
+  passNumber: new Array(6).fill(''),
   tags: [],
 };
 
@@ -162,17 +163,27 @@ const MoimCreate = ({ category }) => {
   }, []);
 
   const onLockChange = useCallback(() => {
-    const { isLock } = commonDetail;
-
     setCommonDetail(
       produce((draft) => {
         draft.isLock = !draft.isLock;
+        if (draft.isLock) {
+          draft.passNumber = new Array(6).fill('');
+        }
       }),
     );
+  }, [dispatch]);
 
-    if (!isLock) {
+  const onPassNumberChange = useCallback((e, i) => {
+    const { value } = e.target;
+
+    if (value <= 9) {
+      setCommonDetail(
+        produce((draft) => {
+          draft.passNumber[i] = value;
+        }),
+      );
     }
-  }, [dispatch, commonDetail]);
+  }, []);
 
   const onStatusChange = useCallback(
     (index) => {
@@ -511,6 +522,7 @@ const MoimCreate = ({ category }) => {
     mainImage,
     title,
     isLock,
+    passNumber,
     tags,
     description,
   } = commonDetail;
@@ -542,6 +554,7 @@ const MoimCreate = ({ category }) => {
           category={category}
           title={title}
           isLock={isLock}
+          passNumber={passNumber}
           moimStatus={moimStatus}
           status={status}
           payInfo={payInfo}
@@ -556,6 +569,7 @@ const MoimCreate = ({ category }) => {
           onTypeChange={onTypeChange}
           onTitleChange={onTitleChange}
           onLockChange={onLockChange}
+          onPassNumberChange={onPassNumberChange}
           onStatusChange={onStatusChange}
           onCostInputChange={onCostInputChange}
           onCostInputReset={onCostInputReset}

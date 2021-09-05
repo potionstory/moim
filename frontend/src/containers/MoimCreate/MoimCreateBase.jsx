@@ -18,6 +18,7 @@ const MoimCreateBase = ({
   category,
   title,
   isLock,
+  passNumber,
   moimStatus,
   status,
   payInfo,
@@ -32,6 +33,7 @@ const MoimCreateBase = ({
   onTypeChange,
   onTitleChange,
   onLockChange,
+  onPassNumberChange,
   onStatusChange,
   onCostInputChange,
   onCostInputReset,
@@ -67,7 +69,9 @@ const MoimCreateBase = ({
       <MoimCreateLock
         isEdit={isEdit}
         isLock={isLock}
+        passNumber={passNumber}
         onLockChange={onLockChange}
+        onPassNumberChange={onPassNumberChange}
       />
       <MoimCreateStatus
         isEdit={isEdit}
