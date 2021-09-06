@@ -25,6 +25,7 @@ export const putCommunityAPI = (communityId, bodyParams, thumbImageFile) => {
     type,
     title,
     isLock,
+    passNumber,
     status,
     description,
     url,
@@ -44,10 +45,16 @@ export const putCommunityAPI = (communityId, bodyParams, thumbImageFile) => {
   formData.set('tags', JSON.stringify(tags));
   formData.set('userName', userName);
 
+  // thumbImage
   if (thumbImageFile !== null) {
     formData.append('thumbImageFile', thumbImageFile);
   } else {
     formData.set('mainImage', mainImage);
+  }
+
+  // passNumber
+  if (passNumber.join("").length === 6) {
+    formData.set('passNumber', passNumber.join(""));
   }
 
   return api.put(`/community/${communityId}`, formData);

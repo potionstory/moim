@@ -12,6 +12,7 @@ export const putMeetingAPI = (meetingId, bodyParams, thumbImageFile) => {
     type,
     title,
     isLock,
+    passNumber,
     status,
     payInfo,
     description,
@@ -43,10 +44,16 @@ export const putMeetingAPI = (meetingId, bodyParams, thumbImageFile) => {
   formData.set('tags', JSON.stringify(tags));
   formData.set('userName', userName);
 
+  // thumbImage
   if (thumbImageFile !== null) {
     formData.append('thumbImageFile', thumbImageFile);
   } else {
     formData.set('mainImage', mainImage);
+  }
+
+  // passNumber
+  if (passNumber.join("").length === 6) {
+    formData.set('passNumber', passNumber.join(""));
   }
 
   return api.put(`/meeting/${meetingId}`, formData);

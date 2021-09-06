@@ -246,6 +246,7 @@ exports.putMeeting = (req, res) => {
       type,
       title,
       isLock,
+      passNumber,
       status,
       payInfo,
       description,
@@ -262,6 +263,7 @@ exports.putMeeting = (req, res) => {
     db.doc(`/meetings/${req.params.meetingId}`)
       .get()
       .then((doc) => {
+        const originPassNumber = doc.data().passNumber;
         const deleteFilePath = doc.data().imagePath;
         bucket.file(deleteFilePath).delete();
 
@@ -270,6 +272,7 @@ exports.putMeeting = (req, res) => {
             type,
             title,
             isLock: JSON.parse(isLock),
+            passNumber: passNumber === undefined ? originPassNumber : passNumber,
             status,
             payInfo: JSON.parse(payInfo),
             imagePath: storageFilepath,
@@ -287,7 +290,36 @@ exports.putMeeting = (req, res) => {
             db.doc(`/meetings/${req.params.meetingId}`)
               .get()
               .then((doc) => {
-                return res.status(200).json(doc.data()); // 201 CREATED
+                let meetingData = {};
+
+                meetingData = {
+                  meetingId: doc.id,
+                  type: doc.data().type,
+                  title: doc.data().title,
+                  isLock: doc.data().isLock,
+                  passNumber: new Array(6).fill(""),
+                  status: doc.data().status,
+                  payInfo: doc.data().payInfo,
+                  mainImage: doc.data().mainImage,
+                  description: doc.data().description,
+                  startDate: doc.data().startDate,
+                  endDate: doc.data().endDate,
+                  location: doc.data().location,
+                  memberSetting: doc.data().memberSetting,
+                  memberList: doc
+                    .data()
+                    .memberList.map(({ email, mobile, passNumber, ...member }) => member),
+                  waiter: doc.data().waiter,
+                  tags: doc.data().tags,
+                  userId: doc.data().userId,
+                  userImage: doc.data().userImage,
+                  userName: doc.data().userName,
+                  createdAt: doc.data().createdAt,
+                  likeCount: doc.data().likeCount,
+                  commentCount: doc.data().commentCount,
+                };
+
+                return res.json(meetingData);
               });
           })
           .catch((err) => {

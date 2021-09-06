@@ -216,12 +216,13 @@ exports.putCommunity = (req, res) => {
       storageFilepath
     )}?alt=media&token=${generatedToken}`;
 
-    const { type, title, isLock, status, description, url, tags, mainImage } =
+    const { type, title, isLock, passNumber, status, description, url, tags, mainImage } =
       req.body;
 
     db.doc(`/communitys/${req.params.communityId}`)
       .get()
       .then((doc) => {
+        const originPassNumber = doc.data().passNumber;
         const deleteFilePath = doc.data().imagePath;
         bucket.file(deleteFilePath).delete();
 
@@ -230,6 +231,7 @@ exports.putCommunity = (req, res) => {
             type,
             title,
             isLock: JSON.parse(isLock),
+            passNumber: passNumber === undefined ? originPassNumber : passNumber,
             status,
             imagePath: storageFilepath,
             mainImage: mainImage === undefined ? thumbImage : mainImage,
@@ -241,7 +243,28 @@ exports.putCommunity = (req, res) => {
             db.doc(`/communitys/${req.params.communityId}`)
               .get()
               .then((doc) => {
-                return res.status(200).json(doc.data()); // 201 CREATED
+                let communityData = {};
+
+                communityData = {
+                  communityId: doc.id,
+                  type: doc.data().type,
+                  title: doc.data().title,
+                  isLock: doc.data().isLock,
+                  passNumber: new Array(6).fill(""),
+                  status: doc.data().status,
+                  mainImage: doc.data().mainImage,
+                  description: doc.data().description,
+                  url: doc.data().url,
+                  tags: doc.data().tags,
+                  userId: doc.data().userId,
+                  userImage: doc.data().userImage,
+                  userName: doc.data().userName,
+                  createdAt: doc.data().createdAt,
+                  likeCount: doc.data().likeCount,
+                  commentCount: doc.data().commentCount,
+                };
+
+                return res.json(communityData);
               });
           })
           .catch((err) => {
