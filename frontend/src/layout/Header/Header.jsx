@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,7 +9,6 @@ import {
   faSignInAlt,
   faUserPlus,
   faSignOutAlt,
-  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import Avatar from 'boring-avatars';
 import api from '../../store/api';
@@ -21,7 +20,6 @@ import {
 import { getUserAction, signOutAction } from '../../store/module/auth';
 import { auth } from '../../server/firebase.util';
 import TextButton from '../../Components/Button/TextButton';
-import IconButton from '../../Components/Button/IconButton';
 import AvatarToast from '../../Components/AvatarToast';
 import {
   HeaderWrap,
@@ -39,20 +37,11 @@ api.defaults.headers.common['Authorization'] = token;
 
 const Header = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const { isAuth, userInfo } = useSelector(({ auth }) => auth);
   const { theme } = useSelector(({ global }) => global);
 
-  const onLinkToCreate = useCallback(() => {
-    history.push('/create');
-  }, []);
-
   const onThemeToggle = useCallback(() => dispatch(themeToggleAction()), [
-    dispatch,
-  ]);
-
-  const onGetUser = useCallback(() => dispatch(getUserAction.REQUEST()), [
     dispatch,
   ]);
 
@@ -79,9 +68,9 @@ const Header = () => {
 
   useEffect(() => {
     if (token) {
-      onGetUser();
+      dispatch(getUserAction.REQUEST());
     }
-  }, [onGetUser]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!isAuth) {
@@ -143,9 +132,6 @@ const Header = () => {
                   icon={faSignOutAlt}
                   text="sign out"
                 />
-              </MenuItem>
-              <MenuItem>
-                <IconButton onClickEvent={onLinkToCreate} icon={faPlus} />
               </MenuItem>
             </MenuList>
             {isAuth && (

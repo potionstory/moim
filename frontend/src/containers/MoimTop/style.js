@@ -25,6 +25,7 @@ export const MoimTopWrap = styled.div`
 `;
 
 export const MoimTopTabWrap = styled.div`
+  display: flex;
   position: relative;
   .activeBar {
     position: absolute;
@@ -38,6 +39,25 @@ export const MoimTopTabWrap = styled.div`
     display: flex;
     flex-direction: row;
     position: relative;
+  }
+  .btnCreate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    transition: all 0.2s ease-out;
+    svg {
+      font-size: 2rem;
+      color: ${({ theme }) => theme.title};
+      transition: all 0.2s ease-out;
+    }
+    &:hover {
+      svg {
+        color: ${({ theme }) => theme.theme};
+      }
+    }
   }
 `;
 

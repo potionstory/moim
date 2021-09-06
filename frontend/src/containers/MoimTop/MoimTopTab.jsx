@@ -1,10 +1,15 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { map } from 'lodash';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { MoimTopTabWrap, TabButton } from './style';
 
 const MoimTopTab = ({ tabMenu, activeIndex, onTabClick }) => {
+  const { isAuth } = useSelector(({ auth }) => auth);
+
   return (
     <MoimTopTabWrap>
       <motion.div
@@ -23,6 +28,11 @@ const MoimTopTab = ({ tabMenu, activeIndex, onTabClick }) => {
           </TabButton>
         ))}
       </ul>
+      {isAuth && (
+        <Link to="/create" className="btnCreate">
+          <FontAwesomeIcon icon={faPlus} />
+        </Link>
+      )}
     </MoimTopTabWrap>
   );
 };
