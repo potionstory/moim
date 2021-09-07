@@ -17,6 +17,9 @@ import MoimCreateSchedule from './MoimCreateSchedule';
 import MoimCreateMap from './MoimCreateMap';
 import MoimCreateMember from './MoimCreateMember';
 import {
+  postCommunityAction,
+} from '../../store/module/detail';
+import {
   communityType,
   meetingType,
   communityStatus,
@@ -135,11 +138,21 @@ const MoimCreate = ({ category }) => {
 
   const onSave = useCallback(() => {
     if (category === 'community') {
-      console.log('onSave: community');
+      dispatch(
+        postCommunityAction.REQUEST({
+          formData: {
+            ...commonDetail,
+            ...addDetail,
+            userId,
+            userImage,
+            userName,
+          },
+        }),
+      );
     } else if (category === 'meeting') {
       console.log('onSave: meeting');
     }
-  }, [dispatch, commonDetail]);
+  }, [dispatch, commonDetail, addDetail]);
 
   const onTypeChange = useCallback(
     (index) => {

@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { applyMiddleware, createStore } from 'redux';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import logger from 'redux-logger';
@@ -10,7 +12,14 @@ import rootSaga from './store/saga';
 import { KakaoInitialize } from './server/kakao.util';
 import Root from './Root';
 
-const sagaMiddleware = createSagaMiddleware();
+const customHistory = createBrowserHistory({
+  forceRefresh: true,
+});
+const sagaMiddleware = createSagaMiddleware({
+  context: {
+    history: customHistory
+  }
+});
 
 const store = createStore(
   rootReducer,
@@ -22,9 +31,11 @@ sagaMiddleware.run(rootSaga);
 KakaoInitialize();
 
 const StoreRoot = () => (
-  <Provider store={store}>
-    <Root />
-  </Provider>
+  <Router history={customHistory}>
+    <Provider store={store}>
+      <Root />
+    </Provider>
+  </Router>
 );
 
 ReactDOM.render(<StoreRoot />, document.getElementById('root'));

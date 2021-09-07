@@ -1,8 +1,9 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeEvery, getContext } from 'redux-saga/effects';
 import { forEach } from 'lodash';
 import {
   GET_COMMUNITY,
   GET_MEETING,
+  POST_COMMUNITY,
   PUT_COMMUNITY,
   PUT_MEETING,
   POST_MOIM_JOIN,
@@ -14,6 +15,7 @@ import {
 import {
   getCommunityAction,
   getMeetingAction,
+  postCommunityAction,
   putCommunityAction,
   putMeetingAction,
   postMoimJoinAction,
@@ -25,6 +27,7 @@ import {
 import { modalCloseAction } from '../module/global';
 import {
   getCommunityAPI,
+  postCommunityAPI,
   putCommunityAPI,
   postCommunityPassNumberAPI,
 } from '../api/community';
@@ -52,6 +55,26 @@ function* workGetMeeting(action) {
   if (res.status === 200) {
     yield put(getMeetingAction.SUCCESS(res.data));
   }
+}
+
+function* workPostCommunity(action) {
+  const { formData } = action.payload;
+
+  const res = yield call(
+    postCommunityAPI,
+    formData,
+  );
+
+  if (res.status === 200) {
+    const { communityId } = res.data;
+    const history = yield getContext('history');
+    
+    yield put(postCommunityAction.SUCCESS());
+
+    history.push(`/detail/community/${communityId}`);
+  } else {
+    yield put(postCommunityAction.FAILURE());
+  }  
 }
 
 function* workPutCommunity(action) {
@@ -178,6 +201,10 @@ function* watchGetMeeting() {
   yield takeEvery(GET_MEETING.REQUEST, workGetMeeting);
 }
 
+function* watchPostCommunity() {
+  yield takeEvery(POST_COMMUNITY.REQUEST, workPostCommunity);
+}
+
 function* watchPutCommunity() {
   yield takeEvery(PUT_COMMUNITY.REQUEST, workPutCommunity);
 }
@@ -212,6 +239,7 @@ function* watchPutStaffCheck() {
 export default [
   watchGetCommunity,
   watchGetMeeting,
+  watchPostCommunity,
   watchPutCommunity,
   watchPutMeeting,
   watchPostMoimJoin,
