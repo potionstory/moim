@@ -86,18 +86,22 @@ exports.postCommunity = (req, res) => {
       storageFilepath
     )}?alt=media&token=${generatedToken}`;
 
+    const { type, title, isLock, passNumber, status, description, url, tags, userId, userImage, userName } = req.body;
+
     const newCommunity = {
-      type: req.body.type,
-      title: req.body.title,
-      isLock: req.body.isLock,
-      status: req.body.status,
+      type,
+      title,
+      isLock: JSON.parse(isLock),
+      passNumber,
+      status,
       imagePath: storageFilepath,
       mainImage,
-      description: req.body.description,
-      url: req.body.url,
-      tags: req.body.tags,
-      userImage: req.user.userImage,
-      userName: req.user.userName,
+      description,
+      url,
+      tags: JSON.parse(tags),
+      userId,
+      userImage,
+      userName,
       createdAt: new Date().toISOString(),
       likeCount: 0,
       commentCount: 0,
