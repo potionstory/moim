@@ -17,6 +17,7 @@ exports.getAllCommunitys = (req, res) => {
           isLock: doc.data().isLock,
           status: doc.data().status,
           mainImage: doc.data().mainImage,
+          userAvatar: doc.data().userAvatar,
           description: doc.data().description,
           url: doc.data().url,
           tags: doc.data().tags,
@@ -86,7 +87,7 @@ exports.postCommunity = (req, res) => {
       storageFilepath
     )}?alt=media&token=${generatedToken}`;
 
-    const { type, title, isLock, passNumber, status, description, url, tags, userId, userImage, userName } = req.body;
+    const { type, title, isLock, passNumber, status, description, url, tags, userId, userImage, userAvatar, userName } = req.body;
 
     const newCommunity = {
       type,
@@ -100,7 +101,8 @@ exports.postCommunity = (req, res) => {
       url,
       tags: JSON.parse(tags),
       userId,
-      userImage,
+      userImage: userImage !== "null" ? userImage : null,
+      userAvatar: JSON.parse(userAvatar),
       userName,
       createdAt: new Date().toISOString(),
       likeCount: 0,
@@ -146,6 +148,7 @@ exports.getCommunity = (req, res) => {
         tags: doc.data().tags,
         userId: doc.data().userId,
         userImage: doc.data().userImage,
+        userAvatar: doc.data().userAvatar,
         userName: doc.data().userName,
         createdAt: doc.data().createdAt,
         likeCount: doc.data().likeCount,
@@ -262,6 +265,7 @@ exports.putCommunity = (req, res) => {
                   tags: doc.data().tags,
                   userId: doc.data().userId,
                   userImage: doc.data().userImage,
+                  userAvatar: doc.data().userAvatar,
                   userName: doc.data().userName,
                   createdAt: doc.data().createdAt,
                   likeCount: doc.data().likeCount,
