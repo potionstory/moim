@@ -12,7 +12,7 @@ export const UserInfoWrap = styled.div`
     overflow: hidden;
     height: 40px;
     padding: 0 12px;
-    img {
+    img, svg {
       width: 34px;
       height: 34px;
       border: 3px solid ${color.gray};
@@ -37,7 +37,7 @@ export const UserInfoWrap = styled.div`
       }
     }
     &:hover {
-      img {
+      img, svg {
         border-color: ${({ theme }) => theme.theme};
       }
       b {

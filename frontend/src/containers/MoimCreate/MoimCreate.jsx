@@ -145,6 +145,7 @@ const MoimCreate = ({ category }) => {
             ...addDetail,
             userId,
             userImage,
+            userAvatar,
             userName,
           },
         }),

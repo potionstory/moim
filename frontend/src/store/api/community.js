@@ -20,6 +20,7 @@ export const postCommunityAPI = (bodyParams) => {
     tags,
     userId,
     userImage,
+    userAvatar,
     userName,
     mainImageFile,
   } = bodyParams;
@@ -35,6 +36,7 @@ export const postCommunityAPI = (bodyParams) => {
   formData.set('tags', JSON.stringify(tags));
   formData.set('userId', userId);
   formData.set('userImage', userImage);
+  formData.set('userAvatar', JSON.stringify(userAvatar));
   formData.set('userName', userName);
   formData.append('mainImageFile', mainImageFile);
 
