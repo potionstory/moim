@@ -32,6 +32,7 @@ exports.getAllMeetings = (req, res) => {
           tags: doc.data().tags,
           userId: doc.data().userId,
           userImage: doc.data().userImage,
+          userAvatar: doc.data().userAvatar,
           userName: doc.data().userName,
           createdAt: doc.data().createdAt,
           likeCount: doc.data().likeCount,
@@ -77,7 +78,7 @@ exports.postMeeting = (req, res) => {
     let fileext = filename.match(/\.[0-9a-z]+$/i)[0];
     let uniqueName = admin.database().ref().push().key;
 
-    storageFilepath = `${req.user.userName}/${uniqueName + fileext}`;
+    storageFilepath = `${req.body.userName}/${uniqueName + fileext}`;
     storageFile = bucket.file(storageFilepath);
 
     file.pipe(storageFile.createWriteStream({ gzip: true, metadata }));
@@ -96,24 +97,46 @@ exports.postMeeting = (req, res) => {
       storageFilepath
     )}?alt=media&token=${generatedToken}`;
 
+    const {
+      type,
+      title,
+      isLock,
+      passNumber,
+      status,
+      description,
+      payInfo,
+      tags,
+      startDate,
+      endDate,
+      location,
+      memberSetting,
+      userId,
+      userImage,
+      userAvatar,
+      userName,
+    } = req.body;
+
     const newMeeting = {
-      type: req.body.type,
-      title: req.body.title,
-      isLock: req.body.isLock,
-      status: req.body.status,
-      payInfo: req.body.payInfo,
+      type,
+      title,
+      isLock,
+      passNumber,
+      status,
+      payInfo: JSON.parse(payInfo),
       imagePath: storageFilepath,
       mainImage,
-      description: req.body.description,
-      startDate: req.body.startDate,
-      endDate: req.body.endDate,
-      location: req.body.location,
-      memberSetting: req.body.memberSetting,
-      memberList: req.body.memberList,
-      waiter: req.body.waiter,
-      tags: req.body.tags,
-      userImage: req.user.userImage,
-      userName: req.user.userName,
+      description,
+      tags: JSON.parse(tags),
+      startDate: JSON.parse(startDate),
+      endDate: JSON.parse(endDate),
+      location: JSON.parse(location),
+      memberSetting: JSON.parse(memberSetting),
+      memberList: [],
+      waiter: [],
+      userId,
+      userImage: userImage !== "null" ? userImage : null,
+      userAvatar: JSON.parse(userAvatar),
+      userName,
       createdAt: new Date().toISOString(),
       likeCount: 0,
       commentCount: 0,
@@ -123,9 +146,8 @@ exports.postMeeting = (req, res) => {
       .add(newMeeting)
       .then((doc) => {
         const resMeeting = newMeeting;
-
         resMeeting.meetingId = doc.id;
-        return res.json(resMeeting);
+        res.json(resMeeting);
       })
       .catch((err) => {
         res.status(500).json({ error: "something went wrong" });
@@ -167,6 +189,7 @@ exports.getMeeting = (req, res) => {
         tags: doc.data().tags,
         userId: doc.data().userId,
         userImage: doc.data().userImage,
+        userAvatar: doc.data().userAvatar,
         userName: doc.data().userName,
         createdAt: doc.data().createdAt,
         likeCount: doc.data().likeCount,
@@ -313,6 +336,7 @@ exports.putMeeting = (req, res) => {
                   tags: doc.data().tags,
                   userId: doc.data().userId,
                   userImage: doc.data().userImage,
+                  userAvatar: doc.data().userAvatar,
                   userName: doc.data().userName,
                   createdAt: doc.data().createdAt,
                   likeCount: doc.data().likeCount,
