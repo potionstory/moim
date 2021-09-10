@@ -1057,7 +1057,7 @@ export const MoimDetailMemberWrap = styled.div`
             overflow: hidden;
             height: 40px;
             margin-right: 12px;
-            img {
+            img, svg {
               width: 40px;
               height: 40px;
               border: 3px solid ${color.gray};
@@ -1078,7 +1078,7 @@ export const MoimDetailMemberWrap = styled.div`
               transition: all 0.2s ease-out;
             }
             &:hover {
-              img {
+              img, svg {
                 border-color: ${({ theme }) => theme.theme};
               }
               .name {

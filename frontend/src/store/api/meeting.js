@@ -3,6 +3,62 @@ import api from './index';
 // get all meeting
 export const getAllMeetingAPI = () => api.get('/meetings');
 
+// post meeting create
+export const postMeetingAPI = (bodyParams) => {
+  const {
+    type,
+    title,
+    isLock,
+    passNumber,
+    status,
+    description,
+    payInfo,
+    tags,
+    startDate,
+    endDate,
+    location,
+    memberSetting,
+    userId,
+    userImage,
+    userAvatar,
+    userName,
+    mainImageFile,
+  } = bodyParams;
+
+  const formData = new FormData();
+
+  formData.set('type', type);
+  formData.set('title', title);
+  formData.set('isLock', JSON.stringify(isLock));
+  formData.set('status', status);
+  formData.set('description', description);
+  formData.set('payInfo', JSON.stringify(payInfo));
+  formData.set('tags', JSON.stringify(tags));
+  formData.set('startDate', JSON.stringify(startDate));
+  formData.set('endDate', JSON.stringify(endDate));
+  formData.set('location', JSON.stringify(location));
+  formData.set('memberSetting', JSON.stringify(memberSetting));
+  formData.set('userId', userId);
+  formData.set('userImage', userImage);
+  formData.set('userAvatar', JSON.stringify(userAvatar));
+  formData.set('userName', userName);
+  formData.append('mainImageFile', mainImageFile);
+
+  // passNumber
+  if (passNumber.join("").length === 6) {
+    formData.set('passNumber', passNumber.join(""));
+  }
+
+  return api
+    .post(`/meeting`, formData)
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
+
 // get one meeting
 export const getMeetingAPI = (meetingId) => api.get(`/meeting/${meetingId}`);
 

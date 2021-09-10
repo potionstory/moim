@@ -5,6 +5,7 @@ import { createType, createAction } from './helper';
 export const GET_COMMUNITY = createType('GET_COMMUNITY');
 export const GET_MEETING = createType('GET_MEETING');
 export const POST_COMMUNITY = createType('POST_COMMUNITY');
+export const POST_MEETING = createType('POST_MEETING');
 export const PUT_COMMUNITY = createType('PUT_COMMUNITY');
 export const PUT_MEETING = createType('PUT_MEETING');
 export const MOIM_THUMB_IMAGE = 'MOIM_THUMB_IMAGE';
@@ -23,6 +24,7 @@ export const RESET_DETAIL = 'RESET_DETAIL';
 export const getCommunityAction = createAction(GET_COMMUNITY);
 export const getMeetingAction = createAction(GET_MEETING);
 export const postCommunityAction = createAction(POST_COMMUNITY);
+export const postMeetingAction = createAction(POST_MEETING);
 export const putCommunityAction = createAction(PUT_COMMUNITY);
 export const putMeetingAction = createAction(PUT_MEETING);
 export const moimThumbImageAction = (payload) => ({
@@ -99,6 +101,23 @@ export default (state = initialState, action) => {
         break;
       }
       case POST_COMMUNITY.FAILURE: {
+        draft.thumbImage = null;
+        draft.thumbImageFile = null;
+        draft.loading = false;
+        break;
+      }
+      case POST_MEETING.REQUEST: {
+        draft.loading = true;
+        break;
+      }
+      case POST_MEETING.SUCCESS: {
+        draft.thumbImage = null;
+        draft.thumbImageFile = null;
+        draft.moim = {};
+        draft.isEdit = false;
+        break;
+      }
+      case POST_MEETING.FAILURE: {
         draft.thumbImage = null;
         draft.thumbImageFile = null;
         draft.loading = false;

@@ -184,7 +184,16 @@ const MoimCreateMember = ({
             </div>
             <div className="clientBody">
               <a href="#" className="clientInfo">
-                <img src={userImage} />
+                {userImage === null ? (
+                  <Avatar
+                    size={40}
+                    name={userAvatar.name}
+                    variant="beam"
+                    colors={userAvatar.colors}
+                  />
+                ) : (
+                  <img src={userImage} />
+                )}
                 <span className="name">{userName}</span>
               </a>
               {isEdit && (

@@ -18,6 +18,7 @@ import MoimCreateMap from './MoimCreateMap';
 import MoimCreateMember from './MoimCreateMember';
 import {
   postCommunityAction,
+  postMeetingAction,
 } from '../../store/module/detail';
 import {
   communityType,
@@ -151,7 +152,18 @@ const MoimCreate = ({ category }) => {
         }),
       );
     } else if (category === 'meeting') {
-      console.log('onSave: meeting');
+      dispatch(
+        postMeetingAction.REQUEST({
+          formData: {
+            ...commonDetail,
+            ...addDetail,
+            userId,
+            userImage,
+            userAvatar,
+            userName,
+          },
+        }),
+      );
     }
   }, [dispatch, commonDetail, addDetail]);
 

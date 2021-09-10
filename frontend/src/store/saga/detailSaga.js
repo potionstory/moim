@@ -4,6 +4,7 @@ import {
   GET_COMMUNITY,
   GET_MEETING,
   POST_COMMUNITY,
+  POST_MEETING,
   PUT_COMMUNITY,
   PUT_MEETING,
   POST_MOIM_JOIN,
@@ -16,6 +17,7 @@ import {
   getCommunityAction,
   getMeetingAction,
   postCommunityAction,
+  postMeetingAction,
   putCommunityAction,
   putMeetingAction,
   postMoimJoinAction,
@@ -33,6 +35,7 @@ import {
 } from '../api/community';
 import {
   getMeetingAPI,
+  postMeetingAPI,
   putMeetingAPI,
   postMeetingJoinAPI,
   postMeetingExitAPI,
@@ -75,6 +78,26 @@ function* workPostCommunity(action) {
   } else {
     yield put(postCommunityAction.FAILURE());
   }  
+}
+
+function* workPostMeeting(action) {
+  const { formData } = action.payload;
+
+  const res = yield call(
+    postMeetingAPI,
+    formData,
+  );
+
+  if (res.status === 200) {
+    const { meetingId } = res.data;
+    const history = yield getContext('history');
+    
+    yield put(postMeetingAction.SUCCESS());
+
+    history.push(`/detail/meeting/${meetingId}`);
+  } else {
+    yield put(postMeetingAction.FAILURE());
+  }
 }
 
 function* workPutCommunity(action) {
@@ -205,6 +228,10 @@ function* watchPostCommunity() {
   yield takeEvery(POST_COMMUNITY.REQUEST, workPostCommunity);
 }
 
+function* watchPostMeeting() {
+  yield takeEvery(POST_MEETING.REQUEST, workPostMeeting);
+}
+
 function* watchPutCommunity() {
   yield takeEvery(PUT_COMMUNITY.REQUEST, workPutCommunity);
 }
@@ -240,6 +267,7 @@ export default [
   watchGetCommunity,
   watchGetMeeting,
   watchPostCommunity,
+  watchPostMeeting,
   watchPutCommunity,
   watchPutMeeting,
   watchPostMoimJoin,

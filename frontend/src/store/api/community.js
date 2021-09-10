@@ -3,10 +3,6 @@ import api from './index';
 // get all community
 export const getAllCommunityAPI = () => api.get('/communitys');
 
-// get one community
-export const getCommunityAPI = (communityId) =>
-  api.get(`/community/${communityId}`);
-
 // post community create
 export const postCommunityAPI = (bodyParams) => {
   const {
@@ -54,6 +50,10 @@ export const postCommunityAPI = (bodyParams) => {
       return error;
     });
 };
+
+// get one community
+export const getCommunityAPI = (communityId) =>
+  api.get(`/community/${communityId}`);
 
 // post community passnumber(check)
 export const postCommunityPassNumberAPI = (communityId, bodyParams) => {
