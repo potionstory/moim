@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import {
   faCommentAlt,
   faMugHot,
@@ -23,6 +24,62 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import icon from './icons';
 import { color, iconBg } from './styles/palette';
+
+export const moimCommonData = {
+  commentCount: 0,
+  comments: [],
+  description: '',
+  isLock: false,
+  likeCount: 0,
+  mainImage: null,
+  mainImageFile: '',
+  title: '',
+  passNumber: new Array(6).fill(''),
+  tags: [],
+};
+
+export const moimCommunityData = {
+  type: 'kakao',
+  status: 'open',
+  url: '',
+};
+
+export const moimMeetingData = {
+  type: 'online',
+  status: 'empty',
+  startDate: {
+    _nanoseconds: 0,
+    _seconds: dayjs().unix(),
+  },
+  endDate: {
+    _nanoseconds: 0,
+    _seconds: dayjs().unix(),
+  },
+  location: {
+    name: '장소 이름',
+    coordinate: {
+      _latitude: 37.56682420267543,
+      _longitude: 126.978652258823,
+    },
+  },
+  memberList: [],
+  watier: [],
+  memberSetting: {
+    count: 0,
+    isSelf: false,
+    formData: {
+      email: false,
+      mobile: false,
+      name: true,
+      passNumber: true,
+    },
+  },
+  payInfo: {
+    cost: 0,
+    bank: '090',
+    account: '',
+  },
+};
 
 export const DESCRIPTION_MAX_LENGTH = 150;
 

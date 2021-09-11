@@ -21,6 +21,9 @@ import {
   postMeetingAction,
 } from '../../store/module/detail';
 import {
+  moimCommonData,
+  moimCommunityData,
+  moimMeetingData,
   communityType,
   meetingType,
   communityStatus,
@@ -28,62 +31,6 @@ import {
 } from '../../lib/const';
 import { DESCRIPTION_MAX_LENGTH } from '../../lib/const';
 import { MoimCreateWrap, MoimCreateInfo } from './style';
-
-const moimCommonData = {
-  commentCount: 0,
-  comments: [],
-  description: '',
-  isLock: false,
-  likeCount: 0,
-  mainImage: null,
-  mainImageFile: '',
-  title: '',
-  passNumber: new Array(6).fill(''),
-  tags: [],
-};
-
-const moimCommunityData = {
-  type: 'kakao',
-  status: 'open',
-  url: '',
-};
-
-const moimMeetingData = {
-  type: 'online',
-  status: 'empty',
-  startDate: {
-    _nanoseconds: 0,
-    _seconds: dayjs().unix(),
-  },
-  endDate: {
-    _nanoseconds: 0,
-    _seconds: dayjs().unix(),
-  },
-  location: {
-    name: '장소 이름',
-    coordinate: {
-      _latitude: 37.56682420267543,
-      _longitude: 126.978652258823,
-    },
-  },
-  memberList: [],
-  watier: [],
-  memberSetting: {
-    count: 0,
-    isSelf: false,
-    formData: {
-      email: false,
-      mobile: false,
-      name: true,
-      passNumber: true,
-    },
-  },
-  payInfo: {
-    cost: 0,
-    bank: '090',
-    account: '',
-  },
-};
 
 const MoimCreate = ({ category }) => {
   const dispatch = useDispatch();
