@@ -1079,7 +1079,8 @@ export const MoimCreateMemberWrap = styled.div`
             overflow: hidden;
             height: 40px;
             margin-right: 12px;
-            img, svg {
+            img,
+            svg {
               width: 40px;
               height: 40px;
               border: 3px solid ${color.gray};
@@ -1100,7 +1101,8 @@ export const MoimCreateMemberWrap = styled.div`
               transition: all 0.2s ease-out;
             }
             &:hover {
-              img, svg {
+              img,
+              svg {
                 border-color: ${({ theme }) => theme.theme};
               }
               .name {
@@ -1250,18 +1252,6 @@ export const MoimCreateMemberWrap = styled.div`
                 height: 100%;
                 border-radius: 4px;
                 background-color: ${({ theme }) => theme.title};
-                .index {
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  padding: 3px;
-                  font-family: 'Rubik';
-                  font-size: 1.25rem;
-                  font-style: italic;
-                  font-weight: 600;
-                  color: ${({ theme }) => theme.main};
-                  line-height: 20px;
-                }
                 .payment {
                   display: flex;
                   align-items: center;

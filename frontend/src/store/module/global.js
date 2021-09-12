@@ -11,8 +11,9 @@ export const PASSNUMBER_MODAL_OPEN = 'PASSNUMBER_MODAL_OPEN';
 export const MODAL_CLOSE = 'MODAL_CLOSE';
 
 // action 생성자 함수
-export const themeToggleAction = () => ({
+export const themeToggleAction = (payload) => ({
   type: THEME_TOGGLE,
+  payload,
 });
 export const categoryChangeAction = (payload) => ({
   type: CATEGORY_CHANGE,
@@ -41,7 +42,7 @@ export const modalCloseAction = () => ({
 // initialState
 const initialState = {
   loading: false,
-  theme: false, // true: Light, false: Dark
+  theme: window.localStorage.getItem('theme') === 'true' ? true : false, // true: Light, false: Dark
   id: null,
   category: 'community',
   modal: {
@@ -54,7 +55,7 @@ export default (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
       case THEME_TOGGLE: {
-        draft.theme = !draft.theme;
+        draft.theme = action.payload;
         break;
       }
       case CATEGORY_CHANGE: {

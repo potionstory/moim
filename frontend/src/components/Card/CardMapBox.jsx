@@ -1,13 +1,13 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
-import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faLock, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { CardMapBoxWrap } from './style';
 
-const CardMapBox = ({ name, address, type, mapRef, onAddressCopy }) => {
+const CardMapBox = ({ isLock, name, address, type, mapRef, onAddressCopy }) => {
   return (
     <CardMapBoxWrap>
-      {type === 'offline' ? (
+      {!isLock && type === 'offline' ? (
         <>
           <div ref={mapRef} className="mapArea"></div>
           <span className="locationName">{name}</span>
@@ -20,8 +20,8 @@ const CardMapBox = ({ name, address, type, mapRef, onAddressCopy }) => {
         </>
       ) : (
         <div className="mapNone">
-          <FontAwesomeIcon icon={faMapMarkerAlt} />
-          <span>online meeting</span>
+          <FontAwesomeIcon icon={isLock ? faLock : faMapMarkerAlt} />
+          <span>{isLock ? 'locked' : 'online meeting'}</span>
         </div>
       )}
     </CardMapBoxWrap>

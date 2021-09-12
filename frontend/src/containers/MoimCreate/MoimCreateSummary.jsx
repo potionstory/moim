@@ -11,13 +11,12 @@ const MoimCreateSummary = ({
   userAvatar,
   userName,
   likeCount,
-  isMoimClient,
   isSave,
   onMainImageChange,
   onSave,
 }) => {
   return (
-    <MoimCreateSummaryWrap isMainActive={!isMoimClient || isSave}>
+    <MoimCreateSummaryWrap isMainActive={isSave}>
       <div className="summaryInner">
         <div className="thumb">
           <label className="btnUpload">

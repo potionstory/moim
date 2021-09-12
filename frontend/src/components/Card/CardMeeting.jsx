@@ -91,6 +91,7 @@ const CardMeeting = ({ item, activeIndex, onHandleDetail }) => {
       case 2:
         return (
           <CardScheduleBox
+            isLock={isLock}
             isSameDate={isSameDate}
             eventStartDate={eventStartDate}
             eventStartWeek={eventStartWeek}
@@ -103,6 +104,7 @@ const CardMeeting = ({ item, activeIndex, onHandleDetail }) => {
 
         return (
           <CardMapBox
+            isLock={isLock}
             name={name}
             address={address}
             type={type}
@@ -126,10 +128,11 @@ const CardMeeting = ({ item, activeIndex, onHandleDetail }) => {
   }, [item, address, onAddressCopy, activeIndex]);
 
   useEffect(() => {
+    const { isLock } = item;
     const { _latitude, _longitude } = item.location.coordinate;
 
     // meeting location
-    if (mapIndex === activeIndex && type === 'offline') {
+    if (!isLock && mapIndex === activeIndex && type === 'offline') {
       mapRef.current.innerHTML = '';
 
       const options = {

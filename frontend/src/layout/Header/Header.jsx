@@ -13,11 +13,11 @@ import {
 import Avatar from 'boring-avatars';
 import api from '../../store/api';
 import {
-  themeToggleAction,
   signInModalOpenAction,
   signUpModalOpenAction,
 } from '../../store/module/global';
 import { getUserAction, signOutAction } from '../../store/module/auth';
+import useTheme from '../../store/hook/useTheme';
 import { auth } from '../../server/firebase.util';
 import TextButton from '../../Components/Button/TextButton';
 import AvatarToast from '../../Components/AvatarToast';
@@ -37,13 +37,14 @@ api.defaults.headers.common['Authorization'] = token;
 
 const Header = () => {
   const dispatch = useDispatch();
+  const { toggleTheme } = useTheme();
 
   const { isAuth, userInfo } = useSelector(({ auth }) => auth);
   const { theme } = useSelector(({ global }) => global);
 
-  const onThemeToggle = useCallback(() => dispatch(themeToggleAction()), [
-    dispatch,
-  ]);
+  const onThemeToggle = useCallback(() => {
+    toggleTheme();
+  }, [dispatch]);
 
   const onSignOut = useCallback(() => {
     auth.signOut();

@@ -32,12 +32,13 @@ import {
 import { DESCRIPTION_MAX_LENGTH } from '../../lib/const';
 import { MoimCreateWrap, MoimCreateInfo } from './style';
 
+const isEdit = true;
+
 const MoimCreate = ({ category }) => {
   const dispatch = useDispatch();
 
   const { userInfo } = useSelector(({ auth }) => auth);
 
-  const [isEdit, setIsEdit] = useState(true);
   const [commonDetail, setCommonDetail] = useState(moimCommonData);
   const [addDetail, setAddDetail] = useState(
     category === 'community' ? moimCommunityData : moimMeetingData,
@@ -390,32 +391,6 @@ const MoimCreate = ({ category }) => {
     [addDetail],
   );
 
-  const onMemberPaymentChange = useCallback((userId) => {
-    // dispatch(
-    //   putPaymentCheckAction.REQUEST({
-    //     meetingId: id,
-    //     userId,
-    //   }),
-    // );
-  }, []);
-
-  const onMemberStaffChange = useCallback((userId) => {
-    //dispatch(putStaffCheckAction.REQUEST({ meetingId: id, userId }));
-  }, []);
-
-  const onMemberRemove = useCallback(
-    (userId) => {
-      const index = findIndex(detail.memberList, { userId });
-
-      setAddDetail(
-        produce((draft) => {
-          draft.memberList.splice(index, 1);
-        }),
-      );
-    },
-    [addDetail],
-  );
-
   const detailComminityTabBoxSwitch = useMemo(() => {
     switch (tabIndex) {
       case 0:
@@ -460,15 +435,11 @@ const MoimCreate = ({ category }) => {
             userImage={userImage}
             userName={userName}
             userAvatar={userAvatar}
-            isMoimClient={true}
             memberSetting={memberSetting}
             memberList={memberList}
             onIsSelfCheck={onIsSelfCheck}
             onJoinFormCheck={onJoinFormCheck}
             onChangeMemberCount={onChangeMemberCount}
-            onMemberPaymentChange={onMemberPaymentChange}
-            onMemberStaffChange={onMemberStaffChange}
-            onMemberRemove={onMemberRemove}
           />
         );
       default:
@@ -477,7 +448,6 @@ const MoimCreate = ({ category }) => {
   }, [isEdit, commonDetail, addDetail, tabIndex]);
 
   useEffect(() => {
-    console.log('useEffect > category');
     if (category === 'community') {
       setAddDetail(moimCommunityData);
     } else if (category === 'meeting') {
@@ -509,7 +479,6 @@ const MoimCreate = ({ category }) => {
         userAvatar={userAvatar}
         userName={userName}
         likeCount={likeCount}
-        isMoimClient={true}
         isSave={
           !isEqual(
             category === 'community' ? moimCommunityData : moimMeetingData,

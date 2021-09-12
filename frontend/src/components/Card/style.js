@@ -491,6 +491,24 @@ export const CardScheduleBoxWrap = styled.div`
       color: ${({ theme }) => theme.main};
     }
   }
+  .scheduleNone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: ${color.gray};
+    svg {
+      font-size: 6rem;
+    }
+    span {
+      margin-top: 1rem;
+      font-family: 'Spoqa Han Sans', 'Helvetica Neue', 'Helvetica', 'Arial',
+        'Noto', 'Apple Gothic', 'MalgunGothic', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+  }
 `;
 
 export const CardMapBoxWrap = styled.div`
@@ -578,7 +596,10 @@ export const CardMapBoxWrap = styled.div`
 `;
 
 export const CardAddInfoBoxWrap = styled.div`
+  overflow-y: auto;
+  max-height: 100%;
   padding: 12px;
+  box-sizing: border-box;
   .contentWrap {
     .contentHead {
       display: flex;

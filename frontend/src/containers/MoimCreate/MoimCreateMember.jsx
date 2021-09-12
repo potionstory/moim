@@ -32,15 +32,11 @@ const MoimCreateMember = ({
   userImage,
   userName,
   userAvatar,
-  isMoimClient,
   memberSetting,
   memberList,
   onIsSelfCheck,
   onJoinFormCheck,
   onChangeMemberCount,
-  onMemberPaymentChange,
-  onMemberStaffChange,
-  onMemberRemove,
 }) => {
   const [isSettingBox, setIsSettingBox] = useState(false);
   const [isMemberOpen, setIsMemberOpen] = useState(true);
@@ -261,72 +257,18 @@ const MoimCreateMember = ({
               <ul>
                 {map(members[0], (item, index) => {
                   if (item !== undefined) {
-                    const {
-                      userId,
-                      userName,
-                      userImage,
-                      userAvatar,
-                      isPayment,
-                      isClient,
-                      isStaff,
-                    } = item;
+                    const { userName } = item;
 
                     return (
                       <li key={index}>
                         <div className="listBox">
                           <div className="listInner">
-                            {!isEdit ? (
-                              <span className="index">{index + 1}</span>
-                            ) : (
-                              !isClient && (
-                                <button
-                                  type="button"
-                                  className="btnRemove"
-                                  onClick={() => onMemberRemove(userId)}
-                                >
-                                  <FontAwesomeIcon icon={faTimes} />
-                                </button>
-                              )
-                            )}
-                            <button
-                              className={`payment ${isPayment && 'active'}`}
-                              onClick={() =>
-                                isMoimClient &&
-                                !isClient &&
-                                onMemberPaymentChange(userId)
-                              }
-                            >
-                              <FontAwesomeIcon
-                                icon={!isEdit ? faWonSign : faWonSign}
-                              />
-                            </button>
-                            <button
-                              className={`avatar ${isClient && 'isClient'} ${
-                                isStaff && 'isStaff'
-                              }`}
-                              onClick={() =>
-                                isMoimClient &&
-                                !isClient &&
-                                onMemberStaffChange(userId)
-                              }
-                            >
-                              {!isClient && !isStaff ? (
-                                <>
-                                  {isNull(userImage) ? (
-                                    <Avatar
-                                      size={40}
-                                      name={userAvatar.name}
-                                      variant="beam"
-                                      colors={userAvatar.colors}
-                                    />
-                                  ) : (
-                                    <img src={userImage} />
-                                  )}
-                                </>
-                              ) : (
-                                <FontAwesomeIcon icon={faCrown} />
-                              )}
-                            </button>
+                            <span className="payment active">
+                              <FontAwesomeIcon icon={faWonSign} />
+                            </span>
+                            <span className="avatar isClient">
+                              <FontAwesomeIcon icon={faCrown} />
+                            </span>
                             <span className="name">{userName}</span>
                           </div>
                         </div>
@@ -387,51 +329,14 @@ const MoimCreateMember = ({
             >
               <ul>
                 {map(members[1], (item, index) => {
-                  const {
-                    userId,
-                    userName,
-                    userImage,
-                    userAvatar,
-                    isClient,
-                    isStaff,
-                  } = item;
+                  const { userName } = item;
 
                   return (
                     <li key={index}>
                       <div className="listBox">
                         <div className="listInner">
-                          {!isEdit ? (
-                            <span className="index">{index + 1}</span>
-                          ) : (
-                            <button
-                              type="button"
-                              className="btnRemove"
-                              onClick={() => onMemberRemove(userId)}
-                            >
-                              <FontAwesomeIcon icon={faTimes} />
-                            </button>
-                          )}
-                          <span
-                            className={`avatar ${isClient && 'isClient'} ${
-                              isStaff && 'isStaff'
-                            }`}
-                          >
-                            {!isClient && !isStaff ? (
-                              <>
-                                {isNull(userImage) ? (
-                                  <Avatar
-                                    size={40}
-                                    name={userAvatar.name}
-                                    variant="beam"
-                                    colors={userAvatar.colors}
-                                  />
-                                ) : (
-                                  <img src={userImage} />
-                                )}
-                              </>
-                            ) : (
-                              <FontAwesomeIcon icon={faCrown} />
-                            )}
+                          <span className="avatar isClient">
+                            <FontAwesomeIcon icon={faCrown} />
                           </span>
                           <span className="name">{userName}</span>
                         </div>
