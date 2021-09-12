@@ -119,7 +119,7 @@ exports.postMeeting = (req, res) => {
     const newMeeting = {
       type,
       title,
-      isLock,
+      isLock: JSON.parse(isLock),
       passNumber,
       status,
       payInfo: JSON.parse(payInfo),
@@ -295,7 +295,8 @@ exports.putMeeting = (req, res) => {
             type,
             title,
             isLock: JSON.parse(isLock),
-            passNumber: passNumber === undefined ? originPassNumber : passNumber,
+            passNumber:
+              passNumber === undefined ? originPassNumber : passNumber,
             status,
             payInfo: JSON.parse(payInfo),
             imagePath: storageFilepath,
@@ -331,7 +332,9 @@ exports.putMeeting = (req, res) => {
                   memberSetting: doc.data().memberSetting,
                   memberList: doc
                     .data()
-                    .memberList.map(({ email, mobile, passNumber, ...member }) => member),
+                    .memberList.map(
+                      ({ email, mobile, passNumber, ...member }) => member
+                    ),
                   waiter: doc.data().waiter,
                   tags: doc.data().tags,
                   userId: doc.data().userId,
