@@ -3,6 +3,7 @@ import CardMainImageBox from './CardMainImageBox';
 import CardDescriptionBox from './CardDescriptionBox';
 import CardUrlBox from './CardUrlBox';
 import CardAddInfoBox from './CardAddInfoBox';
+import CardLockBox from './CardLockBox';
 import { CardTabBoxWrap } from './style';
 
 const CardCommunity = ({ item, activeIndex, onHandleDetail }) => {
@@ -43,7 +44,11 @@ const CardCommunity = ({ item, activeIndex, onHandleDetail }) => {
           />
         );
       case 2:
-        return <CardUrlBox url={url} onUrlCopy={onUrlCopy} />;
+        return !isLock ? (
+          <CardUrlBox url={url} onUrlCopy={onUrlCopy} />
+        ) : (
+          <CardLockBox />
+        );
       case 3:
         return <CardAddInfoBox tags={tags} />;
       default:

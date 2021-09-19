@@ -5,10 +5,13 @@ export const TagListWrap = styled.ul`
   display: flex;
   flex-wrap: wrap;
   li {
+    max-width: 100%;
     height: 20px;
     margin: 6px 6px 0 0;
     button {
+      overflow: hidden;
       position: relative;
+      max-width: 100%;
       height: 20px;
       ${({ isEdit }) =>
         css`
@@ -20,6 +23,7 @@ export const TagListWrap = styled.ul`
       font-weight: 600;
       color: ${({ theme }) => theme.title};
       line-height: 20px;
+      text-overflow: ellipsis;
       transition: background-color 0.2s ease-out;
       &:hover {
         background-color: ${({ isEdit }) =>

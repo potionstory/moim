@@ -11,6 +11,7 @@ import CardDescriptionBox from './CardDescriptionBox';
 import CardScheduleBox from './CardScheduleBox';
 import CardMapBox from './CardMapBox';
 import CardAddInfoBox from './CardAddInfoBox';
+import CardLockBox from './CardLockBox';
 import { CardTabBoxWrap } from './style';
 
 const { kakao } = window;
@@ -26,6 +27,9 @@ const CardMeeting = ({ item, activeIndex, onHandleDetail }) => {
     description,
     startDate,
     endDate,
+    location,
+    memberNowCount,
+    memberMaxCount,
     tags,
   } = item;
 
@@ -35,24 +39,29 @@ const CardMeeting = ({ item, activeIndex, onHandleDetail }) => {
 
   // meeting date
   const eventStartDate = useMemo(
-    () => dayjs.unix(startDate._seconds).format('YYYY/MM/DD/HH/mm').split('/'),
+    () =>
+      !isLock &&
+      dayjs.unix(startDate._seconds).format('YYYY/MM/DD/HH/mm').split('/'),
     [startDate],
   );
   const eventStartWeek = useMemo(
-    () => dayjs.unix(startDate._seconds).format('ddd'),
+    () => !isLock && dayjs.unix(startDate._seconds).format('ddd'),
     [startDate],
   );
   const eventEndDate = useMemo(
-    () => dayjs.unix(endDate._seconds).format('YYYY/MM/DD/HH/mm').split('/'),
+    () =>
+      !isLock &&
+      dayjs.unix(endDate._seconds).format('YYYY/MM/DD/HH/mm').split('/'),
     [endDate],
   );
   const eventEndWeek = useMemo(
-    () => dayjs.unix(endDate._seconds).format('ddd'),
+    () => !isLock && dayjs.unix(endDate._seconds).format('ddd'),
     [endDate],
   );
 
   const isSameDate = useMemo(
     () =>
+      !isLock &&
       dayjs(dayjs.unix(startDate._seconds)).isSame(
         dayjs.unix(endDate._seconds),
         'day',
@@ -61,10 +70,12 @@ const CardMeeting = ({ item, activeIndex, onHandleDetail }) => {
   );
 
   const onAddressCopy = useCallback(() => {
-    const { name } = item.location;
+    if (!isLock) {
+      const { name } = location;
 
-    navigator.clipboard.writeText(`[${name}] ${address}`);
-  }, [item, address]);
+      navigator.clipboard.writeText(`[${name}] ${address}`);
+    }
+  }, [address]);
 
   const cardTabBoxSwitch = useMemo(() => {
     switch (activeIndex) {
@@ -89,50 +100,51 @@ const CardMeeting = ({ item, activeIndex, onHandleDetail }) => {
           />
         );
       case 2:
-        return (
+        return !isLock ? (
           <CardScheduleBox
-            isLock={isLock}
             isSameDate={isSameDate}
             eventStartDate={eventStartDate}
             eventStartWeek={eventStartWeek}
             eventEndDate={eventEndDate}
             eventEndWeek={eventEndWeek}
           />
+        ) : (
+          <CardLockBox />
         );
       case 3:
-        const { name } = item.location;
+        if (!isLock) {
+          const { name } = location;
 
-        return (
-          <CardMapBox
-            isLock={isLock}
-            name={name}
-            address={address}
-            type={type}
-            mapRef={mapRef}
-            onAddressCopy={onAddressCopy}
-          />
-        );
+          return (
+            <CardMapBox
+              name={name}
+              address={address}
+              type={type}
+              mapRef={mapRef}
+              onAddressCopy={onAddressCopy}
+            />
+          );
+        } else {
+          return <CardLockBox />;
+        }
       case 4:
-        const { memberSetting, memberList } = item;
-
         return (
           <CardAddInfoBox
-            now={memberList.length}
-            max={memberSetting.count}
+            now={memberNowCount}
+            max={memberMaxCount}
             tags={tags}
           />
         );
       default:
         return false;
     }
-  }, [item, address, onAddressCopy, activeIndex]);
+  }, [address, onAddressCopy, activeIndex]);
 
   useEffect(() => {
-    const { isLock } = item;
-    const { _latitude, _longitude } = item.location.coordinate;
-
     // meeting location
     if (!isLock && mapIndex === activeIndex && type === 'offline') {
+      const { _latitude, _longitude } = location.coordinate;
+
       mapRef.current.innerHTML = '';
 
       const options = {
@@ -157,7 +169,7 @@ const CardMeeting = ({ item, activeIndex, onHandleDetail }) => {
         }
       });
     }
-  }, [item, activeIndex, type]);
+  }, [activeIndex, type]);
 
   return (
     <CardTabBoxWrap>

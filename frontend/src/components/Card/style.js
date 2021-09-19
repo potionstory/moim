@@ -646,3 +646,20 @@ export const CardAddInfoBoxWrap = styled.div`
     }
   }
 `;
+
+export const CardLockBoxWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: ${color.gray};
+  svg {
+    font-size: 6rem;
+  }
+  span {
+    margin-top: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+`;
