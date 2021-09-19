@@ -10,24 +10,44 @@ exports.getAllCommunitys = (req, res) => {
     .then((data) => {
       let communitys = [];
       data.forEach((doc) => {
-        communitys.push({
-          communityId: doc.id,
-          type: doc.data().type,
-          title: doc.data().title,
-          isLock: doc.data().isLock,
-          status: doc.data().status,
-          mainImage: doc.data().mainImage,
-          userAvatar: doc.data().userAvatar,
-          description: doc.data().description,
-          url: doc.data().url,
-          tags: doc.data().tags,
-          userId: doc.data().userId,
-          userImage: doc.data().userImage,
-          userName: doc.data().userName,
-          createdAt: doc.data().createdAt,
-          likeCount: doc.data().likeCount,
-          commentCount: doc.data().commentCount,
-        });
+        if (!doc.data().isLock) {
+          communitys.push({
+            communityId: doc.id,
+            type: doc.data().type,
+            title: doc.data().title,
+            isLock: doc.data().isLock,
+            status: doc.data().status,
+            mainImage: doc.data().mainImage,
+            userAvatar: doc.data().userAvatar,
+            description: doc.data().description,
+            url: doc.data().url,
+            tags: doc.data().tags,
+            userId: doc.data().userId,
+            userImage: doc.data().userImage,
+            userName: doc.data().userName,
+            createdAt: doc.data().createdAt,
+            likeCount: doc.data().likeCount,
+            commentCount: doc.data().commentCount,
+          });
+        } else {
+          communitys.push({
+            communityId: doc.id,
+            type: doc.data().type,
+            title: doc.data().title,
+            isLock: doc.data().isLock,
+            status: doc.data().status,
+            mainImage: doc.data().mainImage,
+            userAvatar: doc.data().userAvatar,
+            description: doc.data().description,
+            tags: doc.data().tags,
+            userId: doc.data().userId,
+            userImage: doc.data().userImage,
+            userName: doc.data().userName,
+            createdAt: doc.data().createdAt,
+            likeCount: doc.data().likeCount,
+            commentCount: doc.data().commentCount,
+          });
+        }
       });
       return res.json(communitys);
     })
@@ -87,7 +107,20 @@ exports.postCommunity = (req, res) => {
       storageFilepath
     )}?alt=media&token=${generatedToken}`;
 
-    const { type, title, isLock, passNumber, status, description, url, tags, userId, userImage, userAvatar, userName } = req.body;
+    const {
+      type,
+      title,
+      isLock,
+      passNumber,
+      status,
+      description,
+      url,
+      tags,
+      userId,
+      userImage,
+      userAvatar,
+      userName,
+    } = req.body;
 
     const newCommunity = {
       type,
@@ -223,8 +256,17 @@ exports.putCommunity = (req, res) => {
       storageFilepath
     )}?alt=media&token=${generatedToken}`;
 
-    const { type, title, isLock, passNumber, status, description, url, tags, mainImage } =
-      req.body;
+    const {
+      type,
+      title,
+      isLock,
+      passNumber,
+      status,
+      description,
+      url,
+      tags,
+      mainImage,
+    } = req.body;
 
     db.doc(`/communitys/${req.params.communityId}`)
       .get()
@@ -238,7 +280,8 @@ exports.putCommunity = (req, res) => {
             type,
             title,
             isLock: JSON.parse(isLock),
-            passNumber: passNumber === undefined ? originPassNumber : passNumber,
+            passNumber:
+              passNumber === undefined ? originPassNumber : passNumber,
             status,
             imagePath: storageFilepath,
             mainImage: mainImage === undefined ? thumbImage : mainImage,
