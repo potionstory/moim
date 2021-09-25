@@ -157,6 +157,7 @@ function* workGetUser() {
   if (response.status === 200) {
     yield put(getUserAction.SUCCESS(response.data.credentials));
   } else {
+    yield put(signOutAction.REQUEST());
     yield put(getUserAction.FAILURE());
   }
 }

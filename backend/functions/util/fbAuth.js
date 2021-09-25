@@ -9,12 +9,12 @@ module.exports = (req, res, next) => {
     idToken = req.headers.authorization.split("Bearer ")[1];
   } else {
     console.error("No token found");
-    return res.status(403).json({ error: "Unauthorized " });
+    return res.status(403).send({ error: "Unauthorized " });
   }
 
   admin
     .auth()
-    .verifyIdToken(idToken)
+    .verifyIdToken(idToken, true)
     .then((decodedToken) => {
       req.user = decodedToken;
       return db
@@ -30,6 +30,6 @@ module.exports = (req, res, next) => {
     })
     .catch((err) => {
       console.error("Error while verifying token ", err);
-      return res.status(403).json(err);
+      return res.status(403).json({ err });
     });
 };

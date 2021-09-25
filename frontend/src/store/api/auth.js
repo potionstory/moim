@@ -96,4 +96,13 @@ export const postSignIn = (bodyParams) =>
 export const signOut = () => deleteAuthorizationHeader();
 
 // user 정보 가져오기
-export const getUser = () => api.get('/user');
+export const getUser = () => {
+  return api
+    .get('/user')
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
