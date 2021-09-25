@@ -17,8 +17,8 @@ const customHistory = createBrowserHistory({
 });
 const sagaMiddleware = createSagaMiddleware({
   context: {
-    history: customHistory
-  }
+    history: customHistory,
+  },
 });
 
 const store = createStore(

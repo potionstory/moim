@@ -1,5 +1,6 @@
 import { call, put, takeEvery, getContext } from 'redux-saga/effects';
 import { forEach } from 'lodash';
+import { toast } from 'react-toastify';
 import {
   GET_COMMUNITY,
   GET_MEETING,
@@ -63,35 +64,29 @@ function* workGetMeeting(action) {
 function* workPostCommunity(action) {
   const { formData } = action.payload;
 
-  const res = yield call(
-    postCommunityAPI,
-    formData,
-  );
+  const res = yield call(postCommunityAPI, formData);
 
   if (res.status === 200) {
     const { communityId } = res.data;
     const history = yield getContext('history');
-    
+
     yield put(postCommunityAction.SUCCESS());
 
     history.push(`/detail/community/${communityId}`);
   } else {
     yield put(postCommunityAction.FAILURE());
-  }  
+  }
 }
 
 function* workPostMeeting(action) {
   const { formData } = action.payload;
 
-  const res = yield call(
-    postMeetingAPI,
-    formData,
-  );
+  const res = yield call(postMeetingAPI, formData);
 
   if (res.status === 200) {
     const { meetingId } = res.data;
     const history = yield getContext('history');
-    
+
     yield put(postMeetingAction.SUCCESS());
 
     history.push(`/detail/meeting/${meetingId}`);
@@ -188,6 +183,7 @@ function* workPostMoimPassNumberCheck(action) {
     yield put(postMoimPassNumberCheckAction.SUCCESS());
     yield put(modalCloseAction());
   } else {
+    toast.error(`비밀번호가 틀렸습니다.`);
     yield put(postMoimPassNumberCheckAction.FAILURE());
   }
 }
