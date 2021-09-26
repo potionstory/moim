@@ -9,6 +9,7 @@ const {
 } = require("../util/validators");
 
 function updateOrCreateUser(userId, displayName, photoURL) {
+  console.log("updateOrCreateUser:", userId);
   const updateParams = {
     provider: "KAKAO",
     displayName: displayName,
@@ -24,6 +25,7 @@ function updateOrCreateUser(userId, displayName, photoURL) {
     .updateUser(userId, updateParams)
     .catch((error) => {
       if (error.code === "auth/user-not-found") {
+        console.log("updateOrCreateUser > catch");
         updateParams["uid"] = userId;
         return admin.auth().createUser(updateParams);
       }
@@ -51,6 +53,7 @@ function createFirebaseToken(user) {
 }
 
 exports.getFirebaseToken = (req, res) => {
+  console.log("getFirebaseToken");
   const token = req.body.token;
   const user = {
     id: req.body.id,
@@ -177,13 +180,11 @@ exports.socialSignUp = (req, res) => {
       .catch((err) => {
         console.error(err);
         if (err.code === "auth/email-already-in-use") {
-          return res
-            .statusMessage(400)
-            .json({ email: "Email is already in use" });
+          return res.status(403).json({ error: "Email is already in use" });
         } else {
           return res
             .status(500)
-            .json({ general: "Something went wrong, please try again" });
+            .json({ error: "Something went wrong, please try again" });
         }
       });
   });
@@ -258,9 +259,7 @@ exports.signUp = (req, res) => {
       .get()
       .then((doc) => {
         if (doc.exists) {
-          return res
-            .status(400)
-            .json({ userName: "this user name is already taken" });
+          res.status(403).json({ error: "this user name is already taken" });
         } else {
           return firebase
             .auth()
@@ -290,15 +289,12 @@ exports.signUp = (req, res) => {
         return res.status(201).json({ token });
       })
       .catch((err) => {
-        console.error(err);
         if (err.code === "auth/email-already-in-use") {
-          return res
-            .statusMessage(400)
-            .json({ email: "Email is already in use" });
+          res.status(402).send(err);
         } else {
           return res
             .status(500)
-            .json({ general: "Something went wrong, please try again" });
+            .json({ error: "Something went wrong, please try again" });
         }
       });
   });
@@ -379,10 +375,10 @@ exports.getAuthenticatedUser = (req, res) => {
         return res.json(userData);
       })
       .catch((err) => {
-        return res.status(500).json({ error: err.code });
+        res.status(500).send(err);
       });
   } else {
-    return res.status(403).json({ error: "Unauthorized " });
+    res.status(403).json({ error: "Unauthorized" });
   }
 };
 

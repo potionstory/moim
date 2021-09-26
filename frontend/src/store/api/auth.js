@@ -43,6 +43,7 @@ export const postSocialSignUp = (bodyParams) => {
     })
     .catch((err) => {
       console.error(err);
+      return err;
     });
 };
 
@@ -76,7 +77,7 @@ export const postSignUp = (bodyParams) => {
       return res;
     })
     .catch((err) => {
-      console.error(err);
+      return err.response;
     });
 };
 
@@ -96,13 +97,12 @@ export const postSignIn = (bodyParams) =>
 export const signOut = () => deleteAuthorizationHeader();
 
 // user 정보 가져오기
-export const getUser = () => {
-  return api
+export const getUser = () =>
+  api
     .get('/user')
     .then((res) => {
       return res;
     })
-    .catch((error) => {
-      return error;
+    .catch((err) => {
+      return err.response;
     });
-};

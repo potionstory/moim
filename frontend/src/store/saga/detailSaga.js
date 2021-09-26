@@ -183,7 +183,7 @@ function* workPostMoimPassNumberCheck(action) {
     yield put(postMoimPassNumberCheckAction.SUCCESS());
     yield put(modalCloseAction());
   } else {
-    toast.error(`비밀번호가 틀렸습니다.`);
+    toast.error('비밀번호가 틀렸습니다.');
     yield put(postMoimPassNumberCheckAction.FAILURE());
   }
 }

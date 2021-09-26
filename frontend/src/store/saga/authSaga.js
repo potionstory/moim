@@ -32,6 +32,7 @@ import {
   signOut,
   getUser,
 } from '../api/auth';
+import { toast } from 'react-toastify';
 
 function* workSocialSign(action) {
   const { service, userAvatar } = action.payload;
@@ -118,6 +119,11 @@ function* workSignUp(action) {
     yield put(getUserAction.REQUEST());
     yield put(modalCloseAction());
   } else {
+    if (response.status === 402) {
+      toast.error('이미 사용중인 이메일입니다.');
+    } else if (response.status === 403) {
+      toast.error('이미 사용중인 유저네임입니다.');
+    }
     yield put(signUpAction.FAILURE());
   }
 }
