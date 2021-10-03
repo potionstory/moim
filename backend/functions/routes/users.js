@@ -9,7 +9,6 @@ const {
 } = require("../util/validators");
 
 function updateOrCreateUser(userId, displayName, photoURL) {
-  console.log("updateOrCreateUser:", userId);
   const updateParams = {
     provider: "KAKAO",
     displayName: displayName,
@@ -25,7 +24,6 @@ function updateOrCreateUser(userId, displayName, photoURL) {
     .updateUser(userId, updateParams)
     .catch((error) => {
       if (error.code === "auth/user-not-found") {
-        console.log("updateOrCreateUser > catch");
         updateParams["uid"] = userId;
         return admin.auth().createUser(updateParams);
       }
@@ -53,7 +51,6 @@ function createFirebaseToken(user) {
 }
 
 exports.getFirebaseToken = (req, res) => {
-  console.log("getFirebaseToken");
   const token = req.body.token;
   const user = {
     id: req.body.id,
