@@ -2,6 +2,7 @@ import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isEmpty, every, findIndex } from 'lodash';
 import { produce } from 'immer';
+import { toast } from 'react-toastify';
 import { avatars } from '../lib/const';
 import { color } from '../lib/styles/palette';
 import { signUpForm, userInfoForm } from '../utils/formData';
@@ -138,9 +139,33 @@ const SignUp = () => {
     setFocusInput(e.target.name);
   }, []);
 
-  const onInputBlur = useCallback((e) => {
-    setFocusInput(null);
-  }, []);
+  const onInputBlur = useCallback(
+    (e, i) => {
+      setFocusInput(null);
+
+      const { name } = e.target;
+
+      if (!formData[i].isCheck) {
+        switch (name) {
+          case 'email':
+            return toast.error('이메일 형식이 아닙니다.');
+          case 'password':
+            return toast.error(
+              '패스워드 형식이 틀렸습니다. (8~15자리 영문 대소문자, 숫자, 특수 문자 포함(!@#$%^&+=))',
+            );
+          case 'confirmPassword':
+            return toast.error('비밀번호가 일치하지 않습니다.');
+          case 'userName':
+            return toast.error(
+              '유저네임 형식이 틀렸습니다. (4~12자리 한글, 영문)',
+            );
+          default:
+            return false;
+        }
+      }
+    },
+    [formData],
+  );
 
   const onInputChange = useCallback(
     (e, i) => {
@@ -150,11 +175,19 @@ const SignUp = () => {
         produce((draft) => {
           draft[i].name = name;
           draft[i].value = value;
-          draft[i].isCheck = validator[i](value);
+
+          if (name !== 'confirmPassword') {
+            draft[i].isCheck = validator[i](value);
+          } else {
+            draft[i].isCheck =
+              validator[i](value) &&
+              formData[findIndex(formData, { name: 'password' })].value ===
+                value;
+          }
         }),
       );
     },
-    [validator],
+    [formData, validator],
   );
 
   useEffect(() => {

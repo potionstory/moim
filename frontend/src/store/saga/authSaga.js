@@ -1,5 +1,6 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import { isEmpty, forEach, reduce, assign } from 'lodash';
+import { toast } from 'react-toastify';
 import {
   SOCIAL_SIGN,
   SOCIAL_SIGN_UP,
@@ -32,7 +33,6 @@ import {
   signOut,
   getUser,
 } from '../api/auth';
-import { toast } from 'react-toastify';
 
 function* workSocialSign(action) {
   const { service, userAvatar } = action.payload;
@@ -142,6 +142,7 @@ function* workSignIn(action) {
     yield put(getUserAction.REQUEST());
     yield put(modalCloseAction());
   } else {
+    toast.error('이메일 or 비밀번호가 틀렸습니다.');
     yield put(signInAction.FAILURE());
   }
 }

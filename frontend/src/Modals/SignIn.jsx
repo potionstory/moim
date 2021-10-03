@@ -2,6 +2,7 @@ import React, { useState, useMemo, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { every } from 'lodash';
 import { produce } from 'immer';
+import { toast } from 'react-toastify';
 import { signInForm } from '../utils/formData';
 import { emailCheck, passwordCheck } from '../utils/regexUtil';
 import { socialSignInAction, signInAction } from '../store/module/auth';
@@ -35,9 +36,27 @@ const SignIn = () => {
     setFocusInput(e.target.name);
   }, []);
 
-  const onInputBlur = useCallback((e) => {
-    setFocusInput(null);
-  }, []);
+  const onInputBlur = useCallback(
+    (e, i) => {
+      setFocusInput(null);
+
+      const { name } = e.target;
+
+      if (!formData[i].isCheck) {
+        switch (name) {
+          case 'email':
+            return toast.error('이메일 형식이 아닙니다.');
+          case 'password':
+            return toast.error(
+              '패스워드 형식이 틀렸습니다. (8~15자리 영문 대소문자, 숫자, 특수 문자 포함(!@#$%^&+=))',
+            );
+          default:
+            return false;
+        }
+      }
+    },
+    [formData],
+  );
 
   const onInputChange = useCallback((e, i) => {
     const { name, value } = e.target;

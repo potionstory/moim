@@ -32,7 +32,7 @@ const InputItem = ({
         value={form.value}
         disabled={form.isDisable}
         onFocus={onInputFocus}
-        onBlur={onInputBlur}
+        onBlur={(e) => onInputBlur(e, index)}
         onChange={(e) => onInputChange(e, index)}
       />
     </InputWrap>

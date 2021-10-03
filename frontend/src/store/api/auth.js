@@ -90,7 +90,7 @@ export const postSignIn = (bodyParams) =>
       return res;
     })
     .catch((err) => {
-      console.error(err);
+      return err.response;
     });
 
 // 회원 로그아웃
