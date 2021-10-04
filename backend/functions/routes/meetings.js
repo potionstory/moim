@@ -406,38 +406,54 @@ exports.postMeetingJoin = (req, res) => {
   const { name, email, mobile, passNumber, userId, userImage, userAvatar } =
     req.body;
 
-  const newMember = {
-    userId: userId || v4(),
-    userName: name,
-    userImage,
-    userAvatar,
-    email,
-    mobile,
-    passNumber: passNumber.join(""),
-    isPayment: false,
-    isClient: false,
-    isStaff: false,
-    joindAt: new Date().toISOString(),
-  };
-
   db.doc(`/meetings/${req.params.meetingId}`)
-    .update({ memberList: admin.firestore.FieldValue.arrayUnion(newMember) })
-    .then((data) => {
-      db.doc(`/meetings/${req.params.meetingId}`)
-        .get()
-        .then((doc) => {
-          const memberList = doc
-            .data()
-            .memberList.map(
-              ({ email, mobile, passNumber, ...member }) => member
-            );
+    .get()
+    .then((doc) => {
+      const memberList = doc.data().memberList;
+      let emailIndex =
+        memberList.findIndex((member) => email === member.email) || -1;
+      let mobileIndex =
+        memberList.findIndex((member) => mobile === member.mobile) || -1;
 
-          return res.json(memberList);
-        });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).json({ error: "Something went wrong" });
+      if (emailIndex === -1 && mobileIndex === -1) {
+        const newMember = {
+          userId: userId || v4(),
+          userName: name,
+          userImage,
+          userAvatar,
+          email,
+          mobile,
+          passNumber: passNumber.join(""),
+          isPayment: false,
+          isClient: false,
+          isStaff: false,
+          joindAt: new Date().toISOString(),
+        };
+
+        db.doc(`/meetings/${req.params.meetingId}`)
+          .update({
+            memberList: admin.firestore.FieldValue.arrayUnion(newMember),
+          })
+          .then((data) => {
+            db.doc(`/meetings/${req.params.meetingId}`)
+              .get()
+              .then((doc) => {
+                const memberList = doc
+                  .data()
+                  .memberList.map(
+                    ({ email, mobile, passNumber, ...member }) => member
+                  );
+
+                return res.json(memberList);
+              });
+          })
+          .catch((err) => {
+            console.error(err);
+            res.status(500).json({ error: "Something went wrong" });
+          });
+      } else {
+        res.status(500).json({ error: "Something went wrong" });
+      }
     });
 };
 
@@ -447,32 +463,31 @@ exports.postMeetingExit = (req, res) => {
   db.doc(`/meetings/${req.params.meetingId}`)
     .get()
     .then((doc) => {
-      const memberValid = {
-        name: true,
-        email: true,
-        mobile: true,
-        passNumber: true,
-      };
       const memberList = doc.data().memberList;
       const memberIndex = memberList.findIndex(
         (member) => name === member.userName
       );
 
       if (memberIndex === -1) {
-        memberValid.name = false;
+        res.status(403).json({ error: "name does not exist" });
+      }
 
-        return res.status(403).json(memberValid);
+      // email or mobile wrong
+      if (email !== undefined && memberList[memberIndex].email !== email) {
+        return res.status(404).json({ error: "email went wrong" });
+      }
+      if (mobile !== undefined && memberList[memberIndex].mobile !== mobile) {
+        return res.status(404).json({ error: "mobile went wrong" });
+      }
+
+      // passNumber wrong
+      if (passNumber.join("") !== memberList[memberIndex].passNumber) {
+        return res.status(405).json({ error: "passNumber went wrong" });
       }
 
       db.doc(`/meetings/${req.params.meetingId}`)
         .update({
-          memberList: memberList.filter(
-            (member) =>
-              !(
-                member.userName === name &&
-                member.passNumber === passNumber.join("")
-              )
-          ),
+          memberList: memberList.filter((member) => member.userName !== name),
         })
         .then((data) => {
           db.doc(`/meetings/${req.params.meetingId}`)
