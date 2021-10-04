@@ -2,6 +2,7 @@ import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { isNull, filter, every, findIndex } from 'lodash';
 import { produce } from 'immer';
+import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLaugh } from '@fortawesome/free-solid-svg-icons';
 import Avatar from 'boring-avatars';
@@ -67,9 +68,29 @@ const MoimJoin = () => {
     setFocusInput(e.target.name);
   }, []);
 
-  const onInputBlur = useCallback((e) => {
-    setFocusInput(null);
-  }, []);
+  const onInputBlur = useCallback(
+    (e, i) => {
+      setFocusInput(null);
+
+      const { name } = e.target;
+
+      if (name !== 'passNumber' && !formData[i].isCheck) {
+        switch (name) {
+          case 'name':
+            return toast.error(
+              '유저네임 형식이 틀렸습니다. (4~12자리 한글, 영문)',
+            );
+          case 'email':
+            return toast.error('이메일 형식이 아닙니다.');
+          case 'mobile':
+            return toast.error('모바일 형식이 아닏니다.');
+          default:
+            return false;
+        }
+      }
+    },
+    [formData],
+  );
 
   const onInputChange = useCallback((e, i) => {
     const { name, value } = e.target;
@@ -105,9 +126,9 @@ const MoimJoin = () => {
           userName: formName,
         }) !== -1
       ) {
-        alert('참여명이 이미 존재합니다.');
+        toast.error('닉네임이 이미 존재합니다.');
       } else if (userName === formName) {
-        alert('참여명은 클라이언트의 이름으로 할 수 없습니다.');
+        toast.error('닉네임은 클라이언트의 이름으로 할 수 없습니다.');
       } else {
         dispatch(
           postMoimJoinAction.REQUEST({

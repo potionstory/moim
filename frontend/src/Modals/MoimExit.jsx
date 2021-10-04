@@ -2,6 +2,7 @@ import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { isNull, filter, every, findIndex } from 'lodash';
 import { produce } from 'immer';
+import { toast } from 'react-toastify';
 import InputForm from '../Components/InputForm';
 import {
   nameCheck,
@@ -43,9 +44,29 @@ const MoimExit = () => {
     setFocusInput(e.target.name);
   }, []);
 
-  const onInputBlur = useCallback((e) => {
-    setFocusInput(null);
-  }, []);
+  const onInputBlur = useCallback(
+    (e, i) => {
+      setFocusInput(null);
+
+      const { name } = e.target;
+
+      if (name !== 'passNumber' && !formData[i].isCheck) {
+        switch (name) {
+          case 'name':
+            return toast.error(
+              '유저네임 형식이 틀렸습니다. (4~12자리 한글, 영문)',
+            );
+          case 'email':
+            return toast.error('이메일 형식이 아닙니다.');
+          case 'mobile':
+            return toast.error('모바일 형식이 아닏니다.');
+          default:
+            return false;
+        }
+      }
+    },
+    [formData],
+  );
 
   const onInputChange = useCallback((e, i) => {
     const { name, value } = e.target;

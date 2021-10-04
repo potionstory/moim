@@ -45,8 +45,8 @@ export const postMeetingAPI = (bodyParams) => {
   formData.append('mainImageFile', mainImageFile);
 
   // passNumber
-  if (passNumber.join("").length === 6) {
-    formData.set('passNumber', passNumber.join(""));
+  if (passNumber.join('').length === 6) {
+    formData.set('passNumber', passNumber.join(''));
   }
 
   return api
@@ -108,16 +108,24 @@ export const putMeetingAPI = (meetingId, bodyParams, thumbImageFile) => {
   }
 
   // passNumber
-  if (passNumber.join("").length === 6) {
-    formData.set('passNumber', passNumber.join(""));
+  if (passNumber.join('').length === 6) {
+    formData.set('passNumber', passNumber.join(''));
   }
 
   return api.put(`/meeting/${meetingId}`, formData);
 };
 
 // post meeting join
-export const postMeetingJoinAPI = (meetingId, bodyParams) =>
-  api.put(`/meeting/${meetingId}/join`, bodyParams);
+export const postMeetingJoinAPI = (meetingId, bodyParams) => {
+  return api
+    .put(`/meeting/${meetingId}/join`, bodyParams)
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+};
 
 // post meeting exit
 export const postMeetingExitAPI = (meetingId, bodyParams) => {
@@ -126,8 +134,8 @@ export const postMeetingExitAPI = (meetingId, bodyParams) => {
     .then((res) => {
       return res;
     })
-    .catch((error) => {
-      return error;
+    .catch((err) => {
+      return err.response;
     });
 };
 

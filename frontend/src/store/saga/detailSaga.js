@@ -142,6 +142,7 @@ function* workPostMoimJoin(action) {
     yield put(postMoimJoinAction.SUCCESS(res.data));
     yield put(modalCloseAction());
   } else {
+    toast.error('이메일 or 모바일 번호가 이미 존재합니다.');
     yield put(postMoimJoinAction.FAILURE(res.data));
   }
 }
@@ -160,6 +161,13 @@ function* workPostMoimExit(action) {
     yield put(postMoimExitAction.SUCCESS(res.data));
     yield put(modalCloseAction());
   } else {
+    if (res.status === 403) {
+      toast.error('유저네임을 찾을수가 없습니다.');
+    } else if (res.status === 404) {
+      toast.error('이메일 or 모바일 번호가 틀립니다.');
+    } else if (res.status === 405) {
+      toast.error('비밀번호가 틀립니다.');
+    }
     yield put(postMoimExitAction.FAILURE());
   }
 }
