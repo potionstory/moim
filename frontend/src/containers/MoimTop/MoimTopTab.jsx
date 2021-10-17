@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { map } from 'lodash';
@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { MoimTopTabWrap, TabButton } from './style';
 
-const MoimTopTab = ({ tabMenu, activeIndex, onTabClick }) => {
-  const { isAuth } = useSelector(({ auth }) => auth);
+const MoimTopTab = memo(({ tabMenu, activeIndex, onTabClick }) => {
+  const isAuth = useSelector(({ auth }) => auth.isAuth);
 
   return (
     <MoimTopTabWrap>
@@ -35,6 +35,6 @@ const MoimTopTab = ({ tabMenu, activeIndex, onTabClick }) => {
       )}
     </MoimTopTabWrap>
   );
-};
+});
 
 export default MoimTopTab;

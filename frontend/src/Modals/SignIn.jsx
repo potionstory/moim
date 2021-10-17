@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { memo, useState, useMemo, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { every } from 'lodash';
 import { produce } from 'immer';
@@ -12,7 +12,7 @@ import { ModalContentWrap, SocialWrap } from './style';
 
 const validator = [emailCheck, passwordCheck];
 
-const SignIn = () => {
+const SignIn = memo(() => {
   const dispatch = useDispatch();
 
   const onSocialSignIn = useCallback(
@@ -95,6 +95,6 @@ const SignIn = () => {
       </div>
     </ModalContentWrap>
   );
-};
+});
 
 export default SignIn;

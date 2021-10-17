@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonWrap } from './style';
 
-const TextButton = ({ isFull = false, onClickEvent, icon, text }) => {
+const TextButton = memo(({ isFull = false, onClickEvent, icon, text }) => {
   return (
     <ButtonWrap isFull={isFull}>
       <button type="button" onClick={onClickEvent}>
@@ -11,6 +11,6 @@ const TextButton = ({ isFull = false, onClickEvent, icon, text }) => {
       </button>
     </ButtonWrap>
   );
-};
+});
 
 export default TextButton;

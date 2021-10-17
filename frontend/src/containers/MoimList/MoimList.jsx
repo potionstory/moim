@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { memo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { isNull, map } from 'lodash';
@@ -9,7 +9,7 @@ import { setPassNumberCheckAction } from '../../store/module/detail';
 import Card from '../../Components/Card';
 import { MoimListWrap } from './style';
 
-const MoimList = ({ category }) => {
+const MoimList = memo(({ category }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -17,9 +17,12 @@ const MoimList = ({ category }) => {
     community: useSelector(({ community }) => community.list),
     meeting: useSelector(({ meeting }) => meeting.list),
   };
-  const { id } = useSelector(({ global }) => global);
-  const { isPassNumberCheck } = useSelector(({ detail }) => detail);
-  const { userInfo } = useSelector(({ auth }) => auth);
+
+  const id = useSelector(({ global }) => global.id);
+  const isPassNumberCheck = useSelector(
+    ({ detail }) => detail.isPassNumberCheck,
+  );
+  const userInfo = useSelector(({ auth }) => auth.userInfo);
 
   const onGetAllCommunity = useCallback(
     () => dispatch(getAllCommunityAction.REQUEST()),
@@ -71,6 +74,6 @@ const MoimList = ({ category }) => {
       })}
     </MoimListWrap>
   );
-};
+});
 
 export default MoimList;

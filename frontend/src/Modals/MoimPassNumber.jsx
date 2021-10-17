@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { memo, useState, useMemo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { map, every } from 'lodash';
 import { produce } from 'immer';
@@ -8,8 +8,9 @@ import { moimPassNumberForm } from '../utils/formData';
 import { postMoimPassNumberCheckAction } from '../store/module/detail';
 import { ModalContentWrap } from './style';
 
-const MoimPassNumber = () => {
-  const { id, category } = useSelector(({ global }) => global);
+const MoimPassNumber = memo(() => {
+  const id = useSelector(({ global }) => global.id);
+  const category = useSelector(({ global }) => global.category);
 
   const dispatch = useDispatch();
 
@@ -84,6 +85,6 @@ const MoimPassNumber = () => {
       </div>
     </ModalContentWrap>
   );
-};
+});
 
 export default MoimPassNumber;

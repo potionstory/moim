@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAsterisk } from '@fortawesome/free-solid-svg-icons';
 import { CheckBoxWrap } from './style';
 
-const CheckBox = ({ name, isChecked, isRequire, isInverse, onCheck }) => {
+const CheckBox = memo(({ name, isChecked, isRequire, isInverse, onCheck }) => {
   return (
     <CheckBoxWrap isChecked={isRequire || isChecked} isInverse={isInverse}>
       <label>
@@ -17,6 +17,6 @@ const CheckBox = ({ name, isChecked, isRequire, isInverse, onCheck }) => {
       </label>
     </CheckBoxWrap>
   );
-};
+});
 
 export default CheckBox;

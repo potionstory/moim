@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { memo, useState, useMemo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { isNull, filter, every, findIndex } from 'lodash';
 import { produce } from 'immer';
@@ -21,9 +21,9 @@ const validator = {
   passNumber: passNumberCheck,
 };
 
-const MoimExit = () => {
-  const { userInfo } = useSelector(({ auth }) => auth);
-  const { moim } = useSelector(({ detail }) => detail);
+const MoimExit = memo(() => {
+  const userInfo = useSelector(({ auth }) => auth.userInfo);
+  const moim = useSelector(({ detail }) => detail.moim);
   const dispatch = useDispatch();
 
   const { memberSetting } = moim;
@@ -160,6 +160,6 @@ const MoimExit = () => {
       </div>
     </ModalContentWrap>
   );
-};
+});
 
 export default MoimExit;

@@ -1,20 +1,20 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { memo, useState, useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { map } from 'lodash';
 import produce from 'immer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRedoAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
+import MoimTopUtilBody from './MoimTopUtilBody';
 import {
   filterCheck,
   sortCheck,
   utilReset,
 } from '../../../src/store/module/util';
 import { utilTabMenu } from '../../lib/const';
-import MoimTopUtilBody from './MoimTopUtilBody';
 import { utilMenu } from '../../lib/const';
 import { MoimTopUtilWrap, UtilButton, UtilWrap, UtilHeader } from './style';
 
-const MoimTopUtil = ({ tabIndex }) => {
+const MoimTopUtil = memo(({ tabIndex }) => {
   const util = useSelector(({ util }) => util);
   const dispatch = useDispatch();
 
@@ -119,6 +119,6 @@ const MoimTopUtil = ({ tabIndex }) => {
       )}
     </MoimTopUtilWrap>
   );
-};
+});
 
 export default MoimTopUtil;

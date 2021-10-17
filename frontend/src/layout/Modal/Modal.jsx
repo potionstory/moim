@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { memo, useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +11,7 @@ import MoimExit from '../../Modals/MoimExit';
 import MoimPassNumber from '../../Modals/MoimPassNumber';
 import { ModalWrap } from './style';
 
-const Modal = () => {
+const Modal = memo(() => {
   const dispatch = useDispatch();
 
   const onModalClose = useCallback(() => {
@@ -19,7 +19,8 @@ const Modal = () => {
     dispatch(signUserResetAction());
   }, [dispatch]);
 
-  const { theme, modal } = useSelector(({ global }) => global);
+  const theme = useSelector(({ global }) => global.theme);
+  const modal = useSelector(({ global }) => global.modal);
   const { isVisible, name } = modal;
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -70,6 +71,6 @@ const Modal = () => {
       <div className="modalContent">{getModalContent()}</div>
     </ModalWrap>
   );
-};
+});
 
 export default Modal;

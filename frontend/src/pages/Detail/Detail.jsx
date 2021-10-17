@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import MoimDetail from '../../Containers/MoimDetail';
 
-const Detail = ({ match }) => {
+const Detail = memo(({ match }) => {
   const { category, id } = match.params;
 
   return (
@@ -9,6 +9,6 @@ const Detail = ({ match }) => {
       <MoimDetail category={category} id={id} />
     </>
   );
-};
+});
 
 export default Detail;

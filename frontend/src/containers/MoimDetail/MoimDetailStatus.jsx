@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { findIndex } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import StatusList from '../../Components/StatusList';
 import { MoimDetailStatusWrap } from './style';
 
-const MoimDetailStatus = ({ list, status, isEdit, onStatusChange }) => {
+const MoimDetailStatus = memo(({ list, status, isEdit, onStatusChange }) => {
   return (
     <MoimDetailStatusWrap status={status} isEdit={isEdit}>
       <span className="icon">
@@ -21,6 +21,6 @@ const MoimDetailStatus = ({ list, status, isEdit, onStatusChange }) => {
       </span>
     </MoimDetailStatusWrap>
   );
-};
+});
 
 export default MoimDetailStatus;

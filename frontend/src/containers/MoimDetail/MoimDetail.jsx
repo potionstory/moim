@@ -1,4 +1,5 @@
 import React, {
+  memo,
   useState,
   useRef,
   useMemo,
@@ -7,6 +8,7 @@ import React, {
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
+  merge,
   findIndex,
   trim,
   filter,
@@ -48,15 +50,37 @@ import MoimDetailMemeber from './MoimDetailMemeber';
 import { DESCRIPTION_MAX_LENGTH } from '../../lib/const';
 import { MoimDetailWrap, MoimDetailInfo } from './style';
 
-const MoimDetail = ({ category, id }) => {
+const MoimDetail = memo(({ category, id }) => {
   const dispatch = useDispatch();
 
-  const { moim, thumbImage, thumbImageFile, isEdit } = useSelector(
-    ({ detail }) => detail,
-  );
-  const { isAuth, userInfo } = useSelector(({ auth }) => auth);
+  const moim = useSelector(({ detail }) => detail.moim);
+  const thumbImage = useSelector(({ detail }) => detail.thumbImage);
+  const thumbImageFile = useSelector(({ detail }) => detail.thumbImageFile);
+  const isEdit = useSelector(({ detail }) => detail.isEdit);
+  const isAuth = useSelector(({ auth }) => auth.isAuth);
+  const userInfo = useSelector(({ auth }) => auth.userInfo);
 
-  const [detail, setDetail] = useState({});
+  const [mainImage, setMainImage] = useState('');
+  const [userId, setUserId] = useState('');
+  const [userImage, setUserImage] = useState(null);
+  const [userAvatar, setUserAvatar] = useState({});
+  const [userName, setUserName] = useState('');
+  const [likeCount, setLikeCount] = useState(0);
+  const [type, setType] = useState('');
+  const [title, setTitle] = useState('');
+  const [isLock, setIsLock] = useState(false);
+  const [passNumber, setPassNumber] = useState([]);
+  const [payInfo, setPayInfo] = useState({});
+  const [status, setStatus] = useState('');
+  const [url, setUrl] = useState('');
+  const [tags, setTags] = useState([]);
+  const [description, setDescription] = useState('');
+  const [startDate, setStartDate] = useState({});
+  const [endDate, setEndDate] = useState({});
+  const [location, setLocation] = useState({});
+  const [memberSetting, setMemberSetting] = useState({});
+  const [memberList, setMemberList] = useState([]);
+
   const [typeIndex, setTypeIndex] = useState(-1);
   const [tagInput, setTagInput] = useState('');
   const [tabIndex, setTabIndex] = useState(0);
@@ -65,6 +89,57 @@ const MoimDetail = ({ category, id }) => {
   const accountInputRef = useRef();
   const urlInputRef = useRef();
   const tagInputRef = useRef();
+
+  const isSave = useMemo(() => {
+    const common = {
+      mainImage,
+      type,
+      title,
+      isLock,
+      passNumber,
+      status,
+      tags,
+      description,
+    };
+    const community = {
+      url,
+    };
+    const meeting = {
+      payInfo,
+      startDate,
+      endDate,
+      location,
+      memberSetting,
+      memberList,
+    };
+    const detail = merge(
+      {},
+      moim,
+      common,
+      category === 'community' ? community : meeting,
+    );
+
+    return !(isEqual(moim, detail) && isNull(thumbImage));
+  }, [
+    category,
+    moim,
+    mainImage,
+    type,
+    title,
+    isLock,
+    passNumber,
+    payInfo,
+    status,
+    url,
+    tags,
+    description,
+    startDate,
+    endDate,
+    location,
+    memberSetting,
+    memberList,
+    thumbImage,
+  ]);
 
   const isMoimClient = useMemo(
     () => isAuth && !isNull(userInfo) && userInfo.userId === moim.userId,
@@ -75,10 +150,10 @@ const MoimDetail = ({ category, id }) => {
     () =>
       !isNull(userInfo) &&
       findIndex(
-        detail.memberList,
+        moim.memberList,
         (member) => member.userId === userInfo.userId,
       ) !== -1,
-    [userInfo, detail],
+    [userInfo, moim],
   );
 
   const moimType = useMemo(
@@ -133,7 +208,7 @@ const MoimDetail = ({ category, id }) => {
       dispatch(
         putCommunityAction.REQUEST({
           communityId: id,
-          formData: detail,
+          //formData: detail,
           thumbImageFile,
         }),
       );
@@ -141,12 +216,12 @@ const MoimDetail = ({ category, id }) => {
       dispatch(
         putMeetingAction.REQUEST({
           meetingId: id,
-          formData: detail,
+          //formData: detail,
           thumbImageFile,
         }),
       );
     }
-  }, [dispatch, detail, thumbImageFile]);
+  }, [dispatch, thumbImageFile]);
 
   const onEditToggle = useCallback(() => {
     dispatch(setIsEditAction(!isEdit));
@@ -155,11 +230,7 @@ const MoimDetail = ({ category, id }) => {
 
   const onTypeChange = useCallback(
     (index) => {
-      setDetail(
-        produce((draft) => {
-          draft.type = moimType[index].name;
-        }),
-      );
+      setType(moimType[index].name);
     },
     [moimType],
   );
@@ -167,43 +238,36 @@ const MoimDetail = ({ category, id }) => {
   const onTitleChange = useCallback((e) => {
     const { value } = e.target;
 
-    setDetail(
-      produce((draft) => {
-        draft.title = value;
-      }),
-    );
+    setTitle(value);
   }, []);
 
   const onLockChange = useCallback(() => {
-    setDetail(
-      produce((draft) => {
-        draft.isLock = !draft.isLock;
-        if (draft.isLock) {
-          draft.passNumber = new Array(6).fill('');
-        }
-      }),
-    );
-  }, [dispatch, detail]);
+    setIsLock((isLock) => {
+      if (isLock) {
+        setPassNumber(new Array(6).fill(''));
+      }
+      return !isLock;
+    });
+  }, [isLock]);
 
-  const onPassNumberChange = useCallback((e, i) => {
-    const { value } = e.target;
+  const onPassNumberChange = useCallback(
+    (e, i) => {
+      const { value } = e.target;
 
-    if (value <= 9) {
-      setDetail(
-        produce((draft) => {
-          draft.passNumber[i] = value;
-        }),
-      );
-    }
-  }, []);
+      if (value <= 9) {
+        setPassNumber(
+          produce((draft) => {
+            draft[i] = value;
+          }),
+        );
+      }
+    },
+    [passNumber],
+  );
 
   const onStatusChange = useCallback(
     (index) => {
-      setDetail(
-        produce((draft) => {
-          draft.status = moimStatus[index].name;
-        }),
-      );
+      setStatus(moimStatus[index].name);
     },
     [moimStatus],
   );
@@ -212,18 +276,18 @@ const MoimDetail = ({ category, id }) => {
     const value = parseInt(!isEmpty(e.target.value) ? e.target.value : 0);
 
     if (value >= 0 && value <= 99999999) {
-      setDetail(
+      setPayInfo(
         produce((draft) => {
-          draft.payInfo.cost = value ? value : 0;
+          draft.cost = value ? value : 0;
         }),
       );
     }
   }, []);
 
   const onCostInputReset = useCallback(() => {
-    setDetail(
+    setPayInfo(
       produce((draft) => {
-        draft.payInfo.cost = 0;
+        draft.cost = 0;
       }),
     );
 
@@ -231,9 +295,9 @@ const MoimDetail = ({ category, id }) => {
   }, []);
 
   const onBankChange = useCallback((bank) => {
-    setDetail(
+    setPayInfo(
       produce((draft) => {
-        draft.payInfo.bank = bank;
+        draft.bank = bank;
       }),
     );
   }, []);
@@ -241,17 +305,17 @@ const MoimDetail = ({ category, id }) => {
   const onAccountInputChange = useCallback((e) => {
     const { value } = e.target;
 
-    setDetail(
+    setPayInfo(
       produce((draft) => {
-        draft.payInfo.account = value ? value : '';
+        draft.account = value ? value : '';
       }),
     );
   }, []);
 
   const onAccountInputReset = useCallback(() => {
-    setDetail(
+    setPayInfo(
       produce((draft) => {
-        draft.payInfo.account = '';
+        draft.account = '';
       }),
     );
 
@@ -259,27 +323,17 @@ const MoimDetail = ({ category, id }) => {
   }, []);
 
   const onUrlCopy = useCallback(() => {
-    const { url } = detail;
-
     navigator.clipboard.writeText(url);
-  }, [detail]);
+  }, [url]);
 
   const onUrlInputChange = useCallback((e) => {
     const value = e.target.value;
 
-    setDetail(
-      produce((draft) => {
-        draft.url = value;
-      }),
-    );
+    setUrl(value);
   }, []);
 
   const onUrlInputReset = useCallback(() => {
-    setDetail(
-      produce((draft) => {
-        draft.url = '';
-      }),
-    );
+    setUrl('');
 
     urlInputRef.current.focus();
   }, []);
@@ -292,31 +346,25 @@ const MoimDetail = ({ category, id }) => {
     const trimValue = trim(tagInput);
 
     if (
-      findIndex(detail.tags, (item) => item === trimValue) === -1 &&
+      findIndex(tags, (item) => item === trimValue) === -1 &&
       trimValue !== ''
     ) {
-      setDetail(
+      setTags(
         produce((draft) => {
-          draft.tags.push(trimValue);
+          draft.push(trimValue);
         }),
       );
     }
 
     setTagInput('');
     tagInputRef.current.focus();
-  }, [detail, tagInput]);
+  }, [tags, tagInput]);
 
   const onTagRemove = useCallback(
     (tag) => {
-      const tags = filter(detail.tags, (item) => item !== tag);
-
-      setDetail(
-        produce((draft) => {
-          draft.tags = tags;
-        }),
-      );
+      setTags(filter(tags, (item) => item !== tag));
     },
-    [detail],
+    [tags],
   );
 
   const onKeyTagEnter = useCallback(
@@ -332,11 +380,7 @@ const MoimDetail = ({ category, id }) => {
     const value = e.target.value;
 
     if (value.length <= DESCRIPTION_MAX_LENGTH) {
-      setDetail(
-        produce((draft) => {
-          draft.description = value;
-        }),
-      );
+      setDescription(value);
     }
   }, []);
 
@@ -345,17 +389,25 @@ const MoimDetail = ({ category, id }) => {
   }, []);
 
   const onScheduleChange = useCallback((name, date) => {
-    setDetail(
-      produce((draft) => {
-        draft[name]._seconds = dayjs(date).unix();
-      }),
-    );
+    if (name === 'startDate') {
+      setStartDate(
+        produce((draft) => {
+          draft._seconds = dayjs(date).unix();
+        }),
+      );
+    } else if (name === 'endDate') {
+      setEndDate(
+        produce((draft) => {
+          draft._seconds = dayjs(date).unix();
+        }),
+      );
+    }
   }, []);
 
   const onHandleLocation = useCallback((name, coord) => {
-    setDetail(
+    setLocation(
       produce((draft) => {
-        draft.location = {
+        draft = {
           name,
           coordinate: {
             _latitude: coord[0],
@@ -367,35 +419,31 @@ const MoimDetail = ({ category, id }) => {
   }, []);
 
   const onIsSelfCheck = useCallback(() => {
-    setDetail(
+    setMemberSetting(
       produce((draft) => {
-        draft.memberSetting.isSelf = !draft.memberSetting.isSelf;
+        draft.isSelf = !draft.isSelf;
       }),
     );
   }, []);
 
   const onJoinFormCheck = useCallback((name) => {
-    setDetail(
+    setMemberSetting(
       produce((draft) => {
-        draft.memberSetting.formData[name] = !draft.memberSetting.formData[
-          name
-        ];
+        draft.formData[name] = !draft.formData[name];
       }),
     );
   }, []);
 
   const onChangeMemberCount = useCallback(
     (e) => {
-      const {
-        memberSetting: { count },
-      } = detail;
+      const { count } = memberSetting;
 
       switch (e) {
         case 'increment':
           if (count !== 999) {
-            setDetail(
+            setMemberSetting(
               produce((draft) => {
-                draft.memberSetting.count = count + 1;
+                draft.count = count + 1;
               }),
             );
           }
@@ -404,9 +452,9 @@ const MoimDetail = ({ category, id }) => {
 
         case 'decrement':
           if (count !== 0) {
-            setDetail(
+            setMemberSetting(
               produce((draft) => {
-                draft.memberSetting.count = count - 1;
+                draft.count = count - 1;
               }),
             );
           }
@@ -416,9 +464,9 @@ const MoimDetail = ({ category, id }) => {
           const value = parseInt(!isEmpty(e.target.value) ? e.target.value : 0);
 
           if (value > -1) {
-            setDetail(
+            setMemberSetting(
               produce((draft) => {
-                draft.memberSetting.count = value;
+                draft.count = value;
               }),
             );
           }
@@ -426,7 +474,7 @@ const MoimDetail = ({ category, id }) => {
           return false;
       }
     },
-    [detail],
+    [memberSetting],
   );
 
   const onMemberPaymentChange = useCallback((userId) => {
@@ -444,15 +492,9 @@ const MoimDetail = ({ category, id }) => {
 
   const onMemberRemove = useCallback(
     (userId) => {
-      const index = findIndex(detail.memberList, { userId });
-
-      setDetail(
-        produce((draft) => {
-          draft.memberList.splice(index, 1);
-        }),
-      );
+      setMemberList(memberList.filter((member) => member.userId !== userId));
     },
-    [detail],
+    [memberList],
   );
 
   const detailComminityTabBoxSwitch = useMemo(() => {
@@ -462,15 +504,13 @@ const MoimDetail = ({ category, id }) => {
       default:
         return false;
     }
-  }, [detail, isEdit, tabIndex]);
+  }, [tabIndex]);
 
   const detailMeetingTabBoxSwitch = useMemo(() => {
     switch (tabIndex) {
       case 0:
         return <MoimDetailContent />;
       case 1:
-        const { startDate, endDate } = detail;
-
         return (
           <MoimDetailSchedule
             isEdit={isEdit}
@@ -480,8 +520,6 @@ const MoimDetail = ({ category, id }) => {
           />
         );
       case 2:
-        const { location } = detail;
-
         return (
           <MoimDetailMap
             isEdit={isEdit}
@@ -490,22 +528,13 @@ const MoimDetail = ({ category, id }) => {
           />
         );
       case 3:
-        const {
-          userId,
-          userImage,
-          userName,
-          userAvatar,
-          memberSetting,
-          memberList,
-        } = detail;
-
         return (
           <MoimDetailMemeber
             isEdit={isEdit}
             userId={userId}
             userImage={userImage}
-            userName={userName}
             userAvatar={userAvatar}
+            userName={userName}
             isMoimClient={isMoimClient}
             memberSetting={memberSetting}
             memberList={memberList}
@@ -520,7 +549,20 @@ const MoimDetail = ({ category, id }) => {
       default:
         return false;
     }
-  }, [moim, detail, isEdit, tabIndex, isMoimClient]);
+  }, [
+    tabIndex,
+    isEdit,
+    startDate,
+    endDate,
+    location,
+    memberSetting,
+    memberList,
+    userId,
+    userImage,
+    userAvatar,
+    userName,
+    isMoimClient,
+  ]);
 
   useEffect(() => {
     if (category === 'community') {
@@ -534,32 +576,58 @@ const MoimDetail = ({ category, id }) => {
   }, []);
 
   useEffect(() => {
-    setDetail(moim);
+    const {
+      mainImage,
+      userId,
+      userImage,
+      userAvatar,
+      userName,
+      likeCount,
+      type,
+      title,
+      isLock,
+      passNumber,
+      payInfo,
+      status,
+      url,
+      tags,
+      description,
+      startDate,
+      endDate,
+      location,
+      memberSetting,
+      memberList,
+    } = moim;
+
+    setMainImage(mainImage);
+    setUserId(userId);
+    setUserImage(userImage);
+    setUserAvatar(userAvatar);
+    setUserName(userName);
+    setLikeCount(likeCount);
+    setTitle(title);
+    setType(type);
+    setIsLock(isLock);
+    setPassNumber(passNumber);
+    setPayInfo(payInfo);
+    setStatus(status);
+    setUrl(url);
+    setTags(tags);
+    setDescription(description);
+    setStartDate(startDate);
+    setEndDate(endDate);
+    setLocation(location);
+    setMemberSetting(memberSetting);
+    setMemberList(memberList);
   }, [moim]);
 
   useEffect(() => {
-    setTypeIndex(findIndex(moimType, (item) => item.name === detail.type));
-  }, [moimType, detail]);
-
-  const {
-    mainImage,
-    userImage,
-    userAvatar,
-    userName,
-    likeCount,
-    title,
-    isLock,
-    passNumber,
-    payInfo,
-    status,
-    description,
-    url,
-    tags,
-  } = detail;
+    setTypeIndex(findIndex(moimType, (item) => item.name === type));
+  }, [moimType, type]);
 
   return (
     <>
-      {!isEmpty(detail) && (
+      {!isEmpty(userId) && (
         <MoimDetailWrap>
           <MoimDetailSummary
             category={category}
@@ -573,7 +641,7 @@ const MoimDetail = ({ category, id }) => {
             isMoimClient={isMoimClient}
             isMoimMember={isMoimMember}
             isEdit={isEdit}
-            isSave={!(isEqual(moim, detail) && isNull(thumbImage))}
+            isSave={isSave}
             onThumbImageChange={onThumbImageChange}
             onJoinModalOpen={onJoinModalOpen}
             onExitModalOpen={onExitModalOpen}
@@ -631,6 +699,6 @@ const MoimDetail = ({ category, id }) => {
       )}
     </>
   );
-};
+});
 
 export default MoimDetail;

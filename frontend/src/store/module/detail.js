@@ -234,7 +234,12 @@ export default (state = initialState, action) => {
         break;
       }
       case RESET_DETAIL: {
+        draft.loading = false;
         draft.moim = {};
+        draft.thumbImage = null;
+        draft.thumbImageFile = null;
+        draft.isPassNumberCheck = false;
+        draft.isEdit = false;
         break;
       }
       default:

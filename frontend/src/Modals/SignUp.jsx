@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { memo, useState, useMemo, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isEmpty, every, findIndex } from 'lodash';
 import { produce } from 'immer';
@@ -24,7 +24,7 @@ const formValidators = [
   [emailCheck, nameCheck],
 ];
 
-const SignUp = () => {
+const SignUp = memo(() => {
   const dispatch = useDispatch();
 
   const onSocialSign = useCallback(
@@ -103,7 +103,8 @@ const SignUp = () => {
     dispatch(signAvatarResetAction(userAvatar));
   }, [dispatch]);
 
-  const { isSocial, signInfo } = useSelector(({ auth }) => auth);
+  const isSocial = useSelector(({ auth }) => auth.isSocial);
+  const signInfo = useSelector(({ auth }) => auth.signInfo);
 
   const [focusInput, setFocusInput] = useState(null);
   const [formData, setFormData] = useState(signUpForm);
@@ -246,6 +247,6 @@ const SignUp = () => {
       </div>
     </ModalContentWrap>
   );
-};
+});
 
 export default SignUp;

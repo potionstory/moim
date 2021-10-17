@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { motion } from 'framer-motion';
 import { ToggleWrap } from './style';
 
-const Toggle = ({ isTheme, name, isChecked, onCheck }) => {
+const Toggle = memo(({ isTheme, name, isChecked, onCheck }) => {
   return (
     <ToggleWrap isTheme={isTheme} isChecked={isChecked}>
       <label>
@@ -21,6 +21,6 @@ const Toggle = ({ isTheme, name, isChecked, onCheck }) => {
       </label>
     </ToggleWrap>
   );
-};
+});
 
 export default Toggle;

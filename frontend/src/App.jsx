@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Layout from './Layout';
 import Home from './pages/Home';
 import Detail from './pages/Detail';
 import Create from './pages/Create';
 
-const App = () => {
+const App = memo(() => {
   return (
     <BrowserRouter>
       <Layout>
@@ -17,6 +17,6 @@ const App = () => {
       </Layout>
     </BrowserRouter>
   );
-};
+});
 
 export default App;

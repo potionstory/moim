@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { map } from 'lodash';
 import { socials } from '../../lib/const';
 import { SocialListWrap, SocialItem } from './style';
 
-const SocialList = ({ onSocialSign }) => {
+const SocialList = memo(({ onSocialSign }) => {
   return (
     <SocialListWrap>
       {map(socials, (item, index) => (
@@ -15,6 +15,6 @@ const SocialList = ({ onSocialSign }) => {
       ))}
     </SocialListWrap>
   );
-};
+});
 
 export default SocialList;

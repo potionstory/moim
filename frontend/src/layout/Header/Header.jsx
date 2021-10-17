@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { memo, useCallback, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -35,12 +35,13 @@ import {
 const token = localStorage.FBIdToken;
 api.defaults.headers.common['Authorization'] = token;
 
-const Header = () => {
+const Header = memo(() => {
   const dispatch = useDispatch();
   const { toggleTheme } = useTheme();
 
-  const { isAuth, userInfo } = useSelector(({ auth }) => auth);
-  const { theme } = useSelector(({ global }) => global);
+  const isAuth = useSelector(({ auth }) => auth.isAuth);
+  const userInfo = useSelector(({ auth }) => auth.userInfo);
+  const theme = useSelector(({ global }) => global.theme);
 
   const onThemeToggle = useCallback(() => {
     toggleTheme();
@@ -175,6 +176,6 @@ const Header = () => {
       )}
     </HeaderWrap>
   );
-};
+});
 
 export default Header;
