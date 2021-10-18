@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonWrap } from './style';
 
-const IconButton = ({ onClickEvent, icon }) => {
+const IconButton = memo(({ onClickEvent, icon }) => {
   return (
     <ButtonWrap>
       <button type="button" onClick={onClickEvent}>
@@ -10,6 +10,6 @@ const IconButton = ({ onClickEvent, icon }) => {
       </button>
     </ButtonWrap>
   );
-};
+});
 
 export default IconButton;

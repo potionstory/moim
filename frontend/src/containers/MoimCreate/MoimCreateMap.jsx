@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { memo, useState, useRef, useCallback, useEffect } from 'react';
 import { isEqual, isEmpty } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt, faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -7,7 +7,7 @@ import { MoimCreateMapWrap, MoimCreateMapForm } from './style';
 
 const { kakao } = window;
 
-const MoimCreateMap = ({ isEdit, location, onHandleLocation }) => {
+const MoimCreateMap = memo(({ isEdit, location, onHandleLocation }) => {
   const [locateName, setLocateName] = useState('');
   const [locateCoords, setLocateCoords] = useState([0, 0]);
   const [searchWord, setSearchWord] = useState('');
@@ -492,6 +492,6 @@ const MoimCreateMap = ({ isEdit, location, onHandleLocation }) => {
       </div>
     </MoimCreateMapWrap>
   );
-};
+});
 
 export default MoimCreateMap;

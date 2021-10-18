@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import IconList from '../../Components/IconList';
 import { MoimCreateTypeWrap } from './style';
 
-const MoimCreateType = ({
+const MoimCreateType = memo(({
   list,
   checkIndex,
   isEdit,
@@ -22,6 +22,6 @@ const MoimCreateType = ({
       <span className="name">{name}</span>
     </MoimCreateTypeWrap>
   );
-};
+});
 
 export default MoimCreateType;

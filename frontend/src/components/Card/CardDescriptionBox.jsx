@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { CardDescriptionBoxWrap } from './style';
 
-const CardDescriptionBox = ({ id, userId, isLock, description, onHandleDetail }) => {
+const CardDescriptionBox = memo(({ id, userId, isLock, description, onHandleDetail }) => {
   return (
     <CardDescriptionBoxWrap>
       <button type="button" onClick={() => onHandleDetail(id, userId, isLock)}>
@@ -9,6 +9,6 @@ const CardDescriptionBox = ({ id, userId, isLock, description, onHandleDetail })
       </button>
     </CardDescriptionBoxWrap>
   );
-};
+});
 
 export default CardDescriptionBox;

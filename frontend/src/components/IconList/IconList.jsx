@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { map } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { IconListWrap, IconButton } from './style';
 
-const IconList = ({ list, checkIndex, isEdit, isIcon, onCheckChange }) => {
+const IconList = memo(({ list, checkIndex, isEdit, isIcon, onCheckChange }) => {
   return (
     <IconListWrap>
       {isEdit ? (
@@ -45,6 +45,6 @@ const IconList = ({ list, checkIndex, isEdit, isIcon, onCheckChange }) => {
       )}
     </IconListWrap>
   );
-};
+});
 
 export default IconList;

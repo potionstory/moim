@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { isNull } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faImage, faRedoAlt } from '@fortawesome/free-solid-svg-icons';
 import UserInfo from '../../Components/UserInfo';
 import { MoimCreateSummaryWrap } from './style';
 
-const MoimCreateSummary = ({
+const MoimCreateSummary = memo(({
   mainImage,
   userImage,
   userAvatar,
@@ -56,6 +56,6 @@ const MoimCreateSummary = ({
       </div>
     </MoimCreateSummaryWrap>
   );
-};
+});
 
 export default MoimCreateSummary;

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { isUndefined } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faTag } from '@fortawesome/free-solid-svg-icons';
 import TagList from '../TagList';
 import { CardAddInfoBoxWrap } from './style';
 
-const CardAddInfoBox = ({ now, max, tags }) => {
+const CardAddInfoBox = memo(({ now, max, tags }) => {
   return (
     <CardAddInfoBoxWrap>
       {!isUndefined(now) && (
@@ -38,6 +38,6 @@ const CardAddInfoBox = ({ now, max, tags }) => {
       </div>
     </CardAddInfoBoxWrap>
   );
-};
+});
 
 export default CardAddInfoBox;

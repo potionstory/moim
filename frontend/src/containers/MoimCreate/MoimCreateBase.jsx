@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { isUndefined } from 'lodash';
 import MoimCreateType from './MoimCreateType';
 import MoimCreateTitle from './MoimCreateTitle';
@@ -11,7 +11,7 @@ import MoimCreateDescription from './MoimCreateDescription';
 import { DESCRIPTION_MAX_LENGTH } from '../../lib/const';
 import { MoimCreateBaseWrap } from './style';
 
-const MoimCreateBase = ({
+const MoimCreateBase = memo(({
   isEdit,
   typeIndex,
   moimType,
@@ -120,6 +120,6 @@ const MoimCreateBase = ({
       />
     </MoimCreateBaseWrap>
   );
-};
+});
 
 export default MoimCreateBase;

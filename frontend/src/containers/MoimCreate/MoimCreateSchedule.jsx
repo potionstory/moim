@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { memo, useState, useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { map } from 'lodash';
 import dayjs from 'dayjs';
@@ -55,7 +55,7 @@ const arrowMotion = [
   ],
 ];
 
-const MoimCreateSchedule = ({
+const MoimCreateSchedule = memo(({
   isEdit,
   startDate,
   endDate,
@@ -221,6 +221,6 @@ const MoimCreateSchedule = ({
       </span>
     </MoimCreateScheduleWrap>
   );
-};
+});
 
 export default MoimCreateSchedule;

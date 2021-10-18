@@ -1,4 +1,5 @@
 import React, {
+  memo,
   useState,
   useRef,
   useMemo,
@@ -34,7 +35,7 @@ import { MoimCreateWrap, MoimCreateInfo } from './style';
 
 const isEdit = true;
 
-const MoimCreate = ({ category }) => {
+const MoimCreate = memo(({ category }) => {
   const dispatch = useDispatch();
 
   const { userInfo } = useSelector(({ auth }) => auth);
@@ -537,6 +538,6 @@ const MoimCreate = ({ category }) => {
       </MoimCreateInfo>
     </MoimCreateWrap>
   );
-};
+});
 
 export default MoimCreate;

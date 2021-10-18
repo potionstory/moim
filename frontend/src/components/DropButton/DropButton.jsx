@@ -1,11 +1,11 @@
-import React, { useState, useCallback } from 'react';
+import React, { memo, useState, useCallback } from 'react';
 import { map } from 'lodash';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { DropButtonWrap } from './style';
 
-const DropButton = ({ menu, onHandle }) => {
+const DropButton = memo(({ menu, onHandle }) => {
   const [isActive, setIsActive] = useState(false);
 
   const onToggle = useCallback(() => {
@@ -41,6 +41,6 @@ const DropButton = ({ menu, onHandle }) => {
       </ul>
     </DropButtonWrap>
   );
-};
+});
 
 export default DropButton;

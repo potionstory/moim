@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faCopy, faEraser } from '@fortawesome/free-solid-svg-icons';
 import { MoimCreateUrlWrap } from './style';
 
-const MoimCreateUrl = ({
+const MoimCreateUrl = memo(({
   url,
   isEdit,
   urlInputRef,
@@ -36,6 +36,6 @@ const MoimCreateUrl = ({
       </div>
     </MoimCreateUrlWrap>
   );
-};
+});
 
 export default MoimCreateUrl;

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faWonSign } from '@fortawesome/free-solid-svg-icons';
 import { getCommunityIcon, getMeetingIcon } from '../../utils/commonUtil';
 import { CardHeaderWrap } from './style';
 
-const CardHeader = ({ item, category, onHandleDetail }) => {
+const CardHeader = memo(({ item, category, onHandleDetail }) => {
   const { userId, type, title, isLock, payInfo, status } = item;
   const id = item[`${category}Id`];
 
@@ -44,6 +44,6 @@ const CardHeader = ({ item, category, onHandleDetail }) => {
       </div>
     </CardHeaderWrap>
   );
-};
+});
 
 export default CardHeader;

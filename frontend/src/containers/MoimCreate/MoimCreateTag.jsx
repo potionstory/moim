@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { isEmpty } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -6,7 +6,7 @@ import InputBox from '../../Components/InputBox';
 import TagList from '../../Components/TagList';
 import { MoimCreateTagWrap } from './style';
 
-const MoimCreateTag = ({
+const MoimCreateTag = memo(({
   tags,
   isEdit,
   tagInput,
@@ -43,6 +43,6 @@ const MoimCreateTag = ({
       </div>
     </MoimCreateTagWrap>
   );
-};
+});
 
 export default MoimCreateTag;

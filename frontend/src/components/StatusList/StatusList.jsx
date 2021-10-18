@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { map } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { StatusListWrap, StatusItem, StatusItemButton } from './style';
 
-const StatusList = ({ isEdit, list, checkIndex, onStatusChange }) => {
+const StatusList = memo(({ isEdit, list, checkIndex, onStatusChange }) => {
   return (
     <StatusListWrap>
       {!isEdit ? (
@@ -35,6 +35,6 @@ const StatusList = ({ isEdit, list, checkIndex, onStatusChange }) => {
       )}
     </StatusListWrap>
   );
-};
+});
 
 export default StatusList;

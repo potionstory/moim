@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InputBoxWrap } from './style';
 
-const InputBox = ({
+const InputBox = memo(({
   placeholder,
   isNumber,
   value,
@@ -31,6 +31,6 @@ const InputBox = ({
       </button>
     </InputBoxWrap>
   );
-};
+});
 
 export default InputBox;

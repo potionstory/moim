@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAlignLeft } from '@fortawesome/free-solid-svg-icons';
 import TextareaAutosize from 'react-textarea-autosize';
 import { MoimCreateDescriptionWrap } from './style';
 
-const MoimCreateDescription = ({
+const MoimCreateDescription = memo(({
   description,
   isEdit,
   max,
@@ -39,6 +39,6 @@ const MoimCreateDescription = ({
       </div>
     </MoimCreateDescriptionWrap>
   );
-};
+});
 
 export default MoimCreateDescription;

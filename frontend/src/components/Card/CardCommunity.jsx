@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import CardMainImageBox from './CardMainImageBox';
 import CardDescriptionBox from './CardDescriptionBox';
 import CardUrlBox from './CardUrlBox';
@@ -6,7 +6,7 @@ import CardAddInfoBox from './CardAddInfoBox';
 import CardLockBox from './CardLockBox';
 import { CardTabBoxWrap } from './style';
 
-const CardCommunity = ({ item, activeIndex, onHandleDetail }) => {
+const CardCommunity = memo(({ item, activeIndex, onHandleDetail }) => {
   const {
     communityId,
     userId,
@@ -61,6 +61,6 @@ const CardCommunity = ({ item, activeIndex, onHandleDetail }) => {
       <div className="cardTabBox">{cardTabBoxSwitch}</div>
     </CardTabBoxWrap>
   );
-};
+});
 
 export default CardCommunity;

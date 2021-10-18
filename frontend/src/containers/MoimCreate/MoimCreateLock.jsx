@@ -1,11 +1,11 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { memo, useState, useRef, useCallback } from 'react';
 import { isEmpty, map } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import Toggle from '../../Components/Toggle';
 import { MoimCreateLockWrap } from './style';
 
-const MoimCreateLock = ({
+const MoimCreateLock = memo(({
   isEdit,
   isLock,
   passNumber,
@@ -71,6 +71,6 @@ const MoimCreateLock = ({
       </span>
     </MoimCreateLockWrap>
   );
-};
+});
 
 export default MoimCreateLock;

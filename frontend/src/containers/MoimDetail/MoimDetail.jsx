@@ -80,6 +80,7 @@ const MoimDetail = memo(({ category, id }) => {
   const [location, setLocation] = useState({});
   const [memberSetting, setMemberSetting] = useState({});
   const [memberList, setMemberList] = useState([]);
+  const [waiter, setWaiter] = useState([]);
 
   const [typeIndex, setTypeIndex] = useState(-1);
   const [tagInput, setTagInput] = useState('');
@@ -208,7 +209,18 @@ const MoimDetail = memo(({ category, id }) => {
       dispatch(
         putCommunityAction.REQUEST({
           communityId: id,
-          //formData: detail,
+          formData: {
+            type,
+            title,
+            isLock,
+            passNumber,
+            status,
+            description,
+            url,
+            tags,
+            userName,
+            mainImage,
+          },
           thumbImageFile,
         }),
       );
@@ -216,12 +228,49 @@ const MoimDetail = memo(({ category, id }) => {
       dispatch(
         putMeetingAction.REQUEST({
           meetingId: id,
-          //formData: detail,
+          formData: {
+            type,
+            title,
+            isLock,
+            passNumber,
+            status,
+            payInfo,
+            description,
+            startDate,
+            endDate,
+            location,
+            memberSetting,
+            memberList,
+            waiter,
+            tags,
+            userName,
+            mainImage,
+          },
           thumbImageFile,
         }),
       );
     }
-  }, [dispatch, thumbImageFile]);
+  }, [
+    dispatch,
+    type,
+    title,
+    isLock,
+    passNumber,
+    status,
+    url,
+    payInfo,
+    tags,
+    description,
+    startDate,
+    endDate,
+    location,
+    memberSetting,
+    memberList,
+    waiter,
+    userName,
+    mainImage,
+    thumbImageFile
+  ]);
 
   const onEditToggle = useCallback(() => {
     dispatch(setIsEditAction(!isEdit));
@@ -405,17 +454,13 @@ const MoimDetail = memo(({ category, id }) => {
   }, []);
 
   const onHandleLocation = useCallback((name, coord) => {
-    setLocation(
-      produce((draft) => {
-        draft = {
-          name,
-          coordinate: {
-            _latitude: coord[0],
-            _longitude: coord[1],
-          },
-        };
-      }),
-    );
+    setLocation({
+      name,
+      coordinate: {
+        _latitude: coord[0],
+        _longitude: coord[1],
+      },
+    });
   }, []);
 
   const onIsSelfCheck = useCallback(() => {
@@ -449,7 +494,6 @@ const MoimDetail = memo(({ category, id }) => {
           }
 
           return false;
-
         case 'decrement':
           if (count !== 0) {
             setMemberSetting(
@@ -597,6 +641,7 @@ const MoimDetail = memo(({ category, id }) => {
       location,
       memberSetting,
       memberList,
+      waiter,
     } = moim;
 
     setMainImage(mainImage);
@@ -619,6 +664,7 @@ const MoimDetail = memo(({ category, id }) => {
     setLocation(location);
     setMemberSetting(memberSetting);
     setMemberList(memberList);
+    setWaiter(waiter);
   }, [moim]);
 
   useEffect(() => {

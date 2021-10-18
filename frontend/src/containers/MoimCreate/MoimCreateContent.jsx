@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-const MoimCreateContent = () => {
+const MoimCreateContent = memo(() => {
   return (
     <CKEditor
       editor={ClassicEditor}
@@ -13,6 +13,6 @@ const MoimCreateContent = () => {
       }}
     />
   );
-};
+});
 
 export default MoimCreateContent;

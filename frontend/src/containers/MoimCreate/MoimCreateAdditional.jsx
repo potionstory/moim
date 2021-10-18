@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { map } from 'lodash';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { detailTabMenu } from '../../lib/const';
 import { MoimCreateAdditionalWrap, MoimCreateTabItem } from './style';
 
-const MoimCreateAdditional = ({
+const MoimCreateAdditional = memo(({
   tabIndex,
   category,
   detailComminityTabBoxSwitch,
@@ -43,6 +43,6 @@ const MoimCreateAdditional = ({
       </div>
     </MoimCreateAdditionalWrap>
   );
-};
+});
 
 export default MoimCreateAdditional;

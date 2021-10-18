@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import CardHeader from './CardHeader';
 import CardBody from './CardBody';
 import UserInfo from '../UserInfo';
 import { CardWrap } from './style';
 
-const Card = ({ item, category, onHandleDetail }) => {
+const Card = memo(({ item, category, onHandleDetail }) => {
   return (
     <CardWrap>
       <div className="cardBlock">
@@ -29,6 +29,6 @@ const Card = ({ item, category, onHandleDetail }) => {
       />
     </CardWrap>
   );
-};
+});
 
 export default Card;

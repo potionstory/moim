@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { memo, useState, useCallback } from 'react';
 import { map } from 'lodash';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,7 +7,7 @@ import CardCommunity from './CardCommunity';
 import CardMeeting from './CardMeeting';
 import { CardBodyWrap, CardTabMenu, CardTabContentWrap } from './style';
 
-const CardBody = ({ item, category, onHandleDetail }) => {
+const CardBody = memo(({ item, category, onHandleDetail }) => {
   const [tabIndex, setTabIndex] = useState(0);
 
   const onTabClick = useCallback((index) => {
@@ -55,6 +55,6 @@ const CardBody = ({ item, category, onHandleDetail }) => {
       </CardTabContentWrap>
     </CardBodyWrap>
   );
-};
+});
 
 export default CardBody;

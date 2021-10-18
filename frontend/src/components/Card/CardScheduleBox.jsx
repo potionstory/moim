@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { map } from 'lodash';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,7 +6,7 @@ import { faCircle, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { weeks } from '../../lib/const';
 import { CardScheduleBoxWrap } from './style';
 
-const CardScheduleBox = ({
+const CardScheduleBox = memo(({
   isSameDate,
   eventStartDate,
   eventStartWeek,
@@ -107,6 +107,6 @@ const CardScheduleBox = ({
       )}
     </CardScheduleBoxWrap>
   );
-};
+});
 
 export default CardScheduleBox;

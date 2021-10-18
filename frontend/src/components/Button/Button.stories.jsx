@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFlag } from '@fortawesome/free-solid-svg-icons';
 import Spinner from '../Spinner';
 import { ButtonWrap, ButtonIconWrap, ButtonIcon, ButtonText } from './style';
 
-export const TextButton = () => {
+export const TextButton = memo(() => {
   return (
     <ButtonWrap>
       <button>
@@ -18,9 +18,9 @@ export const TextButton = () => {
       </button>
     </ButtonWrap>
   );
-};
+});
 
-export const IconButton = () => {
+export const IconButton = memo(() => {
   return (
     <ButtonWrap>
       <button>
@@ -33,9 +33,9 @@ export const IconButton = () => {
       </button>
     </ButtonWrap>
   );
-};
+});
 
-export const LinkTextButton = () => {
+export const LinkTextButton = memo(() => {
   return (
     <ButtonWrap>
       <a href="#">
@@ -49,9 +49,9 @@ export const LinkTextButton = () => {
       </a>
     </ButtonWrap>
   );
-};
+});
 
-export const LinkIconButton = () => {
+export const LinkIconButton = memo(() => {
   return (
     <ButtonWrap>
       <a href="#">
@@ -64,7 +64,7 @@ export const LinkIconButton = () => {
       </a>
     </ButtonWrap>
   );
-};
+});
 
 export default {
   title: 'components|Button',

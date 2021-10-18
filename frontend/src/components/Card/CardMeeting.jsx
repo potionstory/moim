@@ -1,4 +1,5 @@
 import React, {
+  memo,
   useRef,
   useState,
   useMemo,
@@ -17,7 +18,7 @@ import { CardTabBoxWrap } from './style';
 const { kakao } = window;
 const mapIndex = 3; //map menu index
 
-const CardMeeting = ({ item, activeIndex, onHandleDetail }) => {
+const CardMeeting = memo(({ item, activeIndex, onHandleDetail }) => {
   const {
     meetingId,
     userId,
@@ -176,6 +177,6 @@ const CardMeeting = ({ item, activeIndex, onHandleDetail }) => {
       <div className="cardTabBox">{cardTabBoxSwitch}</div>
     </CardTabBoxWrap>
   );
-};
+});
 
 export default CardMeeting;

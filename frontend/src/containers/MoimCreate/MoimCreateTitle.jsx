@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { MoimCreateTitleWrap } from './style';
 
-const MoimCreateTitle = ({ isEdit, title, onTitleChange }) => {
+const MoimCreateTitle = memo(({ isEdit, title, onTitleChange }) => {
   return (
     <MoimCreateTitleWrap isEdit={isEdit}>
       {!isEdit ? (
@@ -16,6 +16,6 @@ const MoimCreateTitle = ({ isEdit, title, onTitleChange }) => {
       )}
     </MoimCreateTitleWrap>
   );
-};
+});
 
 export default MoimCreateTitle;

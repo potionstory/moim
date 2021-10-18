@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Spinner from '../Spinner';
 import { ButtonWrap } from './style';
 
-const LinkTextButton = ({ path, icon, text }) => {
+const LinkTextButton = memo(({ path, icon, text }) => {
   return (
     <ButtonWrap>
       <Link to={path}>
@@ -14,6 +14,6 @@ const LinkTextButton = ({ path, icon, text }) => {
       </Link>
     </ButtonWrap>
   );
-};
+});
 
 export default LinkTextButton;

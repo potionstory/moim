@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { memo, useState, useMemo, useCallback } from 'react';
 import { isNull, isEmpty, filter, map } from 'lodash';
 import AutosizeInput from 'react-input-autosize';
 import { motion } from 'framer-motion';
@@ -26,7 +26,7 @@ const settingBoxVariants = {
   closed: { opacity: 0, x: '-100%' },
 };
 
-const MoimCreateMember = ({
+const MoimCreateMember = memo(({
   isEdit,
   userId,
   userImage,
@@ -351,6 +351,6 @@ const MoimCreateMember = ({
       </div>
     </MoimCreateMemberWrap>
   );
-};
+});
 
 export default MoimCreateMember;

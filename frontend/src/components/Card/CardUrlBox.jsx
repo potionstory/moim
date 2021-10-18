@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { CardUrlBoxWrap } from './style';
 
-const CardUrlBox = ({ url, onUrlCopy }) => {
+const CardUrlBox = memo(({ url, onUrlCopy }) => {
   return (
     <CardUrlBoxWrap>
       <div className="linkBox">
@@ -16,6 +16,6 @@ const CardUrlBox = ({ url, onUrlCopy }) => {
       </div>
     </CardUrlBoxWrap>
   );
-};
+});
 
 export default CardUrlBox;

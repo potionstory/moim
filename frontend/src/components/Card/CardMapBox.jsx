@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { CardMapBoxWrap } from './style';
 
-const CardMapBox = ({ name, address, type, mapRef, onAddressCopy }) => {
+const CardMapBox = memo(({ name, address, type, mapRef, onAddressCopy }) => {
   return (
     <CardMapBoxWrap>
       {type === 'offline' ? (
@@ -25,6 +25,6 @@ const CardMapBox = ({ name, address, type, mapRef, onAddressCopy }) => {
       )}
     </CardMapBoxWrap>
   );
-};
+});
 
 export default CardMapBox;

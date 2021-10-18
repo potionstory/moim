@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import Avatar from 'boring-avatars';
 import { UserInfoWrap } from './style';
 
-const UserInfo = ({ image, avatar, name, count }) => {
+const UserInfo = memo(({ image, avatar, name, count }) => {
   return (
     <UserInfoWrap>
       <a href="/" className="user">
@@ -28,6 +28,6 @@ const UserInfo = ({ image, avatar, name, count }) => {
       </span>
     </UserInfoWrap>
   );
-};
+});
 
 export default UserInfo;

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 import { find } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy, faWonSign, faEraser } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +8,7 @@ import { color } from '../../lib/styles/palette';
 import { bankList } from '../../lib/const.js';
 import { MoimCreatePayInfoWrap } from './style';
 
-const MoimCreatePayInfo = ({
+const MoimCreatePayInfo = memo(({
   payInfo,
   isEdit,
   costInputRef,
@@ -101,6 +101,6 @@ const MoimCreatePayInfo = ({
       </div>
     </MoimCreatePayInfoWrap>
   );
-};
+});
 
 export default MoimCreatePayInfo;

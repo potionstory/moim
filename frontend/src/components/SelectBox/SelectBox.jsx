@@ -1,11 +1,11 @@
-import React, { useState, useCallback } from 'react';
+import React, { memo, useState, useCallback } from 'react';
 import { map } from 'lodash';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { SelectBoxWrap } from './style';
 
-const SelectBox = ({ defaultValue, value, list, onSelectChange }) => {
+const SelectBox = memo(({ defaultValue, value, list, onSelectChange }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const onOpenHandle = useCallback(() => {
@@ -56,6 +56,6 @@ const SelectBox = ({ defaultValue, value, list, onSelectChange }) => {
       </motion.ul>
     </SelectBoxWrap>
   );
-};
+});
 
 export default SelectBox;

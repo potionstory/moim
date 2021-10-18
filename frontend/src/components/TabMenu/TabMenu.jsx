@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { map } from 'lodash';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TabMenuWrap, TabButton } from './style';
 
-const TabMeun = ({ menu, activeIndex, onTabClick }) => {
+const TabMeun = memo(({ menu, activeIndex, onTabClick }) => {
   return (
     <TabMenuWrap>
       <motion.div
@@ -25,6 +25,6 @@ const TabMeun = ({ menu, activeIndex, onTabClick }) => {
       </ul>
     </TabMenuWrap>
   );
-};
+});
 
 export default TabMeun;

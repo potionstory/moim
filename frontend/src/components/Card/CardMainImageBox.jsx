@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiceD6 } from '@fortawesome/free-solid-svg-icons';
 import { CardMainImageBoxWrap } from './style';
 
-const CardMainImageBox = ({
+const CardMainImageBox = memo(({
   id,
   userId,
   isLock,
@@ -28,6 +28,6 @@ const CardMainImageBox = ({
       </button>
     </CardMainImageBoxWrap>
   );
-};
+});
 
 export default CardMainImageBox;
