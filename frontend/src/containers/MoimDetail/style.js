@@ -1532,6 +1532,9 @@ export const MoimDetailMemberWrap = styled.div`
                       font-size: 0.5rem;
                     }
                   }
+                  .name {
+                    font-size: 0.625rem;
+                  }
                 }
               }
             }
