@@ -22,6 +22,16 @@ export const MoimTopWrap = styled.div`
     line-height: 4rem;
     transition: all 0.2s ease-out;
   }
+
+  @media screen and (max-width: 768px) {
+    margin-bottom: 1rem;
+    h2 {
+      margin-top: 1rem;
+      height: 2.5rem;
+      font-size: 2.5rem;
+      line-height: 2.5rem;
+    }
+  }
 `;
 
 export const MoimTopTabWrap = styled.div`

@@ -6,7 +6,7 @@ import { light, dark } from '../src/lib/styles/palette';
 import App from './App';
 
 const Root = () => {
-  const { theme } = useSelector(({ global }) => global);
+  const theme = useSelector(({ global }) => global.theme);
 
   return (
     <BrowserRouter>

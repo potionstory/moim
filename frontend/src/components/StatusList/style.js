@@ -11,6 +11,13 @@ export const StatusListWrap = styled.div`
       margin: 0 3px;
     }
   }
+
+  @media screen and (max-width: 768px) { 
+    ul {
+      flex-direction: column;
+      gap: 6px 0;
+    }
+  }
 `;
 
 export const StatusItem = styled.span`

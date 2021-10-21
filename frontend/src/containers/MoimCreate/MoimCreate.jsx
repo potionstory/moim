@@ -38,7 +38,7 @@ const isEdit = true;
 const MoimCreate = memo(({ category }) => {
   const dispatch = useDispatch();
 
-  const { userInfo } = useSelector(({ auth }) => auth);
+  const userInfo = useSelector(({ auth }) => auth.userInfo);
 
   const [commonDetail, setCommonDetail] = useState(moimCommonData);
   const [addDetail, setAddDetail] = useState(

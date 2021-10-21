@@ -36,6 +36,10 @@ export const CardWrap = styled.li`
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    min-width: 100%;
+  }
 `;
 
 export const CardHeaderWrap = styled.div`
@@ -468,9 +472,6 @@ export const CardScheduleBoxWrap = styled.div`
             }
           }
         }
-        .day {
-          font-size: 2rem;
-        }
       }
     }
   }
@@ -488,7 +489,7 @@ export const CardScheduleBoxWrap = styled.div`
     transform: translate(-50%, -50%);
     svg {
       font-size: 2rem;
-      color: ${({ theme }) => theme.main};
+      color: ${({ theme }) => theme.title};
     }
   }
   .scheduleNone {

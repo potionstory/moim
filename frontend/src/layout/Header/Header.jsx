@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSun,
   faMoon,
+  faBars,
   faSignInAlt,
   faUserPlus,
   faSignOutAlt,
@@ -26,14 +27,21 @@ import {
   HeaderInnder,
   LeftHead,
   RightHead,
+  MenuBar,
   Menu,
   MenuList,
+  MenuListMobile,
   MenuItem,
   AvatarBox,
 } from './style';
 
 const token = localStorage.FBIdToken;
 api.defaults.headers.common['Authorization'] = token;
+
+const avatarToastVariants = {
+  open: { opacity: 1, x: -320 },
+  closed: { opacity: 0, x: 0 },
+};
 
 const Header = memo(() => {
   const dispatch = useDispatch();
@@ -43,9 +51,16 @@ const Header = memo(() => {
   const userInfo = useSelector(({ auth }) => auth.userInfo);
   const theme = useSelector(({ global }) => global.theme);
 
+  const [isMenuBarActive, setIsMenuBarActive] = useState(false);
+  const [isUserActive, setIsUserActive] = useState(false);
+
   const onThemeToggle = useCallback(() => {
     toggleTheme();
   }, [dispatch]);
+
+  const onMenuToggle = useCallback(() => {
+    setIsMenuBarActive((prev) => !prev);
+  }, []);
 
   const onSignOut = useCallback(() => {
     auth.signOut();
@@ -62,8 +77,6 @@ const Header = memo(() => {
     dispatch(signUpModalOpenAction());
   }, [dispatch]);
 
-  const [isUserActive, setIsUserActive] = useState(false);
-
   const onUserMenuToggle = useCallback(() => {
     setIsUserActive((prev) => !prev);
   }, []);
@@ -79,6 +92,8 @@ const Header = memo(() => {
       setIsUserActive(isAuth);
     }
   }, [isAuth]);
+
+  console.log("isMenuBarActive: ", isMenuBarActive);
 
   return (
     <HeaderWrap>
@@ -112,6 +127,9 @@ const Header = memo(() => {
           </div>
         </LeftHead>
         <RightHead>
+          <MenuBar active={isMenuBarActive} onClick={onMenuToggle}>
+            <FontAwesomeIcon icon={faBars} />
+          </MenuBar>
           <Menu>
             <MenuList>
               <MenuItem>
@@ -136,6 +154,36 @@ const Header = memo(() => {
                 />
               </MenuItem>
             </MenuList>
+            <MenuListMobile
+              as={motion.ul}
+              initial={{ x: 0 }}
+              animate={{ x: isMenuBarActive ? 0 : '100%', opacity: isMenuBarActive ? 1 : 0 }}
+              transition={{
+                ease: 'backInOut',
+              }}
+            >
+              <MenuItem>
+                <TextButton
+                  onClickEvent={onSignInModalOpen}
+                  icon={faSignInAlt}
+                  text="sign in"
+                />
+              </MenuItem>
+              <MenuItem>
+                <TextButton
+                  onClickEvent={onSignUpModalOpen}
+                  icon={faUserPlus}
+                  text="sign up"
+                />
+              </MenuItem>
+              <MenuItem>
+                <TextButton
+                  onClickEvent={onSignOut}
+                  icon={faSignOutAlt}
+                  text="sign out"
+                />
+              </MenuItem>
+            </MenuListMobile>
             {isAuth && (
               <AvatarBox
                 onClick={onUserMenuToggle}
@@ -156,24 +204,25 @@ const Header = memo(() => {
             )}
           </Menu>
         </RightHead>
+        {isAuth && (
+          <motion.div
+            className="avatarToast"
+            animate={isUserActive ? 'open' : 'closed'}
+            variants={avatarToastVariants}
+            transition={{
+              ease: 'backInOut',
+            }}
+          >
+            <AvatarToast
+              isAuth={isAuth}
+              userInfo={userInfo}
+              onSignOut={onSignOut}
+              onSignInModalOpen={onSignInModalOpen}
+              onSignUpModalOpen={onSignUpModalOpen}
+            />
+          </motion.div>
+        )}
       </HeaderInnder>
-      {isAuth && (
-        <motion.div
-          className="avatarToast"
-          animate={{ x: isUserActive ? -360 : -40 }}
-          transition={{
-            ease: 'backInOut',
-          }}
-        >
-          <AvatarToast
-            isAuth={isAuth}
-            userInfo={userInfo}
-            onSignOut={onSignOut}
-            onSignInModalOpen={onSignInModalOpen}
-            onSignUpModalOpen={onSignUpModalOpen}
-          />
-        </motion.div>
-      )}
     </HeaderWrap>
   );
 });

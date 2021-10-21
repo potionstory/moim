@@ -216,6 +216,20 @@ const MoimDetailSchedule = memo(
             );
           })}
         </span>
+        <span className="progressMobile">
+          <motion.span
+            animate={{
+              opacity: [0, 0.5, 1, 0.5, 0],
+            }}
+            transition={{
+              duration: 1,
+              times: [0, 0.25, 0.5, 0.75, 1],
+              loop: Infinity,
+            }}
+          >
+            <FontAwesomeIcon icon={faAngleRight} />
+          </motion.span>
+        </span>
       </MoimDetailScheduleWrap>
     );
   },

@@ -9,6 +9,7 @@ import {
   faAngleUp,
   faUser,
   faUserSlash,
+  faQuestion,
   faWonSign,
   faCrown,
   faGhost,
@@ -24,6 +25,11 @@ import { MoimDetailMemberWrap } from './style';
 const settingBoxVariants = {
   open: { opacity: 1, x: 0 },
   closed: { opacity: 0, x: '-100%' },
+};
+
+const memberInfoVariants = {
+  open: { opacity: 1, x: 0 },
+  closed: { opacity: 0, x: '100%' },
 };
 
 const MoimDetailMember = memo(
@@ -44,6 +50,7 @@ const MoimDetailMember = memo(
     onMemberRemove,
   }) => {
     const [isSettingBox, setIsSettingBox] = useState(false);
+    const [isMemberInfoOpen, setIsMemberInfoOpen] = useState(false);
     const [isMemberOpen, setIsMemberOpen] = useState(true);
     const [isWaiterOpen, setIsWaiterOpen] = useState(true);
 
@@ -74,6 +81,11 @@ const MoimDetailMember = memo(
       setIsSettingBox((isSettingBox) => !isSettingBox);
     }, []);
 
+    const onMemberInfoToggle = useCallback(() => {
+      console.log("onMemberInfoToggle");
+      setIsMemberInfoOpen((isMemberInfoOpen) => !isMemberInfoOpen);
+    }, []);
+
     const onMemberToggle = useCallback(() => {
       setIsMemberOpen((isMemberOpen) => !isMemberOpen);
     }, []);
@@ -85,7 +97,7 @@ const MoimDetailMember = memo(
     const { count, isSelf, formData } = memberSetting;
 
     return (
-      <MoimDetailMemberWrap isEdit={isEdit} isSettingBox={isSettingBox}>
+      <MoimDetailMemberWrap isEdit={isEdit} isSettingBox={isSettingBox} isMemberInfoOpen={isMemberInfoOpen}>
         <div className="memberInner">
           <div className="memberTop">
             <div className="memberCount">
@@ -222,30 +234,42 @@ const MoimDetailMember = memo(
                     <FontAwesomeIcon icon={faUser} />
                   </span>
                   <span className="title">members</span>
-                  <span className="counts">
-                    <span className="count pay">
-                      <span className="icon">
-                        <FontAwesomeIcon icon={faWonSign} />
+                  <div className="info">
+                    <button type="button" onClick={onMemberInfoToggle}>
+                      <FontAwesomeIcon icon={faQuestion} />
+                    </button>
+                    <motion.span
+                      animate={isMemberInfoOpen ? "open" : "closed"}
+                      variants={memberInfoVariants}
+                      transition={{
+                        ease: "backInOut",
+                      }}
+                      className="counts"
+                    >
+                      <span className="count pay">
+                        <span className="icon">
+                          <FontAwesomeIcon icon={faWonSign} />
+                        </span>
+                        {filter(members[0], { isPayment: true }).length}
                       </span>
-                      {filter(members[0], { isPayment: true }).length}
-                    </span>
-                    {` / `}
-                    <span className="count notPay">
-                      <span className="icon">
-                        <FontAwesomeIcon icon={faWonSign} />
+                      <span className="separator">{` / `}</span>
+                      <span className="count notPay">
+                        <span className="icon">
+                          <FontAwesomeIcon icon={faWonSign} />
+                        </span>
+                        {filter(members[0], { isPayment: false }).length}
                       </span>
-                      {filter(members[0], { isPayment: false }).length}
-                    </span>
-                    {` / `}
-                    <span className="count empty">
-                      <span className="icon">
-                        <FontAwesomeIcon icon={faDiceD6} />
+                      <span className="separator">{` / `}</span>
+                      <span className="count empty">
+                        <span className="icon">
+                          <FontAwesomeIcon icon={faDiceD6} />
+                        </span>
+                        {members[0].length - filter(members[0], undefined).length}
                       </span>
-                      {members[0].length - filter(members[0], undefined).length}
-                    </span>
-                  </span>
+                    </motion.span>
+                  </div>
                 </div>
-                <button type="button" onClick={onMemberToggle}>
+                <button type="button" className="btnMember" onClick={onMemberToggle}>
                   <motion.span
                     animate={{ rotate: isMemberOpen ? 180 : 0 }}
                     transition={{
@@ -372,7 +396,7 @@ const MoimDetailMember = memo(
                     </span>
                   </span>
                 </div>
-                <button type="button" onClick={onWatierToggle}>
+                <button type="button" className="btnMember" onClick={onWatierToggle}>
                   <motion.span
                     animate={{ rotate: isWaiterOpen ? 180 : 0 }}
                     transition={{

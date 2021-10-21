@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { motion } from 'framer-motion';
 import { color } from '../../lib/styles/palette';
 
 export const HeaderWrap = styled.section`
@@ -11,16 +12,29 @@ export const HeaderWrap = styled.section`
   background-color: ${({ theme }) => theme.main};
   z-index: 50;
   .avatarToast {
-    position: fixed;
+    position: absolute;
     top: 120px;
     right: -320px;
+  }
+
+  @media screen and (max-width: 768px) {
+    height: 60px;
+    .avatarToast {
+      top: 60px;
+    }
   }
 `;
 
 export const HeaderInnder = styled.div`
   display: flex;
+  position: relative;
   width: 1280px;
   margin: 0 auto;
+
+  @media screen and (max-width: 768px) {
+    width: auto;
+    padding: 0 10px;
+  }
 `;
 
 export const LeftHead = styled.div`
@@ -83,6 +97,13 @@ export const LeftHead = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    padding: 10px 0;
+    .themeToggle {
+      margin-left: 12px;
+    }
+  }
 `;
 
 export const RightHead = styled.div`
@@ -91,6 +112,33 @@ export const RightHead = styled.div`
   padding: 20px 0;
   align-items: center;
   justify-content: flex-end;
+  
+  @media screen and (max-width: 768px) {
+    padding: 10px 0;
+  }
+`;
+
+export const MenuBar = styled.button`
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 8px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  background-color: ${({ active, theme }) => active ? theme.theme : theme.sub};
+  text-align: center;
+  transition: all 0.2s ease-out;
+  svg {
+    font-size: 1rem;
+    color: ${({ active, theme }) => active ? theme.title : theme.gray};
+    vertical-align: middle;
+  }
+
+  @media screen and (max-width: 768px) {
+    display: flex;
+  }
 `;
 
 export const Menu = styled.div`
@@ -100,12 +148,38 @@ export const Menu = styled.div`
 
 export const MenuList = styled.ul`
   display: flex;
+  gap: 10px 12px;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+`;
+
+export const MenuListMobile = styled(motion.ul)`
+  @media screen and (min-width: 768px) {
+    display: none !important;
+  }
+ 
+  @media screen and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px 0;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    padding: 10px;
+    border-bottom-left-radius: 4px;
+    background-color: ${({ theme }) => theme.main};
+  }
 `;
 
 export const MenuItem = styled.li`
-  padding-left: 12px;
-  &:first-child {
-    padding-left: 0;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    button {
+      width: 100%;
+    }
   }
 `;
 
@@ -144,4 +218,8 @@ export const AvatarBox = styled.button`
         color: ${theme.title};
       }
     `};
+
+  @media screen and (max-width: 768px) {
+    margin-left: 12px;
+  }
 `;

@@ -61,7 +61,7 @@ const MoimCreateSchedule = memo(({
   endDate,
   onScheduleChange,
 }) => {
-  const { theme } = useSelector(({ global }) => global);
+  const theme = useSelector(({ global }) => global.theme);
 
   const [isStartOpen, setIsStartOpen] = useState(false);
   const [isEndOpen, setIsEndOpen] = useState(false);

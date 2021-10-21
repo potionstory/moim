@@ -12,6 +12,11 @@ export const AvatarToastWrap = styled.div`
   border-radius: 4px;
   background-color: ${({ theme }) => theme.main};
   transition: all 0.2s ease-out;
+
+  @media screen and (max-width: 768px) {
+    border-radius: 0 0 0 4px;
+    box-shadow: none;
+  }
 `;
 
 export const Member = styled.div`
