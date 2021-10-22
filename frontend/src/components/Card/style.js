@@ -283,6 +283,7 @@ export const CardDescriptionBoxWrap = styled.div`
   height: 100%;
   button {
     display: flex;
+    width: 100%;
     height: 100%;
     padding: 12px;
     font-size: 0.75rem;
@@ -559,6 +560,7 @@ export const CardMapBoxWrap = styled.div`
     bottom: 6px;
     left: 6px;
     z-index: 10;
+    width: 100%;
     max-width: calc(100% - 12px);
     box-sizing: border-box;
     .address {

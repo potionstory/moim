@@ -51,6 +51,7 @@ const MoimDetailMember = memo(
   }) => {
     const [isSettingBox, setIsSettingBox] = useState(false);
     const [isMemberInfoOpen, setIsMemberInfoOpen] = useState(false);
+    const [isWaiterInfoOpen, setIsWaiterInfoOpen] = useState(false);
     const [isMemberOpen, setIsMemberOpen] = useState(true);
     const [isWaiterOpen, setIsWaiterOpen] = useState(true);
 
@@ -82,8 +83,11 @@ const MoimDetailMember = memo(
     }, []);
 
     const onMemberInfoToggle = useCallback(() => {
-      console.log("onMemberInfoToggle");
       setIsMemberInfoOpen((isMemberInfoOpen) => !isMemberInfoOpen);
+    }, []);
+
+    const onWaiterInfoToggle = useCallback(() => {
+      setIsWaiterInfoOpen((isWaiterInfoOpen) => !isWaiterInfoOpen);
     }, []);
 
     const onMemberToggle = useCallback(() => {
@@ -97,7 +101,7 @@ const MoimDetailMember = memo(
     const { count, isSelf, formData } = memberSetting;
 
     return (
-      <MoimDetailMemberWrap isEdit={isEdit} isSettingBox={isSettingBox} isMemberInfoOpen={isMemberInfoOpen}>
+      <MoimDetailMemberWrap isEdit={isEdit} isSettingBox={isSettingBox} isMemberInfoOpen={isMemberInfoOpen} isWaiterInfoOpen={isWaiterInfoOpen}>
         <div className="memberInner">
           <div className="memberTop">
             <div className="memberCount">
@@ -234,6 +238,28 @@ const MoimDetailMember = memo(
                     <FontAwesomeIcon icon={faUser} />
                   </span>
                   <span className="title">members</span>
+                  <div className="counts">
+                    <span className="count pay">
+                      <span className="icon">
+                        <FontAwesomeIcon icon={faWonSign} />
+                      </span>
+                      {filter(members[0], { isPayment: true }).length}
+                    </span>
+                    <span className="separator">{` / `}</span>
+                    <span className="count notPay">
+                      <span className="icon">
+                        <FontAwesomeIcon icon={faWonSign} />
+                      </span>
+                      {filter(members[0], { isPayment: false }).length}
+                    </span>
+                    <span className="separator">{` / `}</span>
+                    <span className="count empty">
+                      <span className="icon">
+                        <FontAwesomeIcon icon={faDiceD6} />
+                      </span>
+                      {members[0].length - filter(members[0], undefined).length}
+                    </span>
+                  </div>
                   <div className="info">
                     <button type="button" onClick={onMemberInfoToggle}>
                       <FontAwesomeIcon icon={faQuestion} />
@@ -387,14 +413,34 @@ const MoimDetailMember = memo(
                     <FontAwesomeIcon icon={faUserSlash} />
                   </span>
                   <span className="title">waiters</span>
-                  <span className="counts">
+                  <div className="counts">
                     <span className="count empty">
                       <span className="icon">
                         <FontAwesomeIcon icon={faGhost} />
                       </span>
                       {members[1].length}
                     </span>
-                  </span>
+                  </div>
+                  <div className="info">
+                    <button type="button" onClick={onWaiterInfoToggle}>
+                      <FontAwesomeIcon icon={faQuestion} />
+                    </button>
+                    <motion.span
+                      animate={isWaiterInfoOpen ? "open" : "closed"}
+                      variants={memberInfoVariants}
+                      transition={{
+                        ease: "backInOut",
+                      }}
+                      className="counts"
+                    >
+                      <span className="count empty">
+                        <span className="icon">
+                          <FontAwesomeIcon icon={faGhost} />
+                        </span>
+                        {members[1].length}
+                      </span>
+                    </motion.span>
+                  </div>
                 </div>
                 <button type="button" className="btnMember" onClick={onWatierToggle}>
                   <motion.span

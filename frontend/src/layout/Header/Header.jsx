@@ -93,8 +93,6 @@ const Header = memo(() => {
     }
   }, [isAuth]);
 
-  console.log("isMenuBarActive: ", isMenuBarActive);
-
   return (
     <HeaderWrap>
       <HeaderInnder>

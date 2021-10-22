@@ -23,7 +23,7 @@ export const MoimDetailSummaryWrap = styled.div`
     .thumb {
       overflow: hidden;
       position: relative;
-      height: 226px;
+      padding-top: 100%;
       border-radius: 4px;
       background-color: ${({ theme }) => theme.sub};
       .btnUpload {
@@ -33,6 +33,7 @@ export const MoimDetailSummaryWrap = styled.div`
         position: absolute;
         top: 0;
         left: 0;
+        z-index: 10;
         width: 100%;
         height: 100%;
         opacity: 0;
@@ -61,6 +62,9 @@ export const MoimDetailSummaryWrap = styled.div`
         }
       }
       img {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -99,6 +103,9 @@ export const MoimDetailSummaryWrap = styled.div`
     .summaryInner {
       .thumb {
         height: 100%;
+        .btnUpload {
+          opacity: 1;
+        }
       }
     }
   }
@@ -163,6 +170,19 @@ export const MoimDetailTitleWrap = styled.div`
     line-height: 72px;
     vertical-align: top;
   }
+
+  @media screen and (max-width: 768px) {
+    padding: 0;
+    ${({ isEdit }) =>
+      isEdit &&
+      css`
+        padding: 12px;
+      `};
+    h3 {
+      font-size: 3rem;
+      line-height: 60px;
+    }
+  }
 `;
 
 export const MoimDetailLockWrap = styled.div`
@@ -213,6 +233,12 @@ export const MoimDetailLockWrap = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    .lockContent {
+      flex-direction: column;
+    }
+  }
 `;
 
 export const MoimDetailPayInfoWrap = styled.div`
@@ -238,6 +264,7 @@ export const MoimDetailPayInfoWrap = styled.div`
     flex: 1;
     margin-left: 12px;
     .payInfo {
+      display: flex;
       padding: 0 12px;
       border-left: 1px dashed ${color.gray};
       ${({ isFree }) =>
@@ -258,6 +285,27 @@ export const MoimDetailPayInfoWrap = styled.div`
         padding-left: 0;
         border-left: 0 none;
       }
+      .btnCopy {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 12px;
+        width: 40px;
+        height: 40px;
+        border-radius: 4px;
+        background-color: ${({ theme }) => theme.theme};
+        svg {
+          font-size: 1rem;
+          color: ${({ theme }) => theme.title};
+          opacity: 0.6;
+          transition: all 0.2s ease-out;
+        }
+        &:hover {
+          svg {
+            opacity: 1;
+          }
+        }
+      }
     }
     .payInput {
       width: 226px;
@@ -267,24 +315,19 @@ export const MoimDetailPayInfoWrap = styled.div`
         margin-right: 0;
       }
     }
-    .btnCopy {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 4px;
-      background-color: ${({ theme }) => theme.theme};
-      svg {
-        font-size: 1rem;
-        color: ${({ theme }) => theme.title};
-        opacity: 0.6;
-        transition: all 0.2s ease-out;
+  }
+
+  @media screen and (max-width: 768px) {
+    .payContent {
+      flex-direction: column;
+      gap: 6px 0;
+      .payInfo {
+        padding: 0;
+        border-left: 0;
       }
-      &:hover {
-        svg {
-          opacity: 1;
-        }
+      .payInput {
+        width: 100%;
+        margin-right: 0;
       }
     }
   }
@@ -313,6 +356,9 @@ export const MoimDetailStatusWrap = styled.div`
 
   @media screen and (max-width: 768px) {
     align-items: flex-start;
+    .statusContent {
+      padding-top: 10px;
+    }
   }
 `;
 
@@ -417,6 +463,14 @@ export const MoimDetailTagWrap = styled.div`
       width: 226px;
       + ul {
         margin-top: 6px;
+      }
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .tagContent {
+      .tagInput {
+        width: 100%;
       }
     }
   }
@@ -692,6 +746,7 @@ export const MoimDetailScheduleWrap = styled.div`
         width: 100%;
         height: 0;
         .weekDot {
+          top: 9px;
           svg {
             font-size: 0.5rem;
           }
@@ -710,7 +765,14 @@ export const MoimDetailScheduleWrap = styled.div`
           transform: translate(-50%, -50%);
         }
         .btnCalendar {
-          bottom: -10px;
+          bottom: 12px;
+          button {
+            width: 24px;
+            height: 24px;
+            svg {
+              font-size: 0.75rem;
+            }
+          }
         }
       }
     }
@@ -926,6 +988,12 @@ export const MoimDetailMapWrap = styled.div`
           }
         }
       }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .locationWrap {
+      max-width: 100%;
     }
   }
 `;
@@ -1213,8 +1281,9 @@ export const MoimDetailMemberWrap = styled.div`
             text-transform: uppercase;
           }
           .info {
+            display: none;
             button {
-              display: none;
+              display: flex;
               align-items: center;
               justify-content: center;
               width: 20px;
@@ -1226,55 +1295,55 @@ export const MoimDetailMemberWrap = styled.div`
                 color: ${({ theme }) => theme.title};
               }
             }
-            .counts {
+          }
+          .counts {
+            display: flex;
+            align-items: center;
+            gap: 0 6px;
+            font-weight: 600;
+            color: ${color.gray};
+            .count {
               display: flex;
               align-items: center;
+              justify-content: center;
               gap: 0 6px;
+              font-family: 'Rubik';
               font-weight: 600;
-              color: ${color.gray};
-              .count {
+              color: ${({ theme }) => theme.title};
+              .icon {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 0 6px;
-                font-family: 'Rubik';
-                font-weight: 600;
-                color: ${({ theme }) => theme.title};
-                .icon {
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  width: 20px;
-                  height: 20px;
-                  svg {
-                    font-size: 0.625rem;
-                  }
+                width: 20px;
+                height: 20px;
+                svg {
+                  font-size: 0.625rem;
                 }
               }
-              .pay {
-                .icon {
-                  border-radius: 10px;
-                  background-color: ${color.orange};
-                  svg {
-                    color: ${color.black};
-                  }
+            }
+            .pay {
+              .icon {
+                border-radius: 10px;
+                background-color: ${color.orange};
+                svg {
+                  color: ${color.black};
                 }
               }
-              .notPay {
-                .icon {
-                  border-radius: 10px;
-                  background-color: ${color.gray};
-                  svg {
-                    color: ${color.black};
-                  }
+            }
+            .notPay {
+              .icon {
+                border-radius: 10px;
+                background-color: ${color.gray};
+                svg {
+                  color: ${color.black};
                 }
               }
-              .empty {
-                .icon {
-                  svg {
-                    font-size: 1rem;
-                    color: ${color.gray};
-                  }
+            }
+            .empty {
+              .icon {
+                svg {
+                  font-size: 1rem;
+                  color: ${color.gray};
                 }
               }
             }
@@ -1472,18 +1541,17 @@ export const MoimDetailMemberWrap = styled.div`
         .listHead {
           position: relative;
           .left {
+            .counts {
+              display: none;
+            }
             .info {
+              display: block;
               button {
-                display: flex;
                 position: relative;
                 z-index: 20;
-                ${({ isMemberInfoOpen }) =>
-                  isMemberInfoOpen &&
-                  css`
-                    background-color: ${({ theme }) => theme.theme};
-                  `};
               }
               .counts {
+                display: flex;
                 flex-direction: column;
                 align-items: flex-start;
                 position: absolute;
@@ -1526,6 +1594,8 @@ export const MoimDetailMemberWrap = styled.div`
                   }
                   .btnRemove,
                   .payment {
+                    top: 4px;
+                    right: 4px;
                     width: 16px;
                     height: 16px;
                     svg {
@@ -1533,8 +1603,40 @@ export const MoimDetailMemberWrap = styled.div`
                     }
                   }
                   .name {
+                    height: 16px;
                     font-size: 0.625rem;
+                    line-height: 16px;
                   }
+                }
+              }
+            }
+          }
+        }
+        &:nth-child(2) {
+          .listHead {
+            .left {
+              .info {
+                button {
+                  ${({ isMemberInfoOpen }) =>
+                    isMemberInfoOpen &&
+                    css`
+                      background-color: ${({ theme }) => theme.theme};
+                    `};  
+                }
+              }
+            }
+          }
+        }
+        &:nth-child(3) {
+          .listHead {
+            .left {
+              .info {
+                button {
+                  ${({ isWaiterInfoOpen }) =>
+                    isWaiterInfoOpen &&
+                    css`
+                      background-color: ${({ theme }) => theme.theme};
+                    `};  
                 }
               }
             }

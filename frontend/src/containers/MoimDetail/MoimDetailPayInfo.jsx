@@ -45,14 +45,16 @@ const MoimDetailPayInfo = memo(
                   <span className="payInfo">
                     {find(bankList, { id: bank }).name}
                   </span>
-                  <span className="payInfo">{account}</span>
-                  <button
-                    type="button"
-                    className="btnCopy"
-                    onClick={onPayInfoCopy}
-                  >
-                    <FontAwesomeIcon icon={faCopy} />
-                  </button>
+                  <span className="payInfo">
+                    {account}
+                    <button
+                      type="button"
+                      className="btnCopy"
+                      onClick={onPayInfoCopy}
+                    >
+                      <FontAwesomeIcon icon={faCopy} />
+                    </button>
+                  </span>
                 </>
               )}
             </>
