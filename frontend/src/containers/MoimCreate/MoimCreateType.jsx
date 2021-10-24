@@ -2,26 +2,21 @@ import React, { memo } from 'react';
 import IconList from '../../Components/IconList';
 import { MoimCreateTypeWrap } from './style';
 
-const MoimCreateType = memo(({
-  list,
-  checkIndex,
-  isEdit,
-  isIcon,
-  name,
-  onCheckChange,
-}) => {
-  return (
-    <MoimCreateTypeWrap>
-      <IconList
-        list={list}
-        checkIndex={checkIndex}
-        isEdit={isEdit}
-        isIcon={isIcon}
-        onCheckChange={onCheckChange}
-      />
-      <span className="name">{name}</span>
-    </MoimCreateTypeWrap>
-  );
-});
+const MoimCreateType = memo(
+  ({ list, checkIndex, isEdit, isIcon, name, onCheckChange }) => {
+    return (
+      <MoimCreateTypeWrap>
+        <IconList
+          list={list}
+          checkIndex={checkIndex}
+          isEdit={isEdit}
+          isIcon={isIcon}
+          onCheckChange={onCheckChange}
+        />
+        <span className="name">{name}</span>
+      </MoimCreateTypeWrap>
+    );
+  },
+);
 
 export default MoimCreateType;

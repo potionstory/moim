@@ -28,14 +28,14 @@ import { color, iconBg } from './styles/palette';
 export const moimCommonData = {
   commentCount: 0,
   comments: [],
-  description: '',
-  isLock: false,
   likeCount: 0,
   mainImage: null,
   mainImageFile: '',
   title: '',
+  isLock: false,
   passNumber: new Array(6).fill(''),
   tags: [],
+  description: '',
 };
 
 export const moimCommunityData = {

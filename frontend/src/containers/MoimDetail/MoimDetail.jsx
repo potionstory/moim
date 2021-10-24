@@ -269,7 +269,7 @@ const MoimDetail = memo(({ category, id }) => {
     waiter,
     userName,
     mainImage,
-    thumbImageFile
+    thumbImageFile,
   ]);
 
   const onEditToggle = useCallback(() => {

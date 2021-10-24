@@ -41,6 +41,23 @@ const MoimCreate = memo(({ category }) => {
   const userInfo = useSelector(({ auth }) => auth.userInfo);
 
   const [commonDetail, setCommonDetail] = useState(moimCommonData);
+  const [mainImage, setMainImage] = useState('');
+  const [mainImageFile, setMainImageFile] = useState(null);
+  const [type, setType] = useState('');
+  const [title, setTitle] = useState('');
+  const [isLock, setIsLock] = useState(false);
+  const [passNumber, setPassNumber] = useState(new Array(6).fill(''));
+  const [status, setStatus] = useState('');
+  const [url, setUrl] = useState('');
+  const [tags, setTags] = useState([]);
+  const [description, setDescription] = useState('');
+  const [startDate, setStartDate] = useState({});
+  const [endDate, setEndDate] = useState({});
+  const [location, setLocation] = useState({});
+  const [memberSetting, setMemberSetting] = useState({});
+  const [memberList, setMemberList] = useState([]);
+  const [waiter, setWaiter] = useState([]);
+
   const [addDetail, setAddDetail] = useState(
     category === 'community' ? moimCommunityData : moimMeetingData,
   );
@@ -79,6 +96,9 @@ const MoimCreate = memo(({ category }) => {
             draft.mainImageFile = file;
           }),
         );
+
+        setMainImage(reader.result);
+        setMainImageFile(file);
       };
 
       reader.readAsDataURL(file);
@@ -118,11 +138,7 @@ const MoimCreate = memo(({ category }) => {
 
   const onTypeChange = useCallback(
     (index) => {
-      setAddDetail(
-        produce((draft) => {
-          draft.type = moimType[index].name;
-        }),
-      );
+      setType(moimType[index].name);
     },
     [moimType],
   );
@@ -451,19 +467,20 @@ const MoimCreate = memo(({ category }) => {
   useEffect(() => {
     if (category === 'community') {
       setAddDetail(moimCommunityData);
+      setType(moimCommunityData.type);
     } else if (category === 'meeting') {
       setAddDetail(moimMeetingData);
+      setType(moimMeetingData.type);
     }
     setTabIndex(0);
   }, [category]);
 
   useEffect(() => {
-    setTypeIndex(findIndex(moimType, (item) => item.name === addDetail.type));
-  }, [moimType, addDetail]);
+    setTypeIndex(findIndex(moimType, (item) => item.name === type));
+  }, [moimType, type]);
 
   const {
     likeCount,
-    mainImage,
     title,
     isLock,
     passNumber,

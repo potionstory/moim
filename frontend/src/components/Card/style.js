@@ -409,7 +409,7 @@ export const CardScheduleBoxWrap = styled.div`
         }
       }
       .day {
-        font-size: 4rem;
+        font-size: 2.5rem;
         font-weight: 600;
         color: ${({ theme }) => theme.title};
       }
@@ -463,13 +463,13 @@ export const CardScheduleBoxWrap = styled.div`
             display: none;
           }
           span {
-            background-color: ${color.none};
-            color: ${color.gray};
+            background-color: ${color.gray};
+            color: ${color.white};
             &:nth-child(1) {
-              color: ${color.red};
+              background-color: ${color.red};
             }
             &:nth-child(7) {
-              color: ${color.blue};
+              background-color: ${color.blue};
             }
           }
         }
@@ -509,6 +509,16 @@ export const CardScheduleBoxWrap = styled.div`
         'Noto', 'Apple Gothic', 'MalgunGothic', sans-serif;
       font-weight: 600;
       text-transform: uppercase;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .dateBox {
+      .dayBox {
+        .day {
+          font-size: 4rem;
+        }
+      }
     }
   }
 `;
