@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-import { isUndefined } from 'lodash';
 import MoimDetailType from './MoimDetailType';
 import MoimDetailTitle from './MoimDetailTitle';
 import MoimDetailLock from './MoimDetailLock';
@@ -80,7 +79,16 @@ const MoimDetailBase = memo(
           isEdit={isEdit}
           onStatusChange={onStatusChange}
         />
-        {!isUndefined(payInfo) && (
+        {category === 'community' ? (
+          <MoimDetailUrl
+            url={url}
+            isEdit={isEdit}
+            urlInputRef={urlInputRef}
+            onUrlCopy={onUrlCopy}
+            onUrlInputChange={onUrlInputChange}
+            onUrlInputReset={onUrlInputReset}
+          />
+        ) : (
           <MoimDetailPayInfo
             payInfo={payInfo}
             isEdit={isEdit}
@@ -91,16 +99,6 @@ const MoimDetailBase = memo(
             onBankChange={onBankChange}
             onAccountInputChange={onAccountInputChange}
             onAccountInputReset={onAccountInputReset}
-          />
-        )}
-        {!isUndefined(url) && (
-          <MoimDetailUrl
-            url={url}
-            isEdit={isEdit}
-            urlInputRef={urlInputRef}
-            onUrlCopy={onUrlCopy}
-            onUrlInputChange={onUrlInputChange}
-            onUrlInputReset={onUrlInputReset}
           />
         )}
         <MoimDetailTag

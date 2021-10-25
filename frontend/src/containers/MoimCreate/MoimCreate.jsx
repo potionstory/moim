@@ -22,7 +22,6 @@ import {
   postMeetingAction,
 } from '../../store/module/detail';
 import {
-  moimCommonData,
   moimCommunityData,
   moimMeetingData,
   communityType,
@@ -40,27 +39,48 @@ const MoimCreate = memo(({ category }) => {
 
   const userInfo = useSelector(({ auth }) => auth.userInfo);
 
-  const [commonDetail, setCommonDetail] = useState(moimCommonData);
-  const [mainImage, setMainImage] = useState('');
+  const [mainImage, setMainImage] = useState(null);
   const [mainImageFile, setMainImageFile] = useState(null);
   const [type, setType] = useState('');
   const [title, setTitle] = useState('');
   const [isLock, setIsLock] = useState(false);
   const [passNumber, setPassNumber] = useState(new Array(6).fill(''));
+  const [payInfo, setPayInfo] = useState({
+    cost: 0,
+    bank: '090',
+    account: '',
+  });
   const [status, setStatus] = useState('');
   const [url, setUrl] = useState('');
   const [tags, setTags] = useState([]);
   const [description, setDescription] = useState('');
-  const [startDate, setStartDate] = useState({});
-  const [endDate, setEndDate] = useState({});
-  const [location, setLocation] = useState({});
-  const [memberSetting, setMemberSetting] = useState({});
+  const [startDate, setStartDate] = useState({
+    _nanoseconds: 0,
+    _seconds: dayjs().unix(),
+  });
+  const [endDate, setEndDate] = useState({
+    _nanoseconds: 0,
+    _seconds: dayjs().unix(),
+  });
+  const [location, setLocation] = useState({
+    name: '장소 이름',
+    coordinate: {
+      _latitude: 37.56682420267543,
+      _longitude: 126.978652258823,
+    },
+  });
+  const [memberSetting, setMemberSetting] = useState({
+    count: 0,
+    isSelf: false,
+    formData: {
+      email: false,
+      mobile: false,
+      name: true,
+      passNumber: true,
+    },
+  });
   const [memberList, setMemberList] = useState([]);
-  const [waiter, setWaiter] = useState([]);
 
-  const [addDetail, setAddDetail] = useState(
-    category === 'community' ? moimCommunityData : moimMeetingData,
-  );
   const [typeIndex, setTypeIndex] = useState(-1);
   const [tagInput, setTagInput] = useState('');
   const [tabIndex, setTabIndex] = useState(0);
@@ -90,13 +110,6 @@ const MoimCreate = memo(({ category }) => {
       let file = e.target.files[0];
 
       reader.onloadend = () => {
-        setCommonDetail(
-          produce((draft) => {
-            draft.mainImage = reader.result;
-            draft.mainImageFile = file;
-          }),
-        );
-
         setMainImage(reader.result);
         setMainImageFile(file);
       };
@@ -111,8 +124,16 @@ const MoimCreate = memo(({ category }) => {
       dispatch(
         postCommunityAction.REQUEST({
           formData: {
-            ...commonDetail,
-            ...addDetail,
+            mainImage,
+            mainImageFile,
+            type,
+            title,
+            isLock,
+            passNumber,
+            status,
+            url,
+            tags,
+            description,
             userId,
             userImage,
             userAvatar,
@@ -124,8 +145,21 @@ const MoimCreate = memo(({ category }) => {
       dispatch(
         postMeetingAction.REQUEST({
           formData: {
-            ...commonDetail,
-            ...addDetail,
+            mainImage,
+            mainImageFile,
+            type,
+            title,
+            isLock,
+            passNumber,
+            status,
+            payInfo,
+            tags,
+            description,
+            startDate,
+            endDate,
+            location,
+            memberSetting,
+            memberList,
             userId,
             userImage,
             userAvatar,
@@ -134,7 +168,26 @@ const MoimCreate = memo(({ category }) => {
         }),
       );
     }
-  }, [dispatch, commonDetail, addDetail]);
+  }, [
+    dispatch,
+    mainImage,
+    mainImageFile,
+    type,
+    title,
+    isLock,
+    passNumber,
+    status,
+    url,
+    payInfo,
+    tags,
+    description,
+    startDate,
+    endDate,
+    location,
+    memberSetting,
+    memberList,
+    userName,
+  ]);
 
   const onTypeChange = useCallback(
     (index) => {
@@ -146,43 +199,36 @@ const MoimCreate = memo(({ category }) => {
   const onTitleChange = useCallback((e) => {
     const { value } = e.target;
 
-    setCommonDetail(
-      produce((draft) => {
-        draft.title = value;
-      }),
-    );
+    setTitle(value);
   }, []);
 
   const onLockChange = useCallback(() => {
-    setCommonDetail(
-      produce((draft) => {
-        draft.isLock = !draft.isLock;
-        if (draft.isLock) {
-          draft.passNumber = new Array(6).fill('');
-        }
-      }),
-    );
-  }, [dispatch]);
+    setIsLock((isLock) => {
+      if (isLock) {
+        setPassNumber(new Array(6).fill(''));
+      }
+      return !isLock;
+    });
+  }, [isLock]);
 
-  const onPassNumberChange = useCallback((e, i) => {
-    const { value } = e.target;
+  const onPassNumberChange = useCallback(
+    (e, i) => {
+      const { value } = e.target;
 
-    if (value <= 9) {
-      setCommonDetail(
-        produce((draft) => {
-          draft.passNumber[i] = value;
-        }),
-      );
-    }
-  }, []);
+      if (value <= 9) {
+        setPassNumber(
+          produce((draft) => {
+            draft[i] = value;
+          }),
+        );
+      }
+    },
+    [passNumber],
+  );
 
   const onStatusChange = useCallback(
     (index) => {
-      setAddDetail(
-        produce((draft) => {
-          draft.status = moimStatus[index].name;
-        }),
-      );
+      setStatus(moimStatus[index].name);
     },
     [moimStatus],
   );
@@ -191,18 +237,18 @@ const MoimCreate = memo(({ category }) => {
     const value = parseInt(!isEmpty(e.target.value) ? e.target.value : 0);
 
     if (value >= 0 && value <= 99999999) {
-      setAddDetail(
+      setPayInfo(
         produce((draft) => {
-          draft.payInfo.cost = value ? value : 0;
+          draft.cost = value ? value : 0;
         }),
       );
     }
   }, []);
 
   const onCostInputReset = useCallback(() => {
-    setAddDetail(
+    setPayInfo(
       produce((draft) => {
-        draft.payInfo.cost = 0;
+        draft.cost = 0;
       }),
     );
 
@@ -210,9 +256,9 @@ const MoimCreate = memo(({ category }) => {
   }, []);
 
   const onBankChange = useCallback((bank) => {
-    setAddDetail(
+    setPayInfo(
       produce((draft) => {
-        draft.payInfo.bank = bank;
+        draft.bank = bank;
       }),
     );
   }, []);
@@ -220,17 +266,17 @@ const MoimCreate = memo(({ category }) => {
   const onAccountInputChange = useCallback((e) => {
     const { value } = e.target;
 
-    setAddDetail(
+    setPayInfo(
       produce((draft) => {
-        draft.payInfo.account = value ? value : '';
+        draft.account = value ? value : '';
       }),
     );
   }, []);
 
   const onAccountInputReset = useCallback(() => {
-    setAddDetail(
+    setPayInfo(
       produce((draft) => {
-        draft.payInfo.account = '';
+        draft.account = '';
       }),
     );
 
@@ -238,27 +284,17 @@ const MoimCreate = memo(({ category }) => {
   }, []);
 
   const onUrlCopy = useCallback(() => {
-    const { url } = addDetail;
-
     navigator.clipboard.writeText(url);
-  }, [addDetail]);
+  }, [url]);
 
   const onUrlInputChange = useCallback((e) => {
     const value = e.target.value;
 
-    setAddDetail(
-      produce((draft) => {
-        draft.url = value;
-      }),
-    );
+    setUrl(value);
   }, []);
 
   const onUrlInputReset = useCallback(() => {
-    setAddDetail(
-      produce((draft) => {
-        draft.url = '';
-      }),
-    );
+    setUrl('');
 
     urlInputRef.current.focus();
   }, []);
@@ -271,31 +307,25 @@ const MoimCreate = memo(({ category }) => {
     const trimValue = trim(tagInput);
 
     if (
-      findIndex(commonDetail.tags, (item) => item === trimValue) === -1 &&
+      findIndex(tags, (item) => item === trimValue) === -1 &&
       trimValue !== ''
     ) {
-      setCommonDetail(
+      setTags(
         produce((draft) => {
-          draft.tags.push(trimValue);
+          draft.push(trimValue);
         }),
       );
     }
 
     setTagInput('');
     tagInputRef.current.focus();
-  }, [commonDetail, tagInput]);
+  }, [tags, tagInput]);
 
   const onTagRemove = useCallback(
     (tag) => {
-      const tags = filter(commonDetail.tags, (item) => item !== tag);
-
-      setCommonDetail(
-        produce((draft) => {
-          draft.tags = tags;
-        }),
-      );
+      setTags(filter(tags, (item) => item !== tag));
     },
-    [commonDetail],
+    [tags],
   );
 
   const onKeyTagEnter = useCallback(
@@ -311,11 +341,7 @@ const MoimCreate = memo(({ category }) => {
     const value = e.target.value;
 
     if (value.length <= DESCRIPTION_MAX_LENGTH) {
-      setCommonDetail(
-        produce((draft) => {
-          draft.description = value;
-        }),
-      );
+      setDescription(value);
     }
   }, []);
 
@@ -324,68 +350,67 @@ const MoimCreate = memo(({ category }) => {
   }, []);
 
   const onScheduleChange = useCallback((name, date) => {
-    setAddDetail(
-      produce((draft) => {
-        draft[name]._seconds = dayjs(date).unix();
-      }),
-    );
+    if (name === 'startDate') {
+      setStartDate(
+        produce((draft) => {
+          draft._seconds = dayjs(date).unix();
+        }),
+      );
+    } else if (name === 'endDate') {
+      setEndDate(
+        produce((draft) => {
+          draft._seconds = dayjs(date).unix();
+        }),
+      );
+    }
   }, []);
 
   const onHandleLocation = useCallback((name, coord) => {
-    setAddDetail(
-      produce((draft) => {
-        draft.location = {
-          name,
-          coordinate: {
-            _latitude: coord[0],
-            _longitude: coord[1],
-          },
-        };
-      }),
-    );
+    setLocation({
+      name,
+      coordinate: {
+        _latitude: coord[0],
+        _longitude: coord[1],
+      },
+    });
   }, []);
 
   const onIsSelfCheck = useCallback(() => {
-    setAddDetail(
+    setMemberSetting(
       produce((draft) => {
-        draft.memberSetting.isSelf = !draft.memberSetting.isSelf;
+        draft.isSelf = !draft.isSelf;
       }),
     );
   }, []);
 
   const onJoinFormCheck = useCallback((name) => {
-    setAddDetail(
+    setMemberSetting(
       produce((draft) => {
-        draft.memberSetting.formData[name] = !draft.memberSetting.formData[
-          name
-        ];
+        draft.formData[name] = !draft.formData[name];
       }),
     );
   }, []);
 
   const onChangeMemberCount = useCallback(
     (e) => {
-      const {
-        memberSetting: { count },
-      } = addDetail;
+      const { count } = memberSetting;
 
       switch (e) {
         case 'increment':
           if (count !== 999) {
-            setAddDetail(
+            setMemberSetting(
               produce((draft) => {
-                draft.memberSetting.count = count + 1;
+                draft.count = count + 1;
               }),
             );
           }
 
           return false;
-
         case 'decrement':
           if (count !== 0) {
-            setAddDetail(
+            setMemberSetting(
               produce((draft) => {
-                draft.memberSetting.count = count - 1;
+                draft.count = count - 1;
               }),
             );
           }
@@ -395,9 +420,9 @@ const MoimCreate = memo(({ category }) => {
           const value = parseInt(!isEmpty(e.target.value) ? e.target.value : 0);
 
           if (value > -1) {
-            setAddDetail(
+            setMemberSetting(
               produce((draft) => {
-                draft.memberSetting.count = value;
+                draft.count = value;
               }),
             );
           }
@@ -405,7 +430,7 @@ const MoimCreate = memo(({ category }) => {
           return false;
       }
     },
-    [addDetail],
+    [memberSetting],
   );
 
   const detailComminityTabBoxSwitch = useMemo(() => {
@@ -415,15 +440,13 @@ const MoimCreate = memo(({ category }) => {
       default:
         return false;
     }
-  }, [commonDetail, isEdit, tabIndex]);
+  }, [tabIndex]);
 
   const detailMeetingTabBoxSwitch = useMemo(() => {
     switch (tabIndex) {
       case 0:
         return <MoimCreateContent />;
       case 1:
-        const { startDate, endDate } = addDetail;
-
         return (
           <MoimCreateSchedule
             isEdit={isEdit}
@@ -433,8 +456,6 @@ const MoimCreate = memo(({ category }) => {
           />
         );
       case 2:
-        const { location } = addDetail;
-
         return (
           <MoimCreateMap
             isEdit={isEdit}
@@ -443,15 +464,13 @@ const MoimCreate = memo(({ category }) => {
           />
         );
       case 3:
-        const { memberSetting, memberList } = addDetail;
-
         return (
           <MoimCreateMember
             isEdit={isEdit}
             userId={userId}
             userImage={userImage}
-            userName={userName}
             userAvatar={userAvatar}
+            userName={userName}
             memberSetting={memberSetting}
             memberList={memberList}
             onIsSelfCheck={onIsSelfCheck}
@@ -462,15 +481,27 @@ const MoimCreate = memo(({ category }) => {
       default:
         return false;
     }
-  }, [isEdit, commonDetail, addDetail, tabIndex]);
+  }, [
+    tabIndex,
+    isEdit,
+    startDate,
+    endDate,
+    location,
+    memberSetting,
+    memberList,
+    userId,
+    userImage,
+    userAvatar,
+    userName,
+  ]);
 
   useEffect(() => {
     if (category === 'community') {
-      setAddDetail(moimCommunityData);
       setType(moimCommunityData.type);
+      setStatus(moimCommunityData.status);
     } else if (category === 'meeting') {
-      setAddDetail(moimMeetingData);
       setType(moimMeetingData.type);
+      setStatus(moimMeetingData.status);
     }
     setTabIndex(0);
   }, [category]);
@@ -479,16 +510,6 @@ const MoimCreate = memo(({ category }) => {
     setTypeIndex(findIndex(moimType, (item) => item.name === type));
   }, [moimType, type]);
 
-  const {
-    likeCount,
-    title,
-    isLock,
-    passNumber,
-    tags,
-    description,
-  } = commonDetail;
-  const { status, payInfo, url } = addDetail;
-
   return (
     <MoimCreateWrap>
       <MoimCreateSummary
@@ -496,11 +517,10 @@ const MoimCreate = memo(({ category }) => {
         userImage={userImage}
         userAvatar={userAvatar}
         userName={userName}
-        likeCount={likeCount}
+        likeCount={0}
         isSave={
           !isEqual(
-            category === 'community' ? moimCommunityData : moimMeetingData,
-            commonDetail,
+            category === 'community' ? moimCommunityData : moimMeetingData
           )
         }
         onMainImageChange={onMainImageChange}

@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-import { isUndefined } from 'lodash';
 import MoimCreateType from './MoimCreateType';
 import MoimCreateTitle from './MoimCreateTitle';
 import MoimCreateLock from './MoimCreateLock';
@@ -49,6 +48,7 @@ const MoimCreateBase = memo(({
   onTagRemove,
   onDescriptionChange,
 }) => {
+
   return (
     <MoimCreateBaseWrap>
       {typeIndex !== -1 && moimType[typeIndex] !== undefined && (
@@ -79,7 +79,16 @@ const MoimCreateBase = memo(({
         status={status}
         onStatusChange={onStatusChange}
       />
-      {!isUndefined(payInfo) && (
+      {category === 'community' ? (
+        <MoimCreateUrl
+          isEdit={isEdit}
+          url={url}
+          urlInputRef={urlInputRef}
+          onUrlCopy={onUrlCopy}
+          onUrlInputChange={onUrlInputChange}
+          onUrlInputReset={onUrlInputReset}
+        />
+      ) : (
         <MoimCreatePayInfo
           isEdit={isEdit}
           payInfo={payInfo}
@@ -90,16 +99,6 @@ const MoimCreateBase = memo(({
           onBankChange={onBankChange}
           onAccountInputChange={onAccountInputChange}
           onAccountInputReset={onAccountInputReset}
-        />
-      )}
-      {!isUndefined(url) && (
-        <MoimCreateUrl
-          isEdit={isEdit}
-          url={url}
-          urlInputRef={urlInputRef}
-          onUrlCopy={onUrlCopy}
-          onUrlInputChange={onUrlInputChange}
-          onUrlInputReset={onUrlInputReset}
         />
       )}
       <MoimCreateTag

@@ -409,7 +409,7 @@ export const CardScheduleBoxWrap = styled.div`
         }
       }
       .day {
-        font-size: 2.5rem;
+        font-size: 4rem;
         font-weight: 600;
         color: ${({ theme }) => theme.title};
       }
@@ -463,15 +463,18 @@ export const CardScheduleBoxWrap = styled.div`
             display: none;
           }
           span {
-            background-color: ${color.gray};
-            color: ${color.white};
+            background-color: ${color.none};
+            color: ${color.gray};
             &:nth-child(1) {
-              background-color: ${color.red};
+              color: ${color.red};
             }
             &:nth-child(7) {
-              background-color: ${color.blue};
+              color: ${color.blue};
             }
           }
+        }
+        .day {
+          font-size: 2.5rem;
         }
       }
     }
@@ -514,9 +517,13 @@ export const CardScheduleBoxWrap = styled.div`
 
   @media screen and (max-width: 768px) {
     .dateBox {
-      .dayBox {
-        .day {
-          font-size: 4rem;
+      &.to {
+        .dayBox {
+          .dayBoxInner {
+            .day {
+              font-size: 4rem;
+            }
+          }
         }
       }
     }
