@@ -18,12 +18,12 @@
 <br />
 ## **Tech Used**
 ---
-### **BACKEND**
+### *backend*
 - firebase
 - express
 <br />
 
-### **FRONTEND**
+### *frontend*
 - react
 - webpack
 - styled-components
