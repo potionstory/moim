@@ -97,7 +97,7 @@ export const MoimDetailSummaryWrap = styled.div`
       }
     }
   }
-  
+
   @media screen and (max-width: 768px) {
     width: 100%;
     .summaryInner {
@@ -466,7 +466,7 @@ export const MoimDetailTagWrap = styled.div`
       }
     }
   }
-  
+
   @media screen and (max-width: 768px) {
     .tagContent {
       .tagInput {
@@ -569,7 +569,7 @@ export const MoimDetailAdditionalWrap = styled.div`
       }
     }
   }
-  
+
   @media screen and (max-width: 768px) {
     .tabContent {
       padding-top: 100%;
@@ -1023,6 +1023,11 @@ export const MoimDetailMapForm = styled.form`
         background-color: ${({ isEdit, theme }) =>
           !isEdit ? theme.theme : theme.title};
         color: ${({ isEdit, theme }) => (!isEdit ? theme.title : theme.theme)};
+        &:disabled {
+          -webkit-text-fill-color: ${({ isEdit, theme }) =>
+            !isEdit ? theme.title : theme.theme};
+          opacity: 1;
+        }
       }
     }
     button {
@@ -1215,7 +1220,8 @@ export const MoimDetailMemberWrap = styled.div`
             overflow: hidden;
             height: 40px;
             margin-right: 12px;
-            img, svg {
+            img,
+            svg {
               width: 40px;
               height: 40px;
               border: 3px solid ${color.gray};
@@ -1236,7 +1242,8 @@ export const MoimDetailMemberWrap = styled.div`
               transition: all 0.2s ease-out;
             }
             &:hover {
-              img, svg {
+              img,
+              svg {
                 border-color: ${({ theme }) => theme.theme};
               }
               .name {
@@ -1622,7 +1629,7 @@ export const MoimDetailMemberWrap = styled.div`
                     isMemberInfoOpen &&
                     css`
                       background-color: ${({ theme }) => theme.theme};
-                    `};  
+                    `};
                 }
               }
             }
@@ -1637,7 +1644,7 @@ export const MoimDetailMemberWrap = styled.div`
                     isWaiterInfoOpen &&
                     css`
                       background-color: ${({ theme }) => theme.theme};
-                    `};  
+                    `};
                 }
               }
             }
