@@ -7,8 +7,9 @@
 <br />
 <br />
 ## **Feature**
-***
+---
 - SPA (Single Page Application)
+- Responsive Web
 - Light / Dark mode
 - Interactive UI
 <br />
@@ -16,8 +17,7 @@
 <br />
 <br />
 ## **Tech Used**
-***
-
+---
 ### **BACKEND**
 - firebase
 - express
