@@ -43,16 +43,37 @@ export const LeftHead = styled.div`
   padding: 20px 0;
   h1 {
     a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: block;
+      position: relative;
       width: 40px;
       height: 40px;
-      border-radius: 4px;
-      background-color: ${({ theme }) => theme.theme};
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: ${({ theme }) => theme.title};
+      span {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border-radius: 4px;
+        opacity: 0;
+        &:nth-child(1) {
+          top: 0;
+          left: -18px;
+          background-color: ${color.red};
+        }
+        &:nth-child(2) {
+          top: -18px;
+          left: 22px;
+          background-color: ${color.orange};
+        }
+        &:nth-child(3) {
+          top: 22px;
+          left: 40px;
+          background-color: ${color.green};
+        }
+        &:nth-child(4) {
+          top: 40px;
+          left: 0;
+          background-color: ${color.blue};
+        }
+      }
     }
   }
   .themeToggle {

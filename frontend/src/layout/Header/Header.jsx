@@ -98,7 +98,56 @@ const Header = memo(() => {
       <HeaderInnder>
         <LeftHead isLight={theme}>
           <h1>
-            <Link to="/">M</Link>
+            <Link to="/">
+              <motion.span
+                animate={{
+                  x: [0, 18, 18, 18, 18, 18, 18, 0, 0, 0, 0],
+                  opacity: [0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
+                }}
+                transition={{
+                  duration: 4,
+                  times: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+                  loop: Infinity,
+                  ease: 'backInOut',
+                }}
+              />
+              <motion.span
+                animate={{
+                  y: [0, 0, 18, 18, 18, 18, 18, 18, 0, 0, 0],
+                  opacity: [0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+                }}
+                transition={{
+                  duration: 4,
+                  times: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+                  loop: Infinity,
+                  ease: 'backInOut',
+                }}
+              />
+              <motion.span
+                animate={{
+                  x: [0, 0, 0, -18, -18, -18, -18, -18, -18, 0, 0],
+                  opacity: [0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
+                }}
+                transition={{
+                  duration: 4,
+                  times: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+                  loop: Infinity,
+                  ease: 'backInOut',
+                }}
+              />
+              <motion.span
+                animate={{
+                  y: [0, 0, 0, 0, -18, -18, -18, -18, -18, -18, 0],
+                  opacity: [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0],
+                }}
+                transition={{
+                  duration: 4,
+                  times: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+                  loop: Infinity,
+                  ease: 'backInOut',
+                }}
+              />
+            </Link>
           </h1>
           <div className="themeToggle">
             <label>
