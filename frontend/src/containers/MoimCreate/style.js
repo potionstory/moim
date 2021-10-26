@@ -8,6 +8,11 @@ export const MoimCreateWrap = styled.section`
   padding: 24px;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.main};
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    padding: 12px;
+  }
 `;
 
 export const MoimCreateSummaryWrap = styled.div`
@@ -18,7 +23,7 @@ export const MoimCreateSummaryWrap = styled.div`
     .thumb {
       overflow: hidden;
       position: relative;
-      height: 226px;
+      padding-top: 100%;
       border-radius: 4px;
       background-color: ${({ theme }) => theme.sub};
       .btnUpload {
@@ -70,6 +75,9 @@ export const MoimCreateSummaryWrap = styled.div`
         }
       }
       img {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -110,6 +118,18 @@ export const MoimCreateSummaryWrap = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    .summaryInner {
+      .thumb {
+        height: 100%;
+        .btnUpload {
+          opacity: 1;
+        }
+      }
+    }
+  }
 `;
 
 export const MoimCreateInfo = styled.div`
@@ -118,11 +138,25 @@ export const MoimCreateInfo = styled.div`
   flex: 1;
   overflow: hidden;
   margin-left: 24px;
+
+  @media screen and (max-width: 768px) {
+    margin-top: 24px;
+    margin-left: 0;
+    padding-top: 24px;
+    border-top: 1px solid ${color.gray};
+  }
 `;
 
 export const MoimCreateBaseWrap = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media screen and (max-width: 768px) {
+    margin-top: 24px;
+    margin-left: 0;
+    padding-top: 24px;
+    border-top: 1px solid ${color.gray};
+  }
 `;
 
 export const MoimCreateTypeWrap = styled.div`
@@ -214,6 +248,12 @@ export const MoimCreateLockWrap = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    .lockContent {
+      flex-direction: column;
+    }
+  }
 `;
 
 export const MoimCreatePayInfoWrap = styled.div`
@@ -287,6 +327,21 @@ export const MoimCreatePayInfoWrap = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    .payContent {
+      flex-direction: column;
+      gap: 6px 0;
+      .payInfo {
+        padding: 0;
+        border-left: 0;
+      }
+      .payInput {
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+  }
 `;
 
 export const MoimCreateStatusWrap = styled.div`
@@ -308,6 +363,13 @@ export const MoimCreateStatusWrap = styled.div`
   }
   .statusContent {
     margin-left: 12px;
+  }
+
+  @media screen and (max-width: 768px) {
+    align-items: flex-start;
+    .statusContent {
+      padding-top: 10px;
+    }
   }
 `;
 
@@ -415,6 +477,14 @@ export const MoimCreateTagWrap = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    .tagContent {
+      .tagInput {
+        width: 100%;
+      }
+    }
+  }
 `;
 
 export const MoimCreateDescriptionWrap = styled.div`
@@ -508,6 +578,12 @@ export const MoimCreateAdditionalWrap = styled.div`
       .tabContentBox {
         height: 100%;
       }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .tabContent {
+      padding-top: 100%;
     }
   }
 `;
@@ -668,6 +744,68 @@ export const MoimCreateScheduleWrap = styled.div`
       height: 40px;
       svg {
         font-size: 4rem;
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .dateInner {
+      padding: 12px;
+      width: 50%;
+      font-size: 1.5rem;
+      .dateBox {
+        padding-top: 100%;
+        width: 100%;
+        height: 0;
+        .weekDot {
+          top: 9px;
+          svg {
+            font-size: 0.5rem;
+          }
+          span {
+            padding: 0 10px;
+            height: 20px;
+            font-size: 0.625rem;
+            line-height: 20px;
+          }
+        }
+        .day {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          font-size: 4rem;
+          transform: translate(-50%, -50%);
+        }
+        .btnCalendar {
+          bottom: 12px;
+          button {
+            width: 24px;
+            height: 24px;
+            svg {
+              font-size: 0.75rem;
+            }
+          }
+        }
+      }
+    }
+    .progress {
+      display: none;
+    }
+    .progressMobile {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      background-color: ${({ theme }) => theme.theme};
+      transform: translate(-50%, -50%);
+      svg {
+        font-size: 2rem;
+        color: ${({ theme }) => theme.title};
       }
     }
   }
@@ -859,6 +997,12 @@ export const MoimCreateMapWrap = styled.div`
           }
         }
       }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .locationWrap {
+      max-width: 100%;
     }
   }
 `;
@@ -1357,6 +1501,125 @@ export const MoimCreateMemberWrap = styled.div`
                     font-size: 0.625rem;
                     color: ${({ theme }) => theme.title};
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 12px;
+    .memberInner {
+      .memberTop {
+        flex-direction: column;
+        .memberClient {
+          margin-top: 12px;
+        }
+      }
+      .memberList {
+        margin-top: 24px;
+        .listHead {
+          position: relative;
+          .left {
+            .counts {
+              display: none;
+            }
+            .info {
+              display: block;
+              button {
+                position: relative;
+                z-index: 20;
+              }
+              .counts {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                position: absolute;
+                top: 0;
+                right: 0;
+                z-index: 20;
+                padding: 4px 12px;
+                border-radius: 4px;
+                background-color: ${({ theme }) => theme.title};
+                .count {
+                  margin: 4px 0;
+                  color: ${({ theme }) => theme.main};
+                }
+                .separator {
+                  display: none;
+                }
+              }
+            }
+          }
+        }
+        .listBody {
+          ul {
+            li {
+              width: calc((100% - 36px) / 4);
+              .listBox {
+                .listInner {
+                  .index {
+                    font-size: 1rem;
+                    line-height: 16px;
+                  }
+                  .avatar {
+                    width: 36px;
+                    height: 36px;
+                    &.isClient,
+                    &.isStaff {
+                      svg {
+                        font-size: 1rem;
+                      }
+                    }
+                  }
+                  .btnRemove,
+                  .payment {
+                    top: 4px;
+                    right: 4px;
+                    width: 16px;
+                    height: 16px;
+                    svg {
+                      font-size: 0.5rem;
+                    }
+                  }
+                  .name {
+                    height: 16px;
+                    font-size: 0.625rem;
+                    line-height: 16px;
+                  }
+                }
+              }
+            }
+          }
+        }
+        &:nth-child(2) {
+          .listHead {
+            .left {
+              .info {
+                button {
+                  ${({ isMemberInfoOpen }) =>
+                    isMemberInfoOpen &&
+                    css`
+                      background-color: ${({ theme }) => theme.theme};
+                    `};  
+                }
+              }
+            }
+          }
+        }
+        &:nth-child(3) {
+          .listHead {
+            .left {
+              .info {
+                button {
+                  ${({ isWaiterInfoOpen }) =>
+                    isWaiterInfoOpen &&
+                    css`
+                      background-color: ${({ theme }) => theme.theme};
+                    `};  
                 }
               }
             }

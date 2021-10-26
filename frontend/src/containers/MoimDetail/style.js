@@ -569,6 +569,7 @@ export const MoimDetailAdditionalWrap = styled.div`
       }
     }
   }
+  
   @media screen and (max-width: 768px) {
     .tabContent {
       padding-top: 100%;
