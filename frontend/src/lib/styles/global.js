@@ -47,6 +47,7 @@ const global = createGlobalStyle`
     border: none;
     background-color: transparent;
     font-family: inherit;
+    margin: 0;
     padding: 0;
     cursor: pointer;
     &:focus {
