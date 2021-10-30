@@ -1,4 +1,5 @@
 import api from './index';
+import { isNull } from 'lodash';
 
 // get all community
 export const getAllCommunityAPI = () => api.get('/communitys');
@@ -37,8 +38,8 @@ export const postCommunityAPI = (bodyParams) => {
   formData.append('mainImageFile', mainImageFile);
 
   // passNumber
-  if (passNumber.join("").length === 6) {
-    formData.set('passNumber', passNumber.join(""));
+  if (passNumber.join('').length === 6) {
+    formData.set('passNumber', passNumber.join(''));
   }
 
   return api
@@ -69,41 +70,41 @@ export const postCommunityPassNumberAPI = (communityId, bodyParams) => {
 
 // put one community
 export const putCommunityAPI = (communityId, bodyParams, thumbImageFile) => {
-  const {
-    type,
-    title,
-    isLock,
-    passNumber,
-    status,
-    description,
-    url,
-    tags,
-    userName,
-    mainImage,
-  } = bodyParams;
-
-  const formData = new FormData();
-
-  formData.set('type', type);
-  formData.set('title', title);
-  formData.set('isLock', JSON.stringify(isLock));
-  formData.set('status', status);
-  formData.set('description', description);
-  formData.set('url', url);
-  formData.set('tags', JSON.stringify(tags));
-  formData.set('userName', userName);
-
-  // thumbImage
-  if (thumbImageFile !== null) {
-    formData.append('thumbImageFile', thumbImageFile);
+  if (isNull(thumbImageFile)) {
+    return api.put(`/community/${communityId}`, bodyParams);
   } else {
-    formData.set('mainImage', mainImage);
-  }
+    const formData = new FormData();
+    const {
+      type,
+      title,
+      isLock,
+      passNumber,
+      status,
+      description,
+      url,
+      tags,
+      userName,
+    } = bodyParams;
 
-  // passNumber
-  if (passNumber.join("").length === 6) {
-    formData.set('passNumber', passNumber.join(""));
-  }
+    formData.set('type', type);
+    formData.set('title', title);
+    formData.set('isLock', JSON.stringify(isLock));
+    formData.set('status', status);
+    formData.set('description', description);
+    formData.set('url', url);
+    formData.set('tags', JSON.stringify(tags));
+    formData.set('userName', userName);
 
-  return api.put(`/community/${communityId}`, formData);
+    // thumbImage
+    if (thumbImageFile !== null) {
+      formData.append('thumbImageFile', thumbImageFile);
+    }
+
+    // passNumber
+    if (passNumber.join('').length === 6) {
+      formData.set('passNumber', passNumber.join(''));
+    }
+
+    return api.put(`/community/thumb/${communityId}`, formData);
+  }
 };

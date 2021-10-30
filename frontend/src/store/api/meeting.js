@@ -1,3 +1,4 @@
+import { isNull } from 'lodash';
 import api from './index';
 
 // get all meeting
@@ -10,7 +11,6 @@ export const postMeetingAPI = (bodyParams) => {
     title,
     isLock,
     passNumber,
-    status,
     description,
     payInfo,
     tags,
@@ -30,7 +30,6 @@ export const postMeetingAPI = (bodyParams) => {
   formData.set('type', type);
   formData.set('title', title);
   formData.set('isLock', JSON.stringify(isLock));
-  formData.set('status', status);
   formData.set('description', description);
   formData.set('payInfo', JSON.stringify(payInfo));
   formData.set('tags', JSON.stringify(tags));
@@ -64,55 +63,57 @@ export const getMeetingAPI = (meetingId) => api.get(`/meeting/${meetingId}`);
 
 // put one meeting
 export const putMeetingAPI = (meetingId, bodyParams, thumbImageFile) => {
-  const {
-    type,
-    title,
-    isLock,
-    passNumber,
-    status,
-    payInfo,
-    description,
-    startDate,
-    endDate,
-    location,
-    memberSetting,
-    memberList,
-    waiter,
-    tags,
-    userName,
-    mainImage,
-  } = bodyParams;
-
-  const formData = new FormData();
-
-  formData.set('type', type);
-  formData.set('title', title);
-  formData.set('isLock', JSON.stringify(isLock));
-  formData.set('status', status);
-  formData.set('payInfo', JSON.stringify(payInfo));
-  formData.set('description', description);
-  formData.set('startDate', JSON.stringify(startDate));
-  formData.set('endDate', JSON.stringify(endDate));
-  formData.set('location', JSON.stringify(location));
-  formData.set('memberSetting', JSON.stringify(memberSetting));
-  formData.set('memberList', JSON.stringify(memberList));
-  formData.set('waiter', JSON.stringify(waiter));
-  formData.set('tags', JSON.stringify(tags));
-  formData.set('userName', userName);
-
-  // thumbImage
-  if (thumbImageFile !== null) {
-    formData.append('thumbImageFile', thumbImageFile);
+  if (isNull(thumbImageFile)) {
+    return api.put(`/meeting/${meetingId}`, bodyParams);
   } else {
-    formData.set('mainImage', mainImage);
-  }
+    const {
+      type,
+      title,
+      isLock,
+      passNumber,
+      payInfo,
+      description,
+      startDate,
+      endDate,
+      location,
+      memberSetting,
+      memberList,
+      waiter,
+      tags,
+      userName,
+      mainImage,
+    } = bodyParams;
 
-  // passNumber
-  if (passNumber.join('').length === 6) {
-    formData.set('passNumber', passNumber.join(''));
-  }
+    const formData = new FormData();
 
-  return api.put(`/meeting/${meetingId}`, formData);
+    formData.set('type', type);
+    formData.set('title', title);
+    formData.set('isLock', JSON.stringify(isLock));
+    formData.set('payInfo', JSON.stringify(payInfo));
+    formData.set('description', description);
+    formData.set('startDate', JSON.stringify(startDate));
+    formData.set('endDate', JSON.stringify(endDate));
+    formData.set('location', JSON.stringify(location));
+    formData.set('memberSetting', JSON.stringify(memberSetting));
+    formData.set('memberList', JSON.stringify(memberList));
+    formData.set('waiter', JSON.stringify(waiter));
+    formData.set('tags', JSON.stringify(tags));
+    formData.set('userName', userName);
+
+    // thumbImage
+    if (thumbImageFile !== null) {
+      formData.append('thumbImageFile', thumbImageFile);
+    } else {
+      formData.set('mainImage', mainImage);
+    }
+
+    // passNumber
+    if (passNumber.join('').length === 6) {
+      formData.set('passNumber', passNumber.join(''));
+    }
+
+    return api.put(`/meeting/thumb/${meetingId}`, formData);
+  }
 };
 
 // post meeting join

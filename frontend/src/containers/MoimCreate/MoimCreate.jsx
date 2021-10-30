@@ -98,7 +98,7 @@ const MoimCreate = memo(({ category }) => {
   );
 
   const moimStatus = useMemo(
-    () => (category === 'community' ? communityStatus : meetingStatus),
+    () => (category === 'community' ? communityStatus : [meetingStatus[0]]),
     [category],
   );
 
@@ -520,7 +520,7 @@ const MoimCreate = memo(({ category }) => {
         likeCount={0}
         isSave={
           !isEqual(
-            category === 'community' ? moimCommunityData : moimMeetingData
+            category === 'community' ? moimCommunityData : moimMeetingData,
           )
         }
         onMainImageChange={onMainImageChange}

@@ -1,12 +1,34 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
+import dayjs from 'dayjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faWonSign } from '@fortawesome/free-solid-svg-icons';
 import { getCommunityIcon, getMeetingIcon } from '../../utils/commonUtil';
 import { CardHeaderWrap } from './style';
 
 const CardHeader = memo(({ item, category, onHandleDetail }) => {
-  const { userId, type, title, isLock, payInfo, status } = item;
+  const nowDate = dayjs().unix();
+  const { userId, type, title, isLock, payInfo } = item;
   const id = item[`${category}Id`];
+
+  const status = useMemo(() => {
+    if (category === 'meeting' && !item.isLock) {
+      const { startDate, endDate, memberNowCount, memberMaxCount } = item;
+
+      if (nowDate < startDate._seconds) {
+        if (memberNowCount < memberMaxCount) {
+          return 'empty';
+        } else {
+          return 'full';
+        }
+      } else if (nowDate >= startDate._seconds && nowDate <= endDate._seconds) {
+        return 'proceeding';
+      } else {
+        return 'complete';
+      }
+    } else {
+      return item.status;
+    }
+  }, [item, category, nowDate]);
 
   return (
     <CardHeaderWrap
@@ -34,12 +56,12 @@ const CardHeader = memo(({ item, category, onHandleDetail }) => {
               <FontAwesomeIcon icon={faLock} />
             </span>
           )}
-          {category === 'meeting' && (
+          {!isLock && category === 'meeting' && (
             <span className="pay">
               <FontAwesomeIcon icon={faWonSign} />
             </span>
           )}
-          <span className="status">{status}</span>
+          {!isLock && <span className="status">{status}</span>}
         </div>
       </div>
     </CardHeaderWrap>

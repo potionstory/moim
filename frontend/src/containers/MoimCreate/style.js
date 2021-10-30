@@ -1401,8 +1401,8 @@ export const MoimCreateMemberWrap = styled.div`
                   align-items: center;
                   justify-content: center;
                   position: absolute;
-                  top: 3px;
-                  right: 3px;
+                  top: 4px;
+                  right: 4px;
                   width: 20px;
                   height: 20px;
                   border-radius: 10px;
@@ -1491,8 +1491,8 @@ export const MoimCreateMemberWrap = styled.div`
                   align-items: center;
                   justify-content: center;
                   position: absolute;
-                  top: 3px;
-                  left: 3px;
+                  top: 4px;
+                  left: 4px;
                   width: 20px;
                   height: 20px;
                   border-radius: 10px;
@@ -1577,8 +1577,6 @@ export const MoimCreateMemberWrap = styled.div`
                   }
                   .btnRemove,
                   .payment {
-                    top: 4px;
-                    right: 4px;
                     width: 16px;
                     height: 16px;
                     svg {
@@ -1604,7 +1602,7 @@ export const MoimCreateMemberWrap = styled.div`
                     isMemberInfoOpen &&
                     css`
                       background-color: ${({ theme }) => theme.theme};
-                    `};  
+                    `};
                 }
               }
             }
@@ -1619,7 +1617,7 @@ export const MoimCreateMemberWrap = styled.div`
                     isWaiterInfoOpen &&
                     css`
                       background-color: ${({ theme }) => theme.theme};
-                    `};  
+                    `};
                 }
               }
             }

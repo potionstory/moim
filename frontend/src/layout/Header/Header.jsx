@@ -179,57 +179,70 @@ const Header = memo(() => {
           </MenuBar>
           <Menu>
             <MenuList>
-              <MenuItem>
-                <TextButton
-                  onClickEvent={onSignInModalOpen}
-                  icon={faSignInAlt}
-                  text="sign in"
-                />
-              </MenuItem>
-              <MenuItem>
-                <TextButton
-                  onClickEvent={onSignUpModalOpen}
-                  icon={faUserPlus}
-                  text="sign up"
-                />
-              </MenuItem>
-              <MenuItem>
-                <TextButton
-                  onClickEvent={onSignOut}
-                  icon={faSignOutAlt}
-                  text="sign out"
-                />
-              </MenuItem>
+              {!isAuth ? (
+                <>
+                  <MenuItem>
+                    <TextButton
+                      onClickEvent={onSignInModalOpen}
+                      icon={faSignInAlt}
+                      text="sign in"
+                    />
+                  </MenuItem>
+                  <MenuItem>
+                    <TextButton
+                      onClickEvent={onSignUpModalOpen}
+                      icon={faUserPlus}
+                      text="sign up"
+                    />
+                  </MenuItem>
+                </>
+              ) : (
+                <MenuItem>
+                  <TextButton
+                    onClickEvent={onSignOut}
+                    icon={faSignOutAlt}
+                    text="sign out"
+                  />
+                </MenuItem>
+              )}
             </MenuList>
             <MenuListMobile
               as={motion.ul}
               initial={{ x: 0 }}
-              animate={{ x: isMenuBarActive ? 0 : '100%', opacity: isMenuBarActive ? 1 : 0 }}
+              animate={{
+                x: isMenuBarActive ? 0 : '100%',
+                opacity: isMenuBarActive ? 1 : 0,
+              }}
               transition={{
                 ease: 'backInOut',
               }}
             >
-              <MenuItem>
-                <TextButton
-                  onClickEvent={onSignInModalOpen}
-                  icon={faSignInAlt}
-                  text="sign in"
-                />
-              </MenuItem>
-              <MenuItem>
-                <TextButton
-                  onClickEvent={onSignUpModalOpen}
-                  icon={faUserPlus}
-                  text="sign up"
-                />
-              </MenuItem>
-              <MenuItem>
-                <TextButton
-                  onClickEvent={onSignOut}
-                  icon={faSignOutAlt}
-                  text="sign out"
-                />
-              </MenuItem>
+              {!isAuth ? (
+                <>
+                  <MenuItem>
+                    <TextButton
+                      onClickEvent={onSignInModalOpen}
+                      icon={faSignInAlt}
+                      text="sign in"
+                    />
+                  </MenuItem>
+                  <MenuItem>
+                    <TextButton
+                      onClickEvent={onSignUpModalOpen}
+                      icon={faUserPlus}
+                      text="sign up"
+                    />
+                  </MenuItem>
+                </>
+              ) : (
+                <MenuItem>
+                  <TextButton
+                    onClickEvent={onSignOut}
+                    icon={faSignOutAlt}
+                    text="sign out"
+                  />
+                </MenuItem>
+              )}
             </MenuListMobile>
             {isAuth && (
               <AvatarBox

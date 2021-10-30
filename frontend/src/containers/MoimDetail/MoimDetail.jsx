@@ -14,6 +14,7 @@ import {
   filter,
   parseInt,
   isNull,
+  isUndefined,
   isEmpty,
   isEqual,
 } from 'lodash';
@@ -51,6 +52,8 @@ import { DESCRIPTION_MAX_LENGTH } from '../../lib/const';
 import { MoimDetailWrap, MoimDetailInfo } from './style';
 
 const MoimDetail = memo(({ category, id }) => {
+  const nowDate = dayjs().unix();
+
   const dispatch = useDispatch();
 
   const moim = useSelector(({ detail }) => detail.moim);
@@ -162,8 +165,15 @@ const MoimDetail = memo(({ category, id }) => {
     [category],
   );
   const moimStatus = useMemo(
-    () => (category === 'community' ? communityStatus : meetingStatus),
-    [category],
+    () =>
+      category === 'community'
+        ? communityStatus
+        : [
+            meetingStatus[
+              findIndex(meetingStatus, (item) => item.name === status)
+            ],
+          ],
+    [category, status],
   );
 
   const onGetCommunity = useCallback(
@@ -233,7 +243,6 @@ const MoimDetail = memo(({ category, id }) => {
             title,
             isLock,
             passNumber,
-            status,
             payInfo,
             tags,
             description,
@@ -655,7 +664,6 @@ const MoimDetail = memo(({ category, id }) => {
     setIsLock(isLock);
     setPassNumber(passNumber);
     setPayInfo(payInfo);
-    setStatus(status);
     setUrl(url);
     setTags(tags);
     setDescription(description);
@@ -665,7 +673,30 @@ const MoimDetail = memo(({ category, id }) => {
     setMemberSetting(memberSetting);
     setMemberList(memberList);
     setWaiter(waiter);
-  }, [moim]);
+
+    if (
+      category === 'meeting' &&
+      !isUndefined(startDate) &&
+      !isUndefined(endDate)
+    ) {
+      if (nowDate < startDate._seconds) {
+        if (
+          memberList.length + (memberSetting.isSelf ? 1 : 0) <
+          memberSetting.count
+        ) {
+          setStatus('empty');
+        } else {
+          setStatus('full');
+        }
+      } else if (nowDate >= startDate._seconds && nowDate <= endDate._seconds) {
+        setStatus('proceeding');
+      } else {
+        setStatus('complete');
+      }
+    } else {
+      setStatus(status);
+    }
+  }, [moim, category]);
 
   useEffect(() => {
     setTypeIndex(findIndex(moimType, (item) => item.name === type));
