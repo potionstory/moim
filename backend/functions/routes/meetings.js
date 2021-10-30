@@ -16,14 +16,15 @@ exports.getAllMeetings = (req, res) => {
             type: doc.data().type,
             title: doc.data().title,
             isLock: doc.data().isLock,
-            status: doc.data().status,
             payInfo: doc.data().payInfo,
             mainImage: doc.data().mainImage,
             description: doc.data().description,
             startDate: doc.data().startDate,
             endDate: doc.data().endDate,
             location: doc.data().location,
-            memberNowCount: doc.data().memberList.length,
+            memberNowCount:
+              doc.data().memberList.length +
+              (doc.data().memberSetting.isSelf ? 1 : 0),
             memberMaxCount: doc.data().memberSetting.count,
             tags: doc.data().tags,
             userId: doc.data().userId,
@@ -40,11 +41,12 @@ exports.getAllMeetings = (req, res) => {
             type: doc.data().type,
             title: doc.data().title,
             isLock: doc.data().isLock,
-            status: doc.data().status,
             payInfo: doc.data().payInfo,
             mainImage: doc.data().mainImage,
             description: doc.data().description,
-            memberNowCount: doc.data().memberList.length,
+            memberNowCount:
+              doc.data().memberList.length +
+              (doc.data().memberSetting.isSelf ? 1 : 0),
             memberMaxCount: doc.data().memberSetting.count,
             tags: doc.data().tags,
             userId: doc.data().userId,
@@ -120,7 +122,6 @@ exports.postMeeting = (req, res) => {
       title,
       isLock,
       passNumber,
-      status,
       description,
       payInfo,
       tags,
@@ -139,7 +140,6 @@ exports.postMeeting = (req, res) => {
       title,
       isLock: JSON.parse(isLock),
       passNumber,
-      status,
       payInfo: JSON.parse(payInfo),
       imagePath: storageFilepath,
       mainImage,
@@ -192,7 +192,6 @@ exports.getMeeting = (req, res) => {
         title: doc.data().title,
         isLock: doc.data().isLock,
         passNumber: new Array(6).fill(""),
-        status: doc.data().status,
         payInfo: doc.data().payInfo,
         mainImage: doc.data().mainImage,
         description: doc.data().description,
@@ -233,8 +232,97 @@ exports.getMeeting = (req, res) => {
     });
 };
 
-// update meeting
+// update meeting (thumbnail X)
 exports.putMeeting = (req, res) => {
+  if (req.method !== "PUT") {
+    return res.status(400).json({ error: "Method not defined" });
+  }
+
+  const {
+    type,
+    title,
+    isLock,
+    passNumber,
+    payInfo,
+    description,
+    startDate,
+    endDate,
+    location,
+    memberSetting,
+    memberList,
+    waiter,
+    tags,
+  } = req.body;
+
+  db.doc(`/meetings/${req.params.meetingId}`)
+    .get()
+    .then((doc) => {
+      const originPassNumber = doc.data().passNumber;
+
+      db.doc(`/meetings/${req.params.meetingId}`)
+        .update({
+          type,
+          title,
+          isLock,
+          passNumber:
+            passNumber === undefined ? originPassNumber : passNumber.join(""),
+          payInfo,
+          description,
+          startDate,
+          endDate,
+          location,
+          memberSetting,
+          memberList,
+          waiter,
+          tags,
+        })
+        .then((doc) => {
+          db.doc(`/meetings/${req.params.meetingId}`)
+            .get()
+            .then((doc) => {
+              let meetingData = {};
+
+              meetingData = {
+                meetingId: doc.id,
+                type: doc.data().type,
+                title: doc.data().title,
+                isLock: doc.data().isLock,
+                passNumber: new Array(6).fill(""),
+                payInfo: doc.data().payInfo,
+                mainImage: doc.data().mainImage,
+                description: doc.data().description,
+                startDate: doc.data().startDate,
+                endDate: doc.data().endDate,
+                location: doc.data().location,
+                memberSetting: doc.data().memberSetting,
+                memberList: doc
+                  .data()
+                  .memberList.map(
+                    ({ email, mobile, passNumber, ...member }) => member
+                  ),
+                waiter: doc.data().waiter,
+                tags: doc.data().tags,
+                userId: doc.data().userId,
+                userImage: doc.data().userImage,
+                userAvatar: doc.data().userAvatar,
+                userName: doc.data().userName,
+                createdAt: doc.data().createdAt,
+                likeCount: doc.data().likeCount,
+                commentCount: doc.data().commentCount,
+              };
+
+              return res.json(meetingData);
+            });
+        })
+        .catch((err) => {
+          console.error(err);
+          return res.status(500).json({ error: err.code }); // 500 INTERNAL_SERVER_ERROR
+        });
+    });
+};
+
+// update meeting (thumbnail O)
+exports.putMeetingThumb = (req, res) => {
   if (req.method !== "PUT") {
     return res.status(400).json({ error: "Method not defined" });
   }
@@ -288,7 +376,6 @@ exports.putMeeting = (req, res) => {
       title,
       isLock,
       passNumber,
-      status,
       payInfo,
       description,
       startDate,
@@ -315,7 +402,6 @@ exports.putMeeting = (req, res) => {
             isLock: JSON.parse(isLock),
             passNumber:
               passNumber === undefined ? originPassNumber : passNumber,
-            status,
             payInfo: JSON.parse(payInfo),
             imagePath: storageFilepath,
             mainImage: mainImage === undefined ? thumbImage : mainImage,
@@ -340,7 +426,6 @@ exports.putMeeting = (req, res) => {
                   title: doc.data().title,
                   isLock: doc.data().isLock,
                   passNumber: new Array(6).fill(""),
-                  status: doc.data().status,
                   payInfo: doc.data().payInfo,
                   mainImage: doc.data().mainImage,
                   description: doc.data().description,

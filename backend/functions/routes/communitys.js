@@ -206,8 +206,70 @@ exports.getCommunity = (req, res) => {
     });
 };
 
-// update community
+// update community (thumbnail X)
 exports.putCommunity = (req, res) => {
+  if (req.method !== "PUT") {
+    return res.status(400).json({ error: "Method not defined" });
+  }
+
+  const { type, title, isLock, passNumber, status, description, url, tags } =
+    req.body;
+
+  db.doc(`/communitys/${req.params.communityId}`)
+    .get()
+    .then((doc) => {
+      const originPassNumber = doc.data().passNumber;
+
+      db.doc(`/communitys/${req.params.communityId}`)
+        .update({
+          type,
+          title,
+          isLock,
+          passNumber:
+            passNumber === undefined ? originPassNumber : passNumber.join(""),
+          status,
+          description,
+          url,
+          tags,
+        })
+        .then((doc) => {
+          db.doc(`/communitys/${req.params.communityId}`)
+            .get()
+            .then((doc) => {
+              let communityData = {};
+
+              communityData = {
+                communityId: doc.id,
+                type: doc.data().type,
+                title: doc.data().title,
+                isLock: doc.data().isLock,
+                passNumber: new Array(6).fill(""),
+                status: doc.data().status,
+                mainImage: doc.data().mainImage,
+                description: doc.data().description,
+                url: doc.data().url,
+                tags: doc.data().tags,
+                userId: doc.data().userId,
+                userImage: doc.data().userImage,
+                userAvatar: doc.data().userAvatar,
+                userName: doc.data().userName,
+                createdAt: doc.data().createdAt,
+                likeCount: doc.data().likeCount,
+                commentCount: doc.data().commentCount,
+              };
+
+              return res.json(communityData);
+            });
+        })
+        .catch((err) => {
+          console.error(err);
+          return res.status(500).json({ error: err.code }); // 500 INTERNAL_SERVER_ERROR
+        });
+    });
+};
+
+// update community (thumbnail O)
+exports.putCommunityThumb = (req, res) => {
   if (req.method !== "PUT") {
     return res.status(400).json({ error: "Method not defined" });
   }
@@ -256,17 +318,8 @@ exports.putCommunity = (req, res) => {
       storageFilepath
     )}?alt=media&token=${generatedToken}`;
 
-    const {
-      type,
-      title,
-      isLock,
-      passNumber,
-      status,
-      description,
-      url,
-      tags,
-      mainImage,
-    } = req.body;
+    const { type, title, isLock, passNumber, status, description, url, tags } =
+      req.body;
 
     db.doc(`/communitys/${req.params.communityId}`)
       .get()
@@ -284,7 +337,7 @@ exports.putCommunity = (req, res) => {
               passNumber === undefined ? originPassNumber : passNumber,
             status,
             imagePath: storageFilepath,
-            mainImage: mainImage === undefined ? thumbImage : mainImage,
+            mainImage: thumbImage,
             description,
             url,
             tags: JSON.parse(tags),
