@@ -776,12 +776,13 @@ export const MoimDetailScheduleWrap = styled.div`
           transform: translate(-50%, -50%);
         }
         .btnCalendar {
-          bottom: 12px;
+          bottom: -88px;
           button {
-            width: 24px;
-            height: 24px;
+            width: 40px;
+            height: 40px;
             svg {
               font-size: 0.75rem;
+              opacity: 1;
             }
           }
         }
@@ -1057,6 +1058,16 @@ export const MoimDetailMapForm = styled.form`
       &:hover {
         svg {
           opacity: ${({ isActive }) => (isActive ? 1 : 0.6)};
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    span {
+      button {
+        svg {
+          opacity: 1;
         }
       }
     }
@@ -1550,6 +1561,19 @@ export const MoimDetailMemberWrap = styled.div`
     .memberInner {
       .memberTop {
         flex-direction: column;
+        .memberCount {
+          .countWrap {
+            .countEdit {
+              .btnWrap {
+                button {
+                  svg {
+                    opacity: 1;
+                  }
+                }
+              }
+            }
+          }
+        }
         .memberClient {
           margin-top: 12px;
         }
@@ -1586,6 +1610,13 @@ export const MoimDetailMemberWrap = styled.div`
                 .separator {
                   display: none;
                 }
+              }
+            }
+          }
+          .btnMember {
+            span {
+              svg {
+                opacity: 1;
               }
             }
           }

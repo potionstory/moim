@@ -583,7 +583,6 @@ export const CardMapBoxWrap = styled.div`
     line-height: 24px;
     ${ellipsis};
   }
-
   .addressBox {
     display: flex;
     gap: 0 6px;
@@ -621,6 +620,16 @@ export const CardMapBoxWrap = styled.div`
         transition: all 0.2s ease-out;
       }
       &:hover {
+        svg {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .addressBox {
+      .btnCopy {
         svg {
           opacity: 1;
         }
