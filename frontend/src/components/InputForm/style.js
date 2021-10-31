@@ -42,7 +42,7 @@ export const InputWrap = styled.div`
     flex: 1;
     width: 100%;
     height: 40px;
-    padding: 0 1rem;
+    padding: 0 12px;
     border-radius: 4px;
     background-color: ${({ theme }) => theme.main};
     ${({ isDisable }) =>

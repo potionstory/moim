@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useRef } from 'react';
 import { map, isArray } from 'lodash';
 import InputItem from './InputItem';
 import InputDigitItem from './InputDigitItem';
@@ -16,6 +16,8 @@ const InputForm = memo(
     onConfirm,
     confirmText,
   }) => {
+    const confirmRef = useRef();
+
     return (
       <InputFormWrap>
         {map(formData, (form, index) => {
@@ -25,9 +27,11 @@ const InputForm = memo(
             return (
               <InputItem
                 key={index}
-                isActive={form.name === focusInput}
                 index={index}
+                isActive={form.name === focusInput}
+                isLast={index === formData.length - 1}
                 form={form}
+                confirmRef={confirmRef}
                 onInputFocus={onInputFocus}
                 onInputChange={onInputChange}
                 onInputBlur={onInputBlur}
@@ -40,6 +44,7 @@ const InputForm = memo(
                 isActive={form.name === focusInput}
                 index={index}
                 form={form}
+                confirmRef={confirmRef}
                 onInputFocus={onInputFocus}
                 onInputPassDigitChange={onInputPassDigitChange}
                 onInputBlur={onInputBlur}
@@ -50,6 +55,7 @@ const InputForm = memo(
         <InputSubmit isActive={isActive}>
           <button
             type="button"
+            ref={confirmRef}
             onClick={() => {
               isActive && onConfirm(formData);
             }}

@@ -5,7 +5,7 @@ import dateTimePicker from './dateTimePicker';
 
 const global = createGlobalStyle`
   html {
-    background-color: ${({ theme }) => theme.sub};
+    background-color: ${({ theme }) => theme.main};
   }
 
   body {

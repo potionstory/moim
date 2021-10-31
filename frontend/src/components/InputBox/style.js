@@ -9,7 +9,7 @@ export const InputBoxWrap = styled.div`
   input {
     width: calc(100% - 40px);
     height: 40px;
-    padding: 8px 20px;
+    padding: 8px 12px;
     box-sizing: border-box;
     ${({ isNumber }) =>
       isNumber &&

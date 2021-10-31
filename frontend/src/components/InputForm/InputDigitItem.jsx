@@ -9,6 +9,7 @@ const InputDigitItem = memo(
     index,
     isActive,
     form,
+    confirmRef,
     onInputFocus,
     onInputPassDigitChange,
     onInputBlur,
@@ -32,13 +33,18 @@ const InputDigitItem = memo(
       [form, isBackSpace],
     );
 
-    const onDigitKeyDown = useCallback((e) => {
-      if (e.key === 'Backspace') {
-        setIsBackSpace(true);
-      } else if (e.keyCode >= 48 && e.keyCode <= 57) {
-        setIsBackSpace(false);
-      }
-    }, []);
+    const onDigitKeyDown = useCallback(
+      (e, i) => {
+        if (e.key === 'Backspace') {
+          setIsBackSpace(true);
+        } else if (e.keyCode >= 48 && e.keyCode <= 57) {
+          setIsBackSpace(false);
+        } else if (e.key === 'Enter' && i === form.value.length - 1) {
+          confirmRef.current.click();
+        }
+      },
+      [form],
+    );
 
     return (
       <InputWrap
@@ -68,7 +74,7 @@ const InputDigitItem = memo(
                   onFocus={onInputFocus}
                   onBlur={onInputBlur}
                   onChange={(e) => onDigitChange(e, index, i)}
-                  onKeyDown={onDigitKeyDown}
+                  onKeyDown={(e) => onDigitKeyDown(e, i)}
                 />
               </li>
             );

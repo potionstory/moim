@@ -154,6 +154,14 @@ export const CardHeaderWrap = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    .info {
+      .title {
+        color: ${({ theme }) => theme.title};
+      }
+    }
+  }
 `;
 
 export const CardBodyWrap = styled.div`
@@ -295,6 +303,12 @@ export const CardDescriptionBoxWrap = styled.div`
     white-space: pre-wrap;
     transition: all 0.2s ease-out;
     &:hover {
+      color: ${({ theme }) => theme.text};
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    button {
       color: ${({ theme }) => theme.text};
     }
   }

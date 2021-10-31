@@ -173,14 +173,16 @@ export const MoimDetailTitleWrap = styled.div`
 
   @media screen and (max-width: 768px) {
     padding: 0;
+    min-height: 40px;
     ${({ isEdit }) =>
       isEdit &&
       css`
         padding: 12px;
       `};
-    h3 {
-      font-size: 3rem;
-      line-height: 60px;
+    h3,
+    textarea {
+      font-size: 2rem;
+      line-height: 40px;
     }
   }
 `;
@@ -237,6 +239,7 @@ export const MoimDetailLockWrap = styled.div`
   @media screen and (max-width: 768px) {
     .lockContent {
       flex-direction: column;
+      gap: 6px 0;
     }
   }
 `;
@@ -352,13 +355,6 @@ export const MoimDetailStatusWrap = styled.div`
   }
   .statusContent {
     margin-left: 12px;
-  }
-
-  @media screen and (max-width: 768px) {
-    align-items: flex-start;
-    .statusContent {
-      padding-top: 10px;
-    }
   }
 `;
 
@@ -526,6 +522,20 @@ export const MoimDetailDescriptionWrap = styled.div`
       }
       .max {
         color: ${color.green};
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .desciptionBox {
+      .description {
+        ${({ isEdit, theme }) =>
+          css`
+            padding: ${!isEdit ? '8px 0 0' : '8px 12px'};
+            background-color: ${!isEdit ? color.none : theme.sub};
+            color: ${theme.text};
+          `};
+        line-height: 24px;
       }
     }
   }

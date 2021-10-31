@@ -5,17 +5,9 @@ export const StatusListWrap = styled.div`
   display: flex;
   ul {
     display: flex;
-    margin: 0 -3px;
+    gap: 0 6px;
     li {
       display: flex;
-      margin: 0 3px;
-    }
-  }
-
-  @media screen and (max-width: 768px) { 
-    ul {
-      flex-direction: column;
-      gap: 6px 0;
     }
   }
 `;

@@ -1,10 +1,23 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { InputWrap } from './style';
 
 const InputItem = memo(
-  ({ index, isActive, form, onInputFocus, onInputChange, onInputBlur }) => {
+  ({
+    index,
+    isActive,
+    isLast,
+    form,
+    confirmRef,
+    onInputFocus,
+    onInputChange,
+    onInputBlur,
+  }) => {
+    const onKeyDown = useCallback(() => {
+      if (isLast) confirmRef.current.click();
+    }, [isLast]);
+
     return (
       <InputWrap
         isActive={isActive}
@@ -28,6 +41,7 @@ const InputItem = memo(
           onFocus={onInputFocus}
           onBlur={(e) => onInputBlur(e, index)}
           onChange={(e) => onInputChange(e, index)}
+          onKeyDown={onKeyDown}
         />
       </InputWrap>
     );
