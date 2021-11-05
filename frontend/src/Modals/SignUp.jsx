@@ -26,6 +26,22 @@ const formValidators = [
 
 const SignUp = memo(() => {
   const dispatch = useDispatch();
+  
+  const isSocial = useSelector(({ auth }) => auth.isSocial);
+  const signInfo = useSelector(({ auth }) => auth.signInfo);
+
+  const [focusInput, setFocusInput] = useState(null);
+  const [formData, setFormData] = useState(signUpForm);
+  const [validator, setValidator] = useState(formValidators[0]);
+  const [userImage, setUserImage] = useState(null);
+
+  const isSignInfo = useMemo(() => {
+    return !isEmpty(signInfo);
+  }, [signInfo]);
+
+  const isActive = useMemo(() => {
+    return every(formData, (item) => item.isCheck);
+  }, [formData]);
 
   const onSocialSign = useCallback(
     (payload) => {
@@ -102,22 +118,6 @@ const SignUp = memo(() => {
 
     dispatch(signAvatarResetAction(userAvatar));
   }, [dispatch]);
-
-  const isSocial = useSelector(({ auth }) => auth.isSocial);
-  const signInfo = useSelector(({ auth }) => auth.signInfo);
-
-  const [focusInput, setFocusInput] = useState(null);
-  const [formData, setFormData] = useState(signUpForm);
-  const [validator, setValidator] = useState(formValidators[0]);
-  const [userImage, setUserImage] = useState(null);
-
-  const isSignInfo = useMemo(() => {
-    return !isEmpty(signInfo);
-  }, [signInfo]);
-
-  const isActive = useMemo(() => {
-    return every(formData, (item) => item.isCheck);
-  }, [formData]);
 
   const onImageChange = useCallback(
     (e) => {

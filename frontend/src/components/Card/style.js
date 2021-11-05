@@ -246,6 +246,7 @@ export const CardMainImageBoxWrap = styled.span`
   position: relative;
   height: 100%;
   .thumb {
+    width: 100%;
     height: 100%;
     img {
       width: 100%;

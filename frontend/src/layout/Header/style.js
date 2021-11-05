@@ -42,6 +42,7 @@ export const LeftHead = styled.div`
   align-items: center;
   padding: 20px 0;
   h1 {
+    overflow: hidden;
     a {
       display: block;
       position: relative;
@@ -52,7 +53,6 @@ export const LeftHead = styled.div`
         width: 18px;
         height: 18px;
         border-radius: 4px;
-        opacity: 0;
         &:nth-child(1) {
           top: 0;
           left: -18px;

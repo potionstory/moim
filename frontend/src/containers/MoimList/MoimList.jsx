@@ -36,16 +36,13 @@ const MoimList = memo(({ category }) => {
 
   const onHandleDetail = useCallback(
     (id, userId, isLock) => {
-      if (
-        (isLock && isNull(userInfo)) ||
-        (!isNull(userInfo) && userInfo.userId !== userId)
-      ) {
-        dispatch(passNumberModalOpenAction(id));
-      } else {
+      if (!isLock || (!isNull(userInfo) && userInfo.userId === userId)) {
         history.push(`/detail/${category}/${id}`);
+      } else {
+        dispatch(passNumberModalOpenAction(id));
       }
     },
-    [category, list, userInfo, dispatch],
+    [category, userInfo, dispatch],
   );
 
   useEffect(() => {

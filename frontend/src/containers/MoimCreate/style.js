@@ -452,6 +452,16 @@ export const MoimCreateUrlWrap = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    .urlContent {
+      button {
+        svg {
+          opacity: 1;
+        }
+      }
+    }
+  }
 `;
 
 export const MoimCreateTagWrap = styled.div`

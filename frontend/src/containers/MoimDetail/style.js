@@ -327,6 +327,11 @@ export const MoimDetailPayInfoWrap = styled.div`
       .payInfo {
         padding: 0;
         border-left: 0;
+        .btnCopy {
+          svg {
+            opacity: 1;
+          }
+        }
       }
       .payInput {
         width: 100%;
@@ -422,6 +427,16 @@ export const MoimDetailUrlWrap = styled.div`
         transition: all 0.2s ease-out;
       }
       &:hover {
+        svg {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .urlContent {
+      button {
         svg {
           opacity: 1;
         }

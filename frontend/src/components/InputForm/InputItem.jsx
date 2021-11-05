@@ -14,8 +14,8 @@ const InputItem = memo(
     onInputChange,
     onInputBlur,
   }) => {
-    const onKeyDown = useCallback(() => {
-      if (isLast) confirmRef.current.click();
+    const onKeyDown = useCallback((e) => {
+      if (isLast && (e.key === 'Enter')) confirmRef.current.click();
     }, [isLast]);
 
     return (
@@ -41,7 +41,7 @@ const InputItem = memo(
           onFocus={onInputFocus}
           onBlur={(e) => onInputBlur(e, index)}
           onChange={(e) => onInputChange(e, index)}
-          onKeyDown={onKeyDown}
+          onKeyDown={(e) => onKeyDown(e)}
         />
       </InputWrap>
     );

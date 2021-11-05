@@ -101,8 +101,7 @@ const Header = memo(() => {
             <Link to="/">
               <motion.span
                 animate={{
-                  x: [0, 18, 18, 18, 18, 18, 18, 0, 0, 0, 0],
-                  opacity: [0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
+                  x: [0, 18, 18, 18, 18, 18, 18, 0, 0, 0, 0]
                 }}
                 transition={{
                   duration: 4,
@@ -114,7 +113,6 @@ const Header = memo(() => {
               <motion.span
                 animate={{
                   y: [0, 0, 18, 18, 18, 18, 18, 18, 0, 0, 0],
-                  opacity: [0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0],
                 }}
                 transition={{
                   duration: 4,
@@ -126,7 +124,6 @@ const Header = memo(() => {
               <motion.span
                 animate={{
                   x: [0, 0, 0, -18, -18, -18, -18, -18, -18, 0, 0],
-                  opacity: [0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
                 }}
                 transition={{
                   duration: 4,
@@ -138,7 +135,6 @@ const Header = memo(() => {
               <motion.span
                 animate={{
                   y: [0, 0, 0, 0, -18, -18, -18, -18, -18, -18, 0],
-                  opacity: [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0],
                 }}
                 transition={{
                   duration: 4,

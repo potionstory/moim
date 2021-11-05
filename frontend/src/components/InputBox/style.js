@@ -39,4 +39,12 @@ export const InputBoxWrap = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    button {
+      svg {
+        opacity: 1;
+      }
+    }
+  }
 `;

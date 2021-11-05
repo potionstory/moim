@@ -14,7 +14,7 @@ export const SelectBoxWrap = styled.div`
     background-color: ${({ theme }) => theme.sub};
     .item {
       flex: 1;
-      padding: 8px 20px;
+      padding: 8px 12px;
       font-size: 0.875rem;
       color: ${({ isValue, theme }) => (isValue ? theme.title : color.gray)};
       font-weight: 600;
@@ -81,6 +81,21 @@ export const SelectBoxWrap = styled.div`
       &:first-child {
         border-top: 0 none;
       }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .selected {
+      button {
+        span {
+          svg {
+            opacity: 1;
+          }
+        }
+      }
+    }
+    ul {
+      top: 46px;
     }
   }
 `;
