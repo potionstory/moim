@@ -133,7 +133,7 @@ export const RightHead = styled.div`
   padding: 20px 0;
   align-items: center;
   justify-content: flex-end;
-  
+
   @media screen and (max-width: 768px) {
     padding: 10px 0;
   }
@@ -148,12 +148,13 @@ export const MenuBar = styled.button`
   padding: 8px;
   box-sizing: border-box;
   border-radius: 4px;
-  background-color: ${({ active, theme }) => active ? theme.theme : theme.sub};
+  background-color: ${({ active, theme }) =>
+    active ? theme.theme : theme.sub};
   text-align: center;
   transition: all 0.2s ease-out;
   svg {
     font-size: 1rem;
-    color: ${({ active, theme }) => active ? theme.title : theme.gray};
+    color: ${({ active, theme }) => (active ? theme.title : theme.gray)};
     vertical-align: middle;
   }
 
@@ -180,7 +181,7 @@ export const MenuListMobile = styled(motion.ul)`
   @media screen and (min-width: 768px) {
     display: none !important;
   }
- 
+
   @media screen and (max-width: 768px) {
     display: flex;
     flex-direction: column;
@@ -243,5 +244,24 @@ export const AvatarBox = styled.button`
 
   @media screen and (max-width: 768px) {
     margin-left: 12px;
+  }
+`;
+
+export const EventLink = styled.span`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  transform: translate(-50%, -50%);
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    svg {
+      font-size: 2.5rem;
+      color: ${({ theme }) => theme.theme};
+    }
   }
 `;

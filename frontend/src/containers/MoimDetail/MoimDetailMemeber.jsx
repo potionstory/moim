@@ -101,7 +101,12 @@ const MoimDetailMember = memo(
     const { count, isSelf, formData } = memberSetting;
 
     return (
-      <MoimDetailMemberWrap isEdit={isEdit} isSettingBox={isSettingBox} isMemberInfoOpen={isMemberInfoOpen} isWaiterInfoOpen={isWaiterInfoOpen}>
+      <MoimDetailMemberWrap
+        isEdit={isEdit}
+        isSettingBox={isSettingBox}
+        isMemberInfoOpen={isMemberInfoOpen}
+        isWaiterInfoOpen={isWaiterInfoOpen}
+      >
         <div className="memberInner">
           <div className="memberTop">
             <div className="memberCount">
@@ -265,10 +270,10 @@ const MoimDetailMember = memo(
                       <FontAwesomeIcon icon={faQuestion} />
                     </button>
                     <motion.span
-                      animate={isMemberInfoOpen ? "open" : "closed"}
+                      animate={isMemberInfoOpen ? 'open' : 'closed'}
                       variants={memberInfoVariants}
                       transition={{
-                        ease: "backInOut",
+                        ease: 'backInOut',
                       }}
                       className="counts"
                     >
@@ -290,12 +295,17 @@ const MoimDetailMember = memo(
                         <span className="icon">
                           <FontAwesomeIcon icon={faDiceD6} />
                         </span>
-                        {members[0].length - filter(members[0], undefined).length}
+                        {members[0].length -
+                          filter(members[0], undefined).length}
                       </span>
                     </motion.span>
                   </div>
                 </div>
-                <button type="button" className="btnMember" onClick={onMemberToggle}>
+                <button
+                  type="button"
+                  className="btnMember"
+                  onClick={onMemberToggle}
+                >
                   <motion.span
                     animate={{ rotate: isMemberOpen ? 180 : 0 }}
                     transition={{
@@ -426,10 +436,10 @@ const MoimDetailMember = memo(
                       <FontAwesomeIcon icon={faQuestion} />
                     </button>
                     <motion.span
-                      animate={isWaiterInfoOpen ? "open" : "closed"}
+                      animate={isWaiterInfoOpen ? 'open' : 'closed'}
                       variants={memberInfoVariants}
                       transition={{
-                        ease: "backInOut",
+                        ease: 'backInOut',
                       }}
                       className="counts"
                     >
@@ -442,7 +452,11 @@ const MoimDetailMember = memo(
                     </motion.span>
                   </div>
                 </div>
-                <button type="button" className="btnMember" onClick={onWatierToggle}>
+                <button
+                  type="button"
+                  className="btnMember"
+                  onClick={onWatierToggle}
+                >
                   <motion.span
                     animate={{ rotate: isWaiterOpen ? 180 : 0 }}
                     transition={{

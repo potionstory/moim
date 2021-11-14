@@ -10,6 +10,7 @@ import {
   faSignInAlt,
   faUserPlus,
   faSignOutAlt,
+  faCertificate,
 } from '@fortawesome/free-solid-svg-icons';
 import Avatar from 'boring-avatars';
 import api from '../../store/api';
@@ -33,6 +34,7 @@ import {
   MenuListMobile,
   MenuItem,
   AvatarBox,
+  EventLink,
 } from './style';
 
 const token = localStorage.FBIdToken;
@@ -101,7 +103,7 @@ const Header = memo(() => {
             <Link to="/">
               <motion.span
                 animate={{
-                  x: [0, 18, 18, 18, 18, 18, 18, 0, 0, 0, 0]
+                  x: [0, 18, 18, 18, 18, 18, 18, 0, 0, 0, 0],
                 }}
                 transition={{
                   duration: 4,
@@ -278,6 +280,11 @@ const Header = memo(() => {
             />
           </motion.div>
         )}
+        <EventLink>
+          <Link to="/event">
+            <FontAwesomeIcon icon={faCertificate} />
+          </Link>
+        </EventLink>
       </HeaderInnder>
     </HeaderWrap>
   );
