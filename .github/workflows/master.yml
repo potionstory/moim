@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "frontend"
 
     strategy:
       matrix:
@@ -24,7 +27,6 @@ jobs:
 
       - name: Build
         run: |
-          cd frontend
           npm install
           npm run build
 
