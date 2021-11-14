@@ -9,9 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: "frontend"
 
     strategy:
       matrix:
@@ -25,11 +22,17 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Build
+      - name: Dependencies
         run: |
           npm install
+        working-directory: ./frontend
+
+      - name: Build
+        run: |
           npm run build
+        working-directory: ./frontend
 
       - name: Deploy
         run: |
           firebase deploy
+        working-directory: ./frontend
