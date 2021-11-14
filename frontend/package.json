@@ -29,7 +29,7 @@
     "firebase": "^7.16.1",
     "framer-motion": "^1.11.0",
     "history": "^4.10.1",
-    "immer": "^6.0.9",
+    "immer": "^9.0.6",
     "lodash": "^4.17.15",
     "moment": "^2.26.0",
     "react": "^17.0.2",
