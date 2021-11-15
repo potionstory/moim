@@ -9,7 +9,7 @@ const EventTop = () => {
     <EventTopWrap>
       <div className="eventTop">
         <EventTopTabWrap>
-          <motion.div
+          {/* <motion.div
             className="activeBar"
             animate={{ x: activeIndex * 80 }}
             transition={{
@@ -24,12 +24,7 @@ const EventTop = () => {
                 </button>
               </TabButton>
             ))}
-          </ul>
-          {isAuth && (
-            <Link to="/create" className="btnCreate">
-              <FontAwesomeIcon icon={faPlus} />
-            </Link>
-          )}
+          </ul> */}
         </EventTopTabWrap>
       </div>
       <h2>EventTop</h2>
