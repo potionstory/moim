@@ -2,23 +2,23 @@ import React from 'react';
 import { map } from 'lodash';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { EventTopWrap, EventTopTabWrap } from './style';
+import { EventTopWrap, EventTopTabWrap, TabButton } from './style';
 
-const EventTop = () => {
+const EventTop = ({ tabMenu, tabTitle, tabIndex, onTabClick }) => {
   return (
     <EventTopWrap>
       <div className="eventTop">
         <EventTopTabWrap>
           <motion.div
             className="activeBar"
-            animate={{ x: activeIndex * 80 }}
+            animate={{ x: tabIndex * 80 }}
             transition={{
               ease: 'backInOut',
             }}
           />
           <ul className="tabList">
             {map(tabMenu, (item, index) => (
-              <TabButton key={index} isActive={index === activeIndex}>
+              <TabButton key={index} isActive={index === tabIndex}>
                 <button type="button" onClick={() => onTabClick(index)}>
                   <FontAwesomeIcon icon={item.icon} />
                 </button>
@@ -27,7 +27,7 @@ const EventTop = () => {
           </ul>
         </EventTopTabWrap>
       </div>
-      <h2>EventTop</h2>
+      <h2>{tabTitle}</h2>
     </EventTopWrap>
   );
 };

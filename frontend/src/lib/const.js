@@ -1,7 +1,8 @@
-import dayjs from 'dayjs';
 import {
   faCommentAlt,
   faMugHot,
+  faGamepad,
+  faDiceSix,
   faFilter,
   faSortAmountDown,
   faDiceD6,
@@ -47,6 +48,25 @@ export const categoryTabMenu = [
   {
     icon: faMugHot,
     title: 'meeting',
+  },
+];
+
+export const eventTabMenu = [
+  {
+    icon: faUser,
+    title: 'member',
+  },
+  {
+    icon: faClock,
+    title: 'schedule',
+  },
+  {
+    icon: faGamepad,
+    title: 'game',
+  },
+  {
+    icon: faDiceSix,
+    title: 'lotto',
   },
 ];
 
