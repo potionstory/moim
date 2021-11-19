@@ -23,7 +23,9 @@ const EventMemberCard = memo(({ member, onMemberClick }) => {
         onClick={() => isConfirm || onMemberClick(id)}
       >
         <span className="job">
-          <span onClick={isFixed && onJobClick}>{isJobView ? job : '???'}</span>
+          <span onClick={() => !isFixed || onJobClick()}>
+            {isJobView ? job : '???'}
+          </span>
         </span>
         <span className="number">
           {!isFixed ? (
