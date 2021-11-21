@@ -1,10 +1,17 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDiceSix } from '@fortawesome/free-solid-svg-icons';
 import { EventLottoWarp } from './style';
 
 const EventLotto = () => {
   return (
     <EventLottoWarp>
-      <h2>Lotto</h2>
+      <div className="lottoBtn">
+        <button type="button">
+          <FontAwesomeIcon icon={faDiceSix} />
+          fsdf
+        </button>
+      </div>
     </EventLottoWarp>
   );
 };

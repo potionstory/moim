@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { produce } from 'immer';
 import EventTop from '../../Containers/EventTop';
 import EventMember from '../../Containers/EventMember';
@@ -7,102 +7,146 @@ import EventGame from '../../Containers/EventGame';
 import EventLotto from '../../containers/EventLotto';
 import { eventTabMenu } from '../../lib/const';
 
-const MEMBER_LENGTH = 12;
+const shuffle = (array) => array.sort(() => Math.random() - 0.5);
+
+const MEMBER_NUMBER = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+const MEMBER_JOB = [
+  '직업1',
+  '직업2',
+  '직업3',
+  '직업4',
+  '직업5',
+  '직업6',
+  '직업7',
+  '직업8',
+  '직업9',
+  '직업10',
+  '직업11',
+  '직업12',
+  '직업13',
+  '직업14',
+  '직업15',
+];
+const MEMBER_TEAM = [1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5];
 const memberData = [
   {
     id: 0,
-    number: 0,
-    name: 'potionstorypotionstory',
-    team: 0,
-    job: '도둑',
+    number: null,
+    name: 'name01',
+    team: null,
+    job: null,
     isConfirm: false,
   },
   {
     id: 1,
-    number: 0,
-    name: '어리양',
-    team: 0,
-    job: '경찰',
+    number: null,
+    name: 'name02',
+    team: null,
+    job: null,
     isConfirm: false,
   },
   {
     id: 2,
-    number: 0,
-    name: 'jurijung',
-    team: 0,
-    job: '테란',
+    number: null,
+    name: 'name03',
+    team: null,
+    job: null,
     isConfirm: false,
   },
   {
     id: 3,
-    number: 0,
-    name: 'Latte',
-    team: 0,
-    job: '프로토스',
+    number: null,
+    name: 'name04',
+    team: null,
+    job: null,
     isConfirm: false,
   },
   {
     id: 4,
-    number: 0,
-    name: 'potionstorypotionstory',
-    team: 0,
-    job: '도둑',
+    number: null,
+    name: 'name05',
+    team: null,
+    job: null,
     isConfirm: false,
   },
   {
     id: 5,
-    number: 0,
-    name: '어리양',
-    team: 0,
-    job: '경찰',
+    number: null,
+    name: 'name06',
+    team: null,
+    job: null,
     isConfirm: false,
   },
   {
     id: 6,
-    number: 0,
-    name: 'jurijung',
-    team: 0,
-    job: '테란',
+    number: null,
+    name: 'name07',
+    team: null,
+    job: null,
     isConfirm: false,
   },
   {
     id: 7,
-    number: 0,
-    name: 'Latte',
-    team: 0,
-    job: '프로토스',
+    number: null,
+    name: 'name08',
+    team: null,
+    job: null,
     isConfirm: false,
   },
   {
     id: 8,
-    number: 0,
-    name: 'potionstorypotionstory',
-    team: 0,
-    job: '도둑',
+    number: null,
+    name: 'name09',
+    team: null,
+    job: null,
     isConfirm: false,
   },
   {
     id: 9,
-    number: 0,
-    name: '어리양',
-    team: 0,
-    job: '경찰',
+    number: null,
+    name: 'name10',
+    team: null,
+    job: null,
     isConfirm: false,
   },
   {
     id: 10,
-    number: 0,
-    name: 'jurijung',
-    team: 0,
-    job: '테란',
+    number: null,
+    name: 'name11',
+    team: null,
+    job: null,
     isConfirm: false,
   },
   {
     id: 11,
-    number: 0,
-    name: 'Latte',
-    team: 0,
-    job: '프로토스',
+    number: null,
+    name: 'name12',
+    team: null,
+    job: null,
+    isConfirm: false,
+  },
+  {
+    id: 12,
+    number: null,
+    name: 'name13',
+    team: null,
+    job: null,
+    isConfirm: false,
+  },
+  {
+    id: 13,
+    number: null,
+    name: 'name14',
+    team: null,
+    job: null,
+    isConfirm: false,
+  },
+  {
+    id: 14,
+    number: null,
+    name: 'name15',
+    team: null,
+    job: null,
     isConfirm: false,
   },
 ];
@@ -123,16 +167,7 @@ const Event = () => {
       setMemberList(
         produce((draft) => {
           const index = memberList.findIndex((member) => member.id === id);
-          let number = Math.floor(Math.random() * MEMBER_LENGTH) + 1;
 
-          while (
-            memberList.findIndex((member) => member.number === number) !== -1
-          ) {
-            number = Math.floor(Math.random() * MEMBER_LENGTH) + 1;
-          }
-
-          draft[index].number = number;
-          draft[index].team = Math.floor(Math.random() * 5) + 1;
           draft[index].isConfirm = true;
         }),
       );
@@ -140,11 +175,19 @@ const Event = () => {
     [memberList],
   );
 
+  const onMemberAlign = useCallback(() => {
+    setMemberList([...memberList].sort((a, b) => a.team - b.team));
+  }, memberList);
+
   const EventTabMenuSwitch = useMemo(() => {
     switch (tabIndex) {
       case 0:
         return (
-          <EventMember memberList={memberList} onMemberClick={onMemberClick} />
+          <EventMember
+            memberList={memberList}
+            onMemberClick={onMemberClick}
+            onMemberAlign={onMemberAlign}
+          />
         );
       case 1:
         return <EventSchedule />;
@@ -155,9 +198,23 @@ const Event = () => {
       default:
         return false;
     }
-  }, [tabIndex, memberList, onMemberClick]);
+  }, [tabIndex, memberList, onMemberClick, onMemberAlign]);
 
-  console.log('memberList: ', memberList);
+  useEffect(() => {
+    shuffle(MEMBER_NUMBER);
+    shuffle(MEMBER_JOB);
+    shuffle(MEMBER_TEAM);
+
+    setMemberList(
+      memberList.map((member, index) => {
+        member.number = MEMBER_NUMBER[index];
+        member.job = MEMBER_JOB[index];
+        member.team = MEMBER_TEAM[index];
+
+        return member;
+      }),
+    );
+  }, []);
 
   return (
     <>

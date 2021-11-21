@@ -12,6 +12,12 @@ export const EventMemberWarp = styled.div`
       height: 153px;
     }
   }
+  .memberButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 24px;
+  }
 `;
 
 export const EventMemberCardWrap = styled.button`
@@ -23,35 +29,39 @@ export const EventMemberCardWrap = styled.button`
   padding: 12px;
   box-sizing: border-box;
   border-radius: 4px;
-  ${({ team, theme }) => {
-    switch (team) {
-      case 1:
-        return css`
-          background-color: ${color.red};
-        `;
-      case 2:
-        return css`
-          background-color: ${color.orange};
-        `;
-      case 3:
-        return css`
-          background-color: ${color.green};
-        `;
-      case 4:
-        return css`
-          background-color: ${color.blue};
-        `;
-      case 5:
-        return css`
-          background-color: ${color.purple};
-        `;
-      default:
-        return css`
-          background-color: ${theme.title};
-        `;
+  ${({ isFixed, team, theme }) => {
+    if (isFixed) {
+      switch (team) {
+        case 1:
+          return css`
+            background-color: ${color.red};
+          `;
+        case 2:
+          return css`
+            background-color: ${color.orange};
+          `;
+        case 3:
+          return css`
+            background-color: ${color.green};
+          `;
+        case 4:
+          return css`
+            background-color: ${color.blue};
+          `;
+        case 5:
+          return css`
+            background-color: ${color.purple};
+          `;
+        default:
+          return false;
+      }
+    } else {
+      return css`
+        background-color: ${theme.title};
+      `;
     }
   }};
-  opacity: ${({ team }) => !team ? 0.6 : 1};
+  opacity: ${({ isFixed }) => (!isFixed ? 0.6 : 1)};
   transition: all 0.2s ease-out;
   &:hover {
     opacity: 1;
@@ -81,7 +91,15 @@ export const EventMemberCardWrap = styled.button`
     font-family: 'Rubik';
     font-size: 4rem;
     font-weight: bold;
-    color: ${({ team, theme }) => !team ? theme.theme : theme.title};
+    color: ${({ isFixed, theme }) => (!isFixed ? theme.theme : theme.title)};
+    .animated-container > div,
+    .digit {
+      width: 40px;
+    }
+    .digit {
+      height: 76px;
+      line-height: 80px;
+    }
   }
   .name {
     width: 100%;

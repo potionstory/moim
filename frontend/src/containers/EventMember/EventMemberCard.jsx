@@ -6,30 +6,24 @@ const EventMemberCard = memo(({ member, onMemberClick }) => {
   const { id, number, name, team, job, isConfirm } = member;
 
   const [isFixed, setIsFixed] = useState(false);
-  const [isJobView, setIsJobView] = useState(false);
-
-  const onJobClick = useCallback(() => {
-    setIsJobView((prev) => !prev);
-  }, []);
 
   useEffect(() => {
     if (isConfirm) setTimeout(() => setIsFixed(true), 2000);
   }, [isConfirm]);
 
   return (
-    <li>
+    <li key={id}>
       <EventMemberCardWrap
+        isFixed={isFixed}
         team={team}
         onClick={() => isConfirm || onMemberClick(id)}
       >
         <span className="job">
-          <span onClick={() => !isFixed || onJobClick()}>
-            {isJobView ? job : '???'}
-          </span>
+          <span>{isFixed ? job : '???'}</span>
         </span>
         <span className="number">
           {!isFixed ? (
-            !number ? (
+            !isConfirm ? (
               '?'
             ) : (
               <AnimatedNumbers
@@ -44,6 +38,13 @@ const EventMemberCard = memo(({ member, onMemberClick }) => {
             )
           ) : (
             number
+              .toString()
+              .split('')
+              .map((digit, index) => (
+                <span key={index} className="digit">
+                  {digit}
+                </span>
+              ))
           )}
         </span>
         <span className="name">{name}</span>
