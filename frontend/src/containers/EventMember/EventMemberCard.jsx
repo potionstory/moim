@@ -1,4 +1,4 @@
-import React, { memo, useState, useCallback, useEffect } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import AnimatedNumbers from 'react-animated-numbers';
 import { EventMemberCardWrap } from './style';
 

@@ -194,7 +194,7 @@ const Event = () => {
       case 2:
         return <EventGame />;
       case 3:
-        return <EventLotto />;
+        return <EventLotto memberList={memberList} />;
       default:
         return false;
     }
