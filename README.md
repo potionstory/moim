@@ -38,5 +38,5 @@
 ### *[frontend]*
 
 <style type="text/css" rel="stylesheet">
-img[alt=for-the-badge] { vertical-align:top }
+img[alt="for-the-badge"] { vertical-align: }
 </style>
