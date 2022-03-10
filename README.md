@@ -11,14 +11,16 @@
  
 ## **Tech Used**
 ### *[deploy]*
-| Title | Description | version |
+| Name | Description | Version |
 |---|---|---|
-| firebase | Auth / Firestore / Storage / Hosting service | <a href="https://github.com/firebase/firebase-js-sdk"><img alt="for-the-badge" src="https://img.shields.io/badge/firebase-v8.3.1-FFCA28?logo=firebase&amp;style=for-the-badge"></a> |
+| <a href="https://github.com/firebase/firebase-js-sdk" target="_blank"><img alt="for-the-badge" src="https://img.shields.io/badge/firebase-555?logo=firebase&amp;style=for-the-badge"></a> | Auth / Firestore / Storage / Hosting service | v8.3.1</a> |
 
 
 ### *[backend]*
-- node
-- express
+| Name | Description | Version |
+|---|---|---|
+| <a href="https://github.com/nodejs/node" target="_blank"><img alt="for-the-badge" src="https://img.shields.io/badge/node-555?logo=node.js&amp;style=for-the-badge"></a> | Auth / Firestore / Storage / Hosting service | v8.3.1</a> |
+| <a href="https://github.com/expressjs/express" target="_blank"><img alt="for-the-badge" src="https://img.shields.io/badge/express-555?logo=express&amp;style=for-the-badge"></a> | Auth / Firestore / Storage / Hosting service | v8.3.1</a> |
 ### *[frontend]*
 - react
 - webpack
