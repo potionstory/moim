@@ -13,7 +13,7 @@
 ### *[deploy]*
 | Title | Description | version |
 |---|---|---|
-| firebase | Auth / Firestore / Storage / Hosting service | <a href="https://www.npmjs.com/package/firebase"><img alt="for-the-badge" src="https://img.shields.io/badge/firebase-v8.3.1-FFCA28?logo=firebase&amp;style=for-the-badge&link=https://www.npmjs.com/package/firebase"></a> |
+| firebase | Auth / Firestore / Storage / Hosting service | <a href="https://github.com/firebase/firebase-js-sdk"><img alt="for-the-badge" src="https://img.shields.io/badge/firebase-v8.3.1-FFCA28?logo=firebase&amp;style=for-the-badge"></a> |
 
 
 ### *[backend]*
