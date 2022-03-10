@@ -13,7 +13,7 @@
 ### *[deploy]*
 | Name | Description |
 |---|---|
-| <a href="https://github.com/firebase/firebase-js-sdk" target="blank" style="display:block;height:28px"><img alt="for-the-badge" src="https://img.shields.io/badge/firebase-v8.3.1-FFCA28?logo=firebase&amp;style=for-the-badge"><!-- .element: style="vertical-align:top" --></a> | Auth / Firestore / Storage / Hosting service |
+| <a href="https://github.com/firebase/firebase-js-sdk" target="blank" style="display:block;height:28px"><img alt="for-the-badge" src="https://img.shields.io/badge/firebase-v8.3.1-FFCA28?logo=firebase&amp;style=for-the-badge"></a><!-- .element: style="display:block;height:28px" --> | Auth / Firestore / Storage / Hosting service |
 
 ### *[backend]*
 - node
