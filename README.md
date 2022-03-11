@@ -12,12 +12,12 @@
 > ### # deploy
 > <a href="https://github.com/firebase/firebase-js-sdk" target="blank" style="display:block;height:28px"><img alt="for-the-badge" src="https://img.shields.io/badge/firebase-v8.3.1-FFCA28?logo=firebase&amp;style=for-the-badge"></a>
 
-### # backend
-<a href="https://github.com/nodejs/node" target="blank" style="display:block;height:28px"><img alt="for-the-badge" src="https://img.shields.io/badge/node.js-v12.13.0-339933?logo=node.js&amp;style=for-the-badge"></a>  
+> ### # backend
+> <a href="https://github.com/nodejs/node" target="blank" style="display:block;height:28px"><img alt="for-the-badge" src="https://img.shields.io/badge/node.js-v12.13.0-339933?logo=node.js&amp;style=for-the-badge"></a>  
 <a href="https://github.com/expressjs/express" target="blank" style="display:block;height:28px"><img alt="for-the-badge" src="https://img.shields.io/badge/express-v4.17.1-000000?logo=express&amp;style=for-the-badge"></a>
 
-### # frontend
-<a href="https://github.com/facebook/react" target="blank" style="display:block;height:28px"><img alt="for-the-badge" src="https://img.shields.io/badge/react-v16.13.1-61DAFB?logo=react&amp;style=for-the-badge"></a>  
+> ### # frontend
+> <a href="https://github.com/facebook/react" target="blank" style="display:block;height:28px"><img alt="for-the-badge" src="https://img.shields.io/badge/react-v16.13.1-61DAFB?logo=react&amp;style=for-the-badge"></a>  
 <a href="https://github.com/reduxjs/redux" target="blank" style="display:block;height:28px"><img alt="for-the-badge" src="https://img.shields.io/badge/redux-v4.0.5-764ABC?logo=redux&amp;style=for-the-badge"></a>  
 <a href="https://github.com/redux-saga/redux-saga" target="blank" style="display:block;height:28px"><img alt="for-the-badge" src="https://img.shields.io/badge/redux saga-v1.1.3-999999?logo=reduxsaga&amp;style=for-the-badge"></a>  
 <a href="https://github.com/webpack/webpack" target="blank" style="display:block;height:28px"><img alt="for-the-badge" src="https://img.shields.io/badge/webpack-v4.43.0-8DD6F9?logo=webpack&amp;style=for-the-badge"></a>  
